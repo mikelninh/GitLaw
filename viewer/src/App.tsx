@@ -1,7 +1,8 @@
 import { useState, useEffect, useMemo } from 'react'
-import { Search, BookOpen, ArrowLeft, Scale, FileText, Hash, ExternalLink, Sparkles, GitCompare, Lightbulb, Heart } from 'lucide-react'
+import { Search, BookOpen, ArrowLeft, Scale, FileText, Hash, ExternalLink, Sparkles, GitCompare, Lightbulb, Heart, MessageCircle, Send } from 'lucide-react'
 import Fuse from 'fuse.js'
 import { loadExplanations, reformDiffs, type Explanations } from './explain'
+import { askLegalQuestion } from './rag'
 import './index.css'
 
 interface LawEntry {
@@ -41,7 +42,11 @@ function App() {
   const [contentSearch, setContentSearch] = useState('')
   const [explanations, setExplanations] = useState<Explanations | null>(null)
   const [showExplain, setShowExplain] = useState(false)
-  const [activeTab, setActiveTab] = useState<'gesetze' | 'reformen'>('gesetze')
+  const [activeTab, setActiveTab] = useState<'gesetze' | 'reformen' | 'fragen'>('gesetze')
+  const [chatQuestion, setChatQuestion] = useState('')
+  const [chatAnswer, setChatAnswer] = useState('')
+  const [chatSources, setChatSources] = useState<{law: string; section: string}[]>([])
+  const [chatLoading, setChatLoading] = useState(false)
 
   // Load index
   useEffect(() => {
@@ -220,6 +225,10 @@ function App() {
             className={`px-4 py-2.5 rounded-t-xl text-sm font-medium transition-colors cursor-pointer ${activeTab === 'reformen' ? 'bg-bg-alt text-ink border border-border border-b-bg-alt' : 'text-ink-muted hover:text-ink'}`}>
             <GitCompare className="w-4 h-4 inline mr-1.5" />Reform-Diffs
           </button>
+          <button onClick={() => setActiveTab('fragen')}
+            className={`px-4 py-2.5 rounded-t-xl text-sm font-medium transition-colors cursor-pointer ${activeTab === 'fragen' ? 'bg-bg-alt text-ink border border-border border-b-bg-alt' : 'text-ink-muted hover:text-ink'}`}>
+            <MessageCircle className="w-4 h-4 inline mr-1.5" />Frage stellen
+          </button>
         </div>
       </div>
 
@@ -282,6 +291,98 @@ function App() {
               Diese Diffs basieren auf den simulierten Gesetzentwürfen aus <a href="https://mikelninh.github.io/deutschland-2030/" className="text-gold hover:underline" target="_blank">Deutschland 2030</a>.
             </p>
           </div>
+        </main>
+      ) : activeTab === 'fragen' ? (
+        /* ── FRAGEN TAB (RAG) ── */
+        <main className="max-w-3xl mx-auto px-5 py-8">
+          <div className="text-center mb-8">
+            <p className="text-sm text-gold font-bold uppercase tracking-widest mb-2">Rechts-Assistent</p>
+            <h2 className="font-display text-3xl mb-3">Stelle eine Frage zum deutschen Recht</h2>
+            <p className="text-ink-muted max-w-md mx-auto">Die Antwort basiert auf echten Gesetzestexten — keine Halluzinationen, nur Fakten. Keine Rechtsberatung.</p>
+          </div>
+
+          {/* Example questions */}
+          <div className="flex flex-wrap gap-2 justify-center mb-8">
+            {[
+              'Kann mein Vermieter mich einfach rausschmeißen?',
+              'Wie lange darf ich am Tag arbeiten?',
+              'Was passiert wenn ich jemanden online beleidige?',
+              'Wann darf ich in Rente gehen?',
+              'Darf mein Chef mich in der Schwangerschaft kündigen?',
+            ].map(q => (
+              <button key={q} onClick={() => setChatQuestion(q)}
+                className="px-3 py-2 rounded-xl text-sm bg-card border border-border text-ink-muted hover:text-gold hover:border-gold/30 cursor-pointer transition-colors">
+                {q}
+              </button>
+            ))}
+          </div>
+
+          {/* Input */}
+          <div className="relative mb-8">
+            <input type="text" value={chatQuestion} onChange={e => setChatQuestion(e.target.value)}
+              onKeyDown={e => {
+                if (e.key === 'Enter' && chatQuestion.trim()) {
+                  setChatLoading(true)
+                  setChatAnswer('')
+                  setChatSources([])
+                  askLegalQuestion(chatQuestion).then(result => {
+                    setChatAnswer(result.answer)
+                    setChatSources(result.sources)
+                    setChatLoading(false)
+                  })
+                }
+              }}
+              placeholder="z.B. 'Wie hoch ist die Mieterhöhung maximal?'"
+              className="w-full pl-5 pr-14 py-4 rounded-2xl border border-border bg-card text-lg shadow-sm focus:outline-none focus:border-gold focus:shadow-md transition-all"
+            />
+            <button onClick={() => {
+              if (chatQuestion.trim()) {
+                setChatLoading(true)
+                setChatAnswer('')
+                setChatSources([])
+                askLegalQuestion(chatQuestion).then(result => {
+                  setChatAnswer(result.answer)
+                  setChatSources(result.sources)
+                  setChatLoading(false)
+                })
+              }
+            }} className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-gold text-white rounded-xl hover:bg-gold/90 transition-colors cursor-pointer">
+              <Send className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Answer */}
+          {chatLoading && (
+            <div className="bg-card rounded-2xl p-8 border border-border text-center text-ink-muted">
+              Suche in den Gesetzen und formuliere Antwort...
+            </div>
+          )}
+          {chatAnswer && (
+            <div className="bg-card rounded-2xl border border-border overflow-hidden">
+              <div className="p-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <Scale className="w-5 h-5 text-gold" />
+                  <p className="font-display text-lg">Antwort</p>
+                </div>
+                <p className="text-ink-soft leading-relaxed whitespace-pre-wrap">{chatAnswer}</p>
+              </div>
+              {chatSources.length > 0 && (
+                <div className="p-4 bg-bg-alt border-t border-border">
+                  <p className="text-xs font-bold text-ink-muted uppercase tracking-widest mb-2">Quellen (echte Gesetzestexte)</p>
+                  <div className="flex flex-wrap gap-2">
+                    {chatSources.map((s, i) => (
+                      <span key={i} className="text-xs bg-card px-2 py-1 rounded border border-border text-ink-muted">
+                        {s.law} — {s.section}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+              <div className="p-3 bg-gold-light border-t border-gold/10 text-center">
+                <p className="text-xs text-gold">⚠️ Dies ist keine Rechtsberatung. Bei konkreten Rechtsfragen wende dich an einen Anwalt.</p>
+              </div>
+            </div>
+          )}
         </main>
       ) : (
       /* ── GESETZE TAB ── */
