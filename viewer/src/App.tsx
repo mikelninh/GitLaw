@@ -339,40 +339,110 @@ function App() {
 
           {/* Example questions — personalized */}
           <div className="flex flex-wrap gap-2 justify-center mb-6">
-            {(selectedPersona === 'mieter' ? [
-              'Kann mein Vermieter die Miete erhöhen?',
-              'Meine Heizung ist kaputt — darf ich die Miete kürzen?',
-              'Mein Vermieter will Eigenbedarf anmelden',
-            ] : selectedPersona === 'schwanger' ? [
-              'Darf mein Chef mich kündigen?',
-              'Wie lange habe ich Mutterschutz?',
-              'Wie viel Elterngeld bekomme ich?',
-            ] : selectedPersona === 'arbeitnehmer' ? [
-              'Wie lange darf ich am Tag arbeiten?',
-              'Mein Chef will mich kündigen — was tun?',
-              'Wann kann ich in Rente gehen?',
-            ] : selectedPersona === 'student' ? [
-              'Was passiert wenn ich schwarzfahre?',
-              'Jemand beleidigt mich online — was tun?',
-              'Baue ich als Student Rente auf?',
-            ] : selectedPersona === 'arbeitslos' ? [
-              'Wie viel Bürgergeld bekomme ich?',
-              'Kann das Jobcenter mein Bürgergeld kürzen?',
-              'Darf ich dazuverdienen?',
-            ] : selectedPersona === 'migrant' ? [
-              'Welchen Aufenthaltstitel brauche ich?',
-              'Kann ich meine Familie nachholen?',
-              'Darf ich arbeiten?',
-            ] : selectedPersona === 'vermieter' ? [
-              'Wie kündige ich wegen Eigenbedarf?',
-              'Darf ich die Miete erhöhen?',
-              'Mein Mieter zahlt nicht — was tun?',
-            ] : [
+            {({
+              student: [
+                'Was passiert wenn ich schwarzfahre?',
+                'Jemand beleidigt mich online — was tun?',
+                'Baue ich als Student Rente auf?',
+                'Kann mein WG-Vermieter mich rausschmeißen?',
+                'Muss ich GEZ zahlen als Student?',
+                'Ich wurde beim Klauen erwischt — was droht mir?',
+              ],
+              arbeitnehmer: [
+                'Wie lange darf ich am Tag arbeiten?',
+                'Mein Chef will mich kündigen — was tun?',
+                'Wann kann ich in Rente gehen?',
+                'Habe ich Recht auf Homeoffice?',
+                'Mein Arbeitgeber zahlt mein Gehalt nicht — was nun?',
+                'Wie viel Urlaub steht mir gesetzlich zu?',
+              ],
+              selbststaendig: [
+                'Muss ich mich selbst krankenversichern?',
+                'Welche Steuern zahle ich als Freelancer?',
+                'Mein Auftraggeber zahlt nicht — was tun?',
+                'Bin ich scheinselbstständig?',
+                'Muss ich in die Rentenversicherung einzahlen?',
+                'Brauche ich ein Gewerbe oder bin ich Freiberufler?',
+              ],
+              elternteil: [
+                'Wie viel Kindergeld steht mir zu?',
+                'Wie lange habe ich Elternzeit?',
+                'Kann ich Kinderbetreuungskosten von der Steuer absetzen?',
+                'Wer entscheidet über die Schule meines Kindes nach Trennung?',
+                'Wie funktioniert das Ehegattensplitting?',
+                'Mein Kind hat in der Schule jemanden verletzt — hafte ich?',
+              ],
+              alleinerziehend: [
+                'Wie viel Unterhalt steht meinem Kind zu?',
+                'Der Vater zahlt keinen Unterhalt — was tun?',
+                'Bekomme ich Unterhaltsvorschuss vom Staat?',
+                'Habe ich Anspruch auf Wohngeld?',
+                'Welche Steuervorteile habe ich als Alleinerziehende?',
+                'Kann ich die Kita-Kosten von der Steuer absetzen?',
+              ],
+              rentner: [
+                'Wie hoch ist meine Rente?',
+                'Darf ich als Rentner dazuverdienen?',
+                'Muss ich als Rentner Steuern zahlen?',
+                'Ich kann mir meine Medikamente nicht leisten — gibt es Hilfe?',
+                'Meine Rente reicht nicht — bekomme ich Grundsicherung?',
+                'Wie funktioniert die Witwenrente?',
+              ],
+              mieter: [
+                'Kann mein Vermieter die Miete erhöhen?',
+                'Meine Heizung ist kaputt — darf ich die Miete kürzen?',
+                'Mein Vermieter will Eigenbedarf anmelden',
+                'Wer zahlt die Reparatur — ich oder der Vermieter?',
+                'Darf mein Vermieter einfach in meine Wohnung?',
+                'Meine Nebenkostenabrechnung ist zu hoch — was tun?',
+              ],
+              vermieter: [
+                'Wie kündige ich wegen Eigenbedarf?',
+                'Darf ich die Miete erhöhen?',
+                'Mein Mieter zahlt nicht — was tun?',
+                'Welche Schönheitsreparaturen muss der Mieter machen?',
+                'Muss ich die Kaution verzinsen?',
+                'Wie setze ich Modernisierungskosten auf die Miete um?',
+              ],
+              azubi: [
+                'Darf mein Ausbilder mich kündigen?',
+                'Wie viele Überstunden darf ich als Azubi machen?',
+                'Muss mein Betrieb mich nach der Ausbildung übernehmen?',
+                'Ich werde im Betrieb nur als billige Arbeitskraft benutzt — ist das erlaubt?',
+                'Wie viel Urlaub habe ich als Azubi?',
+                'Kann ich meine Ausbildung vorzeitig beenden?',
+              ],
+              migrant: [
+                'Welchen Aufenthaltstitel brauche ich?',
+                'Kann ich meine Familie nachholen?',
+                'Darf ich arbeiten?',
+                'Wie lasse ich meinen Berufsabschluss anerkennen?',
+                'Kann ich die deutsche Staatsbürgerschaft beantragen?',
+                'Ich werde wegen meiner Herkunft diskriminiert — was tun?',
+              ],
+              schwanger: [
+                'Darf mein Chef mich kündigen?',
+                'Wie lange habe ich Mutterschutz?',
+                'Wie viel Elterngeld bekomme ich?',
+                'Darf ich in der Schwangerschaft Überstunden machen?',
+                'Kann ich Elternzeit und Teilzeit kombinieren?',
+                'Was passiert mit meinem Job wenn ich 2 Jahre Elternzeit nehme?',
+              ],
+              arbeitslos: [
+                'Wie viel Bürgergeld bekomme ich?',
+                'Kann das Jobcenter mein Bürgergeld kürzen?',
+                'Darf ich dazuverdienen?',
+                'Ich habe Schulden — wird mein Bürgergeld gepfändet?',
+                'Muss ich jeden Job annehmen den das Jobcenter vorschlägt?',
+                'Wie beantrage ich Wohngeld?',
+              ],
+            }[selectedPersona || ''] || [
               'Kann mein Vermieter mich rausschmeißen?',
               'Wie lange darf ich am Tag arbeiten?',
               'Was passiert bei Online-Beleidigung?',
               'Wann kann ich in Rente gehen?',
               'Darf mein Chef mich kündigen?',
+              'Was sind meine Grundrechte?',
             ]).map(q => (
               <button key={q} onClick={() => setChatQuestion(q)}
                 className="px-3 py-2 rounded-xl text-sm bg-card border border-border text-ink-muted hover:text-gold hover:border-gold/30 cursor-pointer transition-colors">
