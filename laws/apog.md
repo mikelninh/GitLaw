@@ -1,0 +1,480 @@
+# Gesetz über das Apothekenwesen
+
+**Abkürzung:** ApoG
+**Ausfertigungsdatum:** 1960-08-20
+**Stand:** Neugefasst durch Bek. v. 15.10.1980 I 1993;
+
+---
+
+## Erster Abschnitt: Die Erlaubnis
+
+### § 1
+
+(1) Den Apotheken obliegt die im öffentlichen Interesse gebotene Sicherstellung einer ordnungsgemäßen Versorgung der Bevölkerung mit Arzneimitteln. Arzneimittel im Sinne dieses Gesetzes sind Arzneimittel, die zur Anwendung beim Menschen bestimmt sind, und Tierarzneimittel.
+
+(2) Wer eine Apotheke und bis zu drei Filialapotheken betreiben will, bedarf der Erlaubnis der zuständigen Behörde.
+
+(3) Die Erlaubnis gilt nur für den Apotheker, dem sie erteilt ist, und für die in der Erlaubnisurkunde bezeichneten Räume.
+
+### § 2
+
+(1) Die Erlaubnis ist auf Antrag zu erteilen, wenn der Antragsteller 4a.
+
+1.
+
+2.
+
+3.
+
+4.
+
+5.
+
+6.
+
+7.
+
+8.
+
+(2) Abweichend von Absatz 1 ist einem approbierten Antragsteller, der nicht gemäß § 4 Abs. 1 Nr. 4 der Bundes-Apothekerordnung die pharmazeutische Prüfung im Geltungsbereich dieses Gesetzes bestanden hat, die Erlaubnis nur zu erteilen, wenn sie für eine Apotheke beantragt wird, die seit mindestens drei Jahren betrieben wird.
+
+(2a) Absatz 2 gilt nicht für approbierte Antragsteller, deren förmliche Qualifikationen bereits durch die zuständigen Behörden für andere Zwecke anerkannt wurden und die tatsächlich und rechtmäßig die beruflichen Tätigkeiten eines Apothekers mindestens drei Jahre lang ununterbrochen im Geltungsbereich dieses Gesetzes ausgeübt haben.
+
+(3) Hat der Apotheker nach seiner Approbation oder nach Erteilung eines nach § 4 Abs. 1a bis 1d, 2 oder 3 der Bundes-Apothekerordnung der pharmazeutischen Prüfung gleichwertigen Diploms, Prüfungszeugnisses oder sonstigen Befähigungsnachweises mehr als zwei Jahre lang ununterbrochen keine pharmazeutische Tätigkeit ausgeübt, so ist ihm die Erlaubnis nur zu erteilen, wenn er im letzten Jahr vor der Antragstellung eine solche Tätigkeit mindestens sechs Monate lang wieder in einer in einem Mitgliedstaat der Europäischen Union oder in einem anderen Vertragsstaat des Abkommens über den Europäischen Wirtschaftsraum oder in einem Vertragsstaat, dem Deutschland und die Europäische Union vertraglich einen entsprechenden Rechtsanspruch eingeräumt haben, gelegenen Apotheke oder Krankenhausapotheke ausgeübt hat.
+
+(4) Die Erlaubnis zum Betrieb mehrerer öffentlicher Apotheken ist auf Antrag zu erteilen, wenn
+
+1.
+
+2.
+
+(5) Für den Betrieb mehrerer öffentlicher Apotheken gelten die Vorschriften dieses Gesetzes mit folgenden Maßgaben entsprechend: Soll die Person des Verantwortlichen im Sinne des Satzes 1 Nummer 2 geändert werden, so ist dies der Behörde von dem Betreiber zwei Wochen vor der Änderung schriftlich anzuzeigen. Bei einem unvorhergesehenen Wechsel der Person des Verantwortlichen muss die Änderungsanzeige nach Satz 2 unverzüglich erfolgen.
+
+1.
+
+2.
+
+### § 3
+
+Die Erlaubnis erlischt
+
+1.
+
+2.
+
+3.
+
+4.
+
+5.
+
+### § 4
+
+(1) Die Erlaubnis ist zurückzunehmen, wenn bei ihrer Erteilung eine der Voraussetzungen nach § 2 nicht vorgelegen hat.
+
+(2) Die Erlaubnis ist zu widerrufen, wenn nachträglich eine der Voraussetzungen nach § 2 Abs. 1 Nr. 1, 2, 4, 6 oder 7 weggefallen ist. Die Erlaubnis kann widerrufen werden, wenn der Erlaubnisinhaber nachträglich Vereinbarungen getroffen hat, die gegen § 8 Satz 2 auch in Verbindung mit Satz 4, § 9 Abs. 1, § 10 oder § 11 verstoßen.
+
+### § 5
+
+Wird eine Apotheke ohne Erlaubnis betrieben, so hat die zuständige Behörde die Apotheke zu schließen.
+
+### § 6
+
+Eine Apotheke darf erst eröffnet werden, nachdem die zuständige Behörde bescheinigt hat, daß die Apotheke den gesetzlichen Anforderungen entspricht (Abnahme).
+
+### § 7
+
+Die Erlaubnis verpflichtet zur persönlichen Leitung der Apotheke in eigener Verantwortung. Im Falle des § 2 Abs. 4 obliegen dem vom Betreiber nach § 2 Abs. 5 Nr. 2 benannten Apotheker die Pflichten entsprechend Satz 1; die Verpflichtungen des Betreibers bleiben unberührt. Die persönliche Leitung einer Krankenhausapotheke obliegt dem angestellten Apotheker.
+
+### § 8
+
+Mehrere Personen zusammen können eine Apotheke nur in der Rechtsform einer rechtsfähigen Gesellschaft bürgerlichen Rechts oder einer offenen Handelsgesellschaft betreiben; in diesen Fällen bedürfen alle Gesellschafter der Erlaubnis. Beteiligungen an einer Apotheke in Form einer Stillen Gesellschaft und Vereinbarungen, bei denen die Vergütung für dem Erlaubnisinhaber gewährte Darlehen oder sonst überlassene Vermögenswerte am Umsatz oder am Gewinn der Apotheke ausgerichtet ist, insbesondere auch am Umsatz oder Gewinn ausgerichtete Mietverträge sind unzulässig. Pachtverträge über Apotheken nach § 9, bei denen die Pacht vom Umsatz oder Gewinn abhängig ist, gelten nicht als Vereinbarungen im Sinne des Satzes 2. Die Sätze 1 bis 3 gelten für Apotheken nach § 2 Abs. 4 entsprechend.
+
+> (+++ § 8 Satz 2: § 8 Satz 2 findet auf Beteiligungen und Vereinbarungen, die am 9. August 1980 bestanden und nicht schon wegen der Umgehung der Ziele des Gesetzes unwirksam waren, erst ab 1. Januar 1986 Anwendung (Artikel 2 Abs. 3 des Gesetzes zur Änderung des Gesetzes über das Apothekenwesen vom 4. August 1980 - BGBl. I S. 1142). +++)
+
+### § 9
+
+(1) Die Verpachtung einer Apotheke oder von Apotheken nach § 2 Abs. 4 ist nur in folgenden Fällen zulässig: Die Zulässigkeit der Verpachtung wird nicht dadurch berührt, daß nach Eintritt der in Satz 1 genannten Fälle eine Apotheke innerhalb desselben Ortes, in Städten innerhalb desselben oder in einen angrenzenden Stadtbezirk, verlegt wird oder daß ihre Betriebsräume geändert werden. Handelt es sich im Falle der Verlegung oder der Veränderung der Betriebsräume um eine Apotheke, die nach Satz 1 Nr. 1 verpachtet ist, so bedarf der Verpächter keiner neuen Erlaubnis. § 3 Nr. 5 bleibt unberührt.
+
+1.
+
+2.
+
+3.
+
+(1a) Stirbt der Verpächter vor Ablauf der vereinbarten Pachtzeit, so kann die zuständige Behörde zur Vermeidung unbilliger Härten für den Pächter zulassen, daß das Pachtverhältnis zwischen dem Pächter und dem Erben für die Dauer von höchstens zwölf Monaten fortgesetzt wird.
+
+(2) Der Pächter bedarf der Erlaubnis nach § 1. Der Pachtvertrag darf die berufliche Verantwortlichkeit und Entscheidungsfreiheit des pachtenden Apothekers nicht beeinträchtigen.
+
+(3) Für die Dauer der Verpachtung finden auf die Erlaubnis des Verpächters § 3 Nr. 4, § 4 Abs. 2, soweit sich diese Vorschrift auf § 2 Abs. 1 Nr. 6 bezieht, sowie § 7 Satz 1 keine Anwendung.
+
+(4) Die nach Absatz 2 erteilte Erlaubnis ist zurückzunehmen, wenn bei ihrer Erteilung eine der Voraussetzungen nach Absatz 1 nicht vorgelegen hat; sie ist zu widerrufen, wenn nachträglich eine dieser Voraussetzungen weggefallen ist. § 4 bleibt unberührt.
+
+### § 10
+
+Der Erlaubnisinhaber darf sich nicht verpflichten, bestimmte Arzneimittel ausschließlich oder bevorzugt anzubieten, anzuwenden oder abzugeben oder anderweitig die Auswahl der von ihm abzugebenden Arzneimittel auf das Angebot bestimmter Hersteller oder Händler oder von Gruppen von solchen zu beschränken.
+
+### § 11
+
+(1) Erlaubnisinhaber und Personal von Apotheken dürfen, soweit gesetzlich nichts anderes bestimmt ist, mit Ärzten oder anderen Personen, die sich mit der Behandlung von Krankheiten befassen, oder mit Dritten keine Rechtsgeschäfte vornehmen oder Absprachen treffen, die eine bevorzugte Lieferung bestimmter Arzneimittel, die Zuführung von Patienten, die Zuweisung von Verschreibungen oder die Fertigung von Arzneimitteln ohne volle Angabe der Zusammensetzung zum Gegenstand haben. Dies gilt auch für Rechtsgeschäfte oder Absprachen, die die Zuweisung von Verschreibungen in elektronischer Form oder von elektronischen Zugangsdaten zu Verschreibungen in elektronischer Form zum Gegenstand haben. Die Sätze 1 und 2 gelten auch für Apotheken, die in einem anderen Mitgliedstaat der Europäischen Union oder in einem anderen Vertragsstaat des Abkommens über den Europäischen Wirtschaftsraum liegen, sowie deren Inhaber, Leiter oder Personal, soweit diese Apotheken Patienten in Deutschland mit Arzneimitteln versorgen.
+
+(1a) Es ist für die in Absatz 1 Satz 1 genannten Dritten unzulässig, Verschreibungen, auch Verschreibungen in elektronischer Form oder elektronische Zugangsdaten zu Verschreibungen in elektronischer Form, zu sammeln, an Apotheken zu vermitteln oder weiterzuleiten und dafür für sich oder andere einen Vorteil zu fordern, sich einen Vorteil versprechen zu lassen, anzunehmen oder zu gewähren.
+
+(2) Abweichend von Absatz 1 darf der Inhaber einer Erlaubnis zum Betrieb einer öffentlichen Apotheke auf Grund einer Absprache anwendungsfertige Zytostatikazubereitungen, die im Rahmen des üblichen Apothekenbetriebes hergestellt worden sind, unmittelbar an den anwendenden Arzt abgeben.
+
+(2a) Abweichend von Absatz 1 sind Absprachen und Vereinbarungen mit einer ärztlichen Einrichtung, die auf die Behandlung von Gerinnungsstörungen bei Hämophilie spezialisiert ist, zur Organisation des Notfallvorrats nach § 43 Absatz 3a des Arzneimittelgesetzes sowie zur unmittelbaren Abgabe der Arzneimittel zur spezifischen Therapie von Gerinnungsstörungen bei Hämophilie an den anwendenden Arzt zulässig. Die Organisation des Notfallvorrats kann auch durch eine Krankenhausapotheke sichergestellt werden; in diesem Fall darf die Krankenhausapotheke im Rahmen der Notfallversorgung Arzneimittel zur spezifischen Therapie von Gerinnungsstörungen bei Hämophilie auch an Patienten oder Einrichtungen der Krankenversorgung abgeben.
+
+(3) Der Inhaber einer Erlaubnis zum Betrieb einer Krankenhausapotheke darf auf Anforderung des Inhabers einer Erlaubnis zum Betrieb einer öffentlichen Apotheke die im Rahmen seiner Apotheke hergestellten anwendungsfertigen Zytostatikazubereitungen an diese öffentliche Apotheke oder auf Anforderung des Inhabers einer Erlaubnis zum Betrieb einer anderen Krankenhausapotheke an diese Krankenhausapotheke abgeben. Dies gilt entsprechend für den Inhaber einer Erlaubnis zum Betrieb einer öffentlichen Apotheke für die Abgabe der in Satz 1 genannten Arzneimittel an eine Krankenhausapotheke oder an eine andere öffentliche Apotheke. Eines Vertrages nach § 14 Abs. 3 oder 4 bedarf es nicht.
+
+(4) Im Falle einer bedrohlichen übertragbaren Krankheit, deren Ausbreitung eine sofortige und das übliche Maß erheblich überschreitende Bereitstellung von spezifischen Arzneimitteln erforderlich macht,
+
+a)
+
+b)
+
+(5) Stellt das Bundesministerium für Gesundheit nach § 79 Absatz 5 Satz 5 bis 7 des Arzneimittelgesetzes fest, dass ein Versorgungsmangel der Bevölkerung mit Arzneimitteln, die zur Vorbeugung oder Behandlung lebensbedrohlicher Erkrankungen benötigt werden, vorliegt, kann die zuständige Behörde im Einzelfall eine Abgabe eines in der Bekanntmachung der Feststellung genannten Arzneimittels entsprechend Absatz 3 Satz 1 und 2 gestatten.
+
+### § 11a
+
+Die Erlaubnis zum Versand von apothekenpflichtigen Arzneimitteln gemäß § 43 Absatz 1 Satz 1 des Arzneimittelgesetzes und gemäß den §§ 43 und 44a Absatz 2 des Tierarzneimittelgesetzes ist dem Inhaber einer Erlaubnis nach § 2 auf Antrag zu erteilen, wenn er schriftlich oder elektronisch versichert, dass er im Falle der Erteilung der Erlaubnis folgende Anforderungen erfüllen wird: Im Falle des elektronischen Handels mit zur Anwendung beim Menschen bestimmten apothekenpflichtigen Arzneimitteln sowie nicht verschreibungspflichtigen Tierarzneimitteln gilt Satz 1 mit der Maßgabe, dass die Apotheke auch über die dafür geeigneten Einrichtungen und Geräte verfügen wird.
+
+1.
+
+2.
+
+a)
+
+b)
+
+c)
+
+d)
+
+3.
+
+a)
+
+b)
+
+c)
+
+d)
+
+e)
+
+f)
+
+### § 11b
+
+(1) Die Erlaubnis nach § 11a ist zurückzunehmen, wenn bei ihrer Erteilung eine der Voraussetzungen nach § 11a nicht vorgelegen hat.
+
+(2) Die Erlaubnis ist zu widerrufen, wenn nachträglich eine der Voraussetzungen nach § 11a weggefallen ist. Die Erlaubnis kann widerrufen werden, wenn Tatsachen die Annahme rechtfertigen, dass der Erlaubnisinhaber entgegen einer vollziehbaren Anordnung der zuständigen Behörde die Apotheke nicht den Anforderungen des § 11a Satz 1 Nr. 1 bis 3, Satz 2 oder einer Rechtsverordnung nach § 21 entsprechend betreibt.
+
+(3) Wird der Versandhandel ohne Erlaubnis betrieben, gilt § 5 entsprechend.
+
+### § 12
+
+Rechtsgeschäfte, die ganz oder teilweise gegen § 8 Satz 2, § 9 Abs. 1, § 10 oder § 11 verstoßen, sind nichtig.
+
+### § 12a
+
+(1) Der Inhaber einer Erlaubnis zum Betrieb einer öffentlichen Apotheke ist verpflichtet, zur Versorgung von Bewohnern von Heimen im Sinne des § 1 des Heimgesetzes mit Arzneimitteln und apothekenpflichtigen Medizinprodukten mit dem Träger der Heime einen schriftlichen Vertrag zu schließen. Der Vertrag bedarf zu seiner Rechtswirksamkeit der Genehmigung der zuständigen Behörde. Die Genehmigung ist zu erteilen, wenn Nachträgliche Änderungen oder Ergänzungen des Vertrages sind der zuständigen Behörde unverzüglich anzuzeigen.
+
+1.
+
+2.
+
+3.
+
+4.
+
+5.
+
+(2) Die Versorgung ist vor Aufnahme der Tätigkeit der zuständigen Behörde anzuzeigen.
+
+(3) Soweit Bewohner von Heimen sich selbst mit Arzneimitteln und apothekenpflichtigen Medizinprodukten aus öffentlichen Apotheken versorgen, bedarf es keines Vertrages nach Absatz 1.
+
+### § 13
+
+(1) Nach dem Tode des Erlaubnisinhabers dürfen die Erben die Apotheke für längstens 12 Monate durch einen Apotheker verwalten lassen.
+
+(1a) Stirbt der Pächter einer Apotheke vor Ablauf der vereinbarten Pachtzeit, so kann die zuständige Behörde zur Vermeidung unbilliger Härten für den Verpächter zulassen, daß dieser die Apotheke für die Dauer von höchstens zwölf Monaten durch einen Apotheker verwalten läßt.
+
+(1b) Der Verwalter bedarf für die Zeit der Verwaltung einer Genehmigung. Die Genehmigung ist zu erteilen, wenn er die Voraussetzungen des § 2 Abs. 1 Nr. 1 bis 4, 7 und 8 erfüllt.
+
+(2) Die Genehmigung erlischt, wenn der Verwalter nicht mehr die Approbation als Apotheker besitzt. § 4 ist entsprechend anzuwenden.
+
+(3) Der Verwalter ist für die Beachtung der Apothekenbetriebsordnung und der Vorschriften über die Herstellung von Arzneimitteln und den Verkehr mit diesen verantwortlich.
+
+## Zweiter Abschnitt: Krankenhausapotheken,
+Bundeswehrapotheken, Zweigapotheken, Notapotheken
+
+### § 14
+
+(1) Dem Träger eines Krankenhauses ist auf Antrag die Erlaubnis zum Betrieb einer Krankenhausapotheke zu erteilen, wenn er Der Leiter der Krankenhausapotheke oder ein von ihm beauftragter Apotheker hat die Ärzte des Krankenhauses über Arzneimittel zu informieren und zu beraten, insbesondere im Hinblick auf eine zweckmäßige und wirtschaftliche Arzneimitteltherapie. Dies gilt auch insoweit, als die ambulante Versorgung berührt ist.
+
+1.
+
+2.
+
+(2) Die Erlaubnis ist zurückzunehmen, wenn nachträglich bekannt wird, dass bei der Erteilung eine der nach Absatz 1 Satz 1 erforderlichen Voraussetzungen nicht vorgelegen hat. Sie ist zu widerrufen, wenn eine der Voraussetzungen nach Absatz 1 weggefallen ist oder wenn der Erlaubnisinhaber oder eine von ihm beauftragte Person den Bestimmungen dieses Gesetzes, der auf Grund des § 21 erlassenen Rechtsverordnung oder den für die Herstellung von Arzneimitteln oder den Verkehr mit diesen erlassenen Rechtsvorschriften gröblich oder beharrlich zuwiderhandelt. Entsprechend ist hinsichtlich der Genehmigung nach Absatz 5 Satz 1 und 3 zu verfahren, wenn die Voraussetzungen nach Absatz 5 Satz 2 nicht vorgelegen haben oder weggefallen sind.
+
+(3) Wer als Inhaber einer Erlaubnis zum Betrieb einer Krankenhausapotheke nach Absatz 1 beabsichtigt, ein weiteres, nicht von ihm selbst getragenes Krankenhaus mit Arzneimitteln zu versorgen, hat dazu mit dem Träger dieses Krankenhauses einen schriftlichen Vertrag zu schließen.
+
+(4) Wer als Träger eines Krankenhauses beabsichtigt, das Krankenhaus von dem Inhaber einer Erlaubnis zum Betrieb einer Apotheke nach § 1 Abs. 2 oder nach den Gesetzen eines anderen Mitgliedstaates der Europäischen Union oder eines anderen Vertragsstaates des Abkommens über den Europäischen Wirtschaftsraum versorgen zu lassen, hat mit dem Inhaber dieser Erlaubnis einen schriftlichen Vertrag zu schließen. Erfüllungsort für die vertraglichen Versorgungsleistungen ist der Sitz des Krankenhauses. Anzuwendendes Recht ist deutsches Recht.
+
+(5) Der nach Absatz 3 oder 4 geschlossene Vertrag bedarf zu seiner Rechtswirksamkeit der Genehmigung der zuständigen Behörde. Diese Genehmigung ist zu erteilen, wenn sichergestellt ist, dass das Krankenhaus mit einer Apotheke nach Absatz 3 oder 4 einen Vertrag über die Arzneimittelversorgung des Krankenhauses durch diese Apotheke geschlossen hat, der folgende Voraussetzungen erfüllt: Eine Genehmigung der zuständigen Behörde ist auch für die Versorgung eines anderen Krankenhauses durch eine unter derselben Trägerschaft stehende Krankenhausapotheke erforderlich. Für die Erteilung der Genehmigung gilt Satz 2 entsprechend.
+
+1.
+
+2.
+
+3.
+
+4.
+
+5.
+
+6.
+
+(6) Der Leiter der Krankenhausapotheke nach Absatz 1 oder einer Apotheke nach Absatz 4 oder ein von ihm beauftragter Apotheker hat die Arzneimittelvorräte des zu versorgenden Krankenhauses nach Maßgabe der Apothekenbetriebsordnung zu überprüfen und dabei insbesondere auf die einwandfreie Beschaffenheit und ordnungsgemäße Aufbewahrung der Arzneimittel zu achten. Zur Beseitigung festgestellter Mängel hat er eine angemessene Frist zu setzen und deren Nichteinhaltung der für die Apothekenaufsicht zuständigen Behörde anzuzeigen.
+
+(7) Der Leiter der Krankenhausapotheke nach Absatz 1 oder ein von ihm beauftragter Apotheker oder der Leiter einer Apotheke nach Absatz 4 dürfen nur solche Krankenhäuser mit Arzneimitteln versorgen, mit denen rechtswirksame Verträge bestehen oder für deren Versorgung eine Genehmigung nach Absatz 5 Satz 3 erteilt worden ist. Die in Satz 1 genannten Personen dürfen Arzneimittel nur an die einzelnen Stationen und anderen Teileinheiten des Krankenhauses zur Versorgung von Patienten abgeben, die in dem Krankenhaus vollstationär, teilstationär, vor- oder nachstationär (§ 115a des Fünften Buches Sozialgesetzbuch) behandelt, ambulant operiert oder im Rahmen sonstiger stationsersetzender Eingriffe (§ 115b des Fünften Buches Sozialgesetzbuch) oder im Rahmen der Übergangspflege im Krankenhaus nach § 39e des Fünften Buches Sozialgesetzbuch versorgt werden, ferner zur unmittelbaren Anwendung bei Patienten an ermächtigte Ambulanzen des Krankenhauses, insbesondere an Hochschulambulanzen (§ 117 des Fünften Buches Sozialgesetzbuch), psychiatrische Institutsambulanzen (§ 118 des Fünften Buches Sozialgesetzbuch), sozialpädiatrische Zentren (§ 119 des Fünften Buches Sozialgesetzbuch), medizinische Behandlungszentren (§ 119c des Fünften Buches Sozialgesetzbuch) und ermächtigte Krankenhausärzte (§ 116 des Fünften Buches Sozialgesetzbuch) sowie an Patienten im Rahmen der ambulanten Behandlung im Krankenhaus, wenn das Krankenhaus hierzu ermächtigt (§ 116a des Fünften Buches Sozialgesetzbuch) oder berechtigt (§§ 116b und 140a Absatz 3 Satz 2 des Fünften Buches Sozialgesetzbuch) ist. Bei der Entlassung von Patienten nach stationärer oder ambulanter Behandlung im Krankenhaus oder bei Beendigung der Übergangspflege im Krankenhaus nach § 39e des Fünften Buches Sozialgesetzbuch darf an diese die zur Überbrückung benötigte Menge an Arzneimitteln nur abgegeben werden, wenn im unmittelbaren Anschluss an die Behandlung ein Wochenende oder ein Feiertag folgt. Unbeschadet des Satzes 3 können an Patienten, für die die Verordnung häuslicher Krankenpflege nach § 92 Abs. 7 Satz 1 Nr. 3 des Fünften Buches Sozialgesetzbuch vorliegt, die zur Überbrückung benötigten Arzneimittel für längstens drei Tage abgegeben werden. An Beschäftigte des Krankenhauses dürfen Arzneimittel nur für deren unmittelbaren eigenen Bedarf abgegeben werden. Die Versorgung mit Arzneimitteln nach den Sätzen 3 bis 5 umfasst auch Arzneimittel, die verschreibungsfähige Betäubungsmittel sind.
+
+(8) Krankenhäuser im Sinne dieses Gesetzes sind Einrichtungen nach § 2 Nr. 1 des Krankenhausfinanzierungsgesetzes. Diesen stehen hinsichtlich der Arzneimittelversorgung gleich: Die nach Landesrecht bestimmten Träger und Durchführenden des Rettungsdienstes sowie Kur- und Spezialeinrichtungen sind als eine Station im Sinne des Absatzes 7 Satz 2 anzusehen, es sei denn, dass sie in Stationen oder andere Teileinheiten mit unterschiedlichem Versorgungszweck unterteilt sind. Dem Träger einer in Satz 2 genannten Einrichtung darf für diese eine Erlaubnis nach Absatz 1 nicht erteilt werden.
+
+1.
+
+2.
+
+a)
+
+b)
+
+c)
+
+(9) Die Absätze 3, 4, 5 Satz 3 und Absatz 7 Satz 1 bis 3 finden keine Anwendung, soweit es sich um Arzneimittel zur Behandlung einer bedrohlichen übertragbaren Krankheit handelt, deren Ausbreitung eine sofortige und das übliche Maß erheblich überschreitende Bereitstellung von spezifischen Arzneimitteln erforderlich macht, und die von den Gesundheitsbehörden des Bundes oder der Länder oder von diesen benannten Stellen nach § 47 Absatz 1 Nummer 3c des Arzneimittelgesetzes bevorratet oder nach § 21 Absatz 2 Nummer 1c des Arzneimittelgesetzes hergestellt wurden.
+
+### § 15
+
+(1) Im Geschäftsbereich des Bundesministeriums der Verteidigung obliegt die Arzneimittelversorgung den Bundeswehrapotheken.
+
+(2) Das Bundesministerium der Verteidigung regelt unter Berücksichtigung der besonderen militärischen Gegebenheiten in Dienstvorschriften die Errichtung der Bundeswehrapotheken sowie deren Einrichtung und Betrieb. Dabei stellt er sicher, daß die Angehörigen der Bundeswehr hinsichtlich der Arzneimittelversorgung und der Arzneimittelsicherheit nicht anders gestellt sind als Zivilpersonen.
+
+(3) (weggefallen)
+
+### § 16
+
+(1) Tritt infolge Fehlens einer Apotheke ein Notstand in der Arzneimittelversorgung ein, so kann die zuständige Behörde dem Inhaber einer nahe gelegenen Apotheke auf Antrag die Erlaubnis zum Betrieb einer Zweigapotheke erteilen, wenn dieser die dafür vorgeschriebenen Räume nachweist.
+
+(2) Zweigapotheken müssen verwaltet werden. § 13 gilt entsprechend.
+
+(3) Die Erlaubnis nach Absatz 1 soll einem Apotheker nicht für mehr als eine Zweigapotheke erteilt werden.
+
+(4) Die Erlaubnis wird für einen Zeitraum von fünf Jahren erteilt; sie kann erneut erteilt werden.
+
+### § 17
+
+Ergibt sich sechs Monate nach öffentlicher Bekanntmachung eines Notstandes in der Arzneimittelversorgung der Bevölkerung, daß weder ein Antrag auf Betrieb einer Apotheke noch einer Zweigapotheke gestellt worden ist, so kann die zuständige Behörde einer Gemeinde oder einem Gemeindeverband die Erlaubnis zum Betrieb einer Apotheke unter Leitung eines von ihr anzustellenden Apothekers erteilen, wenn diese die nach diesem Gesetz vorgeschriebenen Räume und Einrichtungen nachweisen. Der Apotheker muß die Voraussetzungen des § 2 Abs. 1 Nr. 1 bis 4 und 7 erfüllen.
+
+## Dritter Abschnitt: Notdienstpauschale, Apothekenbetriebsordnung und Ausnahmeregelungen für Bundespolizei und Bereitschaftspolizei
+
+### § 18
+
+(1) Der im Vereinsregister des Amtsgerichts Frankfurt am Main unter der Registernummer 4485 eingetragene Deutsche Apothekerverband e. V. errichtet und verwaltet einen Fonds zur Förderung der Sicherstellung des Notdienstes von Apotheken. Er nimmt die Aufgaben im Zusammenhang mit der Errichtung des Fonds sowie der Vereinnahmung und Verteilung der Mittel, einschließlich des Erlasses und der Vollstreckung der hierzu notwendigen Verwaltungsakte, als Beliehener nach Maßgabe der §§ 19 und 20 wahr. Der Deutsche Apothekerverband e. V. ist Anordnungsbehörde im Sinne des § 3 des Verwaltungsvollstreckungsgesetzes und Vollzugsbehörde im Sinne des § 7 des Verwaltungsvollstreckungsgesetzes.
+
+(2) Der Deutsche Apothekerverband e. V. hat den Fonds nach Absatz 1 Satz 1 getrennt vom sonstigen Vermögen des Vereins zu errichten und zu verwalten. Die ihm bei der Errichtung und Verwaltung des Fonds entstehenden Ausgaben werden aus den Einnahmen des Fonds gedeckt. Die Finanzmittel sind bei der Bundesrepublik Deutschland Finanzagentur GmbH anzulegen. Der Fonds hat zur Sicherstellung seiner Zahlungsfähigkeit im jeweils laufenden Quartal Betriebsmittel in angemessener Höhe vorzuhalten, die aus Einnahmen des Fonds zu bilden sind. Zur anfänglichen Aufbringung der Betriebsmittel können Darlehen in angemessener Höhe aufgenommen werden, die bis spätestens zum 31. Dezember 2013 aus den Einnahmen des Fonds zurückzuzahlen sind.
+
+(3) Die Rechts- und Fachaufsicht über den Deutschen Apothekerverband e. V. bei der Wahrnehmung der Aufgaben nach Absatz 1 führt das Bundesministerium für Gesundheit. Der Deutsche Apothekerverband e. V. hat der Aufsichtsbehörde auf Verlangen die Rechnungslegung des Fonds offenzulegen.
+
+### § 19
+
+(1) Die Apotheken sind verpflichtet, nach jedem Quartalsende innerhalb von zehn Tagen nach Bekanntgabe des Bescheids nach Absatz 2 Satz 1 für alle im Quartal abgegebenen Packungen verschreibungspflichtiger Fertigarzneimittel zur Anwendung bei Menschen den Anteil des Festzuschlags nach § 3 Absatz 1 Satz 1 der Arzneimittelpreisverordnung, der der Förderung der Sicherstellung des Notdienstes von Apotheken dient, an den nach § 18 Absatz 1 Satz 1 errichteten Fonds abzuführen. Soweit die Apotheken für die Abrechnung mit den Krankenkassen Rechenzentren in Anspruch nehmen, haben sie die auf die abgerechneten sowie die auf die sonstigen abgegebenen Arzneimittel entfallenden Anteile nach Satz 1 über die Rechenzentren abzuführen.
+
+(2) Der Deutsche Apothekerverband e. V. setzt gegenüber der Apotheke für jedes Quartal die abzuführenden Beträge fest. Widerspruch und Klage gegen die Festsetzung haben keine aufschiebende Wirkung. Der Beliehene ist Widerspruchsbehörde im Sinne des § 73 Absatz 1 Satz 2 Nummer 2 der Verwaltungsgerichtsordnung. Für ein Vorverfahren werden Gebühren und Auslagen erhoben. Für die vollständige oder teilweise Zurückweisung eines Widerspruchs wird eine Gebühr bis zu 500 Euro erhoben. Bei Rücknahme eines Widerspruchs nach Beginn seiner sachlichen Bearbeitung, jedoch vor deren Beendigung, ist die Gebühr nach Satz 5 anteilig zu erheben. Hat der Widerspruch nur deshalb keinen Erfolg, weil die Verletzung einer Verfahrens- oder Formvorschrift nach § 45 des Verwaltungsverfahrensgesetzes unbeachtlich ist, wird keine Gebühr erhoben. Über die Gebühren nach den Sätzen 5 und 6 entscheidet die Widerspruchsbehörde nach billigem Ermessen. Für Klagen gegen den Beliehenen ist das Verwaltungsgericht örtlich zuständig, in dessen Bezirk er seinen Sitz hat.
+
+(3) Die Rechenzentren nach Absatz 1 Satz 2 übermitteln dem Deutschen Apothekerverband e. V. im Wege elektronischer Datenübertragung oder maschinell lesbar auf Datenträgern vollständige Angaben zur Anzahl der im jeweiligen Quartal von den einzelnen Apotheken zu Lasten der gesetzlichen Krankenversicherung abgegebenen Packungen verschreibungspflichtiger Fertigarzneimittel zur Anwendung bei Menschen. Die Apotheken haben dem Deutschen Apothekerverband e. V. die Gesamtzahl der von ihnen im jeweiligen Quartal abgegebenen Packungen verschreibungspflichtiger Fertigarzneimittel zur Anwendung bei Menschen, die nicht zu Lasten der gesetzlichen Krankenversicherung verordnet oder nicht als Sachleistung abgegeben wurden, im Wege einer Selbsterklärung mitzuteilen. Form und Inhalt der Erklärung nach Satz 2 werden vom Deutschen Apothekerverband e. V. festgelegt und auf seiner Webseite bekanntgemacht. Die Übermittlung der Daten hat jeweils innerhalb von vier Wochen nach Quartalsende zu erfolgen. Die Daten dürfen nur für die Zwecke nach Absatz 2 Satz 1 verarbeitet werden. Abweichend von Satz 5 hat der Deutsche Apothekerverband e. V. dem Bundesministerium für Gesundheit auf Anforderung zum Zwecke der Entwicklung und Prüfung von Maßnahmen zur Sicherstellung einer flächendeckenden Versorgung der Bevölkerung mit Arzneimitteln durch öffentliche Apotheken geeignete Auswertungen dieser ihm zur Anzahl abgegebener Packungen verschreibungspflichtiger Fertigarzneimittel übermittelten Daten in einer Form zur Verfügung zu stellen, die keine Rückschlüsse auf einzelne Apotheken zulässt.
+
+(4) Der Deutsche Apothekerverband e. V. erstattet aus den Einnahmen des Fonds den Rechenzentren die notwendigen Kosten für die Übermittlung der Angaben nach Absatz 3 Satz 1 in nachgewiesener Höhe. Abweichend von Satz 1 kann der Deutsche Apothekerverband e. V. mit den Rechenzentren eine pauschale Kostenerstattung vereinbaren.
+
+(5) Soweit Apotheken keine Rechenzentren in Anspruch nehmen, erfolgt die Abführung sämtlicher Anteile nach Absatz 1 Satz 1 unmittelbar durch die Apotheke aufgrund einer Selbsterklärung. Absatz 2 und Absatz 3 Satz 3 bis 5 gelten entsprechend.
+
+(6) Der Deutsche Apothekerverband e. V. stellt sicher, dass die Apotheken ihren Verpflichtungen nach den Absätzen 1, 3 und 5 nachkommen. Bei unterlassener oder bei Anhaltspunkten für eine unvollständige Abführung der Anteile nach Absatz 1 kann er die zur Ermittlung der abzuführenden Beträge notwendigen Überprüfungen der Apotheken sowie der in Anspruch genommenen Rechenzentren vornehmen. Die mit der Überprüfung beauftragten Personen können insbesondere die Betriebs- und Geschäftsräume zu den üblichen Geschäftszeiten betreten, die erforderlichen Auskünfte verlangen sowie in begründeten Fällen Geschäftsunterlagen, einschließlich elektronischer Dateien, einsehen und hiervon Abschriften oder Kopien fertigen. Der zur Auskunft Verpflichtete kann die Auskunft auf solche Fragen verweigern, deren Beantwortung ihn selbst oder einen seiner in § 383 Absatz 1 Nummer 1 bis 3 der Zivilprozessordnung bezeichneten Angehörigen der Gefahr strafrechtlicher Verfolgung oder eines Verfahrens nach dem Gesetz über Ordnungswidrigkeiten aussetzen würde. Die Apotheken und die Rechenzentren haben die Beauftragten des Deutschen Apothekerverbandes e. V. bei der Überprüfung zu unterstützen.
+
+(7) Kommt eine Apotheke ihrer Verpflichtung zur Selbsterklärung nach Absatz 3 Satz 2 nicht nach oder liegen tatsächliche Anhaltspunkte für die Unrichtigkeit der Angaben der abgegebenen Selbsterklärung vor, kann der Deutsche Apothekerverband e. V. die Anzahl der in der betreffenden Apotheke abgegebenen Packungen verschreibungspflichtiger Arzneimittel, die nicht zu Lasten der gesetzlichen Krankenversicherung oder nicht als Sachleistung abgegeben wurden, schätzen. Dabei sind alle Umstände zu berücksichtigen, die für die Schätzung von Bedeutung sind. Für die Schätzung wird eine Gebühr bis zu 500 Euro erhoben. Absatz 2 Satz 3 bis 9 gilt entsprechend.
+
+### § 20
+
+(1) Apotheken, die von der zuständigen Behörde zur Dienstbereitschaft im Notdienst durchgehend in der Zeit von spätestens 20 Uhr bis mindestens 6 Uhr des Folgetages bestimmt wurden und den Notdienst vollständig erbracht haben, erhalten hierfür einen pauschalen Zuschuss.
+
+(2) Die für die Einteilung zur Dienstbereitschaft im Notdienst zuständige Behörde teilt dem Deutschen Apothekerverband e. V. für ihren Zuständigkeitsbereich nach jedem Quartalsende spätestens bis zum Ende des folgenden Monats die Apotheken mit, die im jeweiligen Quartal Notdienste nach Absatz 1 erbracht haben, sowie die Anzahl der jeweils erbrachten Notdienste.
+
+(3) Der Deutsche Apothekerverband e. V. setzt gegenüber den Apotheken für jedes Quartal den pauschalen Zuschuss nach Absatz 1 fest und zahlt ihn für jeden nach Absatz 2 mitgeteilten Notdienst an die Apotheken aus dem Fonds nach § 18 Absatz 1 Satz 1 nach jedem Quartalsende spätestens bis zum Ablauf des folgenden Quartals aus. § 19 Absatz 2 Satz 3 bis 9 gilt entsprechend. Der Zuschuss errechnet sich als Quotient aus der um die Ausgaben nach § 18 Absatz 2 Satz 2, einschließlich der nach § 19 Absatz 4 zu erstattenden Kosten, und die Beträge zur Bildung von Betriebsmitteln nach § 18 Absatz 2 Satz 4 und zur Erfüllung der Verpflichtungen aus Darlehen nach § 18 Absatz 2 Satz 5 bereinigten Summe der beim Fonds vorhandenen Anteile nach § 19 Absatz 1 und der Anzahl der nach Absatz 2 mitgeteilten Notdienste.
+
+### § 20a
+
+(1) Das Bundesministerium für Gesundheit wird ermächtigt, auf Antrag oder mit Zustimmung des Beliehenen die Beleihung des Deutschen Apothekerverbandes e. V. um weitere Aufgaben, die über den nach § 18 Absatz 1 Satz 1 errichteten Fonds abzuwickeln sind, zu erweitern. Diese Aufgaben müssen sich aus gesetzlichen Vorschriften oder aus vertraglichen Vereinbarungen zwischen dem Deutschen Apothekerverband e. V. und den maßgeblichen Spitzenorganisationen der Kostenträger auf Bundesebene ergeben und die Honorierung und die Erstattung von Kosten der Apotheken betreffen. Die Wahrnehmung dieser Aufgaben durch den Beliehenen umfasst den Erlass und die Vollstreckung der hierzu notwendigen Verwaltungsakte, deren Rücknahme und Widerruf. Der Beliehene hat die notwendige Gewähr für die ordnungsgemäße Erfüllung der ihm übertragenen Aufgaben zu bieten.
+
+(2) Der Beleihungsbescheid nach Absatz 1 Satz 1 regelt das Nähere zu den Aufgaben und ihrer Wahrnehmung. Er kann insbesondere Abläufe festlegen, Fristen bestimmen und den Beliehenen zur Sicherstellung der Erfüllung der Mitwirkungspflichten nach den Sätzen 3 und 4 ermächtigen und verpflichten. Die Inhaber einer Erlaubnis nach § 1 Absatz 2 haben dem Beliehenen auf Anforderung die zur Begründung ihres Vergütungs- oder Erstattungsanspruchs oder die zur Abwicklung entsprechender Zahlungen notwendigen Nachweise vorzulegen, Angaben zu machen und Auskünfte zu erteilen, soweit dies für die ordnungsgemäße Wahrnehmung der dem Beliehenen nach Absatz 1 Satz 1 übertragenen weiteren Aufgaben erforderlich ist. Solange notwendige Nachweise nicht vorliegen oder Auskünfte nicht erteilt werden, können vorgesehene Zahlungen aus dem Fonds ganz oder teilweise zurückbehalten werden, nachdem der Leistungsberechtigte auf diese Folge schriftlich hingewiesen worden ist und seiner Mitwirkungspflicht nicht innerhalb einer ihm gesetzten angemessenen Frist nachgekommen ist.
+
+(3) Auf die Wahrnehmung der nach Absatz 1 übertragenen Aufgaben findet § 18 Absatz 1 Satz 3, Absatz 2 und 3 Anwendung, § 18 Absatz 2 Satz 5 mit der Maßgabe, dass aufgenommene Darlehen bis spätestens sechs Monate nach Bestandskraft des Beleihungsbescheides nach Absatz 1 Satz 1 zurückzuzahlen sind. Der Deutsche Apothekerverband e. V. hat eine getrennte Rechnungslegung des nach § 18 Absatz 1 Satz 1 errichteten Fonds und eine getrennte Zuordnung der Verwaltungskosten für die verschiedenen Aufgaben sicherzustellen. Widerspruch und Klage gegen die Festsetzungsbescheide des Beliehenen haben keine aufschiebende Wirkung. Die bei dem nach § 18 Absatz 1 Satz 1 errichteten Fonds zur Auszahlung des pauschalen Zuschusses nach § 20 vorhandenen Daten zu den Inhabern einer Erlaubnis nach § 1 Absatz 2, zu den Apothekenbetriebsstätten, zur Anzahl der abgegebenen Packungen verschreibungspflichtiger Fertigarzneimittel zur Anwendung bei Menschen und zur Abwicklung von Zahlungen dürfen durch den Deutschen Apothekerverband e. V. auch in Abweichung von § 19 Absatz 3 Satz 5 zur Erfüllung der ihm nach Absatz 1 Satz 1 übertragenen weiteren Aufgaben verwendet werden, soweit dies für die Erfüllung dieser Aufgaben erforderlich ist.
+
+### § 20b
+
+Der Deutsche Apothekerverband e. V. hat den Schaden zu ersetzen, der der Bundesrepublik Deutschland durch eine rechtswidrige und vorsätzliche oder fahrlässige Verletzung seiner Pflichten bei der Ausübung der Aufgaben und Befugnisse nach den §§ 18 bis 20a entsteht.
+
+### § 21
+
+(1) Das Bundesministerium für Gesundheit wird ermächtigt, durch Rechtsverordnung mit Zustimmung des Bundesrates eine Apothekenbetriebsordnung zu erlassen, um einen ordnungsgemäßen Betrieb der Apotheken, Zweigapotheken und Krankenhausapotheken zu gewährleisten und um die Qualität der dort herzustellenden und abzugebenden Arzneimittel sicherzustellen. Hierbei sind die von der Weltgesundheitsorganisation aufgestellten Grundregeln für die Herstellung von Arzneimitteln und die Sicherung ihrer Qualität, die Vorschriften des Arzneibuches und die allgemein anerkannten Regeln der pharmazeutischen Wissenschaft zu berücksichtigen. Mit Zustimmung des Bundesrates können durch die Apothekenbetriebsordnung nach Satz 1 Regelungen über die Organisation, Ausstattung und Mitwirkung von Apotheken bei der Durchführung von nach dem Fünften Buch Sozialgesetzbuch vereinbarten Versorgungsformen erlassen werden. Weiterhin wird das Bundesministerium ermächtigt, durch Rechtsverordnung mit Zustimmung des Bundesrates Regelungen insbesondere zur Gestaltung einschließlich des Betreibens und der Qualitätssicherung von Informationen in elektronischen Medien, die in Verbindung mit dem elektronischen Handel mit Arzneimitteln verwendet werden, zu treffen.
+
+(2) In der Apothekenbetriebsordnung nach Absatz 1 Satz 1 können Regelungen getroffen werden über Bei den Regelungen nach Satz 1 Nummer 8 zum Warenlager der Apotheken ist insbesondere sicherzustellen, dass auch im Falle vorübergehender Lieferengpässe oder Mehrbedarfe eine ordnungsgemäße Versorgung insbesondere mit Arzneimitteln, die in Krankenhäusern zur intensivmedizinischen Behandlung benötigt werden, sowie mit Antibiotika und Onkologika gewährleistet ist.
+
+1.
+
+1a.
+
+1b.
+
+1c.
+
+2.
+
+3.
+
+4.
+
+5.
+
+6.
+
+7.
+
+8.
+
+9.
+
+10.
+
+11.
+
+12.
+
+13.
+
+(3) In der Rechtsverordnung nach Absatz 1 Satz 4 können insbesondere folgende Regelungen zur Gestaltung einschließlich des Betreibens und der Qualitätssicherung von Informationen in elektronischen Medien getroffen werden, die in Verbindung mit dem elektronischen Handel mit Arzneimitteln verwendet werden:
+
+1.
+
+2.
+
+3.
+
+4.
+
+5.
+
+6.
+
+7.
+
+8.
+
+9.
+
+10.
+
+11.
+
+12.
+
+13.
+
+14.
+
+15.
+
+(4) Soweit Apotheken eine Erlaubnis zur Herstellung von Arzneimitteln nach den Vorschriften des Arzneimittelgesetzes haben, gelten für den Apothekenbetrieb die Apothekenbetriebsordnung, für den Herstellungsbetrieb die entsprechenden Vorschriften des Arzneimittelrechts.
+
+### § 22
+
+Einrichtungen, die der Arzneimittelversorgung der Angehörigen der Bundespolizei und der Bereitschaftspolizeien der Länder im Rahmen der freien Heilfürsorge sowie ihrer Tierbestände dienen, unterliegen nicht den Vorschriften dieses Gesetzes.
+
+## Vierter Abschnitt: Straf- und Bußgeldbestimmungen
+
+### § 23
+
+Wer vorsätzlich oder fahrlässig ohne die erforderliche Erlaubnis oder Genehmigung eine Apotheke, Krankenhausapotheke oder Zweigapotheke betreibt oder verwaltet, wird mit Freiheitsstrafe bis zu sechs Monaten oder mit Geldstrafe bis zu einhundertachtzig Tagessätzen bestraft.
+
+### § 24
+
+(weggefallen)
+
+### § 25
+
+(1) Ordnungswidrig handelt, wer vorsätzlich oder fahrlässig
+
+1.
+
+2.
+
+2a.
+
+3.
+
+4.
+
+5.
+
+(2) Ordnungswidrig handelt auch, wer vorsätzlich oder fahrlässig einer nach § 21 erlassenen Rechtsverordnung zuwiderhandelt, soweit sie für einen bestimmten Tatbestand auf diese Bußgeldvorschrift verweist.
+
+(3) Die Ordnungswidrigkeit kann in den Fällen des Absatzes 1 Nr. 2 und 2a mit einer Geldbuße bis zu zwanzigtausend Euro, in den Fällen des Absatzes 1 Nr. 1, 3 und 4 und des Absatzes 2 mit einer Geldbuße bis zu fünftausend Euro geahndet werden.
+
+## Fünfter Abschnitt: Schluß- und Übergangsbestimmungen
+
+### § 26
+
+(1) Personalkonzessionen, Realkonzessionen und sonstige persönliche Betriebserlaubnisse, die vor dem Inkrafttreten dieses Gesetzes erteilt worden sind, gelten als Erlaubnisse im Sinne des § 1. Dies gilt auch für Berechtigungen, deren Inhaber Gebietskörperschaften sind; die Apotheken können verpachtet werden; § 9 findet keine Anwendung.
+
+(2) Die nach bisherigem Recht erteilten Erlaubnisse zum Betrieb einer Krankenhausapotheke gelten in ihrem bisherigen Umfange weiter. Die nach bisherigem Recht erteilten Erlaubnisse zum Betrieb einer Zweigapotheke gelten als Erlaubnisse im Sinne des § 16.
+
+### § 27
+
+(1) Inhaber von anderen als den in § 26 bezeichneten Apothekenbetriebsberechtigungen bedürfen zum Betreiben der Apotheke einer Erlaubnis nach § 1. Soweit sie beim Inkrafttreten dieses Gesetzes eine Apotheke auf Grund einer solchen Berechtigung betreiben, gilt die Erlaubnis als erteilt.
+
+(2) Soweit eine solche Berechtigung nach Maßgabe der Verleihungsurkunde und der bis zum Inkrafttreten dieses Gesetzes geltenden landesrechtlichen Bestimmungen von einer Person, die nicht eine der Voraussetzungen des § 2 Abs. 1 Nr. 3 erfüllt, genutzt werden durfte, verbleibt es dabei. Die Nutzung hat durch Verpachtung zu erfolgen; § 9 findet keine Anwendung; § 13 bleibt unberührt.
+
+(3) Inhabern einer solchen Berechtigung wird eine Erlaubnis zum Betrieb einer anderen Apotheke, die keine Zweigapotheke ist, nur erteilt, wenn sie auf die bisherige Berechtigung verzichten.
+
+### § 28
+
+(1) Bei verpachteten Apotheken gilt die dem Pächter verliehene Betriebserlaubnis oder die Bestätigung als Pächter als Erlaubnis nach § 1.
+
+(2) Am 1. Mai 1960 bestehende Verträge über die Verpachtung oder Verwaltung einer Apotheke, die den §§ 9 und 13 nicht entsprechen, bleiben bis zum Ablauf der vereinbarten Vertragsdauer in Kraft, wenn sie nicht zu einem früheren Zeitpunkt ihre Gültigkeit verlieren.
+
+### § 28a
+
+Eine vor dem 1. Januar 2026 ausgestellte Erlaubnis zum Versand von apothekenpflichtigen Arzneimitteln gemäß § 43 Absatz 1 Satz 1 des Arzneimittelgesetzes gilt auch als Erlaubnis für den Versand von apothekenpflichtigen Tierarzneimitteln gemäß den §§ 43 und 44a Absatz 2 des Tierarzneimittelgesetzes.
+
+### § 29
+
+(weggefallen)
+
+### § 30
+
+Auf ärztliche und tierärztliche Abgabestellen für Arzneimittel (Hausapotheken) finden die Vorschriften dieses Gesetzes keine Anwendung.
+
+### § 31 — (Außerkrafttreten)
+
+-
+
+### § 32
+
+(weggefallen)
+
+### § 33 — (Inkrafttreten)
+
+-
+
+### Anlage
+
+(weggefallen)

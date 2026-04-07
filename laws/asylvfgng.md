@@ -1,0 +1,36 @@
+# Gesetz zur Neuregelung des Asylverfahrens
+
+**Abkürzung:** AsylVfGNG
+**Ausfertigungsdatum:** 1992-06-26
+
+---
+
+### Eingangsformel
+
+Der Bundestag hat mit der Mehrheit seiner Mitglieder und mit Zustimmung des Bundesrates das folgende Gesetz beschlossen:
+
+### Art 1 — Asylverfahrensgesetz (AsylVfG)
+
+-
+
+### (XXXX) Art 2 und Art 3 — (weggefallen)
+
+-
+
+### Art 4 — Verweisung auf aufgehobene Vorschriften
+
+Soweit in Gesetzen und Verordnungen auf Vorschriften verwiesen wird, die durch dieses Gesetz außer Kraft treten oder aufgehoben werden, treten an ihre Stelle die entsprechenden Vorschriften dieses Gesetzes.
+
+### Art 5 — Übergangsregelungen
+
+A.
+
+B.
+
+### Art 6
+
+-
+
+### Art 7 — Inkrafttreten
+
+Dieses Gesetz tritt am 1. Juli 1992 in Kraft.

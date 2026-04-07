@@ -1,0 +1,113 @@
+# Sechste Verordnung über zwingende Arbeitsbedingungen für die Pflegebranche
+
+**Abkürzung:** PflegeArbbV 6
+**Ausfertigungsdatum:** 2023-11-28
+**Stand:** V aufgeh. durch § 6 dieser V mWv 1.7.2026
+
+---
+
+### Eingangsformel
+
+Auf Grund des § 11 Absatz 1 in Verbindung mit Absatz 2 und 3 des Arbeitnehmer-Entsendegesetzes, von denen Absatz 1 durch Artikel 1 Nummer 3 des Gesetzes vom 22. November 2019 (BGBl. I S. 1756) geändert worden ist, verordnet das Bundesministerium für Arbeit und Soziales, nachdem es den in den Geltungsbereich dieser Rechtsverordnung fallenden Arbeitgebern und Arbeitnehmerinnen und Arbeitnehmern sowie den Parteien von Tarifverträgen, die zumindest teilweise in den fachlichen Geltungsbereich dieser Rechtsverordnung fallen, und den paritätisch besetzten Kommissionen, die auf der Grundlage kirchlichen Rechts Arbeitsbedingungen für den Bereich kirchlicher Arbeitgeber in der Pflegebranche festlegen, Gelegenheit zur schriftlichen Stellungnahme gegeben hat:
+
+### § 1 — Geltungsbereich
+
+(1) Diese Verordnung gilt für Pflegebetriebe. Dies sind Betriebe und selbstständige Betriebsabteilungen, die überwiegend ambulante, teilstationäre oder stationäre Pflegeleistungen oder ambulante Krankenpflegeleistungen für Pflegebedürftige im Sinne des § 10 Satz 3 des Arbeitnehmer-Entsendegesetzes erbringen. Pflegebetriebe im Sinne des Satzes 1 sind auch Betreuungsdienste nach § 71 Absatz 1a des Elften Buches Sozialgesetzbuch. Keine Pflegebetriebe im Sinne des Satzes 1 sind Einrichtungen, in denen die Leistungen zur medizinischen Vorsorge, zur medizinischen Rehabilitation, zur Teilhabe am Arbeitsleben oder am Leben in der Gemeinschaft, die schulische Ausbildung oder die Erziehung kranker oder behinderter Menschen im Vordergrund des Zweckes der Einrichtung stehen, sowie Krankenhäuser.
+
+(2) Diese Verordnung gilt vorbehaltlich der Absätze 3 und 4 für alle Arbeitnehmerinnen und Arbeitnehmer. Sie gilt nicht für
+
+1.
+
+2.
+
+3.
+
+4.
+
+(3) Diese Verordnung gilt nicht für Arbeitnehmerinnen und Arbeitnehmer der Pflegebetriebe in folgenden Bereichen:
+
+1.
+
+2.
+
+3.
+
+4.
+
+5.
+
+6.
+
+7.
+
+8.
+
+9.
+
+(4) Abweichend von Absatz 3 gilt diese Verordnung für Arbeitnehmerinnen und Arbeitnehmer in den in Absatz 3 genannten Bereichen, soweit sie im Rahmen der von ihnen auszuübenden Tätigkeiten in einem Umfang von mindestens 25 Prozent ihrer vereinbarten Arbeitszeit gemeinsam mit Bezieherinnen und Beziehern von Pflegeleistungen tagesstrukturierend, aktivierend, betreuend oder pflegend tätig werden.
+
+(5) Diese Verordnung gilt für das Gebiet der Bundesrepublik Deutschland.
+
+### § 2 — Mindestentgelt
+
+(1) Das Mindestentgelt beträgt Für Pflegekräfte mit einer mindestens einjährigen Ausbildung und einer entsprechenden Tätigkeit beträgt das Mindestentgelt abweichend von Satz 1 Für Pflegefachkräfte beträgt das Mindestentgelt abweichend von den Sätzen 1 und 2
+
+1.
+
+2.
+
+3.
+
+1.
+
+2.
+
+3.
+
+1.
+
+2.
+
+3.
+
+(2) Pflegekräfte mit einer mindestens einjährigen Ausbildung im Sinne des Absatz 1 Satz 2 sind diejenigen Arbeitnehmerinnen und Arbeitnehmer, die eine Ausbildung zu einem Assistenz- und Helferberuf oder eine vergleichbare Ausbildung in der Pflege abgeschlossen haben, wobei die Ausbildungsdauer mindestens den Vorgaben der Nummer 2 der Eckpunkte für die in Länderzuständigkeit liegenden Ausbildungen zu Assistenz- und Helferberufen in der Pflege (BAnz AT 17.02.2016 B3) entspricht. Die Ausbildung kann im Ausland abgeschlossen worden sein. Eine entsprechende Tätigkeit liegt vor, wenn die Arbeitnehmerin oder der Arbeitnehmer jedenfalls auch Tätigkeiten nach Nummer 1 Buchstabe g der in Satz 1 genannten Eckpunkte auf Anweisung des Arbeitgebers durchführt.
+
+(3) Pflegefachkräfte im Sinne des Absatz 1 Satz 3 sind Arbeitnehmerinnen und Arbeitnehmer, die über eine Qualifikation verfügen, die sie zur Ausübung von Tätigkeiten gemäß § 4 des Pflegeberufegesetzes berechtigt.
+
+(4) Das Mindestentgelt nach Absatz 1 wird auch für Wegezeiten zwischen mehreren aufzusuchenden Patientinnen oder Patienten sowie gegebenenfalls zwischen diesen und den Geschäftsräumen des Pflegebetriebs gezahlt.
+
+(5) Für Zeiten des Bereitschaftsdienstes wird ein Mindestentgelt gemäß den nachstehenden Grundsätzen gezahlt. Die monatlich gezahlte Bruttovergütung geteilt durch die geleisteten Arbeitsstunden einschließlich der Bereitschaftsstunden muss stets mindestens die jeweilige Höhe des allgemeinen gesetzlichen Mindestlohns nach § 1 Absatz 2 Satz 1 des Mindestlohngesetzes in Verbindung mit der auf der Grundlage des § 11 Absatz 1 Satz 2 des Mindestlohngesetzes jeweils erlassenen Verordnung erreichen. Bereitschaftsdienste leisten Arbeitnehmerinnen und Arbeitnehmer, die sich auf Anordnung des Arbeitgebers außerhalb ihrer regelmäßigen Arbeitszeit an einer vom Arbeitgeber bestimmten Stelle aufhalten, um im Bedarfsfall die Arbeit aufzunehmen, wenn zu erwarten ist, dass zwar Arbeit anfällt, erfahrungsgemäß aber die Zeit ohne Arbeitsleistung mindestens 75 Prozent beträgt. Sie sind im Dienstplan zu hinterlegen. Zum Zwecke der Entgeltberechnung kann die Zeit des Bereitschaftsdienstes einschließlich der geleisteten Arbeit auf der Grundlage einer kollektivrechtlichen oder einer schriftlichen einzelvertraglichen Regelung zu mindestens 40 Prozent als Arbeitszeit bewertet werden. Zeiten des Bereitschaftsdienstes, deren Umfang über 64 Stunden im Kalendermonat hinausgeht, werden mit dem Mindestentgelt nach Absatz 1 vergütet. Dies gilt auch, wenn die Arbeitsleistung innerhalb eines Bereitschaftsdienstes mehr als 25 Prozent umfasst.
+
+(6) Von dieser Verordnung werden Zeiten der Rufbereitschaft nicht erfasst. Rufbereitschaft im Sinne des Satzes 1 leisten Arbeitnehmerinnen und Arbeitnehmer, die sich auf Anordnung des Arbeitgebers außerhalb der regelmäßigen Arbeitszeit an einer dem Arbeitgeber anzuzeigenden Stelle aufhalten, um auf Abruf die Arbeit aufzunehmen. Das Vorliegen von Rufbereitschaft in diesem Sinne wird nicht dadurch ausgeschlossen, dass Arbeitnehmerinnen und Arbeitnehmer vom Arbeitgeber mit einem Mobiltelefon oder einem vergleichbaren technischen Hilfsmittel ausgestattet sind. Im Falle einer Arbeitsaufnahme wird die geleistete Arbeitszeit einschließlich der hierfür erforderlichen Wegezeiten mindestens in Höhe des Mindestentgelts nach Absatz 1 vergütet.
+
+(7) Die Vorschriften des Arbeitszeitgesetzes bleiben unberührt.
+
+### § 3 — Fälligkeit
+
+(1) Das Mindestentgelt nach § 2 Absatz 1 wird für die vertraglich vereinbarte Arbeitszeit spätestens am letzten Bankarbeitstag des Kalendermonats fällig, in dem die Arbeitsleistung zu erbringen war. Im Übrigen wird das Mindestentgelt spätestens am letzten Bankarbeitstag des jeweiligen Folgekalendermonats fällig.
+
+(2) Über die vertraglich vereinbarte Arbeitszeit hinausgehende Arbeitsstunden können abweichend von Absatz 1 auf der Grundlage schriftlicher einzelvertraglicher oder kollektivrechtlicher Vereinbarungen bis zu einer Gesamthöhe von 225 Arbeitsstunden in ein Arbeitszeitkonto eingestellt werden. Im Falle einer Überschreitung der in Satz 1 genannten Obergrenze gilt für die Fälligkeit des Anspruchs auf Vergütung dieser Arbeitsstunden die jeweilige Regelung nach Absatz 1. Der Ausgleich dieser Arbeitsstunden kann durch Auszahlung des darauf entfallenden Mindestentgelts oder durch bezahlte Freizeitgewährung erfolgen.
+
+(3) Die Obergrenze von 225 Arbeitsstunden nach Absatz 2 Satz 1 gilt nicht, wenn der Ausgleich der über die vertraglich vereinbarte Arbeitszeit hinausgehenden Arbeitsstunden zum Ende eines Ausgleichszeitraums mit einer Länge von höchstens 16 Monaten in einer Arbeitszeitkontenvereinbarung vereinbart ist. Der Anspruch auf die Vergütung von Arbeitsstunden, die in ein Arbeitszeitkonto eingestellt wurden und nicht innerhalb des Ausgleichszeitraums nach Satz 1 ausgeglichen wurden, wird mit Ablauf des für diese Arbeitsstunden geltenden Ausgleichszeitraums fällig.
+
+(4) Vereinbarungen über Wertguthaben auf der Grundlage des Altersteilzeitgesetzes, der §§ 7b und 7e des Vierten Buches Sozialgesetzbuch oder einer im Hinblick auf den Schutz der Arbeitnehmerinnen und Arbeitnehmer vergleichbaren ausländischen Regelung bleiben unberührt.
+
+(5) Im Falle der Beendigung des Arbeitsverhältnisses hat der Arbeitgeber die zum Zeitpunkt der Beendigung nicht ausgeglichenen Arbeitsstunden spätestens in dem auf die Beendigung des Arbeitsverhältnisses folgenden Kalendermonat abzugelten.
+
+(6) Die Vorschriften des Arbeitszeitgesetzes bleiben unberührt.
+
+### § 4 — Mehrurlaub
+
+(1) Die Arbeitnehmerin oder der Arbeitnehmer hat Anspruch auf zusätzlichen bezahlten Erholungsurlaub, der, ausgehend von einer jahresdurchschnittlichen Verteilung der regelmäßigen wöchentlichen Arbeitszeit auf fünf Tage, je Kalenderjahr neun Tage beträgt (Mehrurlaub). Verteilt sich die regelmäßige Arbeitszeit im Jahresdurchschnitt auf mehr oder weniger als fünf Tage in der Woche, erhöht oder verringert sich der Anspruch auf Mehrurlaub entsprechend.
+
+(2) Soweit tarifliche, betriebliche, arbeitsvertragliche oder sonstige Regelungen insgesamt einen über den gesetzlichen Erholungsurlaub hinausgehenden Anspruch auf bezahlten Urlaub vorsehen, entsteht der Anspruch auf Mehrurlaub nicht. Gesetzlicher Erholungsurlaub ist der bezahlte Urlaub nach dem Bundesurlaubsgesetz sowie nach anderen Gesetzen.
+
+(3) Im Übrigen gelten für den Mehrurlaub die gesetzlichen Bestimmungen.
+
+### § 5 — Ausschlussfrist
+
+Die Ansprüche auf das Mindestentgelt verfallen, wenn sie nicht innerhalb von zwölf Monaten nach ihrer Fälligkeit in Textform geltend gemacht werden.
+
+### § 6 — Inkrafttreten, Außerkrafttreten
+
+Diese Verordnung tritt am 1. Februar 2024 in Kraft und mit Ablauf des 30. Juni 2026 außer Kraft.

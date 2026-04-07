@@ -1,0 +1,83 @@
+# Anordnung zur Übertragung disziplinarrechtlicher Zuständigkeiten und Befugnisse im Geschäftsbereich des Bundesministeriums der Verteidigung
+
+**Abkürzung:** BMVgBDGAnO
+**Ausfertigungsdatum:** 2013-06-07
+**Stand:** Zuletzt geändert durch Art. 1 AnO v. 4.6.2025 I Nr. 141
+
+---
+
+### Eingangsformel
+
+Nach § 33 Absatz 5, § 34 Absatz 2 Satz 2, § 42 Absatz 1 Satz 2 und § 84 Satz 2 des Bundesdisziplinargesetzes vom 9. Juli 2001 (BGBl. I S. 1510) ordnet das Bundesministerium der Verteidigung an:
+
+### § 1
+
+Die Befugnis zur Kürzung der Dienstbezüge bis zum Höchstmaß nach § 33 Absatz 3 Nummer 1 des Bundesdisziplinargesetzes in der bis zum 31. März 2024 geltenden Fassung und nach § 34 Absatz 2 Nummer 1 des Bundesdisziplinargesetzes in der ab dem 1. April 2024 geltenden Fassung wird für den jeweiligen Kommando- oder Geschäftsbereich übertragen:
+
+1.
+
+a)
+
+b)
+
+c)
+
+d)
+
+2.
+
+a)
+
+b)
+
+3.
+
+a)
+
+b)
+
+c)
+
+d)
+
+e)
+
+f)
+
+g)
+
+h)
+
+4.
+
+5.
+
+6.
+
+7.
+
+8.
+
+9.
+
+10.
+
+11.
+
+### § 2
+
+(1) Die Befugnis zur Erhebung der Disziplinarklage nach § 34 Absatz 2 Satz 1 des Bundesdisziplinargesetzes in der bis zum 31. März 2024 geltenden Fassung wird den in § 1 genannten Dienstvorgesetzten für bis zu diesem Zeitpunkt eingeleitete Disziplinarverfahren übertragen.
+
+(2) Die Befugnis zum Aussprechen der Zurückstufung und der Entfernung aus dem Beamtenverhältnis nach § 34 Absatz 4 Halbsatz 1 des Bundesdisziplinargesetzes wird für ab dem 1. April 2024 eingeleitete Disziplinarverfahren den in § 1 genannten Dienstvorgesetzten übertragen.
+
+### § 3
+
+Die Zuständigkeit zum Erlass des Widerspruchsbescheids nach § 42 Absatz 1 des Bundesdisziplinargesetzes wird der nächsthöheren Behörde übertragen. Ist die nächsthöhere Behörde das Bundesministerium der Verteidigung, erlässt die Behörde, die die angefochtene Entscheidung erlassen hat, den Widerspruchsbescheid.
+
+### § 4
+
+Die Disziplinarbefugnisse gegenüber Ruhestandsbeamtinnen und Ruhestandsbeamten nach § 84 Satz 1 des Bundesdisziplinargesetzes werden der Präsidentin oder dem Präsidenten des Bundesamtes für das Personalmanagement der Bundeswehr übertragen. Für vor dem Ruhestand eingeleitete Disziplinarverfahren werden diese Disziplinarbefugnisse der bzw. dem in § 1 genannten Dienstvorgesetzten übertragen, die bzw. der vor Eintritt der Beamtin oder des Beamten in den Ruhestand disziplinarrechtlich zuständig gewesen ist.
+
+### § 5
+
+Diese Anordnung tritt am 1. Juli 2013 in Kraft. Gleichzeitig tritt die Anordnung zur Übertragung disziplinarrechtlicher Zuständigkeiten und Befugnisse im Geschäftsbereich des Bundesministeriums der Verteidigung vom 16. Januar 2002 (BGBl. I S. 613), die durch die Anordnung vom 15. August 2002 (BGBl. I S. 3668) geändert worden ist, außer Kraft.

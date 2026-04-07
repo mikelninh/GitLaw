@@ -1,0 +1,78 @@
+# Verordnung nach § 2 Abs. 6 des Aufbauhilfefondsgesetzes
+
+**Abkürzung:** AufbauhfV
+**Ausfertigungsdatum:** 2003-06-24
+
+---
+
+### Eingangsformel
+
+Auf Grund des § 2 Abs. 6 des Aufbauhilfefondsgesetzes vom 19. September 2002 (BGBl. I S. 3651, 3652) verordnet die Bundesregierung:
+
+### § 1 — Mittelverteilung
+
+(1) Die dem Fonds nach § 4 Abs. 2 des Aufbauhilfefondsgesetzes zugewiesenen Mittel verteilen sich nach folgenden Maßgaben:
+
+1.
+
+2.
+
+3.
+
+4.
+
+(2) Die Mittel des Fonds verteilen sich - mit Ausnahme des Pauschalbetrages nach § 2 Abs. 4 des Aufbauhilfefondsgesetzes, soweit dieser zur Finanzierung eigener Länderprogramme und -maßnahmen eingesetzt wird - auf die einzelnen Maßnahmen nach § 2 Abs. 2 des Aufbauhilfefondsgesetzes nach Maßgabe des gemäß § 5 des Aufbauhilfefondsgesetzes aufzustellenden Wirtschaftsplans.
+
+### § 2 — Mittelverwendung
+
+(1) Nach der Verteilung der Mittel des Fonds im Rahmen seines Wirtschaftsplans obliegt die Entscheidung über die Verwendung der Mittel nach § 2 Abs. 2 Nr. 1 und 2 des Aufbauhilfefondsgesetzes den in § 1 genannten Ländern und den beauftragten Stellen (bewilligende Stellen). Über die Verwendung der Mittel nach § 2 Abs. 2 Nr. 3 des Aufbauhilfefondsgesetzes und für Maßnahmen, die ausschließlich vom Bund aus Fondsmitteln zu finanzieren sind, entscheidet der Bund.
+
+(2) Die Förderfähigkeit der einzelnen kofinanzierten Maßnahmen nach § 2 Abs. 5 in Verbindung mit § 2 Abs. 2 Nr. 1 und 2 des Aufbauhilfefondsgesetzes setzt grundsätzlich den Abschluss einer entsprechenden Verwaltungsvereinbarung zwischen dem Bund und den in § 1 genannten Ländern voraus. Ausnahmen bedürfen der Zustimmung des Bundesministeriums der Finanzen.
+
+(3) Die Einleitung von Schadensbeseitigungsmaßnahmen vor der Bewilligung von Mitteln schließt die Förderfähigkeit dieser Maßnahmen nicht aus. Maßnahmen zur unmittelbaren Gefahrenabwehr oder Schadensbegrenzung vor dem Einsetzen des Hochwassers im August 2002 sind förderfähig. Maßnahmen zur unmittelbaren Gefahrenabwehr oder Schadensbegrenzung im Sinne von § 2 Abs. 2 Nr. 1 des Aufbauhilfefondsgesetzes sind allerdings nur dann förderfähig, wenn sie über das hinausgehen, was üblicherweise zum Schutz vor Hochwasser erforderlich gewesen wäre.
+
+(4) Als Unternehmen im Sinne des § 2 Abs. 2 Nr. 1 des Aufbauhilfefondsgesetzes gelten - unabhängig von ihrer Rechtsform - alle selbständig ausgeübten beruflichen Betätigungen.
+
+(5) Die Mittel sind nach Maßgabe folgender Grundsätze zu gewähren:
+
+1.
+
+2.
+
+3.
+
+### § 3 — Zweckentsprechende Mittelverwendung, Rückforderung
+
+(1) Die Länder sind für die bestimmungsgemäße Verwendung der Mittel des Fonds verantwortlich, soweit nicht der Bund für seine eigenen aus dem Fonds finanzierten Programme und Maßnahmen hierfür die Verantwortung trägt.
+
+(2) Die jeweils zuständigen obersten Landesbehörden unterrichten die jeweils für die Maßnahmen und Programme zuständigen Bundesressorts über die zweckentsprechende Inanspruchnahme und Verwendung der Mittel (Verwendungsbericht). Der Verwendungsbericht enthält Angaben zu den jährlichen Gesamtausgaben und ihrer Verteilung auf die jeweiligen Programme und Einzelmaßnahmen. Weitere Details können auch in den Verwaltungsvereinbarungen nach § 2 Abs. 2 geregelt werden. Einschlägige Prüfungsmitteilungen der Rechnungsprüfungsbehörden der Länder sind mitzuteilen.
+
+(3) Der Bund kann das Auskunftsbedürfnis präzisieren und weitergehende Nachweise verlangen.
+
+(4) Die Länder unterrichten nach Abschluss ihrer verwaltungsmäßigen Prüfung der ordnungsgemäßen Verwendung der Mittel und nach Erstattung der Verwendungsberichte nach Absatz 2 das Bundesministerium der Finanzen bis zum 1. August des Folgejahres in Form eines zusammenfassenden Berichts. Der Bericht soll eine kurzgefasste Darstellung über die Anzahl und Durchführung der Programme und den ihnen zuzuordnenden Maßnahmen, deren Ergebnisse sowie die Höhe der für Programme und Maßnahmen zugewiesenen und verausgabten Mittel des Fonds enthalten. Soweit einschlägige Prüfungsbemerkungen der jeweiligen obersten Rechnungsprüfungsbehörden vorliegen, sind diese ebenfalls mitzuteilen.
+
+(5) Die bewilligenden Stellen haben im Rahmen der Verwaltungsverfahrensvorschriften die Bewilligung aufzuheben und bewilligte Mittel zugunsten des Fonds zurückzufordern, wenn festgestellt wird, dass sie zweckwidrig verwendet wurden oder dass sie zum Ausgleich des Schadens nicht erforderlich waren. Entsprechendes gilt für die Hilfen, die der Bund oder ein Land im Vorgriff auf das Flutopfersolidaritätsgesetz geleistet hat. Die Rückforderung hat auch dann zu erfolgen, wenn und soweit von dritter Seite Leistungen zum Ausgleich des Schadens erbracht worden sind und die Summe aus diesen Leistungen und den bewilligten Fondsmitteln den finanziellen Gesamtaufwand zur Beseitigung des entstandenen Hochwasserschadens übersteigt.
+
+(6) Rückzahlungen von Fondsmitteln fließen den jeweiligen Ausgabetiteln des Wirtschaftsplans des Fonds zu.
+
+### § 4 — Mittelanforderung
+
+(1) Soweit nicht der Bund eigene Maßnahmen und Programme aus den Fondsmitteln zu finanzieren hat und unbeschadet der Regelung des § 4 Abs. 4 Satz 2 des Aufbauhilfefondsgesetzes fordern die Länder für sich und ihre beauftragten Stellen im Rahmen der Ansätze des Wirtschaftsplans des Fonds und nach Maßgabe des Verteilungsschlüssels nach § 1 Abs. 1 die Mittel bedarfsgerecht entsprechend der Abwicklung der Schadensbeseitigungsmaßnahmen beim Bund an.
+
+(2) Überzahlungen oder nicht bedarfsgerecht abgeforderte Mittel sind unverzüglich an den Fonds zurückzuzahlen.
+
+### § 5 — Liquidität des Fonds
+
+Die Liquidität des Fonds ist durch den Bund auf seine Kosten sicherzustellen. Eine Zwischenanlage eventuell überschießender Mittel zugunsten des Fonds erfolgt nicht.
+
+### § 6 — Fondsverwaltung
+
+Die Verwaltung des Fonds obliegt dem Bundesministerium der Finanzen; dieses stellt den erforderlichen Wirtschaftsplan zu seiner Bewirtschaftung auf.
+
+### § 7 — Inkrafttreten
+
+Diese Verordnung tritt mit Wirkung vom 1. Januar 2003 in Kraft.
+
+### Schlussformel
+
+Der Bundesrat hat zugestimmt.

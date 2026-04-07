@@ -1,0 +1,320 @@
+# Verordnung über die Prüfung zum anerkannten Fortbildungsabschluss mit der Bezeichnung Bachelor Professional im Notariat
+
+**Abkürzung:** BAProNotFPrV
+**Ausfertigungsdatum:** 2025-09-03
+
+---
+
+### Eingangsformel
+
+Das Bundesministerium für Bildung, Familie, Senioren, Frauen und Jugend verordnet aufgrund des § 53 Absatz 1 und 2, des § 53a Absatz 1 Nummer 2 und des § 53c des Berufsbildungsgesetzes in der Fassung der Bekanntmachung vom 16. April 2025 (BGBl. 2025 I Nr. 117; 2025 I Nr. 129) in Verbindung mit § 1 Absatz 1 des Zuständigkeitsanpassungsgesetzes vom 16. August 2002 (BGBl. I S. 3165), das durch Artikel 7 der Verordnung vom 31. August 2015 (BGBl. I S. 1474) geändert worden ist, und dem Organisationserlass vom 6. Mai 2025 (BGBl. 2025 I Nr. 131) im Einvernehmen mit dem Bundesministerium der Justiz und für Verbraucherschutz nach Anhörung des Hauptausschusses des Bundesinstituts für Berufsbildung:
+
+### § 1 — Ziel der Prüfung und Bezeichnung des Fortbildungsabschlusses
+
+(1) Mit der erfolgreich abgelegten Prüfung nach dieser Verordnung wird die auf einen beruflichen Aufstieg abzielende Erweiterung der beruflichen Handlungsfähigkeit auf der zweiten beruflichen Fortbildungsstufe der höherqualifizierenden Berufsbildung nachgewiesen.
+
+(2) Die Prüfung wird von der nach dem Berufsbildungsgesetz zuständigen Stelle durchgeführt.
+
+(3) Durch die Prüfung ist festzustellen, ob die zu prüfende Person in der Lage ist, nach § 53c Absatz 2 Satz 1 des Berufsbildungsgesetzes Fach- und Führungsfunktionen zu übernehmen, in denen zu verantwortende Leitungsprozesse von Organisationen eigenständig gesteuert und eigenständig ausgeführt und Mitarbeitende geführt werden. Im Einzelnen umfasst dies insbesondere folgende Tätigkeiten:
+
+1.
+
+2.
+
+3.
+
+4.
+
+5.
+
+6.
+
+7.
+
+8.
+
+(4) Für den Erwerb der in Absatz 3 bezeichneten Fertigkeiten, Kenntnisse und Fähigkeiten bedarf es in der Regel eines Lernumfangs von insgesamt mindestens 1 200 Stunden. Der Lerninhalt bestimmt sich nach den Qualifikationsinhalten der in den §§ 4 bis 8 genannten Prüfungsbereiche.
+
+(5) Die erfolgreich abgelegte Prüfung führt zum anerkannten Fortbildungsabschluss mit der Bezeichnung „Bachelor Professional im Notariat“.
+
+### § 2 — Zulassungsvoraussetzungen
+
+(1) Zur Prüfung ist zuzulassen, wer Folgendes nachweist:
+
+1.
+
+2.
+
+3.
+
+4.
+
+5.
+
+6.
+
+7.
+
+(2) Die Berufspraxis nach Absatz 1 Nummer 3 bis 7 muss wesentliche Bezüge zu den in § 1 Absatz 3 genannten Tätigkeiten aufweisen. Die Dauer und der Inhalt der Berufspraxis sind in geeigneter Weise nachzuweisen.
+
+(3) Abweichend von Absatz 1 ist zur Prüfung auch zuzulassen, wer durch Vorlage von Zeugnissen nachweist oder auf andere Weise glaubhaft macht, eine berufliche Handlungsfähigkeit erworben zu haben, die mit den Zulassungsvoraussetzungen nach Absatz 1 vergleichbar ist.
+
+### § 3 — Inhalt der Prüfung
+
+Die Prüfung umfasst folgende Prüfungsbereiche:
+
+1.
+
+2.
+
+3.
+
+4.
+
+5.
+
+### § 4 — Prüfungsbereich „Liegenschafts- und Grundbuchrecht“
+
+Im Prüfungsbereich „Liegenschafts- und Grundbuchrecht“ hat die zu prüfende Person nachzuweisen, dass sie in der Lage ist, komplexe Vorgänge in diesem Bereich rechtlich zu erfassen und zu beurteilen sowie notarielle Urkunden im Einklang mit den Vorgaben des Berufsrechts und des Beurkundungsrechts zu entwerfen, zu vollziehen und abzurechnen. In diesem Rahmen wird aus folgenden Qualifikationsinhalten geprüft:
+
+1.
+
+2.
+
+3.
+
+4.
+
+5.
+
+6.
+
+7.
+
+8.
+
+### § 5 — Prüfungsbereich „Familien- und Erbrecht sowie Internationales Privatrecht“
+
+Im Prüfungsbereich „Familien- und Erbrecht sowie Internationales Privatrecht“ hat die zu prüfende Person nachzuweisen, dass sie in der Lage ist, komplexe Vorgänge in diesem Bereich rechtlich zu erfassen und zu beurteilen sowie notarielle Urkunden im Einklang mit den Vorgaben des Berufsrechts und des Beurkundungsrechts zu entwerfen, zu vollziehen und abzurechnen. In diesem Rahmen wird aus folgenden Qualifikationsinhalten geprüft:
+
+1.
+
+2.
+
+3.
+
+4.
+
+5.
+
+6.
+
+7.
+
+8.
+
+### § 6 — Prüfungsbereich „Handels- und Gesellschaftsrecht“
+
+Im Prüfungsbereich „Handels- und Gesellschaftsrecht“ hat die zu prüfende Person nachzuweisen, dass sie in der Lage ist, komplexe Vorgänge in diesem Bereich rechtlich zu erfassen und zu beurteilen sowie notarielle Urkunden im Einklang mit den Vorgaben des Berufsrechts und des Beurkundungsrechts zu entwerfen, zu vollziehen und abzurechnen. Dabei sind rechtliche Bestimmungen über Kaufleute, Personen- und Kapitalgesellschaften, Gesellschaften bürgerlichen Rechts, Genossenschaften, Vereine und Stiftungen zu beachten und anzuwenden. In diesem Rahmen wird aus folgenden Qualifikationsinhalten geprüft:
+
+1.
+
+2.
+
+3.
+
+4.
+
+5.
+
+6.
+
+7.
+
+### § 7 — Prüfungsbereich „Büroorganisation“
+
+Im Prüfungsbereich „Büroorganisation“ hat die zu prüfende Person nachzuweisen, dass sie in der Lage ist, Geschäftsprozesse zu erfassen, zielorientiert zu planen und zu kontrollieren sowie Vorgänge entsprechend der berufsrechtlichen Vorgaben mit den rechtlich vorgeschriebenen technischen Systemen abzuwickeln. In diesem Rahmen wird aus folgenden Qualifikationsinhalten geprüft:
+
+1.
+
+2.
+
+3.
+
+4.
+
+5.
+
+6.
+
+7.
+
+8.
+
+9.
+
+10.
+
+11.
+
+12.
+
+### § 8 — Prüfungsbereich „Führung und Zusammenarbeit“
+
+Im Prüfungsbereich „Führung und Zusammenarbeit“ hat die zu prüfende Person nachzuweisen, dass sie in der Lage ist, unter Beachtung der rechtlichen und personellen Rahmenbedingungen Mitarbeitende oder ein Team zu führen und zu motivieren. In diesem Rahmen wird aus folgenden Qualifikationsinhalten geprüft:
+
+1.
+
+2.
+
+3.
+
+4.
+
+5.
+
+6.
+
+7.
+
+8.
+
+### § 9 — Form und Ablauf der Prüfung
+
+(1) Die Prüfung gliedert sich in
+
+1.
+
+2.
+
+(2) Die Prüfung beginnt mit der ersten Prüfungsleistung im Rahmen der schriftlichen Prüfung nach Absatz 1 Nummer 1; die weiteren schriftlichen Prüfungsleistungen sind innerhalb von drei Monaten zu erbringen.
+
+(3) Die mündliche Prüfung nach Absatz 1 Nummer 2 muss innerhalb von drei Jahren nach der letzten schriftlichen Prüfungsleistung erbracht werden. Bei Überschreiten der Frist gelten die erbrachten Prüfungsleistungen als mit null Punkten bewertet.
+
+(4) Absatz 3 Satz 2 ist nicht anzuwenden, wenn die Nichteinhaltung der Frist durch die nach dem Berufsbildungsgesetz zuständige Stelle zu vertreten ist.
+
+### § 10 — Schriftliche Prüfung
+
+(1) Die schriftliche Prüfung besteht aus drei unter Aufsicht durchzuführenden Prüfungsleistungen. Die Aufgabenstellungen sind aus der Beschreibung von im beruflichen Alltag auftretenden Situationen abzuleiten. Die Aufgabenstellungen sind unter Einbeziehung des Berufs- und Beurkundungsrechts sowie des Kostenrechts so zu gestalten, dass jeweils ein anderer Prüfungsbereich nach den §§ 4 bis 6 den Schwerpunkt einer Prüfungsleistung bildet.
+
+(2) Die Aufgabenstellungen müssen der zu prüfenden Person die eigenständige Entwicklung von Lösungen ermöglichen. Aufgabenstellungen, die ausschließlich aus Antwort-Wahlaufgaben bestehen, sind nicht zulässig.
+
+(3) Die Bearbeitungszeit beträgt für jede der drei Prüfungsleistungen 240 Minuten.
+
+### § 11 — Mündliche Prüfung
+
+(1) Die mündliche Prüfung besteht aus zwei Prüfungsleistungen in Form von fallbezogenen Fachgesprächen. Die zu prüfende Person hat nachzuweisen, dass sie in der Lage ist, Probleme des beruflichen Alltags zu analysieren, Lösungen zu entwickeln, zu begründen und Umsetzungsvorschläge zu unterbreiten.
+
+(2) Die Aufgabenstellung des ersten fallbezogenen Fachgesprächs wird auf Grundlage der Qualifikationsinhalte des Prüfungsbereiches nach § 7 gestellt. Die Aufgabenstellung des zweiten fallbezogenen Fachgesprächs wird auf Grundlage der Qualifikationsinhalte des Prüfungsbereiches nach § 8 gestellt. In beiden Fachgesprächen können Qualifikationsinhalte nach den §§ 4 bis 6 fallbezogen thematisiert werden.
+
+(3) Jedes der fallbezogenen Fachgespräche soll 20 Minuten dauern.
+
+### § 12 — Bewertung der Prüfungsleistungen
+
+(1) Jede Prüfungsleistung ist nach Maßgabe der Anlage 1 mit Punkten zu bewerten.
+
+(2) In der schriftlichen Prüfung sind die drei Prüfungsleistungen nach § 10 Absatz 1 jeweils einzeln zu bewerten. Aus den Bewertungen der drei Prüfungsleistungen wird als Bewertung der schriftlichen Prüfung das arithmetische Mittel berechnet.
+
+(3) In der mündlichen Prüfung sind die zwei Prüfungsleistungen nach § 11 Absatz 1 jeweils einzeln zu bewerten. Aus den Bewertungen der beiden Prüfungsleistungen wird als Bewertung der mündlichen Prüfung das arithmetische Mittel berechnet.
+
+### § 13 — Bestehen der Prüfung, Gesamtnote
+
+(1) Die Prüfung ist bestanden, wenn mindestens 50 Punkte erreicht worden sind in
+
+1.
+
+2.
+
+(2) Für die Bildung einer Gesamtnote ist als Gesamtpunktzahl das gewichtete arithmetische Mittel zu berechnen. Dabei werden die Bewertungen wie folgt gewichtet:
+
+1.
+
+2.
+
+(3) Die Gesamtpunktzahl ist kaufmännisch auf eine ganze Zahl zu runden. Der gerundeten Gesamtpunktzahl ist nach Anlage 1 die Note als Dezimalzahl und die Note in Worten zuzuordnen. Die zugeordnete Note ist die Gesamtnote.
+
+### § 14 — Befreiung von einzelnen Prüfungsbestandteilen
+
+Wird die zu prüfende Person nach § 56 Absatz 2 des Berufsbildungsgesetzes von der Ablegung einzelner Prüfungsbestandteile befreit, bleiben diese Prüfungsbestandteile für die Anwendung der §§ 12 und 13 außer Betracht. Für die abgelegten Prüfungsbestandteile erhöhen sich die Anteile in der Bewertung nach § 12 Absatz 2 oder Absatz 3 oder § 13 Absatz 2 entsprechend ihrem Verhältnis zueinander.
+
+### § 15 — Zeugnisse
+
+(1) Wer die Prüfung nach § 13 Absatz 1 bestanden hat, erhält von der nach dem Berufsbildungsgesetz zuständigen Stelle zwei Zeugnisse nach Maßgabe der Anlage 2 Teil A und B.
+
+(2) Auf dem Zeugnis mit den Inhalten nach Anlage 2 Teil B sind die Noten als Dezimalzahlen mit einer Nachkommastelle und in Worten anzugeben.
+
+(3) Jede Befreiung nach § 56 Absatz 2 des Berufsbildungsgesetzes ist mit Ort, Datum und der Bezeichnung des Prüfungsgremiums der nach § 56 Absatz 2 Nummer 1 des Berufsbildungsgesetzes vergleichbaren Prüfung anzugeben.
+
+(4) Die Zeugnisse können zusätzliche nicht amtliche Bemerkungen zur Information (Bemerkungen) enthalten, insbesondere
+
+1.
+
+2.
+
+### § 16 — Wiederholung von Prüfungsleistungen
+
+(1) Jede Prüfungsleistung, die mit weniger als 50 Punkten bewertet worden ist, darf jeweils zweimal wiederholt werden.
+
+(2) Die Frist zur Wiederholung von Prüfungsleistungen beträgt drei Jahre. Sie beginnt mit dem Tag, an dem der Bescheid über das Nichtbestehen der Fortbildungsprüfung oder über das Nichtbestehen der ersten Wiederholungsprüfung der zu prüfenden Person zugeht.
+
+(3) Wer sich nach Ablauf der Frist nach Absatz 2 zur Wiederholung von Prüfungsleistungen anmeldet, muss die gesamte Fortbildungsprüfung wiederholen.
+
+(4) Bei Nichtbestehen der zweiten Wiederholungsprüfung gilt die gesamte Prüfung als nicht bestanden.
+
+### § 17 — Übergangsvorschrift
+
+(1) Diese Verordnung ist nicht anzuwenden auf Prüfungen nach Fortbildungsprüfungsregelungen im Sinne des § 54 Absatz 1 des Berufsbildungsgesetzes zum Fortbildungsabschluss mit der Bezeichnung „Notarfachwirt“ oder „Notarfachwirtin“, „Notarfachreferent“ oder „Notarfachreferentin“, „Notarreferent“ oder „Notarreferentin“, „Leitender Notarmitarbeiter“ oder „Leitende Notarmitarbeiterin“, die vor Ablauf des 31. März 2026 angemeldet wurden, wenn diese bis zum Ablauf des 1. November 2028 nach der jeweiligen Fortbildungsprüfungsregelung zu Ende geführt werden und eine eventuelle Wiederholungsprüfung bis zum Ablauf des 1. November 2030 zu Ende geführt wird. Auf Antrag der zu prüfenden Person hat die nach dem Berufsbildungsgesetz zuständige Stelle die Wiederholungsprüfung nach dieser Verordnung durchzuführen. Prüfungsleistungen, die nach den in Satz 1 bezeichneten Vorschriften abgelegt wurden, können nicht auf die nach dieser Verordnung erforderlichen Prüfungsleistungen angerechnet werden.
+
+(2) Auf Antrag der zu prüfenden Person ist diese Verordnung nicht anzuwenden auf eine Prüfung nach den in Absatz 1 Satz 1 genannten Vorschriften, die vor Ablauf des 31. März 2028 angemeldet wird, wenn die Prüfung und eine eventuelle Wiederholungsprüfung jeweils binnen der in Absatz 1 Satz 1 genannten Fristen zu Ende geführt wird.
+
+(3) Hat sich die zu prüfende Person in der Zeit vom 1. Januar 2020 bis zum Ablauf des 31. März 2026 zur Prüfung nach den in Absatz 1 Satz 1 genannten Vorschriften angemeldet, so hat die nach dem Berufsbildungsgesetz zuständige Stelle auf Antrag der zu prüfenden Person die Prüfung nach dieser Verordnung durchzuführen. Absatz 1 Satz 2 gilt entsprechend.
+
+### § 18 — Evaluierung
+
+Eine Evaluierung dieser Verordnung soll zehn Jahre nach Inkrafttreten erfolgen. Gegenstand der Evaluierung sollen insbesondere die in den §§ 4 bis 6 geregelten Qualifikationsinhalte, die in § 13 Absatz 2 geregelte Gewichtung der Bewertungen sowie das Verhältnis dieser Verordnung zur Geprüfter-Berufsspezialist-Notariat-Fortbildungsprüfungsverordnung sein. Dabei soll insbesondere die Anzahl der nach den beiden Verordnungen abgelegten Prüfungen berücksichtigt werden.
+
+### § 19 — Inkrafttreten
+
+Diese Verordnung tritt am 1. April 2026 in Kraft.
+
+### Anlage 1 — (zu den §§ 12 und 13)
+
+### Anlage 2 — (zu § 15)
+
+Teil A – Zeugnis ohne Prüfungsergebnisse:
+
+1.
+
+2.
+
+3.
+
+4.
+
+5.
+
+6.
+
+Teil B – Zeugnis mit Prüfungsergebnissen:
+
+Alle Angaben des Teils A sowie zusätzlich
+
+1.
+
+2.
+
+3.
+
+4.
+
+5.
+
+6.
+
+7.
+
+8.
+
+9.
+
+10.

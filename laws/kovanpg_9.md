@@ -1,0 +1,28 @@
+# Neuntes Gesetz über die Anpassung der Leistungen des Bundesversorgungsgesetzes
+
+**Abkürzung:** KOVAnpG 9
+**Ausfertigungsdatum:** 1977-06-27
+
+---
+
+### Art 1
+
+Nr. 1 bis 12 Nr. 14 bis 19
+
+13.
+
+> Art. 1 Nr. 13 Kursivdruck: Abgedruckt im Hinblick auf Art. 2
+
+### Art 2 — Besitzstandsklausel
+
+Artikel 1 Nr. 13 gilt nur für die früheren Ehefrauen, deren Ehe nach dem 30. Juni 1977 aufgelöst wurde.
+
+### Art 3 — Berlin-Klausel
+
+Dieses Gesetz gilt nach Maßgabe des § 13 Abs. 1 des Dritten Überleitungsgesetzes auch im Land Berlin.
+
+### Art 4 — Inkrafttreten
+
+(1) Dieses Gesetz tritt, soweit Absatz 2 nichts anderes bestimmt, am 1. Juli 1977 in Kraft.
+
+(2)

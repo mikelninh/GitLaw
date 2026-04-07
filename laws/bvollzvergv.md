@@ -1,0 +1,71 @@
+# Bundesvollziehungsvergütungsverordnung
+
+**Abkürzung:** BVollzVergV
+**Ausfertigungsdatum:** 2021-06-16
+**Stand:** Ersetzt V 2032-1-17 v. 6.1.2003 I 8 (VollstrVergV)
+
+---
+
+### Eingangsformel
+
+Auf Grund des § 49 des Bundesbesoldungsgesetzes, der durch Artikel 1 Nummer 23 des Gesetzes vom 9. Dezember 2019 (BGBl. I S. 2053) neu gefasst worden ist, verordnet das Bundesministerium der Finanzen im Einvernehmen mit dem Bundesministerium des Innern, für Bau und Heimat:
+
+### § 1 — Vergütung
+
+Beamtinnen und Beamte des mittleren Dienstes, die dauerhaft als Vollziehungsbeamtinnen oder  ‑beamte im Sinne des § 285 der Abgabenordnung verwendet werden, erhalten für Vollstreckungshandlungen eine Vergütung nach dieser Verordnung.
+
+### § 2 — Entstehen und Höhe des Vergütungsanspruchs
+
+(1) Die Vergütung wird für Vollstreckungshandlungen nach Absatz 2 gewährt, die von der Vollziehungsbeamtin oder dem Vollziehungsbeamten dokumentiert worden sind.
+
+(2) Vergütet wird
+
+1.
+
+a)
+
+b)
+
+c)
+
+2.
+
+3.
+
+(3) Die Vereinnahmung von Zahlungsmitteln erfolgt, indem Die Zahlungsmittel sind vereinnahmt, wenn
+
+1.
+
+a)
+
+b)
+
+2.
+
+1.
+
+2.
+
+3.
+
+4.
+
+(4) Werden mehrere Vollstreckungsaufträge gegen dieselbe Vollstreckungsschuldnerin oder denselben Vollstreckungsschuldner in einem Termin erledigt, so entsteht der Vergütungsanspruch nur einmal. Vergütungen nach Absatz 2 Nummer 1 und 2 werden jedoch nebeneinander gewährt. Neben einer Vergütung nach Absatz 2 Nummer 3 wird eine Vergütung nach Absatz 2 Nummer 1 nur dann gewährt, wenn Sind mehrere bewegliche Sachen gepfändet worden, so entsteht die Vergütung nach Absatz 2 Nummer 2 nur einmal.
+
+1.
+
+2.
+
+(5) Der monatliche Höchstbetrag der Vergütung beträgt 210 Euro.
+
+### § 3 — Zahlung der Vergütung
+
+Die Vergütung wird spätestens mit den Bezügen für den vierten Monat, der auf die Vollstreckungshandlung folgt, gezahlt.
+
+### § 4 — Aufwendungsersatz
+
+Der Ersatz der Fahrtkosten und der sonstigen Reisekosten, die mit dem Außendienst der Vollziehungsbeamtinnen und  ‑beamten verbunden sind, richtet sich nach dem Bundesreisekostengesetz. Sonstige besondere, für die Vollziehungstätigkeit typische Aufwendungen sind mit der Vergütung abgegolten.
+
+### § 5 — Inkrafttreten, Außerkrafttreten
+
+Diese Verordnung tritt am 1. Juli 2021 in Kraft. Gleichzeitig tritt die Vollstreckungsvergütungsverordnung in der Fassung der Bekanntmachung vom 6. Januar 2003 (BGBl. I S. 8) außer Kraft.
