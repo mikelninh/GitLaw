@@ -1,0 +1,51 @@
+name: Weekly Law Update
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'  # Every Monday at 6:00 UTC
+  workflow_dispatch:  # Manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install requests lxml
+
+      - name: Fetch index
+        run: python parser/fetch_index.py
+
+      - name: Re-parse all laws
+        run: python parser/fetch_fast.py
+
+      - name: Build viewer index
+        run: python parser/build_index.py
+
+      - name: Check for changes
+        id: changes
+        run: |
+          git add laws/ viewer/public/law-index.json
+          if git diff --cached --quiet; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            ADDED=$(git diff --cached --numstat | wc -l)
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "count=$ADDED" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "mikelninh"
+          git config user.email "noreply@github.com"
+          git commit -m "Auto-update: $(date +%Y-%m-%d) — laws refreshed from gesetze-im-internet.de"
+          git push
