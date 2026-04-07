@@ -1,0 +1,48 @@
+# Verordnung zur Durchführung der im Rahmen der Gemeinsamen Agrarpolitik geltenden Ausnahmeregelung hinsichtlich der Anwendung des Standards Nummer 8 für den guten landwirtschaftlichen und ökologischen Zustand für das Antragsjahr 2024
+
+**Abkürzung:** GAPAusnV 2
+**Ausfertigungsdatum:** 2024-04-17
+
+---
+
+### Eingangsformel
+
+Das Bundesministerium für Ernährung und Landwirtschaft verordnet, in Verbindung mit § 1 Absatz 2 des Zuständigkeitsanpassungsgesetzes vom 16. August 2002 (BGBl. I S. 3165) und dem Organisationserlass vom 8. Dezember 2021 (BGBl. I S. 5176), auf Grund des
+
+–
+
+–
+
+–
+
+–
+
+–
+
+### § 1 — Anwendungsbereich
+
+Diese Verordnung dient der Durchführung der Durchführungsverordnung (EU) 2024/587 der Kommission vom 12. Februar 2024 zur Ermöglichung einer Ausnahmeregelung von der Verordnung (EU) 2021/2115 des Europäischen Parlaments und des Rates hinsichtlich der Anwendung des Standards für den guten landwirtschaftlichen und ökologischen Zustand (GLÖZ-Standard) Nr. 8, der Fristen für die Förderfähigkeit von Ausgaben im Rahmen des EGFL und der Vorschriften für Änderungen von GAP-Strategieplänen zur Änderung bestimmter Öko-Regelungen für das Antragsjahr 2024 (ABl. L, 2024/587, 13.2.2024) in der jeweils geltenden Fassung.
+
+### § 2 — Zusätzliche Anrechnungsmöglichkeit für Flächen mit stickstoffbindenden Pflanzen oder Zwischenfrüchten
+
+Zur Erfüllung der Verpflichtung nach § 11 des GAP-Konditionalitäten-Gesetzes in Verbindung mit § 19 der GAP-Konditionalitäten-Verordnung können zusätzlich zu den Anrechnungsmöglichkeiten nach § 20 Absatz 1 der GAP-Konditionalitäten-Verordnung für das Antragsjahr 2024 Flächen angerechnet werden, die genutzt werden. In allen Fällen des Satzes 1 dürfen Pflanzenschutzmittel nicht angewendet werden. In den Fällen des Satzes 1 Nummer 2 muss der nach guter fachlicher Praxis etablierte Bestand bis mindestens 31. Dezember des Antragsjahres auf der Fläche vorhanden sein.
+
+1.
+
+2.
+
+### § 3 — Berücksichtigung bei Öko-Regelungen
+
+Flächen, die von einem Betriebsinhaber zur Erfüllung der in § 2 Satz 1 Nummer 1 genannten Verpflichtung herangezogen werden und die Voraussetzungen hierfür erfüllen, sind für das Antragsjahr 2024 nicht nach Anlage 5 Nummer 2.1 der GAP-Direktzahlungen-Verordnung begünstigungsfähig für die Öko-Regelung nach § 20 Absatz 1 Nummer 2 des GAP-Direktzahlungen-Gesetzes. Für diese Flächen gelten für die Anwendung von Anlage 5 Nummer 2 der GAP-Direktzahlungen-Verordnung für das Antragsjahr 2024 die Bestimmungen für brachliegendes Ackerland.
+
+### § 4 — Ergänzende Angaben im Sammelantrag
+
+Sofern ein Betriebsinhaber im Sammelantrag für das Jahr 2024 Flächen nach § 2 Satz 1 zur Erfüllung der dort genannten Verpflichtung angibt, hat er mit dem Sammelantrag Angaben zu den in § 21 Absatz 1 Nummer 4 GAPInVeKoS-Verordnung bezeichneten Einzelheiten zu übermitteln.
+
+### § 5 — Inkrafttreten
+
+Diese Verordnung tritt am Tag nach der Verkündung in Kraft.
+
+### Schlussformel
+
+Der Bundesrat hat zugestimmt.
