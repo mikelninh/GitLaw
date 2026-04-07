@@ -1,0 +1,93 @@
+# Verordnung über die Verwendung von Extraktionslösungsmitteln bei der Herstellung von Lebensmitteln
+
+**Abkürzung:** ELV
+**Ausfertigungsdatum:** 1991-11-08
+**Stand:** Neugefasst durch Bek. v. 7.3.2018 I 366;
+
+---
+
+### § 1 — Begriffsbestimmung und Anwendungsbereich
+
+(1) Extraktionslösungsmittel im Sinne dieser Verordnung sind Stoffe, die bei der Herstellung von Lebensmitteln zur Extraktion verwendet und aus dem Enderzeugnis wieder entfernt werden, die jedoch unbeabsichtigte, aber technisch unvermeidbare Rückstände oder Umwandlungsprodukte in den Lebensmitteln hinterlassen können.
+
+(2) Diese Verordnung gilt nicht für die Herstellung von Lebensmittelzusatzstoffen, Vitaminen und sonstigen Stoffen, die Lebensmitteln zu ernährungsphysiologischen Zwecken zugesetzt werden.
+
+### § 2 — Zugelassene Stoffe
+
+(1) Stoffe im Sinne des Artikels 3 Absatz 2 Buchstabe b der Verordnung (EG) Nr. 1333/2008 des Europäischen Parlaments und des Rates vom 16. Dezember 2008 über Lebensmittelzusatzstoffe (ABl. L 354 vom 31.12.2008, S. 16) in der jeweils geltenden Fassung, die als Extraktionslösungsmittel verwendet werden, werden den Lebensmittelzusatzstoffen gleichgestellt.
+
+(2) Als Extraktionslösungsmittel werden zugelassen:
+
+1.
+
+a)
+
+b)
+
+c)
+
+2.
+
+3.
+
+(3) Ferner dürfen Wasser, Ethanol und andere Lebensmittel, die Lösungsmitteleigenschaften haben, als Extraktionslösungsmittel verwendet werden.
+
+### § 3 — Höchstmengen
+
+Die in den Anlagen 2 und 3 aufgeführten Stoffe dürfen als Extraktionslösungsmittel bei dem Herstellen von Lebensmitteln, die dazu bestimmt sind, in den Verkehr gebracht zu werden, nur so verwendet werden, dass ihre Restgehalte in den Lebensmitteln die dort festgesetzten Höchstmengen nicht überschreiten.
+
+### § 4 — Reinheitsanforderungen
+
+(1) Die in den Anlagen 1 bis 3 aufgeführten Stoffe dürfen als Extraktionslösungsmittel bei dem Herstellen von Lebensmitteln, die dazu bestimmt sind, in den Verkehr gebracht zu werden, nur verwendet werden, wenn sie den Reinheitsanforderungen gemäß Anlage 4 entsprechen. Das Gleiche gilt für Ethanol.
+
+(2) Die in Anlage 2 bis 3 aufgeführten Extraktionslösungsmittel müssen den spezifischen Reinheitskriterien gemäß Anlage 5 entsprechen.
+
+### § 5 — Kennzeichnung
+
+(1) Die in den Anlagen 1 bis 3 aufgeführten Stoffe sowie Ethanol dürfen, sofern sie zur Verwendung als Extraktionslösungsmittel bestimmt sind, nur in den Verkehr gebracht werden, wenn angegeben sind:
+
+1.
+
+2.
+
+3.
+
+4.
+
+5.
+
+(2) Die Angaben nach Absatz 1 sind auf der Packung, dem Behältnis oder einem damit verbundenen Etikett leicht erkennbar, deutlich lesbar und unverwischbar anzubringen. Bei den Angaben nach Absatz 1 Nummer 3, 4 und 5 genügt die Angabe in den Begleitpapieren.
+
+(3) Die Kennzeichnungsvorschriften der Gefahrstoffverordnung bleiben unberührt.
+
+### § 6 — Ordnungswidrigkeiten
+
+Ordnungswidrig im Sinne des § 60 Absatz 2 Nummer 26 Buchstabe a des Lebensmittel- und Futtermittelgesetzbuches handelt, wer vorsätzlich oder fahrlässig entgegen § 5 Absatz 1 einen Stoff oder Ethanol in den Verkehr bringt.
+
+### § 7 — (Inkrafttreten)
+
+### Anlage 1 — (zu § 2 Absatz 2 Nummer 1 Buchstabe c)
+
+Propan
+
+Butan
+
+Ethylacetat
+
+Kohlendioxid
+
+Aceton; darf nicht bei der Raffinierung von Oliventresteröl verwendet werden
+
+Distickstoffmonoxid
+
+### Anlage 2 — (zu § 2 Absatz 2 Nummer 2 und § 3)
+
+### Anlage 3 — (zu § 2 Absatz 2 Nummer 3 und § 3)
+
+Für den vorgenannten Zweck dürfen außer den in § 2 Absatz 2 Nummer 1 und Absatz 3 bezeichneten Stoffen die nachgenannten Stoffe verwendet werden.
+
+### Anlage 4 — (zu § 4 Absatz 1)
+
+Extraktionslösungsmittel dürfen auch keine toxikologisch bedenklichen Mengen anderer Stoffe enthalten. In einem Kilogramm Ethylmethylketon darf der Gehalt an n-Hexan nicht mehr als 50 Milligramm betragen.
+
+### Anlage 5 — (zu § 4 Absatz 2)

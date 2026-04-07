@@ -1,0 +1,69 @@
+# Verordnung zur Sicherung der Elektrizitätsversorgung in einer Versorgungskrise
+
+**Abkürzung:** EltSV
+**Ausfertigungsdatum:** 1982-04-26
+**Stand:** Zuletzt geändert durch Art. 7 G v. 26.7.2016 I 1786
+
+---
+
+### Eingangsformel
+
+Auf Grund des § 1 Abs. 1 und 3, des § 2 Abs. 3, des § 3 Abs. 1 und 3 sowie des § 16 Nr. 2 Buchstabe a des Energiesicherungsgesetzes 1975 vom 20. Dezember 1974 (BGBl. I S. 3681), das durch Gesetz vom 19. Dezember 1979 (BGBl. I S. 2305) zuletzt geändert worden ist, verordnet die Bundesregierung mit Zustimmung des Bundesrates:
+
+### § 1
+
+(1) Zur Deckung des lebenswichtigen Bedarfs an Elektrizität können die zuständigen Stellen als Lastverteiler Verfügungen erlassen
+
+1.
+
+a)
+
+b)
+
+2.
+
+3.
+
+(2) Die Lastverteiler können Unternehmen und Betriebe, die elektrische Energie erzeugen, weiterleiten oder verteilen, sowie Verbraucher durch Verfügung verpflichten, innerhalb einer bestimmten Frist bestehende Verträge des in Absatz 1 bezeichneten Inhalts zu ändern oder neue Verträge dieses Inhalts abzuschließen, soweit das angestrebte Verhalten durch Anwendung bestehender Verträge nicht oder nicht rechtzeitig verwirklicht werden kann. In der Verfügung ist für eine Leistung das übliche Entgelt oder, in Ermangelung eines solchen, ein angemessenes Entgelt festzusetzen; für die übrigen Vertragsbedingungen gilt Entsprechendes. Kommt ein solcher Vertrag nicht fristgemäß zustande, so können die Lastverteiler ihn durch Verfügung begründen.
+
+(3) Die Lastverteiler dürfen Verfügungen nur erlassen, soweit diese unbedingt erforderlich sind, um eine Gefährdung oder Störung der lebenswichtigen Versorgung mit elektrischer Energie zu beheben oder zu mindern. Bestehende Verträge und die Zweckbestimmung von Eigenanlagen sind möglichst zu berücksichtigen.
+
+(4) Die Abschaltung eines Versorgungsbereichs ist nur zulässig, soweit eine Verringerung der Leistung oder sonstige Maßnahmen nicht ausreichen, um einen über den Versorgungsbereich hinausgehenden Netzzusammenbruch zu verhindern oder zu beheben. Hierbei darf die Deckung des Strombedarfs zur Erfüllung öffentlicher und anderer für die Bevölkerung lebenswichtiger Aufgaben so wenig wie möglich beeinträchtigt werden. Die Abschaltung darf jeweils 4 Stunden nicht überschreiten und ist unverzüglich in geeigneter Weise öffentlich bekanntzugeben. Die Betriebszeit zwischen zwei Sperrzeiten darf nicht kürzer sein als die jeweils vorangegangene Sperrzeit. Sind wiederholt Abschaltungen erforderlich, so ist ein Zeitplan aufzustellen und unverzüglich in geeigneter Weise öffentlich bekanntzugeben.
+
+(5) Die Verfügungen sind zu befristen, soweit sich ihre Geltungsdauer nicht schon aus ihrem Inhalt ergibt. Sie werden unwirksam, sobald diese Verordnung aufgehoben oder außer Anwendung gesetzt wird. Entsprechendes gilt für Verträge, die auf Grund einer Verfügung nach Absatz 2 Satz 1 geschlossen oder durch eine Verfügung nach Absatz 2 Satz 3 begründet worden sind. Verträge, die auf Grund oder durch Verfügung nach Absatz 2 geändert worden sind, leben mit ihrem ursprünglichen Inhalt wieder auf.
+
+(6) Zur Deckung des lebenswichtigen Bedarfs an Elektrizität nach Absatz 1 sind die Betreiber von Übertragungsnetzen berechtigt und verpflichtet, die Gefährdung oder Störung nach Maßgabe des § 13g Absatz 2 des Energiewirtschaftsgesetzes durch den Abruf von stillzulegenden Anlagen während der Sicherheitsbereitschaft der stillzulegenden Anlagen zu beseitigen, soweit der Lastverteiler keine gegenteilige Verfügung erlassen hat.
+
+### § 2
+
+Unternehmen und Betriebe, die über Anlagen zur Erzeugung von elektrischer Energie mit einer Gesamtleistung von mehr als 100 MW verfügen und ihre Leistung ganz oder teilweise in das Netz der öffentlichen Versorgung einspeisen können, sind verpflichtet, der Bundesnetzagentur für Elektrizität, Gas, Telekommunikation, Post und Eisenbahnen sowie der nach Landesrecht zuständigen Stelle Meldungen entsprechend der Anlage zu dieser Verordnung in zweifacher Ausfertigung bis zum Zehnten jeden Monats zu erstatten. Die Bundesnetzagentur für Elektrizität, Gas, Telekommunikation, Post und Eisenbahnen und die nach Landesrecht zuständige Stelle können diese Meldungen in kürzeren Zeitabständen verlangen, wenn dies zur Sicherung der Energieversorgung notwendig ist.
+
+### § 3
+
+Ordnungswidrig im Sinne des § 15 Abs. 1 Nr. 1 des Energiesicherungsgesetzes 1975 handelt, wer vorsätzlich oder fahrlässig
+
+1.
+
+2.
+
+### § 4
+
+Verwaltungsbehörde im Sinne des § 16 Nr. 2 Buchstabe a des Energiesicherungsgesetzes 1975 ist die Bundesnetzagentur für Elektrizität, Gas, Telekommunikation, Post und Eisenbahnen.
+
+### § 5
+
+(weggefallen)
+
+### § 6
+
+(1) Diese Verordnung tritt am Tage nach der Verkündung in Kraft.
+
+(2) Sie darf erst dann angewandt werden, wenn die Bundesregierung
+
+1.
+
+2.
+
+### Anlage — (zu § 2)
+
+Fundstelle des Originaltextes: BGBl. I 1982, 516

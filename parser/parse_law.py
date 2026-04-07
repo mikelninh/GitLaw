@@ -18,28 +18,22 @@ def download_xml(xml_url: str) -> bytes:
 
 
 def extract_text(content_node) -> str:
-    """Extract text from a <Content> node, handling nested elements."""
+    """Extract text from a <Content> node, handling all nested elements."""
     if content_node is None:
         return ""
 
-    parts = []
-    for p in content_node.iter():
-        if p.tag == "P":
-            text = p.text or ""
-            # Also get tail text and child text
-            for child in p:
-                text += child.text or ""
-                text += child.tail or ""
-            text += p.tail or "" if p.tail and p.getparent().tag == "Content" else ""
-            text = text.strip()
-            if text:
-                parts.append(text)
-        elif p.tag == "DL" or p.tag == "DT" or p.tag == "DD":
-            text = (p.text or "").strip()
-            if text:
-                parts.append(text)
+    # Use itertext() to get ALL text recursively, preserving order
+    # Then process the raw text to clean it up
+    raw = "".join(content_node.itertext())
 
-    return "\n\n".join(parts)
+    # Clean up whitespace: collapse multiple spaces, preserve paragraph breaks
+    lines = []
+    for line in raw.split("\n"):
+        line = " ".join(line.split())  # collapse whitespace
+        if line:
+            lines.append(line)
+
+    return "\n\n".join(lines)
 
 
 def parse_law(xml_content: bytes) -> dict:

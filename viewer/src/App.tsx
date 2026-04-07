@@ -166,26 +166,56 @@ function App() {
         </div>
       </header>
 
-      {/* Quick links */}
+      {/* Featured laws */}
       <div className="bg-bg-alt border-b border-border">
-        <div className="max-w-5xl mx-auto px-5 py-3 flex flex-wrap gap-2 justify-center">
-          {[
-            { id: 'gg', label: 'Grundgesetz' },
-            { id: 'stgb', label: 'StGB' },
-            { id: 'bgb', label: 'BGB' },
-            { id: 'sgb_6', label: 'SGB VI (Rente)' },
-            { id: 'netzdg', label: 'NetzDG' },
-            { id: 'tierschg', label: 'Tierschutzgesetz' },
-            { id: 'aufenthg_2004', label: 'Aufenthaltsgesetz' },
-            { id: 'ao_1977', label: 'Abgabenordnung' },
-          ].map(q => (
-            <button key={q.id} onClick={() => loadLaw(q.id)}
-              className="px-3 py-1.5 rounded-full text-sm bg-card border border-border text-ink-muted hover:text-gold hover:border-gold/30 transition-colors cursor-pointer">
-              {q.label}
-            </button>
-          ))}
+        <div className="max-w-5xl mx-auto px-5 py-6">
+          <p className="text-xs font-bold text-ink-muted uppercase tracking-widest mb-3 text-center">Wichtige Gesetze</p>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            {[
+              { id: 'gg', label: 'Grundgesetz', emoji: '🏛️', desc: 'Verfassung' },
+              { id: 'stgb', label: 'StGB', emoji: '⚖️', desc: 'Strafrecht' },
+              { id: 'bgb', label: 'BGB', emoji: '📋', desc: 'Zivilrecht' },
+              { id: 'sgb_6', label: 'SGB VI', emoji: '🏦', desc: 'Rentenrecht' },
+              { id: 'netzdg', label: 'NetzDG', emoji: '🌐', desc: 'Netzwerkrecht' },
+              { id: 'tierschg', label: 'TierSchG', emoji: '🐾', desc: 'Tierschutz' },
+              { id: 'aufenthg_2004', label: 'AufenthG', emoji: '🛂', desc: 'Aufenthaltsrecht' },
+              { id: 'ao_1977', label: 'AO', emoji: '💶', desc: 'Steuerrecht' },
+            ].map(q => (
+              <button key={q.id} onClick={() => loadLaw(q.id)}
+                className="flex items-center gap-3 p-3 rounded-xl bg-card border border-border hover:border-gold/30 hover:shadow-sm transition-all cursor-pointer text-left">
+                <span className="text-xl">{q.emoji}</span>
+                <div>
+                  <span className="text-sm font-bold text-ink">{q.label}</span>
+                  <p className="text-xs text-ink-muted">{q.desc}</p>
+                </div>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
+
+      {/* Recently updated / notable */}
+      {!search && (
+        <div className="max-w-5xl mx-auto px-5 py-6">
+          <p className="text-xs font-bold text-ink-muted uppercase tracking-widest mb-3">Zuletzt geändert</p>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2">
+            {laws
+              .filter(l => l.stand && l.stand.includes('2025') || l.stand && l.stand.includes('2026') || l.stand && l.stand.includes('2024'))
+              .slice(0, 6)
+              .map(law => (
+                <button key={law.id} onClick={() => loadLaw(law.id)}
+                  className="flex items-start gap-3 p-4 rounded-xl bg-card border border-border hover:border-gold/30 hover:shadow-sm transition-all cursor-pointer text-left">
+                  <Scale className="w-4 h-4 text-gold mt-0.5 shrink-0" />
+                  <div className="min-w-0">
+                    <p className="text-sm font-bold text-ink truncate">{law.abbreviation || law.title}</p>
+                    <p className="text-xs text-ink-muted truncate">{law.title}</p>
+                    <p className="text-[11px] text-gold mt-1">{law.stand?.slice(0, 60)}</p>
+                  </div>
+                </button>
+              ))}
+          </div>
+        </div>
+      )}
 
       {/* Law list */}
       <main className="max-w-5xl mx-auto px-5 py-8">

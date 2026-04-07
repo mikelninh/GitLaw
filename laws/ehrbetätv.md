@@ -1,0 +1,35 @@
+# Verordnung über die ehrenamtliche Betätigung von Arbeitslosen
+
+**Abkürzung:** EhrBetätV
+**Ausfertigungsdatum:** 2002-05-24
+**Stand:** Zuletzt geändert durch Art. 11 G v. 22.12.2025 I Nr. 363
+
+---
+
+### Eingangsformel
+
+Auf Grund des § 151 Abs. 2 Nr. 4 des Dritten Buches Sozialgesetzbuch - Arbeitsförderung - (Artikel 1 des Gesetzes vom 24. März 1997, BGBl. I S. 594, 595), der durch Artikel 1 Nr. 47 des Gesetzes vom 10. Dezember 2001 (BGBl. I S. 3443) eingefügt worden ist, verordnet das Bundesministerium für Arbeit und Sozialordnung:
+
+### § 1 — Ehrenamtliche Betätigung
+
+(1) Ehrenamtlich im Sinne des § 138 Absatz 2 des Dritten Buches Sozialgesetzbuch ist eine Betätigung, die
+
+1.
+
+2.
+
+3.
+
+(2) Der Ersatz von Auslagen, die dem ehrenamtlich Tätigen durch Ausübung der ehrenamtlichen Tätigkeit entstehen, berührt die Unentgeltlichkeit nicht. Dies gilt auch, wenn der Auslagenersatz in pauschalierter Form erfolgt und die Pauschale 275 Euro im Monat nicht übersteigt. Neben einer nicht steuerpflichtigen Aufwandsentschädigung, die der ehrenamtlich Tätige erhält, ist eine Pauschalierung des Auslagenersatzes nur möglich, soweit die Auslagenpauschale zusammen mit der nicht steuerpflichtigen Aufwandsentschädigung 275 Euro im Monat nicht übersteigt.
+
+### § 2 — Berufliche Eingliederung
+
+Die berufliche Eingliederung des Arbeitslosen hat Vorrang vor der Ausübung einer ehrenamtlichen Betätigung. Der Arbeitslose hat der Agentur für Arbeit die Ausübung einer mindestens 15 Stunden wöchentlich umfassenden ehrenamtlichen Betätigung unverzüglich anzuzeigen. Er hat darüber hinaus sicherzustellen, dass er
+
+1.
+
+2.
+
+### § 3 — Inkrafttreten
+
+Diese Verordnung tritt mit Wirkung vom 1. Januar 2002 in Kraft.
