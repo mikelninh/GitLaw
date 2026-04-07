@@ -1,138 +1,106 @@
-# GitLaw 📝
+# GitLaw ⚖️
 
-**Version control for legislation.** Every change tracked. Every author visible. Every lobbying influence traceable.
+**Alle 5.938 deutschen Bundesgesetze als durchsuchbares, transparentes Markdown-Archiv.**
 
-## The Problem
-
-Laws are changed behind closed doors. Nobody knows who inserted which clause, which lobbyist influenced which paragraph, or what changed between version 1 and version 47. Citizens, journalists, and even other legislators can't follow what's happening.
-
-Germany has 1,700 federal laws and 50,000 regulations. When they change, the changes are buried in legal jargon and published in formats nobody can read.
-
-## The Solution
-
-Treat laws like code. Use version control — the same technology that powers every piece of software on earth — to make legislation transparent, traceable, and participatory.
-
-**Three pillars:**
-
-### 1. Track Every Change
-Every law as a plain-text file. Every amendment tracked with author, timestamp, and justification. Automatic diffs show exactly what changed — word by word.
-
-### 2. Let Citizens Comment
-Anyone can comment on any paragraph — like code review. Aggregated feedback shows which clauses are controversial and which have public support.
-
-### 3. Trace Lobbying Influence
-Link the lobbying register to legislative changes. When a lobbyist meets a legislator on Monday and an amendment appears on Friday that mirrors the lobbyist's position paper — automatic flagging. Not a ban. Just sunlight.
+107.691 Paragraphen. 904.989 Zeilen. Open Source. Für jeden zugänglich.
 
 > "Sunlight is the best disinfectant." — Louis Brandeis
 
-## Does This Exist?
+## Was ist GitLaw?
 
-| Project | What it does | What's missing |
-|---------|-------------|---------------|
-| **bundesgit** | Mirrors German federal laws on GitHub | No change tracking, no attribution, no citizen participation |
-| **offenegesetze.de** | Makes the Bundesgesetzblatt searchable | Read-only, no version control, no lobbying link |
-| **La Fabrique de la Loi** (France) | Tracks amendments through legislative process | No citizen comments, no lobbying tracing |
-| **g0v** (Taiwan) | Civic tech alternative to gov sites | Prototyped law tracking but not adopted officially |
-| **GitLaw** (this project) | All of the above — combined | **This is what we're building** |
+Gesetze werden hinter verschlossenen Türen geändert. Niemand weiß, wer welche Klausel eingefügt hat. GitLaw macht die gesamte deutsche Bundesgesetzgebung durchsuchbar, lesbar und transparent — mit derselben Technologie, die 100 Millionen Entwickler für Software nutzen.
 
-## How It Works
+**Live Viewer**: [mikelninh.github.io/gitlaw](https://mikelninh.github.io/gitlaw/)
 
+## Was drin ist
+
+| Metrik | Zahl |
+|--------|------|
+| Gesetze | **5.938** |
+| Paragraphen | **107.691** |
+| Zeilen | **904.989** |
+| Abdeckung | **86%** aller Bundesgesetze |
+
+Jedes Gesetz als sauberes Markdown — von der Abgabenordnung bis zum Zukunftsfinanzierungsgesetz.
+
+### Schlüsselgesetze
+
+| Gesetz | Datei | Beschreibung |
+|--------|-------|-------------|
+| 🏛️ Grundgesetz | `laws/gg.md` | Die Verfassung |
+| ⚖️ Strafgesetzbuch | `laws/stgb.md` | Strafrecht |
+| 📋 Bürgerliches Gesetzbuch | `laws/bgb.md` | Zivilrecht (10.768 Zeilen) |
+| 🏦 Sozialgesetzbuch VI | `laws/sgb_6.md` | Rentenrecht |
+| 🌐 Netzwerkdurchsetzungsgesetz | `laws/netzdg.md` | Plattform-Regulierung |
+| 🐾 Tierschutzgesetz | `laws/tierschg.md` | Tierschutz |
+| 💶 Einkommensteuergesetz | `laws/estg.md` | Einkommensteuer |
+| 🛂 Aufenthaltsgesetz | `laws/aufenthg_2004.md` | Aufenthaltsrecht |
+
+## Web Viewer
+
+Der Viewer (`viewer/`) ist eine React-App mit:
+- **Fuzzy-Suche** über alle 5.938 Gesetze
+- **Featured Laws** mit Schnellzugriff
+- **"Zuletzt geändert"** — Gesetze die kürzlich aktualisiert wurden
+- **In-Gesetz-Suche** mit Treffer-Hervorhebung
+- **GitHub-Link** zu jedem Markdown-File
+
+```bash
+cd viewer
+npm install
+npm run dev    # http://localhost:5175/gitlaw/
 ```
-            ┌─────────────────────┐
-            │   Bundesgesetzblatt  │  ← Official source
-            └──────────┬──────────┘
-                       │ parse
-            ┌──────────▼──────────┐
-            │   GitLaw Repository  │  ← Plain-text laws in Git
-            │   (version control)  │
-            └──────────┬──────────┘
-                       │
-        ┌──────────────┼──────────────┐
-        │              │              │
-   ┌────▼────┐   ┌─────▼─────┐  ┌────▼────┐
-   │  Diffs  │   │ Comments  │  │ Lobby   │
-   │  (what  │   │ (citizen  │  │ Trace   │
-   │ changed)│   │ feedback) │  │ (who    │
-   │         │   │           │  │ pushed  │
-   └─────────┘   └───────────┘  │ what?)  │
-                                └─────────┘
+
+## Parser
+
+Der Parser (`parser/`) konvertiert XML von gesetze-im-internet.de zu Markdown:
+
+```bash
+pip install requests lxml
+
+# Index aller Gesetze holen
+python parser/fetch_index.py          # → 6.876 Gesetze gefunden
+
+# Ein Gesetz parsen
+python parser/parse_law.py "https://www.gesetze-im-internet.de/gg/xml.zip"
+
+# Alle parsen (parallel, 10 Worker)
+python parser/fetch_fast.py           # ~10 Minuten für alles
 ```
 
-## Example
+## Die Vision: 3 Phasen
 
-**§ 185 StGB — Beleidigung (Insult)**
+### Phase 1: Archiv ✅ (fertig)
+Alle Bundesgesetze als durchsuchbares Markdown in Git.
 
-```diff
-- Die Beleidigung wird mit Freiheitsstrafe bis zu einem Jahr
-- oder mit Geldstrafe bestraft.
-+ Die Beleidigung wird mit Freiheitsstrafe bis zu zwei Jahren
-+ oder mit Geldstrafe bestraft.
-```
+### Phase 2: Bürgerbeteiligung (geplant)
+- Paragraph-Level-Kommentare
+- Öffentliche API für Forscher und Journalisten
+- Meinungsvergleich pro Gesetz (Wahl-O-Mat-Stil)
 
-**Change metadata:**
-- Author: Dr. Marco Buschmann (FDP), Bundesjustizminister
-- Date: 2024-08-15
-- Justification: "Anpassung an die gestiegene Bedeutung digitaler Beleidigungen"
-- Lobbying link: Meeting with BDK (Bund Deutscher Kriminalbeamter) on 2024-07-22 — position paper requested higher penalties
+### Phase 3: Lobbying-Transparenz (geplant)
+- Integration mit dem Lobbyregister (lobbyregister.bundestag.de)
+- NLP-Vergleich: Lobbying-Positionspapiere ↔ Amendments
+- Timeline-Analyse: Meeting am Montag → Amendment am Freitag = automatisches Flag
+- Dashboard: "Meistbeeinflusste Gesetze des Monats"
 
-**Citizen comments:** 47 comments, 72% positive, concerns about freedom of speech from 3 legal academics.
+## Datenquellen
+
+- **gesetze-im-internet.de** — Alle Bundesgesetze (BMJV)
+- **lobbyregister.bundestag.de** — Bundeslobbyregister (ab Phase 3)
 
 ## Tech Stack
 
-- **Git** for version control (the same tool used by 100 million developers)
-- **Markdown** for law text (human-readable, machine-parseable)
-- **NLP** for comparing lobbying documents with amendments (text similarity)
-- **Web interface** for citizen comments and diff visualization
+- **Parser**: Python + lxml + requests
+- **Viewer**: React + TypeScript + Vite + Tailwind + Fuse.js
+- **Daten**: Markdown in Git (versioniert, diffbar, durchsuchbar)
 
-## Roadmap
+## Verwandte Projekte
 
-### Phase 1: Mirror (Now)
-- [ ] Parse all current German federal laws from gesetze-im-internet.de
-- [ ] Convert to clean Markdown files
-- [ ] Initialize Git repository with full history
-- [ ] Build web viewer with diff visualization
+- **[offenegesetze.de](https://offenegesetze.de)** — Bundesgesetzblatt durchsuchbar (OKF)
+- **[bundesgit](https://github.com/bundestag/gesetze)** — Mirror (abandoned)
+- **[La Fabrique de la Loi](https://lafabriquedelaloi.fr)** — Französische Amendment-Verfolgung
 
-### Phase 2: Citizen Layer (Q3 2026)
-- [ ] Add paragraph-level commenting
-- [ ] Public API for researchers and journalists
-- [ ] Embed Wahl-O-Mat-style opinion matching per law
+## Lizenz
 
-### Phase 3: Lobbying Trace (Q1 2027)
-- [ ] Integrate with Lobbyregister (lobbyregister.bundestag.de)
-- [ ] NLP pipeline: compare position papers → amendments
-- [ ] Timeline analysis: meeting date → amendment date correlation
-- [ ] Public dashboard: "Most influenced laws of the month"
-
-### Phase 4: Live Tracking (2027+)
-- [ ] Real-time tracking of new Gesetzentwürfe as they enter committee
-- [ ] Notification system: "A law you commented on was just amended"
-- [ ] Integration with Deutschland 2030 platform
-
-## Why This Matters
-
-Democracy requires informed citizens. You can't be informed about laws you can't read, changes you can't see, and influences you can't trace.
-
-GitLaw doesn't tell people what to think. It shows them what happened. The rest is up to democracy.
-
-## Data Sources
-
-- **gesetze-im-internet.de** — All federal laws, maintained by BMJV
-- **Bundesgesetzblatt** (via offenegesetze.de) — Official publication of legal changes
-- **lobbyregister.bundestag.de** — Federal lobbying register (since 2022)
-- **Bundestag Drucksachen** — Parliamentary documents, bills, amendments
-
-## Contributing
-
-This is open source. PRs welcome. The most impactful contribution right now: help parsing German legal text into clean Markdown.
-
-## License
-
-MIT — Use it, fork it, improve it. Democracy should be open source.
-
-## Related
-
-- [Deutschland 2030](https://github.com/mikelninh/deutschland-2030) — The broader reform platform
-- [offenegesetze.de](https://offenegesetze.de) — Making the Bundesgesetzblatt accessible
-- [bundesgit](https://github.com/bundestag/gesetze) — Mirror of German laws
-- [La Fabrique de la Loi](https://lafabriquedelaloi.fr) — French amendment tracking
-- [Pol.is](https://pol.is) — Consensus finding tool (used by Taiwan's vTaiwan)
+MIT — Nutze es, forke es, verbessere es. Demokratie sollte Open Source sein.
