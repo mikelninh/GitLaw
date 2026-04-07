@@ -1,49 +1,69 @@
 # GitLaw ⚖️
 
-**Alle 5.938 deutschen Bundesgesetze als durchsuchbares, transparentes Markdown-Archiv.**
+**Alle 5.936 deutschen Bundesgesetze als durchsuchbares, transparentes Markdown-Archiv.**
 
-107.691 Paragraphen. 904.989 Zeilen. Open Source. Für jeden zugänglich.
+1.303.451 Zeilen. 107.715 Paragraphen. Open Source. Automatisch aktuell.
 
 > "Sunlight is the best disinfectant." — Louis Brandeis
+
+**[Live Viewer →](https://mikelninh.github.io/gitlaw/)**
 
 ## Was ist GitLaw?
 
 Gesetze werden hinter verschlossenen Türen geändert. Niemand weiß, wer welche Klausel eingefügt hat. GitLaw macht die gesamte deutsche Bundesgesetzgebung durchsuchbar, lesbar und transparent — mit derselben Technologie, die 100 Millionen Entwickler für Software nutzen.
 
-**Live Viewer**: [mikelninh.github.io/gitlaw](https://mikelninh.github.io/gitlaw/)
+### Features
 
-## Was drin ist
+- **Alle Bundesgesetze durchsuchbar** — Fuzzy-Suche über 5.936 Gesetze
+- **AI-Erklärung** — "Einfach erklären" Button: GPT-4o-mini erklärt jeden Paragraphen in 3 Sätzen für einen 16-Jährigen
+- **Reform-Diffs** — Zeigt Vorher/Nachher was sich im Gesetzestext ändert wenn eine Reform umgesetzt wird (Verbindung zu [Deutschland 2030](https://github.com/mikelninh/deutschland-2030))
+- **Wöchentlich aktualisiert** — Jeden Montag 6:00 UTC parst ein GitHub Action automatisch alle Gesetze neu. Änderungen werden als Git-Diff sichtbar.
+- **100% Open Source** — MIT Lizenz. Fork it, improve it.
 
-| Metrik | Zahl |
-|--------|------|
-| Gesetze | **5.938** |
-| Paragraphen | **107.691** |
-| Zeilen | **904.989** |
+## Zahlen
+
+| Metrik | Stand |
+|--------|-------|
+| Gesetze | **5.936** |
+| Paragraphen | **107.715** |
+| Zeilen | **1.303.451** |
 | Abdeckung | **86%** aller Bundesgesetze |
+| Aktualisierung | **Automatisch wöchentlich** |
+| Zuletzt geändert 2025/2026 | **508 Gesetze** |
 
-Jedes Gesetz als sauberes Markdown — von der Abgabenordnung bis zum Zukunftsfinanzierungsgesetz.
-
-### Schlüsselgesetze
+## Schlüsselgesetze
 
 | Gesetz | Datei | Beschreibung |
 |--------|-------|-------------|
-| 🏛️ Grundgesetz | `laws/gg.md` | Die Verfassung |
-| ⚖️ Strafgesetzbuch | `laws/stgb.md` | Strafrecht |
-| 📋 Bürgerliches Gesetzbuch | `laws/bgb.md` | Zivilrecht (10.768 Zeilen) |
-| 🏦 Sozialgesetzbuch VI | `laws/sgb_6.md` | Rentenrecht |
-| 🌐 Netzwerkdurchsetzungsgesetz | `laws/netzdg.md` | Plattform-Regulierung |
-| 🐾 Tierschutzgesetz | `laws/tierschg.md` | Tierschutz |
-| 💶 Einkommensteuergesetz | `laws/estg.md` | Einkommensteuer |
-| 🛂 Aufenthaltsgesetz | `laws/aufenthg_2004.md` | Aufenthaltsrecht |
+| 🏛️ Grundgesetz | [`laws/gg.md`](laws/gg.md) | Die Verfassung |
+| ⚖️ Strafgesetzbuch | [`laws/stgb.md`](laws/stgb.md) | Strafrecht |
+| 📋 Bürgerliches Gesetzbuch | [`laws/bgb.md`](laws/bgb.md) | Zivilrecht (17.896 Zeilen) |
+| 🏦 SGB V | [`laws/sgb_5.md`](laws/sgb_5.md) | Krankenversicherung |
+| 🏦 SGB VI | [`laws/sgb_6.md`](laws/sgb_6.md) | Rentenrecht |
+| 🌐 NetzDG | [`laws/netzdg.md`](laws/netzdg.md) | Plattform-Regulierung |
+| 🐾 Tierschutzgesetz | [`laws/tierschg.md`](laws/tierschg.md) | Tierschutz |
+| 💶 Einkommensteuergesetz | [`laws/estg.md`](laws/estg.md) | Einkommensteuer |
+| 🛂 Aufenthaltsgesetz | [`laws/aufenthg_2004.md`](laws/aufenthg_2004.md) | Aufenthaltsrecht |
+
+## Reform-Diffs: Was sich ändern würde
+
+GitLaw zeigt Gesetze wie sie **sind**. [Deutschland 2030](https://github.com/mikelninh/deutschland-2030) zeigt wie sie sein **könnten**. Die Reform-Diffs zeigen den **Weg dazwischen**.
+
+Beispiel — **Rentenreform §36 SGB VI**:
+
+```diff
+- Versicherte haben Anspruch auf Altersrente, wenn sie das
+- 67. Lebensjahr vollendet und die Wartezeit von 35 Jahren
+- erfüllt haben.
++ Nach 45 Beitragsjahren besteht Anspruch auf abschlagsfreie
++ Altersrente, frühestens ab Vollendung des 63. Lebensjahres.
++ Versicherte mit 20+ Jahren körperlicher Belastung erhalten
++ einen Zuschlag von 12 Monaten.
+```
+
+**→ [Alle Reform-Diffs im Viewer ansehen](https://mikelninh.github.io/gitlaw/)**
 
 ## Web Viewer
-
-Der Viewer (`viewer/`) ist eine React-App mit:
-- **Fuzzy-Suche** über alle 5.938 Gesetze
-- **Featured Laws** mit Schnellzugriff
-- **"Zuletzt geändert"** — Gesetze die kürzlich aktualisiert wurden
-- **In-Gesetz-Suche** mit Treffer-Hervorhebung
-- **GitHub-Link** zu jedem Markdown-File
 
 ```bash
 cd viewer
@@ -51,54 +71,61 @@ npm install
 npm run dev    # http://localhost:5175/gitlaw/
 ```
 
-## Parser
+Braucht `VITE_OPENAI_API_KEY` in `viewer/.env` für die AI-Erklärungen.
 
-Der Parser (`parser/`) konvertiert XML von gesetze-im-internet.de zu Markdown:
+## Parser
 
 ```bash
 pip install requests lxml
 
-# Index aller Gesetze holen
-python parser/fetch_index.py          # → 6.876 Gesetze gefunden
-
-# Ein Gesetz parsen
-python parser/parse_law.py "https://www.gesetze-im-internet.de/gg/xml.zip"
-
-# Alle parsen (parallel, 10 Worker)
-python parser/fetch_fast.py           # ~10 Minuten für alles
+python parser/fetch_index.py     # Index holen (6.876 Gesetze)
+python parser/fetch_fast.py      # Alle parsen (10 Worker, ~10 Min)
+python parser/build_index.py     # Viewer-Index bauen
 ```
 
-## Die Vision: 3 Phasen
+## Automatische Aktualisierung
 
-### Phase 1: Archiv ✅ (fertig)
-Alle Bundesgesetze als durchsuchbares Markdown in Git.
+Jeden Montag 6:00 UTC läuft ein [GitHub Action](.github/workflows/update-laws.yml):
+1. Parst alle Gesetze neu von gesetze-im-internet.de
+2. Vergleicht mit der vorherigen Version
+3. Committed nur wenn sich etwas geändert hat
+4. Die Änderung ist als **Git-Diff** sichtbar — DAS ist GitLaw
+
+## Roadmap
+
+### Phase 1: Archiv ✅
+Alle Bundesgesetze durchsuchbar, AI-erklärbar, mit Reform-Diffs. Wöchentlich aktualisiert.
 
 ### Phase 2: Bürgerbeteiligung (geplant)
 - Paragraph-Level-Kommentare
 - Öffentliche API für Forscher und Journalisten
-- Meinungsvergleich pro Gesetz (Wahl-O-Mat-Stil)
+- "Was bedeutet das für MICH?" — personalisierte Erklärungen
 
 ### Phase 3: Lobbying-Transparenz (geplant)
-- Integration mit dem Lobbyregister (lobbyregister.bundestag.de)
-- NLP-Vergleich: Lobbying-Positionspapiere ↔ Amendments
-- Timeline-Analyse: Meeting am Montag → Amendment am Freitag = automatisches Flag
-- Dashboard: "Meistbeeinflusste Gesetze des Monats"
+- Integration mit lobbyregister.bundestag.de
+- NLP: Lobbying-Papiere ↔ Amendments vergleichen
+- Automatisches Flagging bei verdächtigen Timelines
 
 ## Datenquellen
 
-- **gesetze-im-internet.de** — Alle Bundesgesetze (BMJV)
-- **lobbyregister.bundestag.de** — Bundeslobbyregister (ab Phase 3)
+- **[gesetze-im-internet.de](https://www.gesetze-im-internet.de)** — Alle Bundesgesetze (BMJV)
+- **[lobbyregister.bundestag.de](https://www.lobbyregister.bundestag.de)** — Bundeslobbyregister (Phase 3)
 
-## Tech Stack
+## Tech
 
-- **Parser**: Python + lxml + requests
-- **Viewer**: React + TypeScript + Vite + Tailwind + Fuse.js
-- **Daten**: Markdown in Git (versioniert, diffbar, durchsuchbar)
+| Komponente | Stack |
+|-----------|-------|
+| Parser | Python + lxml + requests |
+| Viewer | React + TypeScript + Vite + Tailwind + Fuse.js |
+| AI | OpenAI GPT-4o-mini |
+| Daten | Markdown in Git |
+| Updates | GitHub Actions (wöchentlich) |
+| Deployment | GitHub Pages |
 
 ## Verwandte Projekte
 
-- **[offenegesetze.de](https://offenegesetze.de)** — Bundesgesetzblatt durchsuchbar (OKF)
-- **[bundesgit](https://github.com/bundestag/gesetze)** — Mirror (abandoned)
+- **[Deutschland 2030](https://github.com/mikelninh/deutschland-2030)** — 9 Reformen für Deutschland, evidenzbasiert
+- **[offenegesetze.de](https://offenegesetze.de)** — Bundesgesetzblatt durchsuchbar
 - **[La Fabrique de la Loi](https://lafabriquedelaloi.fr)** — Französische Amendment-Verfolgung
 
 ## Lizenz
