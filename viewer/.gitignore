@@ -24,3 +24,4 @@ dist-ssr
 *.sw?
 laws/
 node_modules/
+.env
