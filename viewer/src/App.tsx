@@ -660,22 +660,57 @@ function App() {
             <p className="text-ink-muted max-w-md mx-auto">Wähle einen Musterbrief, fülle die Felder aus, kopiere oder drucke ihn.</p>
           </div>
 
+          {/* Category filter */}
           {!activeTemplate ? (
-            <div className="grid sm:grid-cols-2 gap-3">
-              {letterTemplates.map(t => (
-                <button key={t.id} onClick={() => { setActiveTemplate(t.id); setTemplateFields({}); setGeneratedLetter('') }}
-                  className="bg-card rounded-xl border border-border p-5 text-left hover:border-gold/30 hover:shadow-sm transition-all cursor-pointer">
-                  <div className="flex items-center gap-3 mb-2">
-                    <span className="text-2xl">{t.emoji}</span>
-                    <div>
-                      <h3 className="font-display text-sm">{t.title}</h3>
-                      <span className="text-[10px] text-ink-muted">{t.category}</span>
+            <div>
+              <div className="flex flex-wrap gap-2 justify-center mb-6">
+                {['Alle', ...new Set(letterTemplates.map(t => t.category))].map(cat => (
+                  <button key={cat} className="px-3 py-1.5 rounded-full text-xs bg-card border border-border text-ink-muted hover:text-gold hover:border-gold/30 cursor-pointer transition-colors">
+                    {cat}
+                  </button>
+                ))}
+              </div>
+              <p className="text-center text-sm text-ink-muted mb-4">{letterTemplates.length} Musterbriefe · {letterTemplates.filter(t => !t.premium).length} kostenlos · {letterTemplates.filter(t => t.premium).length} Premium</p>
+              <div className="grid sm:grid-cols-2 gap-3">
+                {letterTemplates.map(t => (
+                  <button key={t.id} onClick={() => {
+                    if (t.premium) {
+                      alert('Dieses Template ist Teil von GitLaw Premium (€4,99/Monat). Kommt bald! Aktuell sind ' + letterTemplates.filter(x => !x.premium).length + ' Musterbriefe kostenlos verfügbar.')
+                      return
+                    }
+                    setActiveTemplate(t.id); setTemplateFields({}); setGeneratedLetter('')
+                  }}
+                    className={`rounded-xl border p-5 text-left transition-all cursor-pointer ${t.premium ? 'bg-gold-light/30 border-gold/20 hover:border-gold/40' : 'bg-card border-border hover:border-gold/30 hover:shadow-sm'}`}>
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="text-2xl">{t.emoji}</span>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <h3 className="font-display text-sm">{t.title}</h3>
+                          {t.premium && <span className="text-[9px] font-bold text-gold bg-gold-light px-1.5 py-0.5 rounded-full">PREMIUM</span>}
+                        </div>
+                        <span className="text-[10px] text-ink-muted">{t.category}</span>
+                      </div>
                     </div>
-                  </div>
-                  <p className="text-xs text-ink-muted">{t.description}</p>
-                  <p className="text-[10px] text-gold mt-2">{t.lawReference}</p>
+                    <p className="text-xs text-ink-muted">{t.description}</p>
+                    <p className="text-[10px] text-gold mt-2">{t.lawReference}</p>
+                  </button>
+                ))}
+              </div>
+
+              {/* Premium CTA */}
+              <div className="mt-8 bg-gold-light rounded-2xl p-6 text-center border border-gold/10">
+                <h3 className="font-display text-lg mb-2">GitLaw Premium — €4,99/Monat</h3>
+                <p className="text-sm text-ink-soft mb-4">Alle {letterTemplates.length} Musterbriefe + unbegrenzte AI-Fragen + Favoriten-Sync + Beratungsstellen-Suche</p>
+                <div className="flex flex-wrap gap-3 justify-center text-xs text-ink-muted">
+                  <span>✅ {letterTemplates.filter(t => !t.premium).length} Briefe kostenlos</span>
+                  <span>⭐ {letterTemplates.filter(t => t.premium).length} Premium-Briefe</span>
+                  <span>🌍 6 Sprachen</span>
+                  <span>♾️ Unbegrenzte Fragen</span>
+                </div>
+                <button className="mt-4 px-6 py-2.5 bg-gold text-white rounded-xl font-medium hover:bg-gold/90 transition-colors cursor-pointer text-sm">
+                  Kommt bald — Warteliste beitreten
                 </button>
-              ))}
+              </div>
             </div>
           ) : (() => {
             const tmpl = letterTemplates.find(t => t.id === activeTemplate)!
