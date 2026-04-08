@@ -10,7 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.102.1",
     "fuse.js": "^7.3.0",
+    "jspdf": "^4.2.1",
     "lucide-react": "^1.7.0",
     "openai": "^6.33.0",
     "react": "^19.2.4",

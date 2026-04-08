@@ -3,3 +3,5 @@ __pycache__/
 parser/law_index.json
 parser/fetch_log.txt
 .DS_Store
+rag/vectorstore/index.faiss
+rag/vectorstore/index.pkl
