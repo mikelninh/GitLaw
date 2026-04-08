@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react'
-import { Search, ArrowLeft, Scale, FileText, ExternalLink, Sparkles, GitCompare, Lightbulb, Heart, MessageCircle, Send, Download, Share2 } from 'lucide-react'
+import { Search, ArrowLeft, Scale, FileText, ExternalLink, Sparkles, GitCompare, Lightbulb, MessageCircle, Send, Download, Share2 } from 'lucide-react'
 import Fuse from 'fuse.js'
 import { loadExplanations, reformDiffs, type Explanations } from './explain'
 import { askLegalQuestion } from './rag'
@@ -384,25 +384,22 @@ function App() {
         /* ── REFORM DIFFS TAB ── */
         <main className="max-w-4xl mx-auto px-5 py-8">
           <div className="text-center mb-8">
-            <p className="text-sm text-gold font-bold uppercase tracking-widest mb-2">Deutschland 2030 × GitLaw</p>
-            <h2 className="font-display text-3xl mb-3">Was sich im Gesetzestext ändert</h2>
-            <p className="text-ink-muted max-w-lg mx-auto">Jede Reform verändert konkrete Paragraphen. Hier siehst du den Vorher/Nachher-Diff — Wort für Wort.</p>
+            <p className="text-sm text-gold font-bold uppercase tracking-widest mb-2">Reformvorschläge × GitLaw</p>
+            <h2 className="font-display text-3xl mb-3">Was sich ändern könnte</h2>
+            <p className="text-ink-muted max-w-lg mx-auto">Wie würden konkrete Reformvorschläge den Gesetzestext verändern? Vorher/Nachher — Wort für Wort.</p>
           </div>
 
-          {/* Teal Swan inspiration */}
-          <div className="bg-gold-light rounded-2xl p-6 mb-8 text-center border border-gold/10">
-            <Heart className="w-5 h-5 text-gold mx-auto mb-3" />
-            <p className="text-ink-soft italic leading-relaxed max-w-lg mx-auto">
-              "If you want someone to make a change, you need to spark their desire to change by showing them why it is in their best interest to make the change."
-            </p>
-            <p className="text-ink-muted text-sm mt-2">— Teal Swan</p>
+          {/* Important disclaimer */}
+          <div className="bg-blue-light rounded-2xl p-5 mb-8 border border-blue/10">
+            <p className="text-sm text-blue font-medium mb-1">⚠️ Dies sind keine beschlossenen Gesetze</p>
+            <p className="text-sm text-ink-muted">Diese Diffs zeigen <strong>Reformvorschläge</strong> aus dem Projekt <a href="https://mikelninh.github.io/zeitgeist/" target="_blank" rel="noopener" className="text-gold hover:underline font-medium">Zeitgeist DE</a> — eine evidenzbasierte Vision für Deutschland, inspiriert von 12 Ländern. Die Vorschläge basieren auf simulierten Bundestagsdebatten und internationaler Forschung.</p>
           </div>
 
           <div className="space-y-6">
             {reformDiffs.map((diff, i) => (
               <div key={i} className="bg-card rounded-2xl border border-border overflow-hidden">
                 <div className="p-6 border-b border-border">
-                  <p className="text-xs font-bold text-gold uppercase tracking-widest mb-1">Reform</p>
+                  <p className="text-xs font-bold text-gold uppercase tracking-widest mb-1">Reformvorschlag</p>
                   <h3 className="font-display text-xl mb-1">{diff.reform}</h3>
                   <p className="text-sm text-ink-muted">{diff.affectedLaw} — {diff.paragraph}</p>
                 </div>
@@ -410,11 +407,11 @@ function App() {
                 {/* Diff view */}
                 <div className="grid md:grid-cols-2">
                   <div className="p-5 bg-red-light/30 border-r border-border">
-                    <p className="text-xs font-bold text-red uppercase tracking-widest mb-2">Aktueller Gesetzestext</p>
+                    <p className="text-xs font-bold text-red uppercase tracking-widest mb-2">Aktuell geltendes Recht</p>
                     <p className="text-sm text-ink-soft leading-relaxed font-mono whitespace-pre-wrap">{diff.currentText}</p>
                   </div>
                   <div className="p-5 bg-green-light/30">
-                    <p className="text-xs font-bold text-green uppercase tracking-widest mb-2">Nach der Reform</p>
+                    <p className="text-xs font-bold text-green uppercase tracking-widest mb-2">Vorschlag (nicht beschlossen)</p>
                     <p className="text-sm text-ink-soft leading-relaxed font-mono whitespace-pre-wrap">{diff.proposedText}</p>
                   </div>
                 </div>
@@ -436,7 +433,7 @@ function App() {
 
           <div className="text-center mt-10">
             <p className="text-ink-muted text-sm mb-4">
-              Diese Diffs basieren auf den simulierten Gesetzentwürfen aus <a href="https://mikelninh.github.io/deutschland-2030/" className="text-gold hover:underline" target="_blank">Deutschland 2030</a>.
+              Alle Reformvorschläge stammen aus <a href="https://mikelninh.github.io/zeitgeist/" className="text-gold hover:underline" target="_blank" rel="noopener">Zeitgeist DE</a> — eine evidenzbasierte Vision für Deutschland.
             </p>
           </div>
         </main>

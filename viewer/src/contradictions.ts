@@ -75,7 +75,7 @@ export const contradictions: Contradiction[] = [
   {
     id: "klima-autobahn",
     emoji: "🛣️",
-    title: "Klimaschutzgesetz sagt Klimaneutralität 2045 — gleichzeitig 850 km neue Autobahn",
+    title: "€22 Mrd./Jahr fossile Subventionen — trotz Klimaneutralitätsziel 2045",
     category: "Klimaschutz",
     severity: "ernst",
     lawSays: {
@@ -84,11 +84,11 @@ export const contradictions: Contradiction[] = [
       quote: "Die Treibhausgasemissionen werden schrittweise gemindert. Ziel ist die Erreichung der Netto-Treibhausgasneutralität bis 2045.",
       lawId: "ksg",
     },
-    realitySays: "Der Bundesverkehrswegeplan plant 850 km neue Autobahnen. Mehr Straßen = mehr Verkehr = mehr Emissionen (induzierter Verkehr). Deutschland hat kein Tempolimit — einziges Land weltweit.",
-    contradiction: "Man kann nicht gleichzeitig klimaneutral werden UND das Straßennetz für fossilen Verkehr ausbauen. Das eine macht das andere unmöglich.",
-    numbers: "850 km neue Autobahn geplant · Kein Tempolimit · Dieselprivileg: €8,2 Mrd./Jahr · Kerosinsteuerbefreiung: Flugbenzin steuerfrei",
-    whyNothingHappens: "Autolobby ist eine der mächtigsten in Deutschland. 'Freie Fahrt für freie Bürger' ist quasi-religiös. Arbeitsplatzargument.",
-    whatShouldChange: "Tempolimit 120 km/h (spart sofort 3-5% Sprit). Dieselprivileg abschaffen. Autobahnneubau-Moratorium. Investitionen in Schiene.",
+    realitySays: "Der Bundesverkehrswegeplan plant 850 km neue Autobahnen. Gleichzeitig: Dieselprivileg (€8,2 Mrd./Jahr Subvention), Kerosinsteuerbefreiung (Flüge künstlich verbilligt vs. Bahn), kein Tempolimit. Gegenargument: Wenn alle E-Autos fahren, wäre Autobahnausbau klimaneutral möglich.",
+    contradiction: "Der Widerspruch liegt weniger im Straßenbau selbst als in den fossilen Subventionen: Diesel €8,2 Mrd./Jahr verbilligt, Kerosin steuerfrei, Dienstwagenprivileg — alles Anreize für fossile Mobilität. Mit 100% E-Mobilität + erneuerbarem Strom wäre Autobahnausbau weniger problematisch. Aber: Wir sind bei ~25% E-Auto-Neuzulassungen, nicht bei 100%.",
+    numbers: "850 km neue Autobahn · Dieselprivileg: €8,2 Mrd./Jahr · Kerosin: steuerfrei · E-Auto-Anteil Neuzulassungen: ~25% · Dienstwagenprivileg: €5,5 Mrd./Jahr",
+    whyNothingHappens: "Die fossilen Subventionen halten das alte System künstlich am Leben. Autolobby ist mächtig, 'Freie Fahrt' ist quasi-religiös. Aber: der echte Hebel liegt bei den Subventionen, nicht beim Straßenbau per se.",
+    whatShouldChange: "Fossile Subventionen abschaffen (Diesel, Kerosin, Dienstwagen = €22 Mrd./Jahr). E-Mobilität + Ladeinfrastruktur beschleunigen. Tempolimit als Brückenmaßnahme bis E-Mobilität Standard ist. Schiene ausbauen als Alternative.",
   },
   {
     id: "splitting-gleichstellung",
