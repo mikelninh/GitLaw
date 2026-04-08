@@ -18,7 +18,7 @@ import time
 from pathlib import Path
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
-from langchain.schema import Document
+from langchain_core.documents import Document
 
 LAWS_DIR = Path("laws")
 OUTPUT_DIR = Path("rag/vectorstore")
