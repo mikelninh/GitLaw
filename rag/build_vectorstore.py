@@ -105,20 +105,50 @@ def build_vectorstore(docs: list[Document], output_dir: Path):
     )
 
     # Process in batches to show progress
-    batch_size = 500
+    batch_size = 200  # Smaller batches to stay under TPM limit
     vectorstore = None
+
+    # Check for existing checkpoint
+    if (output_dir / "index.faiss").exists():
+        print("  Found existing checkpoint, loading...")
+        vectorstore = FAISS.load_local(str(output_dir), embeddings, allow_dangerous_deserialization=True)
+        print(f"  Loaded checkpoint with {vectorstore.index.ntotal} vectors")
+
+    total_batches = (len(docs) + batch_size - 1) // batch_size
 
     for i in range(0, len(docs), batch_size):
         batch = docs[i:i + batch_size]
-        print(f"  Batch {i // batch_size + 1}/{(len(docs) + batch_size - 1) // batch_size} ({len(batch)} chunks)...")
+        batch_num = i // batch_size + 1
+        print(f"  Batch {batch_num}/{total_batches} ({len(batch)} chunks)...", flush=True)
 
-        if vectorstore is None:
-            vectorstore = FAISS.from_documents(batch, embeddings)
-        else:
-            batch_store = FAISS.from_documents(batch, embeddings)
-            vectorstore.merge_from(batch_store)
+        try:
+            if vectorstore is None:
+                vectorstore = FAISS.from_documents(batch, embeddings)
+            else:
+                batch_store = FAISS.from_documents(batch, embeddings)
+                vectorstore.merge_from(batch_store)
+        except Exception as e:
+            print(f"    Error: {e}. Saving checkpoint and waiting 30s...")
+            if vectorstore:
+                vectorstore.save_local(str(output_dir))
+            time.sleep(30)
+            # Retry once
+            try:
+                batch_store = FAISS.from_documents(batch, embeddings)
+                if vectorstore:
+                    vectorstore.merge_from(batch_store)
+                else:
+                    vectorstore = batch_store
+            except Exception as e2:
+                print(f"    Retry failed: {e2}. Skipping batch.")
+                continue
 
-        time.sleep(0.5)  # Rate limit safety
+        time.sleep(3)  # 3s between batches to respect TPM limit
+
+        # Save checkpoint every 50 batches
+        if batch_num % 50 == 0 and vectorstore:
+            vectorstore.save_local(str(output_dir))
+            print(f"    [checkpoint saved: {vectorstore.index.ntotal} vectors]", flush=True)
 
     # Save
     vectorstore.save_local(str(output_dir))
