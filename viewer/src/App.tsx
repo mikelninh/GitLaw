@@ -5,6 +5,8 @@ import { loadExplanations, reformDiffs, type Explanations } from './explain'
 import { askLegalQuestion } from './rag'
 import { getDailyLaw, dailyLaws, getCategoryColor } from './daily-law'
 import { exportLawAsPDF, generateShareLink, copyToClipboard } from './export'
+import { letterTemplates } from './templates'
+import { addFavorite, isFavorite, removeFavorite } from './favorites'
 import './index.css'
 
 interface LawEntry {
@@ -66,7 +68,10 @@ function App() {
   const [contentSearch, setContentSearch] = useState('')
   const [explanations, setExplanations] = useState<Explanations | null>(null)
   const [showExplain, setShowExplain] = useState(false)
-  const [activeTab, setActiveTab] = useState<'gesetze' | 'reformen' | 'fragen'>('gesetze')
+  const [activeTab, setActiveTab] = useState<'gesetze' | 'reformen' | 'fragen' | 'briefe'>('gesetze')
+  const [activeTemplate, setActiveTemplate] = useState<string | null>(null)
+  const [templateFields, setTemplateFields] = useState<Record<string, string>>({})
+  const [generatedLetter, setGeneratedLetter] = useState('')
   const [chatInput, setChatInput] = useState('')
   const [chatMessages, setChatMessages] = useState<{role: 'user' | 'assistant'; text: string; sources?: {law: string; section: string}[]}[]>([])
   const [chatLoading, setChatLoading] = useState(false)
@@ -146,6 +151,17 @@ function App() {
                 className="pl-9 pr-4 py-1.5 rounded-lg border border-border bg-card text-sm w-56 focus:outline-none focus:border-gold"
               />
             </div>
+            {/* Favorit toggle */}
+            {law && (
+              <button onClick={() => {
+                if (isFavorite(law.id)) { removeFavorite(law.id) } else { addFavorite(law.id, law.title) }
+                setSelectedLaw(law.id) // Force re-render
+              }}
+                className={`text-lg cursor-pointer ${isFavorite(law.id) ? 'text-gold' : 'text-ink-muted/30 hover:text-gold'}`}
+                title={isFavorite(law.id) ? 'Aus Favoriten entfernen' : 'Zu Favoriten hinzufügen'}>
+                {isFavorite(law.id) ? '⭐' : '☆'}
+              </button>
+            )}
             {/* Font size (Barrierefreiheit) */}
             <div className="flex items-center gap-1 border border-border rounded-lg overflow-hidden">
               <button onClick={() => setFontSize(f => Math.max(12, f - 2))} className="px-2 py-1 text-xs text-ink-muted hover:bg-bg-alt cursor-pointer" title="Schrift kleiner">A-</button>
@@ -312,6 +328,10 @@ function App() {
           <button onClick={() => setActiveTab('fragen')}
             className={`px-4 py-2.5 rounded-t-xl text-sm font-medium transition-colors cursor-pointer ${activeTab === 'fragen' ? 'bg-bg-alt text-ink border border-border border-b-bg-alt' : 'text-ink-muted hover:text-ink'}`}>
             <MessageCircle className="w-4 h-4 inline mr-1.5" />Frage stellen
+          </button>
+          <button onClick={() => setActiveTab('briefe')}
+            className={`px-4 py-2.5 rounded-t-xl text-sm font-medium transition-colors cursor-pointer ${activeTab === 'briefe' ? 'bg-bg-alt text-ink border border-border border-b-bg-alt' : 'text-ink-muted hover:text-ink'}`}>
+            <FileText className="w-4 h-4 inline mr-1.5" />Musterbriefe
           </button>
         </div>
       </div>
@@ -631,6 +651,90 @@ function App() {
           )}
         </main>
       ) : (
+      /* ── MUSTERBRIEFE TAB ── */
+      activeTab === 'briefe' ? (
+        <main className="max-w-3xl mx-auto px-5 py-8">
+          <div className="text-center mb-8">
+            <p className="text-sm text-gold font-bold uppercase tracking-widest mb-2">Musterbriefe</p>
+            <h2 className="font-display text-3xl mb-3">Dein Recht — schwarz auf weiß</h2>
+            <p className="text-ink-muted max-w-md mx-auto">Wähle einen Musterbrief, fülle die Felder aus, kopiere oder drucke ihn.</p>
+          </div>
+
+          {!activeTemplate ? (
+            <div className="grid sm:grid-cols-2 gap-3">
+              {letterTemplates.map(t => (
+                <button key={t.id} onClick={() => { setActiveTemplate(t.id); setTemplateFields({}); setGeneratedLetter('') }}
+                  className="bg-card rounded-xl border border-border p-5 text-left hover:border-gold/30 hover:shadow-sm transition-all cursor-pointer">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="text-2xl">{t.emoji}</span>
+                    <div>
+                      <h3 className="font-display text-sm">{t.title}</h3>
+                      <span className="text-[10px] text-ink-muted">{t.category}</span>
+                    </div>
+                  </div>
+                  <p className="text-xs text-ink-muted">{t.description}</p>
+                  <p className="text-[10px] text-gold mt-2">{t.lawReference}</p>
+                </button>
+              ))}
+            </div>
+          ) : (() => {
+            const tmpl = letterTemplates.find(t => t.id === activeTemplate)!
+            return (
+              <div>
+                <button onClick={() => setActiveTemplate(null)} className="text-sm text-gold hover:underline cursor-pointer mb-4">← Zurück</button>
+                <div className="bg-card rounded-2xl border border-border p-6 mb-6">
+                  <h3 className="font-display text-xl mb-1">{tmpl.emoji} {tmpl.title}</h3>
+                  <p className="text-sm text-ink-muted mb-4">{tmpl.description}</p>
+                  <div className="space-y-3">
+                    {tmpl.fields.map(f => (
+                      <div key={f.id}>
+                        <label className="text-sm font-medium text-ink mb-1 block">{f.label}</label>
+                        {f.type === 'textarea' ? (
+                          <textarea value={templateFields[f.id] || ''} onChange={e => setTemplateFields({...templateFields, [f.id]: e.target.value})}
+                            placeholder={f.placeholder} rows={3}
+                            className="w-full px-3 py-2 rounded-lg border border-border text-sm focus:outline-none focus:border-gold" />
+                        ) : (
+                          <input type={f.type || 'text'} value={templateFields[f.id] || ''} onChange={e => setTemplateFields({...templateFields, [f.id]: e.target.value})}
+                            placeholder={f.placeholder}
+                            className="w-full px-3 py-2 rounded-lg border border-border text-sm focus:outline-none focus:border-gold" />
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  <button onClick={() => {
+                    let text = tmpl.template
+                    text = text.replace(/\{\{datum\}\}/g, new Date().toLocaleDateString('de-DE'))
+                    for (const [key, val] of Object.entries(templateFields)) {
+                      text = text.replace(new RegExp(`\\{\\{${key}\\}\\}`, 'g'), val || `[${key}]`)
+                    }
+                    setGeneratedLetter(text)
+                  }} className="mt-4 px-6 py-3 bg-gold text-white rounded-xl font-medium hover:bg-gold/90 transition-colors cursor-pointer">
+                    Brief generieren
+                  </button>
+                </div>
+
+                {generatedLetter && (
+                  <div className="bg-card rounded-2xl border border-border overflow-hidden">
+                    <div className="p-4 border-b border-border flex items-center justify-between">
+                      <span className="text-sm font-bold">Dein Brief</span>
+                      <div className="flex gap-2">
+                        <button onClick={() => copyToClipboard(generatedLetter).then(() => alert('Kopiert!'))}
+                          className="text-xs text-gold hover:underline cursor-pointer">Kopieren</button>
+                        <button onClick={() => window.print()}
+                          className="text-xs text-gold hover:underline cursor-pointer">Drucken</button>
+                      </div>
+                    </div>
+                    <pre className="p-6 text-sm whitespace-pre-wrap font-mono leading-relaxed">{generatedLetter}</pre>
+                    <div className="p-3 bg-gold-light text-center">
+                      <p className="text-xs text-gold">Rechtsgrundlage: {tmpl.lawReference} · Dies ist ein Muster — bei Bedarf anwaltlich prüfen lassen.</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )
+          })()}
+        </main>
+      ) :
       /* ── GESETZE TAB ── */
       <div>
 
