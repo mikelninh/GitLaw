@@ -6,6 +6,7 @@ import { askLegalQuestion } from './rag'
 import { getDailyLaw, dailyLaws, getCategoryColor } from './daily-law'
 import { exportLawAsPDF, generateShareLink, copyToClipboard } from './export'
 import { letterTemplates } from './templates'
+import { contradictions } from './contradictions'
 import { addFavorite, isFavorite, removeFavorite } from './favorites'
 import './index.css'
 
@@ -70,7 +71,7 @@ function App() {
   const [showExplain, setShowExplain] = useState(false)
   const [liveExplaining, setLiveExplaining] = useState(false)
   const [liveExplanation, setLiveExplanation] = useState('')
-  const [activeTab, setActiveTab] = useState<'gesetze' | 'reformen' | 'fragen' | 'briefe'>('gesetze')
+  const [activeTab, setActiveTab] = useState<'gesetze' | 'reformen' | 'fragen' | 'briefe' | 'widersprueche'>('gesetze')
   const [activeTemplate, setActiveTemplate] = useState<string | null>(null)
   const [templateFields, setTemplateFields] = useState<Record<string, string>>({})
   const [generatedLetter, setGeneratedLetter] = useState('')
@@ -371,6 +372,10 @@ function App() {
           <button onClick={() => setActiveTab('briefe')}
             className={`px-4 py-2.5 rounded-t-xl text-sm font-medium transition-colors cursor-pointer ${activeTab === 'briefe' ? 'bg-bg-alt text-ink border border-border border-b-bg-alt' : 'text-ink-muted hover:text-ink'}`}>
             <FileText className="w-4 h-4 inline mr-1.5" />Musterbriefe
+          </button>
+          <button onClick={() => setActiveTab('widersprueche')}
+            className={`px-4 py-2.5 rounded-t-xl text-sm font-medium transition-colors cursor-pointer ${activeTab === 'widersprueche' ? 'bg-bg-alt text-ink border border-border border-b-bg-alt' : 'text-ink-muted hover:text-ink'}`}>
+            ⚡ Widersprüche
           </button>
         </div>
       </div>
@@ -690,6 +695,83 @@ function App() {
           )}
         </main>
       ) : (
+      /* ── WIDERSPRÜCHE TAB ── */
+      activeTab === 'widersprueche' ? (
+        <main className="max-w-3xl mx-auto px-5 py-8">
+          <div className="text-center mb-8">
+            <p className="text-sm text-red font-bold uppercase tracking-widest mb-2">Widersprüche</p>
+            <h2 className="font-display text-3xl mb-3">Wo das Recht sich selbst widerspricht</h2>
+            <p className="text-ink-muted max-w-md mx-auto">Was das Gesetz sagt — und was die Realität zeigt. Mit echten Paragraphen, echten Zahlen.</p>
+          </div>
+          <div className="space-y-6">
+            {contradictions.map(c => {
+              const severityColor = c.severity === 'krass' ? 'bg-red-light text-red' : c.severity === 'absurd' ? 'bg-purple-light text-purple' : 'bg-gold-light text-gold'
+              return (
+                <div key={c.id} className="bg-card rounded-2xl border border-border overflow-hidden">
+                  <div className="p-6">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="text-2xl">{c.emoji}</span>
+                      <div className="flex-1">
+                        <h3 className="font-display text-base">{c.title}</h3>
+                        <div className="flex gap-2 mt-1">
+                          <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-blue-light text-blue">{c.category}</span>
+                          <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${severityColor}`}>{c.severity}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Law says */}
+                    <div className="bg-green-light rounded-xl p-4 mb-3">
+                      <p className="text-[10px] font-bold text-green uppercase tracking-wider mb-1">Was das Gesetz sagt</p>
+                      <p className="text-sm text-ink-soft italic">"{c.lawSays.quote}"</p>
+                      <p className="text-[11px] text-green mt-1">— {c.lawSays.law}, {c.lawSays.paragraph}</p>
+                      {c.lawSays.lawId && (
+                        <button onClick={() => loadLaw(c.lawSays.lawId!)} className="text-[11px] text-gold hover:underline cursor-pointer mt-1">→ Im Volltext lesen</button>
+                      )}
+                    </div>
+
+                    {/* Reality says */}
+                    <div className="bg-red-light rounded-xl p-4 mb-3">
+                      <p className="text-[10px] font-bold text-red uppercase tracking-wider mb-1">Was die Realität zeigt</p>
+                      <p className="text-sm text-ink-soft">{c.realitySays}</p>
+                    </div>
+
+                    {/* The contradiction */}
+                    <div className="bg-gold-light rounded-xl p-4 mb-3 border border-gold/10">
+                      <p className="text-[10px] font-bold text-gold uppercase tracking-wider mb-1">Der Widerspruch</p>
+                      <p className="text-sm text-ink-soft font-medium">{c.contradiction}</p>
+                    </div>
+
+                    {/* Numbers */}
+                    {c.numbers && (
+                      <div className="bg-bg-alt rounded-xl p-4 mb-3">
+                        <p className="text-[10px] font-bold text-ink-muted uppercase tracking-wider mb-1">Zahlen</p>
+                        <p className="text-sm text-ink-muted">{c.numbers}</p>
+                      </div>
+                    )}
+
+                    {/* Why nothing happens */}
+                    <div className="mb-3">
+                      <p className="text-[10px] font-bold text-ink-muted uppercase tracking-wider mb-1">Warum passiert nichts?</p>
+                      <p className="text-sm text-ink-muted">{c.whyNothingHappens}</p>
+                    </div>
+
+                    {/* What should change */}
+                    <div className="bg-blue-light rounded-xl p-4">
+                      <p className="text-[10px] font-bold text-blue uppercase tracking-wider mb-1">Was sich ändern muss</p>
+                      <p className="text-sm text-ink-soft">{c.whatShouldChange}</p>
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+
+          <div className="mt-8 text-center">
+            <p className="text-sm text-ink-muted">Kennst du einen Widerspruch der fehlt? <a href="https://github.com/mikelninh/gitlaw/issues" target="_blank" rel="noopener" className="text-gold hover:underline">Melde ihn auf GitHub</a></p>
+          </div>
+        </main>
+      ) :
       /* ── MUSTERBRIEFE TAB ── */
       activeTab === 'briefe' ? (
         <main className="max-w-3xl mx-auto px-5 py-8">
