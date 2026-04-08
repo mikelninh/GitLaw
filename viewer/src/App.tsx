@@ -17,7 +17,18 @@ interface LawEntry {
   file: string
 }
 
-// Simple markdown to HTML (no library needed for basic formatting)
+// Known law abbreviation → file ID mapping for cross-linking
+const lawAbbrevMap: Record<string, string> = {
+  'GG': 'gg', 'StGB': 'stgb', 'BGB': 'bgb', 'StPO': 'stpo', 'ZPO': 'zpo',
+  'SGB V': 'sgb_5', 'SGB VI': 'sgb_6', 'SGB II': 'sgb_2', 'SGB XII': 'sgb_12',
+  'EStG': 'estg', 'AO': 'ao_1977', 'NetzDG': 'netzdg', 'TierSchG': 'tierschg',
+  'AufenthG': 'aufenthg_2004', 'ArbZG': 'arbzg', 'KSchG': 'kschg',
+  'MuSchG': 'muschg', 'AGG': 'agg', 'GEG': 'geg', 'BEEG': 'beeg',
+  'BImSchG': 'bimschg', 'UWG': 'uwg', 'HGB': 'hgb', 'AktG': 'aktg',
+  'BetrVG': 'betrvg', 'InsO': 'inso', 'VwGO': 'vwgo', 'GWB': 'gwb',
+}
+
+// Markdown to HTML with paragraph cross-linking
 function md(text: string): string {
   return text
     .replace(/^### (.+)$/gm, '<h3 id="$1">$1</h3>')
@@ -30,8 +41,17 @@ function md(text: string): string {
       const cells = row.split('|').map((c: string) => c.trim()).filter(Boolean)
       return `<tr>${cells.map((c: string) => `<td style="padding:4px 12px;border-bottom:1px solid #e5e3de">${c}</td>`).join('')}</tr>`
     })
+    // Cross-link: "§ 573 BGB" or "§§ 185, 186 StGB" → clickable
+    .replace(/§§?\s*(\d+\w*(?:\s*(?:Abs\.|Absatz|Nr\.|Nummer|Satz|Buchst\.)\s*\d+\w*)*)\s+((?:SGB\s+[IVX]+|[A-ZÄÖÜ][A-Za-zÄÖÜäöü]+))/g,
+      (_match: string, num: string, abbr: string) => {
+        const lawId = lawAbbrevMap[abbr.trim()]
+        if (lawId) {
+          return `<a href="#" onclick="event.preventDefault();window.__loadLaw&&window.__loadLaw('${lawId}')" style="color:var(--color-gold);text-decoration:underline;cursor:pointer">§ ${num} ${abbr}</a>`
+        }
+        return `§ ${num} ${abbr}`
+      })
     .replace(/\n\n/g, '</p><p>')
-    .replace(/^(?!<[h|b|t|p])/gm, '')
+    .replace(/^(?!<[h|b|t|p|a])/gm, '')
 }
 
 function App() {
@@ -49,6 +69,12 @@ function App() {
   const [chatSources, setChatSources] = useState<{law: string; section: string}[]>([])
   const [chatLoading, setChatLoading] = useState(false)
   const [selectedPersona, setSelectedPersona] = useState<string | null>(null)
+
+  // Expose loadLaw for cross-linking from rendered HTML
+  useEffect(() => {
+    (window as any).__loadLaw = loadLaw
+    return () => { delete (window as any).__loadLaw }
+  })
 
   // Load index
   useEffect(() => {
@@ -598,21 +624,37 @@ function App() {
           )
         })()}
 
-        {/* More interesting laws */}
+        {/* More interesting laws — expandable */}
         <p className="text-[11px] font-bold text-ink-muted uppercase tracking-widest mb-3">Spannende Gesetze entdecken</p>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2 mb-10">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-10">
           {dailyLaws.filter(l => l.id !== getDailyLaw().id).slice(0, 9).map(law => (
-            <div key={law.id} className="bg-card rounded-xl border border-border p-4 hover:border-gold/30 hover:shadow-sm transition-all cursor-default">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-lg">{law.emoji}</span>
-                <span className={`text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full ${getCategoryColor(law.category)}`}>{law.category}</span>
+            <details key={law.id} className="bg-card rounded-xl border border-border hover:border-gold/20 hover:shadow-sm transition-all group">
+              <summary className="p-4 cursor-pointer list-none">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-lg">{law.emoji}</span>
+                  <span className={`text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full ${getCategoryColor(law.category)}`}>{law.category}</span>
+                  {law.year && <span className="text-[10px] text-ink-muted">{law.year}</span>}
+                </div>
+                <h4 className="font-display text-sm group-open:text-gold transition-colors">{law.title}</h4>
+                <p className="text-[12px] text-ink-muted mt-1">{law.law} — {law.paragraph}</p>
+              </summary>
+              <div className="px-4 pb-4 space-y-3">
+                <p className="text-[13px] text-ink-soft leading-relaxed">{law.context}</p>
+                {law.funFact && (
+                  <div className="bg-gold-light rounded-lg p-3">
+                    <p className="text-[12px] text-ink-soft"><strong className="text-gold">Fun Fact:</strong> {law.funFact}</p>
+                  </div>
+                )}
+                {law.needsUpdate && (
+                  <div className="bg-red-light rounded-lg p-3">
+                    <p className="text-[12px] text-ink-soft"><strong className="text-red">Braucht Update:</strong> {law.needsUpdate}</p>
+                  </div>
+                )}
+                {law.lawId && (
+                  <button onClick={() => loadLaw(law.lawId!)} className="text-[12px] text-gold hover:underline cursor-pointer">→ Gesetz im Volltext lesen</button>
+                )}
               </div>
-              <h4 className="font-display text-sm mb-1">{law.title}</h4>
-              <p className="text-[12px] text-ink-muted leading-relaxed">{law.context.slice(0, 120)}...</p>
-              {law.lawId && (
-                <button onClick={() => loadLaw(law.lawId!)} className="mt-2 text-[12px] text-gold hover:underline cursor-pointer">→ Gesetz lesen</button>
-              )}
-            </div>
+            </details>
           ))}
         </div>
 
