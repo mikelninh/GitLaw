@@ -58,6 +58,7 @@ function md(text: string): string {
 function App() {
   const [laws, setLaws] = useState<LawEntry[]>([])
   const [search, setSearch] = useState('')
+  const [fontSize, setFontSize] = useState(16) // Accessibility: adjustable font size
   const [selectedLaw, setSelectedLaw] = useState<string | null>(null)
   const [lawContent, setLawContent] = useState('')
   const [_loading, setLoading] = useState(true)
@@ -146,6 +147,12 @@ function App() {
                 className="pl-9 pr-4 py-1.5 rounded-lg border border-border bg-card text-sm w-56 focus:outline-none focus:border-gold"
               />
             </div>
+            {/* Font size (Barrierefreiheit) */}
+            <div className="flex items-center gap-1 border border-border rounded-lg overflow-hidden">
+              <button onClick={() => setFontSize(f => Math.max(12, f - 2))} className="px-2 py-1 text-xs text-ink-muted hover:bg-bg-alt cursor-pointer" title="Schrift kleiner">A-</button>
+              <span className="text-[10px] text-ink-muted px-1">{fontSize}</span>
+              <button onClick={() => setFontSize(f => Math.min(24, f + 2))} className="px-2 py-1 text-xs text-ink-muted hover:bg-bg-alt cursor-pointer" title="Schrift größer">A+</button>
+            </div>
             {/* Export + Share + GitHub */}
             {law && (
               <div className="flex items-center gap-2">
@@ -173,6 +180,20 @@ function App() {
           </div>
         </header>
 
+        {/* Gesetzesstand — P0 für Anwälte */}
+        {lawContent && law && (
+          <div className="bg-blue-light border-b border-blue/10">
+            <div className="max-w-3xl mx-auto px-5 py-2 flex items-center justify-between text-sm">
+              <span className="text-blue font-medium">{law.title}</span>
+              {law.stand ? (
+                <span className="text-blue/70 text-xs">{law.stand}</span>
+              ) : law.date ? (
+                <span className="text-blue/70 text-xs">Ausfertigungsdatum: {law.date}</span>
+              ) : null}
+            </div>
+          </div>
+        )}
+
         {/* Explain toggle */}
         {lawContent && (
           <div className="bg-gold-light border-b border-gold/20">
@@ -197,7 +218,7 @@ function App() {
             <div className="text-center py-20 text-ink-muted">Lade Gesetzestext...</div>
           ) : (
             <>
-              <div className="law-content" dangerouslySetInnerHTML={{ __html: html }} />
+              <div className="law-content" style={{ fontSize: `${fontSize}px` }} dangerouslySetInnerHTML={{ __html: html }} />
               {showExplain && explanations && (
                 <div className="mt-12 border-t border-border pt-8">
                   <div className="flex items-center gap-2 mb-6">
