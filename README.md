@@ -96,3 +96,17 @@ python -m uvicorn rag.server:app --port 8001      # API
 **[Deutschland 2030](https://github.com/mikelninh/deutschland-2030)** — 9 Reformen für Deutschland
 
 MIT Lizenz — Demokratie sollte Open Source sein.
+
+## Ökosystem — Digitale Demokratie
+
+Dieses Projekt ist Teil eines Open-Source-Ökosystems für digitale Demokratie:
+
+| Projekt | Frage | Link |
+|---------|-------|------|
+| **FairEint** | Was sollte Deutschland anders machen? | [GitHub](https://github.com/mikelninh/faireint) · [Live](https://mikelninh.github.io/faireint/) |
+| **GitLaw** | Was steht im Gesetz? | [GitHub](https://github.com/mikelninh/gitlaw) · [Live](https://mikelninh.github.io/gitlaw/) |
+| **Public Money Mirror** | Wohin fließt das Steuergeld? | [GitHub](https://github.com/mikelninh/Public-Money-Mirror) |
+| **SafeVoice** | Wer wird online angegriffen? | [GitHub](https://github.com/mikelninh/safevoice) |
+
+Alle Projekte: [github.com/mikelninh](https://github.com/mikelninh) · Unterstützen: [Ko-fi](https://ko-fi.com/mikel777) · [GitHub Sponsors](https://github.com/sponsors/mikelninh)
+
