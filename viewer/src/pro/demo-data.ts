@@ -279,7 +279,91 @@ const GENERISCH: KanzleiPreset = {
   cases: GNIOSDORZ.cases, // reuse the three-case mix
 }
 
-export const KANZLEI_PRESETS: KanzleiPreset[] = [RUBIN, GNIOSDORZ, GENERISCH]
+// --- Thai Bao Nguyen — Strafrecht/Mietrecht/Migration (vietnamesische Community) -----
+
+const NGUYEN: KanzleiPreset = {
+  key: 'nguyen',
+  label: 'Rechtsanwalt Thai Bao Nguyen',
+  tagline: 'Strafrecht · Mietrecht · Migrationsrecht (vietnamesische Mandant:innen)',
+  settings: {
+    name: 'Anwaltskanzlei Thai Bao Nguyen',
+    anwaltName: 'Rechtsanwalt Thai Bao Nguyen',
+    address: '[bitte im Profil ergänzen]\nBerlin',
+    contact: 'thai.bao@ra-nguyen.de  ·  ra-nguyen.de',
+    kammerId: 'Rechtsanwaltskammer Berlin',
+  },
+  cases: [
+    {
+      case: {
+        aktenzeichen: '25/0301',
+        mandantName: 'Nguyen Van Minh',
+        description: 'Aufenthaltstitel-Verlängerung; Mandant lebt seit 4 J. in DE, Beschäftigung gewechselt — Frist läuft.',
+        mandantEmail: 'minh.nguyen@example.com',
+        fristOffsetDays: 6,
+        fristBezeichnung: 'Verlängerungsantrag § 8 AufenthG',
+      },
+      research: {
+        question: 'Welche Voraussetzungen für die Verlängerung einer Aufenthaltserlaubnis nach § 8 AufenthG, wenn der Mandant den Arbeitgeber gewechselt hat?',
+        answer:
+          'Die Verlängerung der Aufenthaltserlaubnis richtet sich nach § 8 AufenthG. Maßgeblich ist, ob die Erteilungsvoraussetzungen des ursprünglichen Aufenthaltszwecks (z.B. § 18a/§ 18b AufenthG bei Beschäftigung) weiterhin vorliegen.\n\n' +
+          'Bei Arbeitgeberwechsel ist § 8 Abs. 1 AufenthG einschlägig: die Verlängerung erfolgt unter denselben Voraussetzungen wie die Erteilung. Dazu gehört insbesondere die Sicherung des Lebensunterhalts (§ 5 Abs. 1 Nr. 1 AufenthG) und ggf. erneute Zustimmung der Bundesagentur für Arbeit nach § 39 AufenthG, sofern der neue Beruf nicht von der Zustimmungsfreiheit (§ 9 BeschV) gedeckt ist.\n\n' +
+          'Prozessual: Antrag rechtzeitig vor Ablauf des bisherigen Titels stellen. Bei verspätetem Antrag droht Erlöschen (§ 51 Abs. 1 Nr. 7 AufenthG). Bei Antrag während Gültigkeit greift Fiktionswirkung gem. § 81 Abs. 4 AufenthG — Ausstellung einer Fiktionsbescheinigung sicherstellen.',
+        citations: [
+          { display: '§ 8 AufenthG', lawId: 'aufenthg_2004', section: '8', verified: true },
+          { display: '§ 5 AufenthG', lawId: 'aufenthg_2004', section: '5', verified: true },
+          { display: '§ 39 AufenthG', lawId: 'aufenthg_2004', section: '39', verified: true },
+          { display: '§ 81 AufenthG', lawId: 'aufenthg_2004', section: '81', verified: true },
+        ],
+        reviewed: true,
+      },
+    },
+    {
+      case: {
+        aktenzeichen: '25/0312',
+        mandantName: 'Le Thi Hoa',
+        description: 'Familiennachzug Ehegattin aus Vietnam; Stammberechtigter mit Niederlassungserlaubnis. A1-Sprachnachweis-Frage.',
+        mandantEmail: 'hoa.le@example.com',
+        fristOffsetDays: 28,
+        fristBezeichnung: 'Visumsantrag bei Botschaft Hanoi',
+      },
+      research: {
+        question: 'Welche Voraussetzungen für Familiennachzug der Ehegattin aus Vietnam zu Stammberechtigten mit Niederlassungserlaubnis? Sprachnachweis-Pflicht?',
+        answer:
+          'Der Ehegattennachzug richtet sich nach §§ 27, 30 AufenthG. Voraussetzungen: bestehende Ehe, Volljährigkeit beider Partner (§ 30 Abs. 1 Nr. 1 AufenthG), ausreichender Wohnraum, Sicherung Lebensunterhalt (§ 5 Abs. 1 Nr. 1 AufenthG).\n\n' +
+          'Sprachnachweis A1: § 30 Abs. 1 S. 1 Nr. 2 AufenthG fordert einfache Deutschkenntnisse (A1-Niveau) bereits vor Einreise. Ausnahme: § 30 Abs. 1 S. 3 Nr. 2 AufenthG bei Niederlassungserlaubnis-Stammberechtigten — entfällt bei besonderem Härtefall (BVerfG 25.03.2011 – 2 BvR 1413/10) bzw. Unzumutbarkeit des Spracherwerbs.\n\n' +
+          'Prozessual: Visum bei Auslandsvertretung (Botschaft Hanoi) beantragen, Anhörung bei Ausländerbehörde am Wohnort des Stammberechtigten. Bei Ablehnung Remonstration binnen 1 Monat, dann Klage VG.',
+        citations: [
+          { display: '§ 27 AufenthG', lawId: 'aufenthg_2004', section: '27', verified: true },
+          { display: '§ 30 AufenthG', lawId: 'aufenthg_2004', section: '30', verified: true },
+          { display: '§ 5 AufenthG', lawId: 'aufenthg_2004', section: '5', verified: true },
+        ],
+        reviewed: false,
+      },
+    },
+    {
+      case: {
+        aktenzeichen: '25/0287',
+        mandantName: 'Pham Quoc An',
+        description: 'Strafbefehl wegen § 263 StGB (Betrug) — Mandant bestreitet, Sprachbarriere bei Beschuldigten-Vernehmung.',
+        mandantEmail: 'an.pham@example.com',
+        fristOffsetDays: 9,
+        fristBezeichnung: 'Einspruch Strafbefehl § 410 StPO',
+      },
+      letter: {
+        templateId: 'akteneinsicht',
+        fields: {
+          recipient: 'Amtsgericht Tiergarten — Strafabteilung',
+          mandant: 'Pham Quoc An',
+          aktenzeichen: '227 Cs 105/26',
+          rolle: 'Beschuldigter',
+          rechtsgrundlage: '§ 147 StPO',
+        },
+      },
+    },
+  ],
+}
+
+export const KANZLEI_PRESETS: KanzleiPreset[] = [RUBIN, GNIOSDORZ, NGUYEN, GENERISCH]
 
 // --- Apply ------------------------------------------------------------------
 

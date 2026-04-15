@@ -9,9 +9,43 @@
  */
 
 import { useEffect, useState } from 'react'
-import { X, ExternalLink, BookOpen, Loader2, Pencil, Save } from 'lucide-react'
+import { X, ExternalLink, BookOpen, Loader2, Pencil, Save, Scale } from 'lucide-react'
 import type { Citation } from './types'
 import { getParagraphNote, saveParagraphNote } from './store'
+
+/**
+ * Deep-Link-URLs zu den Profi-Rechtsprechungs-Datenbanken.
+ *
+ * Wir versuchen NICHT eigene BGH-Datenbank-Hoheit zu beanspruchen
+ * (Beck/dejure/openjur sind Profis darin). Stattdessen liefern wir
+ * verifizierte Paragraphentexte UND einen Klick zur bevorzugten
+ * Recherche-Quelle der Anwält:in. Das spart 30 Sek pro Lookup.
+ *
+ * Format-Mapping basiert auf den real-existierenden URL-Strukturen
+ * dieser Anbieter (Stand 04/2026).
+ */
+function buildResearchLinks(lawAbbrev: string, paragraph: string) {
+  const dejureSlug = lawAbbrev.toLowerCase().replace(/\s+/g, '_')
+  const beckSearch = encodeURIComponent(`§ ${paragraph} ${lawAbbrev}`)
+  const openjurSearch = encodeURIComponent(`§ ${paragraph} ${lawAbbrev}`)
+  return [
+    {
+      label: 'dejure.org',
+      url: `https://dejure.org/gesetze/${dejureSlug}/${paragraph}.html`,
+      hint: 'Volltext + Querverweise',
+    },
+    {
+      label: 'openjur.de',
+      url: `https://openjur.de/suche.html?q=${openjurSearch}`,
+      hint: 'Urteile + Volltext-Suche',
+    },
+    {
+      label: 'Beck-Online',
+      url: `https://beck-online.beck.de/Search?q=${beckSearch}`,
+      hint: 'erfordert Beck-Account · BGH-Standardquelle',
+    },
+  ]
+}
 
 interface Props {
   citation: Citation | null
@@ -152,6 +186,40 @@ export default function CitationDrawer({ citation, onClose }: Props) {
               <article className="law-content text-sm leading-relaxed">
                 <pre className="whitespace-pre-wrap font-sans">{fullText}</pre>
               </article>
+
+              {/* Rechtsprechungs-Recherche — Deep-Links zu Profi-DBs.
+                  Wir haben keine eigene BGH-Datenbank (würde Lizenz-Konflikte
+                  geben). Statt dessen: einen Klick zu der Quelle die der:die
+                  Anwält:in eh nutzt. */}
+              {citation.verified && (
+                <section className="mt-6 pt-5 border-t border-[var(--color-border)]">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Scale className="w-4 h-4 text-[var(--color-gold)]" />
+                    <h3 className="text-sm font-semibold">Rechtsprechung suchen</h3>
+                  </div>
+                  <p className="text-xs text-[var(--color-ink-soft)] mb-3">
+                    Wir bieten verifizierten Gesetzestext. Für aktuelle Rechtsprechung
+                    nutze deine bevorzugte Profi-Datenbank — ein Klick:
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                    {buildResearchLinks(citation.display.match(/§\s*\d+\w*\s+(.+)/)?.[1] || '', citation.section).map(link => (
+                      <a
+                        key={link.label}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block border border-[var(--color-border)] rounded-lg p-3 text-xs hover:border-[var(--color-gold)] transition-colors"
+                      >
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="font-semibold text-[var(--color-ink)]">{link.label}</span>
+                          <ExternalLink className="w-3 h-3 text-[var(--color-ink-muted)]" />
+                        </div>
+                        <span className="text-[var(--color-ink-muted)] text-[11px]">{link.hint}</span>
+                      </a>
+                    ))}
+                  </div>
+                </section>
+              )}
 
               {/* Persönliche Notiz — baut Wissensdatenbank auf */}
               <section className="mt-6 pt-5 border-t border-[var(--color-border)]">

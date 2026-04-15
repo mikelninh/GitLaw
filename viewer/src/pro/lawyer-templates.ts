@@ -924,8 +924,762 @@ Hinweis: Eheverträge bedürfen zwingend der gleichzeitigen Anwesenheit beider E
   },
 ]
 
-/** Combined list for UI pickers: built-in + notar-spezial. */
-export const ALL_BUILTIN_TEMPLATES: LawyerTemplate[] = [...LAWYER_TEMPLATES, ...NOTAR_TEMPLATES]
+/**
+ * Migrationsrecht-Pack — für Fachanwält:innen für Migrationsrecht und Solos
+ * mit hoher Migrant:innen-Mandantschaft (z. B. Berliner Kanzleien mit
+ * vietnamesischer/türkischer/arabischer Community).
+ *
+ * 12 Templates: Aufenthaltstitel-Erteilung/-Verlängerung, Niederlassung,
+ * Familiennachzug, Beschäftigungserlaubnis, Einbürgerung, Widersprüche,
+ * Eilanträge gegen Abschiebung, Fiktionsbescheinigung, Härtefall,
+ * Familienasyl. Frist-Hinweise und Anlagen-Listen sind in render() drin.
+ */
+export const MIGRATION_TEMPLATES: LawyerTemplate[] = [
+// ---------------------------------
+  {
+    id: 'aufenthaltserlaubnis_antrag',
+    title: 'Antrag auf Aufenthaltserlaubnis',
+    description: 'Erstantrag auf Erteilung einer Aufenthaltserlaubnis gem. §§ 7, 8 AufenthG bei der zuständigen Ausländerbehörde.',
+    useCase: 'Mandantschaft hält sich rechtmäßig in Deutschland auf (z. B. mit nationalem Visum) und benötigt erstmals eine Aufenthaltserlaubnis zu einem konkreten Aufenthaltszweck.',
+    fields: [
+      { id: 'behoerde', label: 'Ausländerbehörde', type: 'text', required: true, placeholder: 'Landesamt für Einwanderung Berlin (LEA)' },
+      { id: 'mandant', label: 'Antragsteller:in (Mandant:in)', type: 'text', required: true },
+      { id: 'mandantAnschrift', label: 'Anschrift Antragsteller:in', type: 'textarea' },
+      { id: 'geboren', label: 'Geburtsdatum', type: 'date', required: true },
+      { id: 'staatsang', label: 'Staatsangehörigkeit', type: 'text', required: true },
+      { id: 'zweck', label: 'Aufenthaltszweck', type: 'text', required: true, placeholder: 'Studium (§ 16b) / Beschäftigung (§ 18b) / Familiennachzug (§ 28)', hint: 'Bitte konkrete Norm des AufenthG benennen.' },
+      { id: 'bisherigeTitel', label: 'Bisheriger Aufenthaltsstatus / Visum', type: 'textarea', placeholder: 'Nationales Visum Typ D v. 12.01.2026, gültig bis 11.04.2026' },
+      { id: 'anlagen', label: 'Anlagen', type: 'textarea', placeholder: 'Pass, biometrisches Lichtbild, Mietvertrag, Krankenversicherung, Immatrikulation, Arbeitsvertrag' },
+    ],
+    render: f => `An ${f.behoerde || '[Ausländerbehörde]'}
+
+Antrag auf Erteilung einer Aufenthaltserlaubnis
+gem. §§ 7, 8 AufenthG i. V. m. ${f.zweck ? `§ ${f.zweck.replace(/^.*§\s*/, '')}` : '[einschlägiger Spezialnorm]'}
+
+Sehr geehrte Damen und Herren,
+
+namens und im Auftrag meiner Mandantschaft, ${f.mandant || '[Mandant:in]'}${f.geboren ? `, geboren am ${f.geboren}` : ''}${f.staatsang ? `, ${f.staatsang}e:r Staatsangehörige:r` : ''}${f.mandantAnschrift ? `, wohnhaft ${f.mandantAnschrift.replace(/\n/g, ', ')}` : ''}, beantrage ich
+
+die Erteilung einer Aufenthaltserlaubnis
+
+gem. §§ 7, 8 AufenthG zum Zweck ${f.zweck || '[Aufenthaltszweck]'}.
+
+I. Bisheriger Aufenthalt
+
+${f.bisherigeTitel || '[Angaben zu Einreise, Visum und bisherigem Status]'}
+
+II. Erteilungsvoraussetzungen (§ 5 AufenthG)
+
+Die allgemeinen Erteilungsvoraussetzungen nach § 5 Abs. 1 AufenthG liegen vor: Die Identität und Staatsangehörigkeit meiner Mandantschaft sind geklärt, der Lebensunterhalt ist gesichert (§ 2 Abs. 3 AufenthG), ein Ausweisungsinteresse besteht nicht. Die Passpflicht (§ 3 AufenthG) ist erfüllt.
+
+III. Anlagen
+
+${f.anlagen || '— gültiger Pass (Kopie)\n— biometrisches Lichtbild\n— Nachweis des Lebensunterhalts\n— Nachweis Krankenversicherung\n— Meldebestätigung\n— zweckbezogene Nachweise'}
+
+Ich bitte um Terminvergabe zur persönlichen Vorsprache meiner Mandantschaft sowie um Ausstellung einer Fiktionsbescheinigung gem. § 81 Abs. 4 AufenthG für die Dauer des Verfahrens. Die anwaltliche Vertretungsvollmacht wird anwaltlich versichert.
+
+${SIGN_OFF}
+`,
+  },
+
+  // ---------------------------------
+  {
+    id: 'niederlassungserlaubnis',
+    title: 'Antrag auf Niederlassungserlaubnis',
+    description: 'Antrag auf Erteilung einer unbefristeten Niederlassungserlaubnis gem. § 9 AufenthG nach fünfjährigem Besitz einer Aufenthaltserlaubnis.',
+    useCase: 'Mandantschaft erfüllt die Voraussetzungen des § 9 Abs. 2 AufenthG (fünf Jahre Aufenthaltserlaubnis, Lebensunterhalt, B1, Rentenversicherung, ausreichender Wohnraum).',
+    fields: [
+      { id: 'behoerde', label: 'Ausländerbehörde', type: 'text', required: true },
+      { id: 'mandant', label: 'Mandant:in', type: 'text', required: true },
+      { id: 'mandantAnschrift', label: 'Anschrift Mandant:in', type: 'textarea' },
+      { id: 'bisherigerTitel', label: 'Bisheriger Aufenthaltstitel', type: 'text', required: true, placeholder: 'Aufenthaltserlaubnis § 18b AufenthG' },
+      { id: 'titelSeit', label: 'Titel erteilt am', type: 'date', required: true, hint: '5-Jahres-Frist § 9 Abs. 2 Nr. 1 AufenthG' },
+      { id: 'beschaeftigung', label: 'Aktuelle Beschäftigung', type: 'textarea', placeholder: 'Arbeitgeber, Position, sozialversicherungspflichtig seit ...' },
+      { id: 'sprachnachweis', label: 'Sprachnachweis B1', type: 'text', placeholder: 'Zertifikat telc Deutsch B1 v. 03.11.2025' },
+      { id: 'lebensunterhalt', label: 'Sicherung Lebensunterhalt', type: 'textarea', hint: 'Monatliches Nettoeinkommen, Bedarf, ggf. Ehegatte.' },
+    ],
+    render: f => `An ${f.behoerde || '[Ausländerbehörde]'}
+
+Antrag auf Erteilung einer Niederlassungserlaubnis
+gem. § 9 AufenthG
+
+Sehr geehrte Damen und Herren,
+
+namens und im Auftrag meiner Mandantschaft, ${f.mandant || '[Mandant:in]'}${f.mandantAnschrift ? `, wohnhaft ${f.mandantAnschrift.replace(/\n/g, ', ')}` : ''}, beantrage ich
+
+die Erteilung einer Niederlassungserlaubnis
+
+gem. § 9 Abs. 2 AufenthG.
+
+I. Besitz einer Aufenthaltserlaubnis seit fünf Jahren (§ 9 Abs. 2 Nr. 1 AufenthG)
+
+Meine Mandantschaft ist seit ${f.titelSeit || '[Datum]'} im Besitz einer ${f.bisherigerTitel || '[Aufenthaltserlaubnis]'}. Die Fünfjahresfrist ist damit gewahrt.
+
+II. Sicherung des Lebensunterhalts (§ 9 Abs. 2 Nr. 2 AufenthG)
+
+${f.lebensunterhalt || '[Angaben zur Einkommenssituation, Nachweise liegen bei]'}
+
+III. Beiträge zur gesetzlichen Rentenversicherung (§ 9 Abs. 2 Nr. 3 AufenthG)
+
+Meine Mandantschaft hat Pflichtbeiträge bzw. freiwillige Beiträge zur gesetzlichen Rentenversicherung für mindestens 60 Monate geleistet; der entsprechende Versicherungsverlauf ist beigefügt.
+
+IV. Beschäftigung (§ 9 Abs. 2 Nr. 5 AufenthG)
+
+${f.beschaeftigung || '[Angaben zur aktuellen Erwerbstätigkeit]'}
+
+V. Sprachkenntnisse und Kenntnisse der Rechts- und Gesellschaftsordnung (§ 9 Abs. 2 Nr. 7, 8 AufenthG)
+
+Ausreichende Deutschkenntnisse auf Niveau B1 sind durch ${f.sprachnachweis || '[Zertifikat]'} nachgewiesen. Kenntnisse der Rechts- und Gesellschaftsordnung sind durch erfolgreichen Abschluss des Einbürgerungs- bzw. Orientierungskurses belegt.
+
+VI. Weitere Voraussetzungen
+
+Ausweisungsinteressen i. S. v. § 54 AufenthG bestehen nicht. Ausreichender Wohnraum (§ 9 Abs. 2 Nr. 9 AufenthG) ist vorhanden; der Mietvertrag liegt bei.
+
+VII. Anlagen
+
+— bisheriger Aufenthaltstitel (Kopie)
+— Rentenversicherungsverlauf
+— Arbeitsvertrag und 3 aktuelle Gehaltsabrechnungen
+— B1-Zertifikat
+— Nachweis Integrationskurs / „Leben in Deutschland"-Test
+— Mietvertrag
+
+Die anwaltliche Vertretungsvollmacht wird anwaltlich versichert.
+
+${SIGN_OFF}
+`,
+  },
+
+  // ---------------------------------
+  {
+    id: 'verlaengerung_aufenthaltstitel',
+    title: 'Verlängerung Aufenthaltstitel',
+    description: 'Antrag auf Verlängerung einer laufenden Aufenthaltserlaubnis gem. § 8 AufenthG.',
+    useCase: 'Laufender Aufenthaltstitel läuft in Kürze ab. Verlängerungsantrag ist rechtzeitig vor Ablauf zu stellen; bei fristgerechter Antragstellung greift die Fiktionswirkung des § 81 Abs. 4 AufenthG.',
+    fields: [
+      { id: 'behoerde', label: 'Ausländerbehörde', type: 'text', required: true },
+      { id: 'mandant', label: 'Mandant:in', type: 'text', required: true },
+      { id: 'mandantAnschrift', label: 'Anschrift Mandant:in', type: 'textarea' },
+      { id: 'bisherigerTitel', label: 'Bisheriger Titel (Rechtsgrundlage)', type: 'text', required: true, placeholder: 'Aufenthaltserlaubnis § 28 Abs. 1 S. 1 Nr. 1 AufenthG' },
+      { id: 'ablaufDatum', label: 'Ablauf des Titels', type: 'date', required: true, hint: 'Antrag muss vor Ablauf gestellt sein — § 81 Abs. 4 AufenthG.' },
+      { id: 'verhaeltnisse', label: 'Geänderte / unveränderte Verhältnisse', type: 'textarea', required: true, placeholder: 'Ehebestand fortbestehend seit ..., Arbeitsverhältnis unverändert bei ...' },
+      { id: 'anlagen', label: 'Anlagen', type: 'textarea', placeholder: 'Pass, aktuelle Meldebescheinigung, Gehaltsabrechnungen, Krankenversicherung' },
+    ],
+    render: f => `An ${f.behoerde || '[Ausländerbehörde]'}
+
+Antrag auf Verlängerung der Aufenthaltserlaubnis
+gem. § 8 AufenthG
+
+Sehr geehrte Damen und Herren,
+
+namens und im Auftrag meiner Mandantschaft, ${f.mandant || '[Mandant:in]'}${f.mandantAnschrift ? `, wohnhaft ${f.mandantAnschrift.replace(/\n/g, ', ')}` : ''}, beantrage ich
+
+die Verlängerung der Aufenthaltserlaubnis
+
+meiner Mandantschaft, derzeit erteilt auf Grundlage von ${f.bisherigerTitel || '[Rechtsgrundlage]'}, gültig bis ${f.ablaufDatum || '[Ablaufdatum]'}.
+
+I. Fortbestand des Aufenthaltszwecks (§ 8 Abs. 1 AufenthG)
+
+${f.verhaeltnisse || '[Darlegung, dass die Erteilungsvoraussetzungen fortbestehen; relevante Veränderungen sind aufzuführen.]'}
+
+II. Erteilungsvoraussetzungen
+
+Die allgemeinen Erteilungsvoraussetzungen des § 5 AufenthG liegen weiterhin vor. Der Lebensunterhalt ist gesichert, die Passpflicht ist erfüllt, Ausweisungsinteressen bestehen nicht.
+
+III. Fiktionswirkung
+
+Der Antrag wird vor Ablauf des derzeitigen Titels gestellt, sodass der bisherige Titel gem. § 81 Abs. 4 S. 1 AufenthG bis zur Entscheidung der Behörde als fortbestehend gilt. Ich bitte vorsorglich um Ausstellung einer Fiktionsbescheinigung (§ 81 Abs. 5 AufenthG).
+
+IV. Anlagen
+
+${f.anlagen || '— Pass (Kopie)\n— Meldebescheinigung\n— aktuelle Einkommensnachweise\n— Nachweis Krankenversicherung\n— bisheriger Titel (Kopie)'}
+
+Die anwaltliche Vertretungsvollmacht wird anwaltlich versichert.
+
+${SIGN_OFF}
+`,
+  },
+
+  // ---------------------------------
+  {
+    id: 'familiennachzug_ehegatte',
+    title: 'Familiennachzug Ehegatt:in',
+    description: 'Antrag auf Visum zum Ehegattennachzug gem. §§ 27, 28, 30 AufenthG bei der Auslandsvertretung.',
+    useCase: 'Ehegatt:in einer/eines in Deutschland lebenden Stammberechtigten möchte zum Zweck der Herstellung der ehelichen Lebensgemeinschaft nachziehen. Grundsätzlich A1-Sprachnachweis erforderlich (§ 30 Abs. 1 S. 1 Nr. 2 AufenthG).',
+    fields: [
+      { id: 'behoerde', label: 'Empfänger:in (Botschaft / Ausländerbehörde)', type: 'text', required: true, placeholder: 'Deutsche Botschaft Ankara / LEA Berlin' },
+      { id: 'antragsteller', label: 'Antragsteller:in (im Ausland)', type: 'text', required: true },
+      { id: 'antragstellerDaten', label: 'Geburtsdatum / Staatsangehörigkeit Antragsteller:in', type: 'text', placeholder: '12.03.1992, türkisch' },
+      { id: 'stammberechtigt', label: 'Stammberechtigte:r in Deutschland', type: 'text', required: true, hint: 'Name, Aufenthaltstitel / Staatsangehörigkeit' },
+      { id: 'eheDatum', label: 'Eheschließung (Datum)', type: 'date', required: true },
+      { id: 'eheOrt', label: 'Ort der Eheschließung', type: 'text', required: true },
+      { id: 'sprachnachweis', label: 'Sprachnachweis A1', type: 'text', placeholder: 'Goethe A1 v. 14.02.2026 / Befreiungstatbestand § 30 Abs. 1 S. 3 AufenthG' },
+      { id: 'anlagen', label: 'Anlagen', type: 'textarea', placeholder: 'Heiratsurkunde mit Apostille, Pässe, A1-Zertifikat, Mietvertrag, Einkommensnachweise' },
+    ],
+    render: f => `An ${f.behoerde || '[Botschaft / Ausländerbehörde]'}
+
+Antrag auf Visum zum Ehegattennachzug
+gem. §§ 27, 28 bzw. 30 AufenthG
+
+Sehr geehrte Damen und Herren,
+
+namens und im Auftrag meiner Mandantschaft, ${f.antragsteller || '[Antragsteller:in]'}${f.antragstellerDaten ? ` (${f.antragstellerDaten})` : ''}, beantrage ich
+
+die Erteilung eines nationalen Visums zum Zweck des Ehegattennachzugs
+
+zur Herstellung der ehelichen Lebensgemeinschaft mit ${f.stammberechtigt || '[Stammberechtigte:r]'} in der Bundesrepublik Deutschland.
+
+I. Eheliche Lebensgemeinschaft (§ 27 Abs. 1 AufenthG)
+
+Die Ehe wurde am ${f.eheDatum || '[Datum]'} in ${f.eheOrt || '[Ort]'} geschlossen. Die Heiratsurkunde nebst Apostille / Legalisation liegt bei. Beide Ehegatten beabsichtigen die Herstellung und Wahrung der ehelichen Lebensgemeinschaft im Bundesgebiet; eine Scheinehe liegt ausdrücklich nicht vor.
+
+II. Voraussetzungen auf Seiten der stammberechtigten Person
+
+${f.stammberechtigt || '[Stammberechtigte:r]'} hält sich rechtmäßig im Bundesgebiet auf (Nachweis als Anlage). Ausreichender Wohnraum (§ 29 Abs. 1 Nr. 2 AufenthG) und die Sicherung des Lebensunterhalts (§ 5 Abs. 1 Nr. 1 AufenthG) sind gegeben; entsprechende Nachweise liegen bei.
+
+III. Sprachnachweis (§ 30 Abs. 1 S. 1 Nr. 2 AufenthG)
+
+${f.sprachnachweis || 'Einfache Deutschkenntnisse auf Niveau A1 werden durch beigefügtes Zertifikat nachgewiesen. Hilfsweise liegt ein Befreiungstatbestand gem. § 30 Abs. 1 S. 3 AufenthG vor.'}
+
+IV. Beteiligung der Ausländerbehörde
+
+Ich rege an, die zuständige Ausländerbehörde am künftigen Wohnort zeitnah gem. § 31 AufenthV zu beteiligen, um Verfahrensverzögerungen zu vermeiden.
+
+V. Anlagen
+
+${f.anlagen || '— Reisepass Antragsteller:in\n— Heiratsurkunde mit Apostille / Legalisation\n— Aufenthaltstitel / Pass der stammberechtigten Person\n— Mietvertrag, Wohnflächenberechnung\n— Einkommensnachweise der letzten 6 Monate\n— A1-Zertifikat'}
+
+Ich bitte um zeitnahe Terminvergabe und Bearbeitung. Die anwaltliche Vertretungsvollmacht wird anwaltlich versichert.
+
+${SIGN_OFF}
+`,
+  },
+
+  // ---------------------------------
+  {
+    id: 'familiennachzug_kind',
+    title: 'Kindernachzug',
+    description: 'Antrag auf Visum bzw. Aufenthaltserlaubnis zum Kindernachzug gem. § 32 AufenthG (minderjährige ledige Kinder bis 16/18 Jahre).',
+    useCase: 'Eltern bzw. personensorgeberechtigter Elternteil leben rechtmäßig in Deutschland; minderjähriges lediges Kind soll nachziehen. Bei Kindern ab 16 J. zusätzliche Integrationsprognose (§ 32 Abs. 2 AufenthG).',
+    fields: [
+      { id: 'behoerde', label: 'Empfänger:in (Botschaft / Ausländerbehörde)', type: 'text', required: true },
+      { id: 'eltern', label: 'Eltern / Sorgeberechtigte:r in DE', type: 'text', required: true, hint: 'Name + Aufenthaltstitel' },
+      { id: 'kind', label: 'Kind (Name)', type: 'text', required: true },
+      { id: 'kindGeboren', label: 'Geburtsdatum Kind', type: 'date', required: true, hint: 'Relevant für § 32 Abs. 2 AufenthG (Altersgrenze 16).' },
+      { id: 'staatsang', label: 'Staatsangehörigkeit Kind', type: 'text' },
+      { id: 'sorgerecht', label: 'Sorgerecht', type: 'textarea', placeholder: 'Alleiniges Sorgerecht der Mutter seit Scheidung v. ... / gemeinsames Sorgerecht' },
+      { id: 'anlagen', label: 'Anlagen', type: 'textarea', placeholder: 'Geburtsurkunde, Sorgerechtsentscheidung, Pässe, Aufenthaltstitel Eltern' },
+    ],
+    render: f => `An ${f.behoerde || '[Botschaft / Ausländerbehörde]'}
+
+Antrag auf Visum zum Kindernachzug
+gem. § 32 AufenthG
+
+Sehr geehrte Damen und Herren,
+
+namens und im Auftrag meiner Mandantschaft, ${f.eltern || '[Eltern / Sorgeberechtigte:r]'}, beantrage ich für das gemeinsame Kind
+
+${f.kind || '[Kind]'}${f.kindGeboren ? `, geboren am ${f.kindGeboren}` : ''}${f.staatsang ? `, ${f.staatsang}e:r Staatsangehörige:r` : ''},
+
+die Erteilung eines Visums zum Nachzug gem. § 32 AufenthG.
+
+I. Voraussetzungen des § 32 AufenthG
+
+Das Kind ist minderjährig und ledig. Die sorgeberechtigten Eltern bzw. der allein personensorgeberechtigte Elternteil halten sich rechtmäßig im Bundesgebiet auf und verfügen über einen Aufenthaltstitel i. S. v. § 32 Abs. 1 AufenthG.
+
+II. Sorgerecht
+
+${f.sorgerecht || '[Angaben zum Sorgerecht und Vorlage der zugrundeliegenden Urkunden / Entscheidungen]'}
+
+III. Sicherung des Lebensunterhalts und Wohnraum
+
+Der Lebensunterhalt ist gesichert (§ 5 Abs. 1 Nr. 1 AufenthG), ausreichender Wohnraum steht zur Verfügung (§ 29 Abs. 1 Nr. 2 AufenthG). Entsprechende Nachweise liegen bei.
+
+IV. ${(() => { const g = f.kindGeboren ? new Date(f.kindGeboren) : null; return g && (Date.now() - g.getTime()) / (1000*60*60*24*365.25) >= 16 ? 'Integrationsprognose (§ 32 Abs. 2 AufenthG)' : 'Hinweis'})()}
+
+${(() => { const g = f.kindGeboren ? new Date(f.kindGeboren) : null; return g && (Date.now() - g.getTime()) / (1000*60*60*24*365.25) >= 16 ? 'Da das Kind das 16. Lebensjahr vollendet hat, wird auf die Integrationsprognose nach § 32 Abs. 2 AufenthG besonders hingewiesen; der Sprachnachweis C1 bzw. die Integrationsfähigkeit wird durch beiliegende Nachweise belegt.' : 'Das Kind hat das 16. Lebensjahr noch nicht vollendet; eine Integrationsprognose nach § 32 Abs. 2 AufenthG ist nicht erforderlich.'})()}
+
+V. Anlagen
+
+${f.anlagen || '— Geburtsurkunde des Kindes mit Apostille\n— Sorgerechtsnachweis / Einverständniserklärung des anderen Elternteils\n— Reisepass des Kindes\n— Aufenthaltstitel und Pass der Eltern\n— Einkommens- und Wohnraumnachweise'}
+
+Ich bitte um zeitnahe Terminvergabe; die minderjährige Antragstellerin / der minderjährige Antragsteller ist auf die baldige Familienzusammenführung dringend angewiesen. Die anwaltliche Vertretungsvollmacht wird anwaltlich versichert.
+
+${SIGN_OFF}
+`,
+  },
+
+  // ---------------------------------
+  {
+    id: 'beschaeftigungserlaubnis',
+    title: 'Antrag Beschäftigungserlaubnis',
+    description: 'Antrag auf Erteilung der Erlaubnis zur Ausübung einer Erwerbstätigkeit gem. § 4a AufenthG („Erwerbstätigkeit gestattet").',
+    useCase: 'Mandantschaft besitzt einen Aufenthaltstitel, der eine Erwerbstätigkeit nicht oder nur mit gesonderter Erlaubnis zulässt (z. B. Aufenthaltsgestattung, Duldung, bestimmte humanitäre Titel). Zustimmung der BA nach §§ 39 ff. AufenthG ggf. erforderlich.',
+    fields: [
+      { id: 'behoerde', label: 'Ausländerbehörde', type: 'text', required: true },
+      { id: 'mandant', label: 'Mandant:in', type: 'text', required: true },
+      { id: 'aktuellerStatus', label: 'Aktueller Aufenthaltsstatus', type: 'text', required: true, placeholder: 'Aufenthaltsgestattung / Duldung § 60a / AE § 25 Abs. 5' },
+      { id: 'arbeitgeber', label: 'Arbeitgeber:in', type: 'text', required: true },
+      { id: 'stelle', label: 'Stellenbezeichnung / Tätigkeit', type: 'textarea', required: true, placeholder: 'Fachkraft Pflege, 30h/Woche, EG P7 TVöD' },
+      { id: 'vertragslaufzeit', label: 'Vertragslaufzeit', type: 'text', placeholder: 'unbefristet ab 01.05.2026 / befristet bis 30.04.2027' },
+      { id: 'bruttolohn', label: 'Bruttolohn', type: 'text', placeholder: '€ 3.200,- monatlich' },
+      { id: 'baZustimmung', label: 'BA-Zustimmung erforderlich?', type: 'text', placeholder: 'ja (§ 39 AufenthG) / nein (§ 32 BeschV)' },
+    ],
+    render: f => `An ${f.behoerde || '[Ausländerbehörde]'}
+
+Antrag auf Erteilung der Erlaubnis zur Erwerbstätigkeit
+gem. § 4a AufenthG
+
+Sehr geehrte Damen und Herren,
+
+namens und im Auftrag meiner Mandantschaft, ${f.mandant || '[Mandant:in]'} (aktueller Status: ${f.aktuellerStatus || '[Status]'}), beantrage ich
+
+die Erteilung der Erlaubnis zur Ausübung einer Erwerbstätigkeit
+
+gem. § 4a Abs. 1 und 2 AufenthG durch Eintragung des Zusatzes „Erwerbstätigkeit gestattet" in den Aufenthaltstitel bzw. die Bescheinigung meiner Mandantschaft.
+
+I. Angaben zum Arbeitsverhältnis
+
+Arbeitgeber:in: ${f.arbeitgeber || '[Arbeitgeber:in]'}
+Tätigkeit: ${f.stelle || '[Stellenbezeichnung]'}
+Vertragslaufzeit: ${f.vertragslaufzeit || '—'}
+Bruttovergütung: ${f.bruttolohn || '—'}
+
+Der Arbeitsvertrag sowie die „Erklärung zum Beschäftigungsverhältnis" der BA liegen bei.
+
+II. Zustimmung der Bundesagentur für Arbeit
+
+${(f.baZustimmung || '').toLowerCase().startsWith('ja') ? 'Die Zustimmung der Bundesagentur für Arbeit gem. §§ 39, 40 AufenthG ist einzuholen. Ich bitte die Ausländerbehörde, das Verfahren über das einheitliche Zustimmungsverfahren anzustoßen. Die Arbeitsbedingungen entsprechen den tariflichen bzw. ortsüblichen Bedingungen (§ 39 Abs. 3 AufenthG).' : 'Eine Zustimmung der Bundesagentur für Arbeit ist nicht erforderlich (zustimmungsfreie Beschäftigung gem. BeschV). Die einschlägige Norm ist in den Anlagen dargestellt.'}
+
+III. Ermessen / gebundene Entscheidung
+
+Die Voraussetzungen liegen vor; im Rahmen des Ermessens (soweit einschlägig) überwiegt das Integrationsinteresse meiner Mandantschaft sowie das Interesse des Arbeitgebers an einer zeitnahen Aufnahme der Beschäftigung.
+
+IV. Eilbedürftigkeit
+
+Der Arbeitsantritt ist auf den im Vertrag genannten Termin datiert. Eine Entscheidung innerhalb von drei Wochen wird höflich erbeten; andernfalls droht der Verlust des Arbeitsplatzes.
+
+V. Anlagen
+
+— Arbeitsvertrag
+— „Erklärung zum Beschäftigungsverhältnis" (BA-Vordruck)
+— Stellenbeschreibung
+— Nachweis beruflicher Qualifikation
+— Kopie Aufenthaltstitel / Duldung / Gestattung
+
+Die anwaltliche Vertretungsvollmacht wird anwaltlich versichert.
+
+${SIGN_OFF}
+`,
+  },
+
+  // ---------------------------------
+  {
+    id: 'einbuergerung_antrag',
+    title: 'Einbürgerungsantrag',
+    description: 'Antrag auf Einbürgerung gem. §§ 8, 9, 10 StAG (Regelfrist 5 Jahre, bei besonderen Integrationsleistungen 3 Jahre).',
+    useCase: 'Mandantschaft lebt langjährig und rechtmäßig in Deutschland und möchte die deutsche Staatsangehörigkeit erwerben. Seit Reform des StAG 2024 ist Mehrstaatigkeit grundsätzlich zulässig.',
+    fields: [
+      { id: 'behoerde', label: 'Einbürgerungsbehörde', type: 'text', required: true, placeholder: 'LEA Berlin — Staatsangehörigkeitsbehörde' },
+      { id: 'mandant', label: 'Mandant:in', type: 'text', required: true },
+      { id: 'mandantAnschrift', label: 'Anschrift Mandant:in', type: 'textarea' },
+      { id: 'bisherigeStaatsang', label: 'Bisherige Staatsangehörigkeit(en)', type: 'text', required: true },
+      { id: 'aufenthaltSeit', label: 'Rechtmäßiger Aufenthalt in DE seit', type: 'date', required: true, hint: '§ 10 Abs. 1 Nr. 3 StAG — 5 bzw. 3 Jahre.' },
+      { id: 'sprachnachweis', label: 'Sprachnachweis', type: 'text', placeholder: 'B1 (§ 10 Abs. 1 Nr. 6) bzw. C1 bei 3-Jahres-Variante' },
+      { id: 'einbuergerungstest', label: 'Einbürgerungstest', type: 'text', placeholder: 'Zertifikat v. ... / Befreiung gem. § 10 Abs. 6 StAG' },
+      { id: 'lebensunterhalt', label: 'Sicherung Lebensunterhalt', type: 'textarea', hint: 'Keine Leistungen nach SGB II/XII (§ 10 Abs. 1 Nr. 3 StAG) — Ausnahmen bei Unverschulden.' },
+    ],
+    render: f => `An ${f.behoerde || '[Einbürgerungsbehörde]'}
+
+Antrag auf Einbürgerung
+gem. §§ 8, 10 StAG
+
+Sehr geehrte Damen und Herren,
+
+namens und im Auftrag meiner Mandantschaft, ${f.mandant || '[Mandant:in]'}${f.mandantAnschrift ? `, wohnhaft ${f.mandantAnschrift.replace(/\n/g, ', ')}` : ''}, bisher ${f.bisherigeStaatsang || '[Staatsangehörigkeit]'}, beantrage ich
+
+die Einbürgerung in den deutschen Staatsverband
+
+gem. § 10 StAG, hilfsweise § 8 StAG.
+
+I. Rechtmäßiger gewöhnlicher Aufenthalt (§ 10 Abs. 1 Nr. 1 StAG)
+
+Meine Mandantschaft hält sich seit ${f.aufenthaltSeit || '[Datum]'} rechtmäßig und mit gewöhnlichem Aufenthalt im Bundesgebiet auf. Die Voraussetzungen der 5-Jahres-Frist (§ 10 Abs. 1 Nr. 1 StAG) — ggf. der 3-Jahres-Frist bei besonderen Integrationsleistungen (§ 10 Abs. 3 StAG n. F.) — sind erfüllt.
+
+II. Bekenntnis zur freiheitlichen demokratischen Grundordnung (§ 10 Abs. 1 Nr. 1 StAG)
+
+Meine Mandantschaft bekennt sich zur freiheitlichen demokratischen Grundordnung des Grundgesetzes und erklärt, keine Bestrebungen verfolgt zu haben oder zu verfolgen, die gegen sie gerichtet sind. Eine entsprechende Loyalitätserklärung liegt bei.
+
+III. Aufenthaltsrechtlicher Status (§ 10 Abs. 1 Nr. 2 StAG)
+
+Meine Mandantschaft ist im Besitz eines nach § 10 Abs. 1 Nr. 2 StAG einbürgerungsgeeigneten Aufenthaltstitels (Nachweis als Anlage).
+
+IV. Sicherung des Lebensunterhalts (§ 10 Abs. 1 Nr. 3 StAG)
+
+${f.lebensunterhalt || '[Darlegung, dass der Lebensunterhalt ohne Inanspruchnahme von SGB II-/XII-Leistungen gesichert ist; ggf. Ausnahmen des § 10 Abs. 1 Nr. 3 a. E. StAG.]'}
+
+V. Sprachkenntnisse (§ 10 Abs. 1 Nr. 6 StAG)
+
+Ausreichende Deutschkenntnisse sind nachgewiesen durch: ${f.sprachnachweis || '[Sprachnachweis]'}.
+
+VI. Staatsbürgerliche Kenntnisse (§ 10 Abs. 1 Nr. 7 StAG)
+
+Kenntnisse der Rechts- und Gesellschaftsordnung: ${f.einbuergerungstest || 'bestandener Einbürgerungstest (Zertifikat als Anlage)'}.
+
+VII. Straffreiheit (§ 10 Abs. 1 Nr. 5, § 12a StAG)
+
+Meine Mandantschaft ist strafrechtlich nicht in einem einbürgerungsschädlichen Umfang in Erscheinung getreten; ein Führungszeugnis wird von der Behörde eingeholt (§ 41 StAG).
+
+VIII. Mehrstaatigkeit
+
+Nach dem Gesetz zur Modernisierung des Staatsangehörigkeitsrechts ist die bisherige Staatsangehörigkeit grundsätzlich beizubehalten (§ 12 StAG n. F.); ein Entlassungsverfahren ist nicht erforderlich.
+
+IX. Anlagen
+
+— Lebenslauf
+— Pass / Passersatz und Aufenthaltstitel
+— Einkommensnachweise der letzten 12 Monate
+— B1-/C1-Zertifikat, Einbürgerungstest
+— Loyalitätserklärung
+— Meldebescheinigung, Geburts- und ggf. Eheurkunde
+
+Die anwaltliche Vertretungsvollmacht wird anwaltlich versichert.
+
+${SIGN_OFF}
+`,
+  },
+
+  // ---------------------------------
+  {
+    id: 'widerspruch_ablehnung_aufenthalt',
+    title: 'Widerspruch gegen Ablehnung Aufenthaltstitel',
+    description: 'Widerspruch gegen einen ablehnenden Bescheid der Ausländerbehörde gem. §§ 68 ff. VwGO — Frist 1 Monat (§ 70 VwGO)!',
+    useCase: 'Ausländerbehörde hat einen Antrag (Erteilung, Verlängerung, Niederlassung) abgelehnt. Statthafter Rechtsbehelf ist — soweit das Vorverfahren nicht landesrechtlich abgeschafft ist — der Widerspruch binnen eines Monats. In Berlin/Brandenburg: unmittelbar Verpflichtungsklage!',
+    fields: [
+      { id: 'behoerde', label: 'Ausländerbehörde (Widerspruchsgegnerin)', type: 'text', required: true },
+      { id: 'mandant', label: 'Mandant:in', type: 'text', required: true },
+      { id: 'bescheidDatum', label: 'Datum des Bescheids', type: 'date', required: true, hint: 'Frist § 70 VwGO: 1 Monat ab Bekanntgabe!' },
+      { id: 'aktenzeichen', label: 'Aktenzeichen Bescheid', type: 'text', required: true },
+      { id: 'bescheidGegenstand', label: 'Gegenstand des Bescheids', type: 'text', placeholder: 'Ablehnung der Verlängerung § 28 AufenthG' },
+      { id: 'begruendung', label: 'Widerspruchsbegründung', type: 'textarea', required: true, hint: 'Sach- und Rechtsfehler, neue Tatsachen, Ermessensfehler.' },
+    ],
+    render: f => `An ${f.behoerde || '[Ausländerbehörde]'}
+
+Widerspruch
+in der Ausländersache ${f.mandant || '[Mandant:in]'}
+gegen den Bescheid vom ${f.bescheidDatum || '[Datum]'}, Az. ${f.aktenzeichen || '[Aktenzeichen]'}
+${f.bescheidGegenstand ? `— ${f.bescheidGegenstand} —` : ''}
+
+Sehr geehrte Damen und Herren,
+
+namens und im Auftrag meiner Mandantschaft, ${f.mandant || '[Mandant:in]'}, lege ich gegen den oben bezeichneten Bescheid
+
+W i d e r s p r u c h
+
+ein und beantrage,
+
+1. den angefochtenen Bescheid aufzuheben,
+2. dem Antrag meiner Mandantschaft in vollem Umfang stattzugeben,
+3. hilfsweise, die Sache unter Beachtung der Rechtsauffassung der Widerspruchsbehörde erneut zu bescheiden.
+
+Die Widerspruchsfrist des § 70 Abs. 1 VwGO ist gewahrt.
+
+I. Sachverhalt
+
+Auf den Akteninhalt wird Bezug genommen. Ergänzende Tatsachen werden im Rahmen der Begründung vorgetragen.
+
+II. Begründung
+
+${f.begruendung || '[Ausführliche rechtliche Begründung: Verkennung der Tatsachen, fehlerhafte Anwendung der §§ AufenthG, Ermessensfehler (§ 114 VwGO), Verhältnismäßigkeit, Art. 6 GG / Art. 8 EMRK bei familiärem Bezug.]'}
+
+III. Aufschiebende Wirkung
+
+Der Widerspruch entfaltet aufschiebende Wirkung (§ 80 Abs. 1 VwGO), soweit diese nicht nach § 84 AufenthG entfällt. Vorsorglich beantrage ich im Falle des § 84 AufenthG die Anordnung bzw. Wiederherstellung der aufschiebenden Wirkung gem. § 80 Abs. 4 VwGO bei der Behörde sowie ggf. § 80 Abs. 5 VwGO beim Verwaltungsgericht.
+
+IV. Abhilfe
+
+Ich rege eine Abhilfeentscheidung gem. § 72 VwGO an. Andernfalls bitte ich um Vorlage an die Widerspruchsbehörde und Akteneinsicht gem. § 29 VwVfG.
+
+Die anwaltliche Vertretungsvollmacht wird anwaltlich versichert.
+
+${SIGN_OFF}
+`,
+  },
+
+  // ---------------------------------
+  {
+    id: 'eilantrag_abschiebung',
+    title: 'Eilantrag gegen Abschiebung (§ 80 Abs. 5 VwGO)',
+    description: 'Antrag auf Anordnung / Wiederherstellung der aufschiebenden Wirkung beim Verwaltungsgericht gegen eine Abschiebungsanordnung.',
+    useCase: 'Mandantschaft ist von drohender Abschiebung betroffen. Höchste Eilbedürftigkeit — Antrag muss vor Vollzug gestellt werden; ggf. zusätzlich „Hängebeschluss" nach § 123 VwGO analog.',
+    fields: [
+      { id: 'gericht', label: 'Verwaltungsgericht', type: 'text', required: true, placeholder: 'Verwaltungsgericht Berlin' },
+      { id: 'mandant', label: 'Mandant:in (Antragsteller:in)', type: 'text', required: true },
+      { id: 'mandantAnschrift', label: 'Anschrift / Unterbringung', type: 'textarea', placeholder: 'Abschiebungshaft JVA Berlin-Grünau' },
+      { id: 'antragsgegnerin', label: 'Antragsgegnerin (Behörde)', type: 'text', required: true, placeholder: 'Land Berlin, vertreten durch das LEA' },
+      { id: 'anordnungDatum', label: 'Datum der Abschiebungsanordnung', type: 'date', required: true },
+      { id: 'aktenzeichen', label: 'Aktenzeichen der Behörde', type: 'text' },
+      { id: 'eilbeduerftigkeit', label: 'Eilbedürftigkeit', type: 'textarea', required: true, placeholder: 'Flug gebucht auf ..., Vollzug unmittelbar bevorstehend' },
+      { id: 'haerte', label: 'Härtegründe / Rechtsverstöße', type: 'textarea', required: true, hint: 'Art. 6 GG, Art. 8 EMRK, Art. 3 EMRK, Krankheit, familiäre Bindung.' },
+    ],
+    render: f => `An das ${f.gericht || '[Verwaltungsgericht]'}
+
+Antrag nach § 80 Abs. 5 VwGO (Eilantrag)
+
+in dem verwaltungsgerichtlichen Verfahren
+
+${f.mandant || '[Mandant:in]'}${f.mandantAnschrift ? `, derzeit ${f.mandantAnschrift.replace(/\n/g, ', ')}` : ''}
+— Antragsteller:in —
+Prozessbevollmächtigte: Unterzeichnerin / Unterzeichner
+
+gegen
+
+${f.antragsgegnerin || '[Antragsgegnerin]'}
+— Antragsgegnerin —
+
+wegen Abschiebungsanordnung vom ${f.anordnungDatum || '[Datum]'}${f.aktenzeichen ? `, Az. ${f.aktenzeichen}` : ''}
+
+namens und in Vollmacht der/des Antragstellerin:s beantrage ich,
+
+1. die aufschiebende Wirkung des gleichzeitig erhobenen Widerspruchs / der Klage gegen die Abschiebungsanordnung vom ${f.anordnungDatum || '[Datum]'} gem. § 80 Abs. 5 VwGO anzuordnen bzw. wiederherzustellen,
+2. der Antragsgegnerin im Wege des Hängebeschlusses aufzugeben, bis zur Entscheidung über diesen Eilantrag von Vollzugsmaßnahmen — insbesondere der Abschiebung — abzusehen,
+3. der Antragsgegnerin die Kosten des Verfahrens aufzuerlegen,
+4. meiner Mandantschaft Prozesskostenhilfe zu bewilligen und die Unterzeichnerin / den Unterzeichner beizuordnen (§ 166 VwGO i. V. m. §§ 114 ff. ZPO).
+
+I. Sachverhalt
+
+${f.eilbeduerftigkeit || '[Darstellung der unmittelbaren Vollzugsgefahr, Buchung Flug, Termin, Ingewahrsamnahme.]'}
+
+II. Zulässigkeit
+
+Der Antrag ist statthaft nach § 80 Abs. 5 VwGO. Eine aufschiebende Wirkung entfällt gem. § 84 Abs. 1 AufenthG bzw. § 75 AsylG, sodass die gerichtliche Anordnung geboten ist.
+
+III. Begründetheit — Interessenabwägung
+
+Das Suspensivinteresse meiner Mandantschaft überwiegt das Vollzugsinteresse der Antragsgegnerin erheblich:
+
+${f.haerte || '[Ausführungen zu Art. 6 GG (Familie), Art. 8 EMRK (Privatleben), Art. 3 EMRK (Behandlung im Zielstaat), gesundheitlichen Abschiebungsverboten nach § 60 Abs. 7 AufenthG, Reiseunfähigkeit.]'}
+
+Die Abschiebung würde irreparable Nachteile verursachen; der Bescheid erweist sich zudem bei summarischer Prüfung als offensichtlich rechtswidrig.
+
+IV. Glaubhaftmachung
+
+Zur Glaubhaftmachung dienen die anliegenden Unterlagen sowie die anwaltlich versicherten Angaben.
+
+V. Anlagen
+
+— Abschiebungsanordnung in Kopie
+— Widerspruch / Klageschrift
+— Atteste, Urkunden, eidesstattliche Versicherungen
+— PKH-Erklärung nebst Belegen
+
+Die anwaltliche Vertretungsvollmacht wird anwaltlich versichert.
+
+${SIGN_OFF}
+`,
+  },
+
+  // ---------------------------------
+  {
+    id: 'fiktionsbescheinigung',
+    title: 'Antrag auf Fiktionsbescheinigung',
+    description: 'Antrag auf Ausstellung einer Fiktionsbescheinigung gem. § 81 Abs. 5 AufenthG i. V. m. § 81 Abs. 4 AufenthG.',
+    useCase: 'Laufender Aufenthaltstitel läuft ab, Verlängerungsantrag ist rechtzeitig gestellt — die Behörde zögert die Entscheidung hinaus. Fiktionsbescheinigung wird für Arbeit, Reise, Banken benötigt.',
+    fields: [
+      { id: 'behoerde', label: 'Ausländerbehörde', type: 'text', required: true },
+      { id: 'mandant', label: 'Mandant:in', type: 'text', required: true },
+      { id: 'ablaufenderTitel', label: 'Ablaufender Aufenthaltstitel', type: 'text', required: true, placeholder: 'AE § 18b AufenthG, gültig bis 12.05.2026' },
+      { id: 'antragEingang', label: 'Verlängerungsantrag eingegangen am', type: 'date', required: true, hint: 'Fristwahrung § 81 Abs. 4 AufenthG.' },
+      { id: 'eilbeduerftigkeit', label: 'Eilbedürftigkeit', type: 'textarea', required: true, placeholder: 'Dienstreise ins Ausland am ..., Arbeitgeber fordert Nachweis, Bank sperrt Konto' },
+    ],
+    render: f => `An ${f.behoerde || '[Ausländerbehörde]'}
+
+Antrag auf Ausstellung einer Fiktionsbescheinigung
+gem. § 81 Abs. 5 i. V. m. Abs. 4 AufenthG
+
+Sehr geehrte Damen und Herren,
+
+namens und im Auftrag meiner Mandantschaft, ${f.mandant || '[Mandant:in]'}, beantrage ich die unverzügliche
+
+Ausstellung einer Fiktionsbescheinigung
+
+gem. § 81 Abs. 5 AufenthG.
+
+I. Rechtzeitige Antragstellung (§ 81 Abs. 4 AufenthG)
+
+Meine Mandantschaft ist Inhaberin / Inhaber des Aufenthaltstitels ${f.ablaufenderTitel || '[Titel]'}. Der Antrag auf Verlängerung bzw. Erteilung eines neuen Titels wurde am ${f.antragEingang || '[Datum]'} und damit vor Ablauf des bisherigen Titels bei der Behörde eingereicht. Der bisherige Titel gilt gem. § 81 Abs. 4 S. 1 AufenthG bis zur Entscheidung der Behörde als fortbestehend.
+
+II. Eilbedürftigkeit
+
+${f.eilbeduerftigkeit || '[Konkrete Nachteile ohne Bescheinigung: Arbeitsplatzverlust, Reise, Sozialleistungsbezug, Bank, Mietvertrag.]'}
+
+Ohne Aushändigung einer Fiktionsbescheinigung ist meine Mandantschaft nicht in der Lage, den Fortbestand des Aufenthaltstitels gegenüber Dritten (Arbeitgeber, Banken, Grenzbehörden) nachzuweisen. Dies ist mit dem Sinn und Zweck des § 81 Abs. 4 AufenthG unvereinbar.
+
+III. Rechtsanspruch
+
+§ 81 Abs. 5 AufenthG begründet einen Anspruch auf Ausstellung der Bescheinigung; ein Ermessen besteht insoweit nicht. Die Behörde ist zur unverzüglichen Ausstellung verpflichtet.
+
+IV. Bitte um Terminvergabe
+
+Ich bitte um kurzfristige Terminvergabe innerhalb der nächsten zehn Tage und weise vorsorglich darauf hin, dass bei weiterer Verzögerung ein Eilrechtsschutzverfahren nach § 123 VwGO geprüft werden wird.
+
+V. Anlagen
+
+— bisheriger Aufenthaltstitel (Kopie)
+— Eingangsbestätigung des Verlängerungsantrags
+— Nachweise Eilbedürftigkeit (Arbeitgeber-Bescheinigung, Reisebuchung etc.)
+
+Die anwaltliche Vertretungsvollmacht wird anwaltlich versichert.
+
+${SIGN_OFF}
+`,
+  },
+
+  // ---------------------------------
+  {
+    id: 'haertefall_antrag',
+    title: 'Härtefallantrag (§ 23a AufenthG)',
+    description: 'Antrag auf Ersuchen der Härtefallkommission um Erteilung einer Aufenthaltserlaubnis aus dringenden humanitären oder persönlichen Gründen.',
+    useCase: 'Mandantschaft ist ausreisepflichtig, aber tief in Deutschland verwurzelt; andere Wege sind ausgeschöpft. Die Härtefallkommission des Landes kann ein Ersuchen an die oberste Landesbehörde richten (§ 23a AufenthG).',
+    fields: [
+      { id: 'kommission', label: 'Härtefallkommission (Bundesland)', type: 'text', required: true, placeholder: 'Härtefallkommission des Landes Berlin bei der Senatsverwaltung für Inneres' },
+      { id: 'mandant', label: 'Mandant:in', type: 'text', required: true },
+      { id: 'mandantDaten', label: 'Geburtsdatum / Staatsangehörigkeit', type: 'text' },
+      { id: 'aufenthaltSeit', label: 'Aufenthalt in Deutschland seit', type: 'date', required: true },
+      { id: 'aktuellerStatus', label: 'Aktueller Status', type: 'text', placeholder: 'Duldung § 60a AufenthG seit ...' },
+      { id: 'verwurzelung', label: 'Soziale und wirtschaftliche Verwurzelung', type: 'textarea', required: true, hint: 'Arbeit, Sprache, Familie, Schule der Kinder, Ehrenamt.' },
+      { id: 'haertegruende', label: 'Besondere Härtegründe', type: 'textarea', required: true, hint: 'Warum wäre die Ausreise unzumutbar? Krankheit, Kinder, kulturelle Entwurzelung.' },
+    ],
+    render: f => `An die ${f.kommission || '[Härtefallkommission]'}
+
+Eingabe an die Härtefallkommission
+gem. § 23a AufenthG i. V. m. der Härtefallkommissionsverordnung des Landes
+
+in der Ausländersache ${f.mandant || '[Mandant:in]'}${f.mandantDaten ? ` (${f.mandantDaten})` : ''}
+
+Sehr geehrte Mitglieder der Härtefallkommission,
+
+namens und im Auftrag meiner Mandantschaft wende ich mich mit der Bitte an die Kommission,
+
+ein Ersuchen an die oberste Landesbehörde zu richten,
+
+der oder dem Mandantin / Mandanten abweichend von den Erteilungs- und Verlängerungsvoraussetzungen des Aufenthaltsgesetzes eine Aufenthaltserlaubnis gem. § 23a AufenthG zu erteilen.
+
+I. Persönliche Verhältnisse
+
+Meine Mandantschaft hält sich seit ${f.aufenthaltSeit || '[Datum]'} ununterbrochen im Bundesgebiet auf. Aktueller Status: ${f.aktuellerStatus || '[Status]'}.
+
+II. Soziale und wirtschaftliche Verwurzelung
+
+${f.verwurzelung || '[Dichte Schilderung: Sprachniveau, Erwerbstätigkeit, Familie, Schule/Ausbildung der Kinder, Wohnsituation, Ehrenamt, Freundeskreis.]'}
+
+III. Besondere Härtegründe (§ 23a Abs. 1 AufenthG)
+
+${f.haertegruende || '[Warum rechtfertigen die persönlichen Umstände eine Aufenthaltsgewährung aus dringenden humanitären oder persönlichen Gründen? Warum wäre die Ausreise eine besondere Härte — Krankheit, Kindeswohl, Entwurzelung, Bleibeinteresse Art. 8 EMRK.]'}
+
+IV. Ausschlussgründe
+
+Ausschlussgründe i. S. d. § 23a Abs. 1 S. 3 AufenthG (schwere Straftaten, Bezug zu Extremismus) liegen nicht vor. Die Passbeschaffung ist — soweit erforderlich — eingeleitet bzw. unmöglich und wird nachgewiesen.
+
+V. Sicherung des Lebensunterhalts / Verpflichtungserklärung
+
+Der Lebensunterhalt ist gesichert bzw. kann durch die beigefügte Verpflichtungserklärung gesichert werden. Ein Bezug öffentlicher Leistungen ist nicht bzw. nur in unvermeidbarem Umfang gegeben.
+
+VI. Anträge
+
+Ich bitte die Kommission,
+1. die Sache zur Beratung und Entscheidung anzunehmen,
+2. ein Ersuchen gem. § 23a AufenthG an die oberste Landesbehörde zu richten,
+3. bis zur Entscheidung bei der Ausländerbehörde auf Aussetzung etwaiger aufenthaltsbeendender Maßnahmen hinzuwirken.
+
+VII. Anlagen
+
+— Lebenslauf, Lichtbild
+— Nachweise Aufenthalt, Duldungen
+— Arbeits-/Ausbildungsnachweise, Sprachzertifikate
+— Schul- und Zeugnisbescheinigungen der Kinder
+— ärztliche Atteste
+— Referenzschreiben (Arbeitgeber, Schule, Gemeinde, Nachbarschaft)
+
+Die anwaltliche Vertretungsvollmacht wird anwaltlich versichert.
+
+${SIGN_OFF}
+`,
+  },
+
+  // ---------------------------------
+  {
+    id: 'familienasyl_antrag',
+    title: 'Antrag auf Familienasyl / Familienflüchtlingsschutz',
+    description: 'Antrag gem. § 26 AsylG auf Ableitung des Schutzstatus von einer stammberechtigten Person.',
+    useCase: 'Stammberechtigte Person hat bestandskräftig Asyl, Flüchtlingsschutz oder subsidiären Schutz; Ehegatt:in oder minderjähriges lediges Kind leitet den Status ab.',
+    fields: [
+      { id: 'bamf', label: 'Empfänger:in', type: 'text', required: true, placeholder: 'Bundesamt für Migration und Flüchtlinge, Außenstelle Berlin' },
+      { id: 'antragsteller', label: 'Antragsteller:in', type: 'text', required: true },
+      { id: 'antragstellerDaten', label: 'Geburtsdatum / Staatsangehörigkeit', type: 'text' },
+      { id: 'stamm', label: 'Stammberechtigte Person', type: 'text', required: true, hint: 'Name, BAMF-Az.' },
+      { id: 'verhaeltnis', label: 'Verwandtschaftsverhältnis', type: 'text', required: true, placeholder: 'Ehegatte / minderjähriges lediges Kind / Elternteil eines minderj. Stammberechtigten' },
+      { id: 'bestandskraft', label: 'Bestandskraft der Stamm-Anerkennung', type: 'date', required: true, hint: '§ 26 Abs. 1 Nr. 3 / Abs. 2 Nr. 2 / Abs. 3 Nr. 3 AsylG.' },
+      { id: 'einreise', label: 'Einreise der/des Antragsteller:in', type: 'date', hint: '§ 26 Abs. 1 Nr. 2 AsylG — vor/innerhalb welcher Frist?' },
+    ],
+    render: f => `An das ${f.bamf || '[Bundesamt für Migration und Flüchtlinge]'}
+
+Antrag auf Familienasyl / Familienflüchtlingsschutz / internationalen Schutz
+gem. § 26 AsylG
+
+in der Asylsache ${f.antragsteller || '[Antragsteller:in]'}${f.antragstellerDaten ? ` (${f.antragstellerDaten})` : ''}
+
+Sehr geehrte Damen und Herren,
+
+namens und im Auftrag meiner Mandantschaft beantrage ich
+
+die Zuerkennung der Flüchtlingseigenschaft bzw. Anerkennung als Asylberechtigte:r, hilfsweise die Zuerkennung des subsidiären Schutzstatus,
+
+abgeleitet gem. § 26 AsylG von der stammberechtigten Person.
+
+I. Stammberechtigte Person
+
+${f.stamm || '[Name und Aktenzeichen der stammberechtigten Person]'} wurde mit unanfechtbarem Bescheid des Bundesamtes vom ${f.bestandskraft || '[Datum]'} als Asylberechtigte:r anerkannt bzw. ihr/ihm wurde die Flüchtlingseigenschaft oder der subsidiäre Schutzstatus zuerkannt. Die Bestandskraft ist gewahrt (§ 26 Abs. 1 Nr. 3, Abs. 2 Nr. 2, Abs. 3 Nr. 3 AsylG).
+
+II. Verwandtschaftsverhältnis
+
+Meine Mandantschaft steht zu der stammberechtigten Person in folgendem Verhältnis: ${f.verhaeltnis || '[Verhältnis]'}. Die Verwandtschaft wird durch die anliegenden Personenstandsurkunden nachgewiesen.
+
+III. Weitere Voraussetzungen
+
+1. Die eheliche Lebensgemeinschaft / familiäre Lebensgemeinschaft bestand bereits in dem Staat, in dem die stammberechtigte Person politisch verfolgt wird (§ 26 Abs. 1 Nr. 2 AsylG).
+2. Die Einreise der/des Antragsteller:in erfolgte am ${f.einreise || '[Einreisedatum]'}; der Antrag wird unverzüglich nach der Einreise gestellt (§ 26 Abs. 1 Nr. 1 AsylG).
+3. Ausschlussgründe nach § 26 Abs. 4 AsylG (§§ 3 Abs. 2, 4 Abs. 2 AsylG) liegen nicht vor.
+
+IV. Minderjährigkeit (bei Kindernachzug)
+
+Sofern der Antrag für ein minderjähriges lediges Kind gestellt wird: Die Minderjährigkeit bestand auch zum Zeitpunkt der Asylantragstellung der stammberechtigten Person bzw. ist gem. § 26 Abs. 2 AsylG maßgeblich.
+
+V. Antrag auf bevorzugte Bearbeitung
+
+Da die familiäre Trennung Grundrechtspositionen aus Art. 6 GG und Art. 8 EMRK berührt, bitte ich um vorrangige Bearbeitung und Anhörung.
+
+VI. Anlagen
+
+— Pass / Passersatz
+— Geburts- und Heiratsurkunden mit Apostille
+— Anerkennungsbescheid der stammberechtigten Person
+— Nachweise zur Einreise
+— Anhörungsvorbereitung folgt gesondert
+
+Die anwaltliche Vertretungsvollmacht wird anwaltlich versichert.
+
+${SIGN_OFF}
+`,
+  },
+]
+
+/** Combined list for UI pickers: built-in + notar + migration. */
+export const ALL_BUILTIN_TEMPLATES: LawyerTemplate[] = [
+  ...LAWYER_TEMPLATES,
+  ...NOTAR_TEMPLATES,
+  ...MIGRATION_TEMPLATES,
+]
 
 export function getAnyBuiltinTemplate(id: string): LawyerTemplate | undefined {
   return ALL_BUILTIN_TEMPLATES.find(t => t.id === id)

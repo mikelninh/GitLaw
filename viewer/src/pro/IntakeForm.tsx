@@ -1,24 +1,34 @@
 /**
  * Mandant:innen-Fragebogen — öffentlich, KEIN Pro-Auth-Gate.
  *
- * Anwält:in teilt URL (z. B. per QR-Code bei Termin, oder Link in E-Mail).
- * Mandant:in füllt aus → Submit speichert lokal UND öffnet mailto: zur:m
- * Anwält:in mit den ausgefüllten Feldern für Remote-Zustellung.
+ * Mehrsprachig (DE/VI/TR/AR/EN) via ?lang=vi etc. — Berliner Realität:
+ * viele Mandant:innen sprechen ihre Muttersprache besser als Deutsch.
+ * Patrick Rubin = türkisch-mietrechtl. Mandant:innen, Thai Bao Nguyen
+ * (ra-nguyen.de) = vietnamesische Community, etc.
  *
- * URL: /#/intake/:slug — wobei slug = caseId oder ein Sammel-Inbox-Slug.
+ * Anwält:in teilt URL (z. B. per QR-Code bei Termin, oder Link in E-Mail)
+ * im jeweiligen Sprach-Setup. Mandant:in füllt aus → Submit speichert
+ * lokal UND öffnet mailto: zur:m Anwält:in mit den ausgefüllten Feldern.
  *
- * Für wen: Rubin schickt Link an potenzielle Mieter mit Mietstreitigkeit.
- * Werner/Jasmin geben QR am Erstberatungstermin, Mandant:in füllt auf Handy.
- * Das ist der Killer-Feature vs. Beck-Online (die hat sowas nicht).
+ * URL: /#/intake/:slug?lang=vi
+ *
+ * Die Anwält:in sieht die Antworten IMMER auf Deutsch in der Akte —
+ * Übersetzung gilt nur für die LABELS, die Eingaben bleiben unverändert.
  */
 
 import { useState } from 'react'
-import { Scale, Send, CheckCircle2 } from 'lucide-react'
-import { useParams } from 'react-router-dom'
+import { Scale, Send, CheckCircle2, Globe } from 'lucide-react'
+import { useParams, useSearchParams } from 'react-router-dom'
 import { getCase, getSettings, saveIntake } from './store'
+import { detectIntakeLang, getIntakeStrings, INTAKE_LANGS, isRtl } from './intake-i18n'
 
 export default function IntakeForm() {
   const { slug } = useParams<{ slug: string }>()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const lang = detectIntakeLang(searchParams.get('lang'))
+  const t = getIntakeStrings(lang)
+  const rtl = isRtl(lang)
+
   const [done, setDone] = useState(false)
   const [emailSending, setEmailSending] = useState(false)
 
@@ -29,17 +39,20 @@ export default function IntakeForm() {
   const [gewuenschterAusgang, setGewuenschterAusgang] = useState('')
   const [consent, setConsent] = useState(false)
 
-  // Für Kiosk-Modus: Wenn der Slug eine Akten-ID ist UND die Anwält:in
-  // im selben Browser eingeloggt ist, können wir den Anwält:innen-Namen zeigen.
-  // Bei Remote-Zugriff haben Mandant:innen keinen Zugriff auf Settings — dann
-  // zeigen wir einen generischen Header.
   const settings = getSettings()
   const caseInfo = slug ? getCase(slug) : undefined
+
+  function setLang(newLang: string) {
+    const next = new URLSearchParams(searchParams)
+    if (newLang === 'de') next.delete('lang')
+    else next.set('lang', newLang)
+    setSearchParams(next, { replace: true })
+  }
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!consent) {
-      alert('Bitte bestätigen Sie die Datenschutz-Information, um fortzufahren.')
+      alert(t.consentRequired)
       return
     }
 
@@ -61,7 +74,6 @@ export default function IntakeForm() {
       alert('Kanzlei-E-Mail ist nicht bekannt — bitte nehmen Sie direkt Kontakt auf.')
       return
     }
-    // Versuche, die Kanzlei-E-Mail aus den Contact-Zeilen zu holen
     const contact = settings.contact || ''
     const emailMatch = contact.match(/[\w._%+-]+@[\w.-]+\.[A-Z|a-z]{2,}/)
     const kanzleiEmail = emailMatch ? emailMatch[0] : ''
@@ -69,7 +81,8 @@ export default function IntakeForm() {
     const body = [
       `Sehr geehrte ${settings.anwaltName || 'Damen und Herren'},`,
       ``,
-      `hiermit übermittle ich Ihnen über Ihren Fragebogen folgende Angaben:`,
+      `hiermit übermittle ich Ihnen über Ihren Fragebogen folgende Angaben` +
+        (lang !== 'de' ? ` (eingegeben in ${INTAKE_LANGS.find(l => l.code === lang)?.label}):` : ':'),
       ``,
       `Name:          ${name}`,
       `E-Mail:        ${email || '—'}`,
@@ -92,20 +105,17 @@ export default function IntakeForm() {
 
   if (done) {
     return (
-      <div className="min-h-screen bg-[var(--color-bg)] flex items-center justify-center p-4">
+      <div
+        className="min-h-screen bg-[var(--color-bg)] flex items-center justify-center p-4"
+        dir={rtl ? 'rtl' : 'ltr'}
+      >
         <div className="w-full max-w-md bg-white border border-[var(--color-border)] rounded-2xl p-8 text-center space-y-4">
           <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mx-auto text-green-700">
             <CheckCircle2 className="w-6 h-6" />
           </div>
-          <h1 className="text-xl font-semibold">Vielen Dank für Ihre Angaben</h1>
+          <h1 className="text-xl font-semibold">{t.thankYouTitle}</h1>
           <p className="text-sm text-[var(--color-ink-soft)]">
-            {settings.name
-              ? `Ihre Angaben wurden an ${settings.name} übermittelt.`
-              : 'Ihre Angaben wurden übermittelt.'}
-            {' '}Sie erhalten innerhalb der nächsten Werktage eine Rückmeldung.
-          </p>
-          <p className="text-sm text-[var(--color-ink-soft)]">
-            Für die Weiterleitung per E-Mail an die Kanzlei:
+            {t.thankYouMessage(settings.name || '')}
           </p>
           <button
             onClick={onSendMail}
@@ -113,11 +123,10 @@ export default function IntakeForm() {
             className="inline-flex items-center gap-2 bg-[var(--color-ink)] text-white rounded-lg px-4 py-2 text-sm hover:opacity-90 disabled:opacity-50"
           >
             <Send className="w-4 h-4" />
-            {emailSending ? 'Öffne E-Mail-Programm…' : 'Per E-Mail an die Kanzlei senden'}
+            {emailSending ? t.emailButtonSending : t.emailButtonLabel}
           </button>
           <p className="text-xs text-[var(--color-ink-muted)] pt-4 border-t border-[var(--color-border)]">
-            Hinweis: Wenn Sie dieses Formular am Tablet/Computer Ihrer Anwält:in ausgefüllt haben,
-            ist die Übermittlung bereits direkt erfolgt. Der E-Mail-Versand ist optional als Kopie.
+            {t.kioskNote}
           </p>
         </div>
       </div>
@@ -125,24 +134,46 @@ export default function IntakeForm() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--color-bg)] py-10 px-4">
+    <div
+      className="min-h-screen bg-[var(--color-bg)] py-10 px-4"
+      dir={rtl ? 'rtl' : 'ltr'}
+    >
       <div className="max-w-xl mx-auto bg-white border border-[var(--color-border)] rounded-2xl p-8 space-y-6">
+        {/* Sprach-Auswahl oben */}
+        <div className="flex items-center justify-end gap-1 -mt-2 -mr-2 flex-wrap">
+          <Globe className="w-3.5 h-3.5 text-[var(--color-ink-muted)] mr-1" />
+          {INTAKE_LANGS.map(l => (
+            <button
+              key={l.code}
+              type="button"
+              onClick={() => setLang(l.code)}
+              className={`text-xs px-2 py-1 rounded transition-colors ${
+                l.code === lang
+                  ? 'bg-[var(--color-ink)] text-white'
+                  : 'text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] hover:bg-[var(--color-bg-alt)]'
+              }`}
+              title={l.label}
+            >
+              <span className="mr-0.5">{l.flag}</span>
+              {l.code.toUpperCase()}
+            </button>
+          ))}
+        </div>
+
         <header className="flex items-center gap-3 pb-4 border-b border-[var(--color-border)]">
-          <Scale className="w-6 h-6 text-[var(--color-gold)]" />
+          <Scale className="w-6 h-6 text-[var(--color-gold)] shrink-0" />
           <div>
             <h1 className="text-xl font-semibold">
-              {settings.name ? `Erstanfrage an ${settings.name}` : 'Erstanfrage an die Kanzlei'}
+              {t.headerTitle(settings.name || '—')}
             </h1>
             <p className="text-xs text-[var(--color-ink-muted)]">
-              {caseInfo
-                ? `Bezug: ${caseInfo.aktenzeichen}`
-                : 'Bitte füllen Sie die nachfolgenden Felder aus.'}
+              {caseInfo ? `${t.caseRefPrefix}: ${caseInfo.aktenzeichen}` : t.headerSubtitle}
             </p>
           </div>
         </header>
 
         <form onSubmit={onSubmit} className="space-y-4">
-          <FormField label="Ihr Name" required>
+          <FormField label={t.fieldName} required={t.required}>
             <input
               type="text"
               value={name}
@@ -150,44 +181,49 @@ export default function IntakeForm() {
               className="w-full border border-[var(--color-border)] rounded-lg px-3 py-2 focus:outline-none focus:border-[var(--color-gold)]"
               required
               autoFocus
+              dir={rtl ? 'rtl' : 'ltr'}
             />
           </FormField>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <FormField label="E-Mail">
+            <FormField label={t.fieldEmail}>
               <input
                 type="email"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 className="w-full border border-[var(--color-border)] rounded-lg px-3 py-2 focus:outline-none focus:border-[var(--color-gold)]"
+                dir="ltr"
               />
             </FormField>
-            <FormField label="Telefon (für Rückruf)">
+            <FormField label={t.fieldPhone}>
               <input
                 type="tel"
                 value={phone}
                 onChange={e => setPhone(e.target.value)}
                 className="w-full border border-[var(--color-border)] rounded-lg px-3 py-2 focus:outline-none focus:border-[var(--color-gold)]"
+                dir="ltr"
               />
             </FormField>
           </div>
 
-          <FormField label="Worum geht es?" required hint="Bitte schildern Sie Ihr Anliegen in eigenen Worten. 2-5 Sätze reichen.">
+          <FormField label={t.fieldConcern} required={t.required} hint={t.fieldConcernHint}>
             <textarea
               value={anliegen}
               onChange={e => setAnliegen(e.target.value)}
               rows={5}
               className="w-full border border-[var(--color-border)] rounded-lg px-3 py-2 focus:outline-none focus:border-[var(--color-gold)]"
               required
+              dir={rtl ? 'rtl' : 'ltr'}
             />
           </FormField>
 
-          <FormField label="Was möchten Sie konkret erreichen? (optional)">
+          <FormField label={t.fieldOutcome}>
             <textarea
               value={gewuenschterAusgang}
               onChange={e => setGewuenschterAusgang(e.target.value)}
               rows={3}
               className="w-full border border-[var(--color-border)] rounded-lg px-3 py-2 focus:outline-none focus:border-[var(--color-gold)]"
+              dir={rtl ? 'rtl' : 'ltr'}
             />
           </FormField>
 
@@ -196,27 +232,22 @@ export default function IntakeForm() {
               type="checkbox"
               checked={consent}
               onChange={e => setConsent(e.target.checked)}
-              className="mt-0.5"
+              className="mt-0.5 shrink-0"
               required
             />
-            <span>
-              Ich willige ein, dass meine Angaben an die Kanzlei übermittelt und zur
-              Bearbeitung meines Anliegens gespeichert werden dürfen. Eine Einwilligung
-              zur Mandatierung ist damit nicht verbunden.
-            </span>
+            <span>{t.consent}</span>
           </label>
 
           <button
             type="submit"
             className="w-full inline-flex items-center justify-center gap-2 bg-[var(--color-ink)] text-white rounded-lg px-4 py-3 hover:opacity-90"
           >
-            <Send className="w-4 h-4" /> Angaben übermitteln
+            <Send className="w-4 h-4" /> {t.submit}
           </button>
         </form>
 
         <footer className="text-xs text-[var(--color-ink-muted)] border-t border-[var(--color-border)] pt-4">
-          Formular bereitgestellt durch GitLaw Pro. Die Kanzlei ist für Inhalt und
-          Datenverarbeitung verantwortlich.
+          {t.footer}
         </footer>
       </div>
     </div>
@@ -228,17 +259,17 @@ function FormField({
 }: {
   label: string
   hint?: string
-  required?: boolean
+  required?: string
   children: React.ReactNode
 }) {
   return (
     <label className="block">
-      <div className="flex items-baseline justify-between mb-1">
+      <div className="flex items-baseline justify-between mb-1 gap-2">
         <span className="text-sm font-medium">
           {label}
-          {required && <span className="text-red-600 ml-1">*</span>}
+          {required && <span className="text-red-600 ml-1" title={required}>*</span>}
         </span>
-        {hint && <span className="text-xs text-[var(--color-ink-muted)]">{hint}</span>}
+        {hint && <span className="text-xs text-[var(--color-ink-muted)] text-right">{hint}</span>}
       </div>
       {children}
     </label>

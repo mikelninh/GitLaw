@@ -83,13 +83,14 @@ const VALID_INVITES = new Set([
   'BETA-MUSTER-4',
   'BETA-MUSTER-5',
   'DEMO',
-  // Named tokens for the three real Beta-Testkanzleien (April-Mai 2026).
+  // Named tokens for the four real Beta-Testkanzleien (April-Mai 2026).
   // Jede Token-URL kann zusätzlich einen ?preset= Param tragen, der die
   // passende Demo-Akten-Sammlung beim ersten Login auto-lädt
   // (siehe ProAuth.tsx + demo-data.ts presets).
   'BETA-RUBIN',     // Patrick Rubin (Mietrecht/WEG, Berlin)     → preset=rubin
   'BETA-WERNER',    // Werner Gniosdorz (Notar a.D., Berlin)     → preset=gniosdorz
   'BETA-JASMIN',    // Jasmin Gniosdorz (Erbrecht/Familie)       → preset=gniosdorz
+  'BETA-NGUYEN',    // Thai Bao Nguyen (Strafrecht/Mietrecht/Migration, vietnamesisch) → preset=nguyen
 ])
 
 export function isInviteValid(token: string): boolean {
