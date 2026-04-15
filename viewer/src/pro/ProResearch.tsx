@@ -74,23 +74,22 @@ export default function ProResearch() {
   function onAnonymize() {
     const { anonymized, replacements } = anonymize(question)
     if (replacements.length === 0) {
-      alert('Keine personenbezogenen Daten erkannt. Die Frage ist bereits sicher zu senden.')
+      setAnonymizeFeedback({ tone: 'neutral', text: 'Keine personenbezogenen Daten erkannt — die Frage ist bereits sicher.' })
+      setTimeout(() => setAnonymizeFeedback(null), 4000)
       return
     }
     setQuestion(anonymized)
-    // Kurzes UI-Feedback via native alert — kann später als Toast eleganter werden.
-    alert(
-      `${replacements.length} Stelle(n) anonymisiert:\n\n` +
-        replacements
-          .slice(0, 10)
-          .map(r => `  ${r.original}  →  ${r.placeholder}`)
-          .join('\n') +
-        (replacements.length > 10 ? `\n  …und ${replacements.length - 10} weitere` : '') +
-        `\n\nBitte Frage nochmal kurz durchlesen, bevor du sie absendest.`,
-    )
+    setAnonymizeFeedback({
+      tone: 'success',
+      text: `${replacements.length} Stelle(n) ersetzt: ` +
+        replacements.slice(0, 5).map(r => `${r.original} → ${r.placeholder}`).join(' · ') +
+        (replacements.length > 5 ? ` (+${replacements.length - 5})` : ''),
+    })
+    setTimeout(() => setAnonymizeFeedback(null), 6000)
   }
 
   const piiDetected = question && hasPII(question)
+  const [anonymizeFeedback, setAnonymizeFeedback] = useState<{ tone: 'success' | 'neutral'; text: string } | null>(null)
 
   function onSave() {
     if (!answer) return
@@ -192,6 +191,17 @@ export default function ProResearch() {
               <strong>Hinweis:</strong> Die Frage enthält potenziell personenbezogene Daten (Namen,
               Adressen, E-Mails). Vor dem Absenden an die KI empfehlen wir die Anonymisierung —
               Recherche-Fragen gehen an OpenAI (USA) ohne AVV.
+            </div>
+          )}
+          {anonymizeFeedback && (
+            <div
+              className={`text-xs rounded px-3 py-2 transition-opacity ${
+                anonymizeFeedback.tone === 'success'
+                  ? 'text-green-900 bg-green-50 border border-green-200'
+                  : 'text-[var(--color-ink-soft)] bg-[var(--color-bg-alt)] border border-[var(--color-border)]'
+              }`}
+            >
+              {anonymizeFeedback.text}
             </div>
           )}
 

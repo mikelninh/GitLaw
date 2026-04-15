@@ -14,9 +14,20 @@ import {
   FolderOpen, Search, FileText, Plus, Clock, AlertCircle, Inbox, Sparkles, TrendingUp,
 } from 'lucide-react'
 import {
-  listAudit, listCases, listIntakes, listLetters, listResearch,
+  getSettings, listAudit, listCases, listIntakes, listLetters, listResearch,
 } from './store'
 import { savingsThisWeek } from './savings'
+
+function getSettingsName(): string {
+  const s = getSettings()
+  // Use the first name part if Anwält:in name is set, otherwise blank (no greeting suffix)
+  if (!s.anwaltName) return ''
+  // Strip titles like "RAin", "Dr.", etc. for greeting
+  const parts = s.anwaltName
+    .replace(/^(RAin|RA|Rechtsanwalt|Rechtsanwältin|Dr\.|Prof\.|Dipl\.-[A-Za-z]+)\s+/g, '')
+    .split(/\s+/)
+  return parts[0] || ''
+}
 
 function daysUntil(iso: string): number {
   const diff = new Date(iso).getTime() - Date.now()
@@ -50,12 +61,17 @@ export default function ProDashboard() {
 
   return (
     <div className="space-y-8">
-      <header>
-        <h1 className="text-2xl font-semibold mb-1">
+      <header className="bg-gradient-to-r from-[var(--color-gold-light)] via-[var(--color-bg-alt)] to-transparent rounded-2xl p-5 -mx-2">
+        <h1 className="text-3xl font-semibold mb-1" style={{ fontFamily: "'Georgia', serif" }}>
           {greeting}
+          {(getSettingsName()) && (
+            <span className="text-[var(--color-ink-soft)] font-normal text-2xl">
+              , {getSettingsName()}
+            </span>
+          )}
         </h1>
         <p className="text-sm text-[var(--color-ink-soft)]">
-          {new Date().toLocaleDateString('de-DE', { weekday: 'long', day: 'numeric', month: 'long' })}
+          {new Date().toLocaleDateString('de-DE', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
         </p>
       </header>
 

@@ -19,9 +19,14 @@ import { useState } from 'react'
 import { QRCodeSVG } from 'qrcode.react'
 import { Maximize2, X, Smartphone } from 'lucide-react'
 
-const SCALE_LOGO_SVG =
-  `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23C08B20'><path d='M12 3v18M5 21h14M3 7l9-2 9 2M5 7l-2 7c0 1.7 1.3 3 3 3s3-1.3 3-3l-2-7M19 7l-2 7c0 1.7 1.3 3 3 3s3-1.3 3-3l-2-7'/></svg>`
-const LOGO_DATA_URL = `data:image/svg+xml;utf8,${SCALE_LOGO_SVG}`
+// Schwarzer Kreis mit goldenem G — scant zuverlässig, kanzlei-passend.
+// Wir nutzen excavate=true im QR, daher wird das Logo auf weißem
+// Untergrund platziert. Dunkler Kreis sorgt für klaren Kontrast.
+const LOGO_SVG = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'>
+  <circle cx='16' cy='16' r='15' fill='%231A1A1A'/>
+  <text x='16' y='22.5' text-anchor='middle' font-family='Georgia, serif' font-size='20' fill='%23C08B20' font-weight='bold'>G</text>
+</svg>`
+const LOGO_DATA_URL = `data:image/svg+xml;utf8,${LOGO_SVG.replace(/\n\s*/g, '')}`
 
 interface Props {
   url: string
