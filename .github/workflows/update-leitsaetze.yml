@@ -1,0 +1,68 @@
+name: Update kuratierte BGH-Leitsätze
+
+on:
+  schedule:
+    # Jeden Sonntag 02:00 UTC = 03:00/04:00 Berlin (je nach Sommerzeit)
+    - cron: '0 2 * * 0'
+  workflow_dispatch:
+    # manueller Trigger über GitHub-Web-UI
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Run update script
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: node scripts/update-leitsaetze.mjs
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if git diff --quiet viewer/public/leitsaetze/; then
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+            echo "Keine Änderungen — nichts zu committen."
+          else
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+            echo "Änderungen erkannt:"
+            git diff --stat viewer/public/leitsaetze/
+          fi
+
+      - name: Create Pull Request
+        if: steps.changes.outputs.has_changes == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore(leitsaetze): wöchentliches Auto-Update"
+          title: "🤖 Auto-Update Leitsätze (KW $(date +%V))"
+          body: |
+            Automatische wöchentliche Aktualisierung der kuratierten BGH-/BVerfG-/BVerwG-/BSG-Leitsätze.
+
+            Generiert von `scripts/update-leitsaetze.mjs` mit Claude Sonnet 4.6.
+
+            **Bitte vor Merge:**
+            1. Diff der hinzugefügten Leitsätze prüfen — Az + Datum + Quelle plausibel?
+            2. Bei Zweifel: 2-3 Stichproben in der Quelle (bundesgerichtshof.de etc.) öffnen
+            3. Wenn alles stimmt → mergen → der Vercel-Auto-Deploy zieht die Files
+
+            Sicherheitsfilter im Script:
+            - URL muss von Whitelist-Domain sein (BGH/BVerfG/BVerwG/BSG/dejure/hrr-strafrecht/openjur/rewis)
+            - Aktenzeichen werden nicht überschrieben (dedupe)
+            - Max 5 Leitsätze pro File (älteste werden verdrängt)
+
+            Erstellt automatisch durch `.github/workflows/update-leitsaetze.yml`.
+          branch: auto/leitsaetze-update
+          delete-branch: true
+          labels: |
+            auto-update
+            leitsaetze

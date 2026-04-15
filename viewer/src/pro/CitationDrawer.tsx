@@ -58,6 +58,50 @@ async function loadLeitsaetze(lawId: string, section: string): Promise<LeitsatzF
 }
 
 /**
+ * Stufe 3: Live-Lookup gegen OpenLegalData via unseren Vercel-Proxy.
+ * Wird nur aufgerufen wenn KEIN curated Leitsatz existiert (oder zusätzlich
+ * als breitere Coverage). Cached server-seitig in Upstash 60 Tage.
+ */
+interface LiveCase {
+  court: string
+  date: string
+  slug: string
+  url: string
+  snippet: string
+}
+interface LiveResponse {
+  lawId: string
+  section: string
+  abbrev: string
+  totalCount: number
+  results: LiveCase[]
+  hinweis?: string
+}
+
+const liveCache = new Map<string, LiveResponse | null>()
+const API_BASE = (typeof window !== 'undefined' && window.location.hostname === 'localhost')
+  ? 'https://gitlaw-xi.vercel.app'  // dev: hit the live API (we don't run vercel dev)
+  : ''  // prod: same-origin
+
+async function loadLiveRechtsprechung(lawId: string, section: string): Promise<LiveResponse | null> {
+  const key = `${lawId}_${section}`
+  if (liveCache.has(key)) return liveCache.get(key) || null
+  try {
+    const resp = await fetch(`${API_BASE}/api/rechtsprechung/${lawId}/${encodeURIComponent(section)}`)
+    if (!resp.ok) {
+      liveCache.set(key, null)
+      return null
+    }
+    const data: LiveResponse = await resp.json()
+    liveCache.set(key, data)
+    return data
+  } catch {
+    liveCache.set(key, null)
+    return null
+  }
+}
+
+/**
  * Deep-Link-URLs zu den Profi-Rechtsprechungs-Datenbanken.
  *
  * Wir versuchen NICHT eigene BGH-Datenbank-Hoheit zu beanspruchen
@@ -140,17 +184,25 @@ export default function CitationDrawer({ citation, onClose }: Props) {
   const [noteBody, setNoteBody] = useState('')
   const [noteSaved, setNoteSaved] = useState(false)
   const [leitsaetze, setLeitsaetze] = useState<LeitsatzFile | null>(null)
+  const [liveRsp, setLiveRsp] = useState<LiveResponse | null>(null)
+  const [liveLoading, setLiveLoading] = useState(false)
 
   useEffect(() => {
     if (!citation || !citation.verified) return
     setLoading(true)
     setFullText(null)
     setLeitsaetze(null)
+    setLiveRsp(null)
     loadLawSection(citation.lawId, citation.section)
       .then(t => setFullText(t))
       .finally(() => setLoading(false))
-    // Lade Leitsätze parallel — non-blocking, kann leer sein (kein File für diesen §)
+    // Lade kuratierte Leitsätze (Stufe 2) parallel
     loadLeitsaetze(citation.lawId, citation.section).then(setLeitsaetze)
+    // Lade Live-Rechtsprechung (Stufe 3) parallel — nicht-blockierend
+    setLiveLoading(true)
+    loadLiveRechtsprechung(citation.lawId, citation.section)
+      .then(setLiveRsp)
+      .finally(() => setLiveLoading(false))
     // Load existing note for this paragraph
     const existing = getParagraphNote(citation.lawId, citation.section)
     setNoteBody(existing?.body || '')
@@ -234,6 +286,58 @@ export default function CitationDrawer({ citation, onClose }: Props) {
               <article className="law-content text-sm leading-relaxed">
                 <pre className="whitespace-pre-wrap font-sans">{fullText}</pre>
               </article>
+
+              {/* Stufe 3: Weitere Treffer aus OpenLegalData (Live-Lookup, gecached) */}
+              {(liveLoading || (liveRsp && liveRsp.results.length > 0)) && (
+                <section className="mt-6 pt-5 border-t border-[var(--color-border)]">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Scale className="w-4 h-4 text-[var(--color-gold)]" />
+                    <h3 className="text-sm font-semibold">
+                      Weitere Urteile{liveRsp && ` (${liveRsp.results.length})`}
+                    </h3>
+                    {liveRsp && liveRsp.totalCount > liveRsp.results.length && (
+                      <span className="text-xs text-[var(--color-ink-muted)]">
+                        von {liveRsp.totalCount.toLocaleString('de-DE')}
+                      </span>
+                    )}
+                  </div>
+                  {liveLoading && !liveRsp && (
+                    <div className="flex items-center gap-2 text-xs text-[var(--color-ink-muted)]">
+                      <Loader2 className="w-3.5 h-3.5 animate-spin" /> Suche bei OpenLegalData…
+                    </div>
+                  )}
+                  {liveRsp && liveRsp.results.length > 0 && (
+                    <>
+                      <ul className="space-y-2">
+                        {liveRsp.results.map((r, i) => (
+                          <li key={i} className="text-xs border border-[var(--color-border)] rounded-lg p-2.5 hover:border-[var(--color-gold)]">
+                            <div className="flex items-baseline justify-between gap-2 mb-1">
+                              <span className="font-mono font-semibold text-[var(--color-ink)]">{r.court}</span>
+                              <span className="text-[var(--color-ink-muted)]">
+                                {r.date && new Date(r.date).toLocaleDateString('de-DE')}
+                              </span>
+                            </div>
+                            {r.snippet && (
+                              <p className="text-[var(--color-ink-soft)] leading-relaxed mb-1.5">{r.snippet}</p>
+                            )}
+                            <a
+                              href={r.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]"
+                            >
+                              Zur Entscheidung <ExternalLink className="w-3 h-3" />
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                      {liveRsp.hinweis && (
+                        <p className="text-xs text-[var(--color-ink-muted)] mt-2 italic">{liveRsp.hinweis}</p>
+                      )}
+                    </>
+                  )}
+                </section>
+              )}
 
               {/* Stufe 2: Kuratierte BGH-/BVerfG-/etc-Leitsätze (wenn vorhanden) */}
               {leitsaetze && leitsaetze.leitsaetze.length > 0 && (
