@@ -16,12 +16,18 @@ import ProTemplates from './ProTemplates'
 import ProAudit from './ProAudit'
 import ProEingaenge from './ProEingaenge'
 import ProPricing from './ProPricing'
+import WelcomeBao from './WelcomeBao'
 
 export default function ProApp() {
   return (
     <Routes>
       {/* Pricing public — no auth gate, so interested lawyers can see tiers */}
       <Route path="/preise" element={<PublicPricingShell />} />
+
+      {/* Personal landing pages — public, kein Auth-Gate. Pro Beta-Tester
+          eigener Pfad mit personalisiertem Welcome + 1-Klick-Login-CTA. */}
+      <Route path="/bao" element={<WelcomeBao />} />
+      <Route path="/willkommen/bao" element={<WelcomeBao />} />
 
       {/* Everything else is auth-gated */}
       <Route
