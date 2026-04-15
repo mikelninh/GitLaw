@@ -2,34 +2,28 @@
  * GET /api/sync/{key}  → return last snapshot for kanzleiKey, 404 if none
  * PUT /api/sync/{key}  → store snapshot
  *
- * Storage: Vercel KV (Redis). Aktivierung:
- *   1. `vercel kv create gitlaw-pro-sync`
- *   2. `vercel link` + `vercel env pull .env.local`
- *   3. KV_REST_API_URL und KV_REST_API_TOKEN sind dann automatisch da.
+ * Storage: Upstash Redis (verbunden via Vercel-Marketplace-Integration).
+ * Erforderliche Env-Vars (von Upstash automatisch in Vercel injectet):
+ *   - KV_REST_API_URL
+ *   - KV_REST_API_TOKEN
+ * (Upstash setzt zusätzlich KV_URL und REDIS_URL, die wir hier nicht brauchen.)
  *
  * WICHTIG für Beta:
  *   - kanzleiKey ist die einzige "Auth". Wer ihn rät, kann lesen/schreiben.
  *     Für Pilotbetrieb mit handverteilten Keys vertretbar; vor Public-Launch
  *     auf token-basierte Auth (Magic-Link + JWT) umstellen.
- *   - Snapshot-Größe ist begrenzt (Vercel KV erlaubt ~1MB pro Eintrag).
- *     Bei Überschreitung in Chunks splitten oder S3-kompatibles Storage.
- *   - DSGVO: AVV mit Vercel notwendig. Falls EU-Region erforderlich, nutze
- *     Upstash Redis statt Vercel KV — Upstash hat EU-Regionen.
+ *   - Snapshot-Größe ist begrenzt (~900 KB pro Eintrag).
+ *   - DSGVO: Upstash-Region Frankfurt (eu-central-1), AVV mit Upstash
+ *     erforderlich für Produktivbetrieb mit Mandant:innen-Daten.
  */
 
 import type { VercelRequest, VercelResponse } from '@vercel/node'
+import { Redis } from '@upstash/redis'
 
-// Lazy import so the function can be deployed even before KV is provisioned
-async function getKv() {
-  try {
-    const mod = await import('@vercel/kv')
-    return mod.kv
-  } catch {
-    return null
-  }
-}
+const redis = Redis.fromEnv()
 
-const MAX_SNAPSHOT_SIZE = 900_000  // ~900 KB — leave room for KV overhead
+const MAX_SNAPSHOT_SIZE = 900_000  // ~900 KB
+const TTL_SECONDS = 60 * 60 * 24 * 90  // 90 Tage
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader('Access-Control-Allow-Origin', '*')
@@ -38,28 +32,28 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   if (req.method === 'OPTIONS') return res.status(200).end()
 
+  // Sanity check: ohne Env-Vars ist Redis nicht initialisierbar
+  if (!process.env.KV_REST_API_URL || !process.env.KV_REST_API_TOKEN) {
+    return res.status(503).json({
+      error: 'Cloud-Sync ist serverseitig nicht konfiguriert.',
+      hint: 'Admin: Upstash-Integration im Vercel-Dashboard mit Projekt verbinden, dann re-deploy.',
+    })
+  }
+
   const { key } = req.query
   if (typeof key !== 'string' || !key.trim() || key.length > 200) {
     return res.status(400).json({ error: 'Invalid key' })
-  }
-
-  const kv = await getKv()
-  if (!kv) {
-    return res.status(503).json({
-      error: 'Cloud-Sync ist serverseitig noch nicht provisioniert.',
-      hint: 'Admin: vercel kv create gitlaw-pro-sync && vercel env pull',
-    })
   }
 
   const namespacedKey = `proSync:${key}`
 
   if (req.method === 'GET') {
     try {
-      const snapshot = await kv.get(namespacedKey)
+      const snapshot = await redis.get(namespacedKey)
       if (!snapshot) return res.status(404).json({ error: 'No snapshot for this key' })
       return res.status(200).json(snapshot)
     } catch (err) {
-      return res.status(500).json({ error: 'KV read failed', detail: String(err) })
+      return res.status(500).json({ error: 'Read failed', detail: String(err) })
     }
   }
 
@@ -74,15 +68,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         error: 'Snapshot too large',
         sizeBytes: size,
         limitBytes: MAX_SNAPSHOT_SIZE,
-        hint: 'Bitte ZIP-Export der Akten archivieren und alte Akten lokal löschen.',
+        hint: 'Bitte ZIP-Export alter Akten archivieren und lokal löschen.',
       })
     }
     try {
-      // Store with 90-day TTL — explicit cleanup signal to user
-      await kv.set(namespacedKey, body, { ex: 60 * 60 * 24 * 90 })
-      return res.status(200).json({ ok: true, sizeBytes: size })
+      await redis.set(namespacedKey, body, { ex: TTL_SECONDS })
+      return res.status(200).json({ ok: true, sizeBytes: size, ttlDays: TTL_SECONDS / 86400 })
     } catch (err) {
-      return res.status(500).json({ error: 'KV write failed', detail: String(err) })
+      return res.status(500).json({ error: 'Write failed', detail: String(err) })
     }
   }
 

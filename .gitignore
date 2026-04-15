@@ -6,3 +6,4 @@ parser/fetch_log.txt
 rag/vectorstore/index.faiss
 rag/vectorstore/index.pkl
 .vercel
+api/node_modules

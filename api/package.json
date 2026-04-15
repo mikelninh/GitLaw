@@ -1,5 +1,9 @@
 {
   "name": "gitlaw-api",
   "version": "1.0.0",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "@upstash/redis": "^1.37.0",
+    "@vercel/node": "^5.7.5"
+  }
 }
