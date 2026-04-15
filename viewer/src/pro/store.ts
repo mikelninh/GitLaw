@@ -76,14 +76,20 @@ export function saveSettings(s: KanzleiSettings): void {
 // --- Invite token (Beta gate) ---
 
 const VALID_INVITES = new Set([
-  // Beta tokens — these correspond to specific Anwält:innen we hand-invite.
-  // Rotate / extend this list as we onboard testers.
+  // Generic muster tokens — usable for ad-hoc tests / public demos
   'BETA-MUSTER-1',
   'BETA-MUSTER-2',
   'BETA-MUSTER-3',
   'BETA-MUSTER-4',
   'BETA-MUSTER-5',
   'DEMO',
+  // Named tokens for the three real Beta-Testkanzleien (April-Mai 2026).
+  // Jede Token-URL kann zusätzlich einen ?preset= Param tragen, der die
+  // passende Demo-Akten-Sammlung beim ersten Login auto-lädt
+  // (siehe ProAuth.tsx + demo-data.ts presets).
+  'BETA-RUBIN',     // Patrick Rubin (Mietrecht/WEG, Berlin)     → preset=rubin
+  'BETA-WERNER',    // Werner Gniosdorz (Notar a.D., Berlin)     → preset=gniosdorz
+  'BETA-JASMIN',    // Jasmin Gniosdorz (Erbrecht/Familie)       → preset=gniosdorz
 ])
 
 export function isInviteValid(token: string): boolean {

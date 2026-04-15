@@ -18,6 +18,7 @@ import {
   log,
   setStoredInvite,
 } from './store'
+import { isDemoLoaded, loadDemoData, getPreset } from './demo-data'
 
 interface Props {
   children: React.ReactNode
@@ -30,22 +31,39 @@ export default function ProAuth({ children }: Props) {
   const [searchParams, setSearchParams] = useSearchParams()
 
   // Auto-unlock if a previously saved token is still valid, OR if a fresh
-  // token is in the URL (#/pro?invite=BETA-…)
+  // token is in the URL (#/pro?invite=BETA-…&preset=rubin)
   useEffect(() => {
     const fromHash = searchParams.get('invite')
+    const presetFromHash = searchParams.get('preset')
     // Also fall back to pre-hash query string, just in case someone shared
     // a link like "/?invite=BETA-…" before the hash got added.
     const fromSearch = new URLSearchParams(window.location.search).get('invite')
+    const presetFromSearch = new URLSearchParams(window.location.search).get('preset')
     const fromUrl = fromHash || fromSearch
+    const presetFromUrl = presetFromHash || presetFromSearch
+
     if (fromUrl && isInviteValid(fromUrl)) {
       setStoredInvite(fromUrl)
       log('login', `via URL token`)
+
+      // Auto-load preset on FIRST login if requested and not already loaded.
+      // This is the "wow-moment" path: Rubin clicks his pitch link and his
+      // own Kanzlei-Branding + 3 cases appear instantly without setup.
+      if (presetFromUrl && !isDemoLoaded() && getPreset(presetFromUrl)) {
+        try {
+          loadDemoData(presetFromUrl)
+        } catch (err) {
+          console.warn('Preset auto-load failed', err)
+        }
+      }
+
       setUnlocked(true)
-      // Strip the token from the URL so it's not shoulder-surfed / copied.
+      // Strip token + preset from URL so they're not shoulder-surfed / copied.
       const clean = new URLSearchParams(searchParams)
       clean.delete('invite')
+      clean.delete('preset')
       setSearchParams(clean, { replace: true })
-      if (fromSearch) {
+      if (fromSearch || presetFromSearch) {
         const url = window.location.pathname + window.location.hash
         window.history.replaceState({}, '', url)
       }
