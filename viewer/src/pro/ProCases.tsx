@@ -27,6 +27,8 @@ import {
 } from './store'
 import { exportAuditPDF } from './pdf'
 import { exportCaseBundle } from './zip'
+import { berechneFristAusPreset, FRIST_PRESETS, presetToBezeichnung } from './frist-calc'
+import QrCard from './QrCard'
 import type { MandantCase } from './types'
 
 /** Returns days until the ISO date, negative if past. */
@@ -104,6 +106,24 @@ function IntakeShareDialog({
             {copied ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
             {copied ? 'Kopiert!' : 'Kopieren'}
           </button>
+        </div>
+
+        {/* QR-Code für iPad-zu-Handy-Übergabe im Mandant:innen-Termin */}
+        <div className="bg-gradient-to-br from-[var(--color-bg-alt)] to-white border border-[var(--color-border)] rounded-2xl p-5 flex flex-wrap items-center gap-5">
+          <QrCard
+            url={url}
+            size={140}
+            caption={`Fragebogen — ${caseDisplay.split(' · ')[1] || ''}`}
+          />
+          <div className="text-sm text-[var(--color-ink-soft)] flex-1 min-w-[200px]">
+            <p className="font-semibold text-[var(--color-ink)] mb-2">📱 Im Termin nutzen:</p>
+            <ol className="space-y-1.5 text-sm list-decimal list-inside">
+              <li>QR-Code zeigen <span className="text-[var(--color-ink-muted)]">(klicken für Vollbild)</span></li>
+              <li>Mandant:in scannt mit Handy-Kamera</li>
+              <li>Formular öffnet sich, wird ausgefüllt</li>
+              <li>Antwort erscheint in dieser Akte</li>
+            </ol>
+          </div>
         </div>
         <div className="flex items-center gap-2 flex-wrap">
           <a
@@ -281,6 +301,20 @@ function CreateForm({
   const [mandantEmail, setMandantEmail] = useState('')
   const [fristDatum, setFristDatum] = useState('')
   const [fristBezeichnung, setFristBezeichnung] = useState('')
+  // Frist-Calculator state
+  const [bescheidDatum, setBescheidDatum] = useState('')
+  const [presetId, setPresetId] = useState<string>('')
+  const [calcResult, setCalcResult] = useState<ReturnType<typeof berechneFristAusPreset> | null>(null)
+
+  function onCalcFrist() {
+    if (!bescheidDatum || !presetId) return
+    const r = berechneFristAusPreset(bescheidDatum, presetId as Parameters<typeof berechneFristAusPreset>[1])
+    setCalcResult(r)
+    if (r) {
+      setFristDatum(r.enddatum)
+      setFristBezeichnung(presetToBezeichnung(presetId as Parameters<typeof presetToBezeichnung>[0]))
+    }
+  }
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -349,6 +383,54 @@ function CreateForm({
           className="border border-[var(--color-border)] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[var(--color-gold)]"
         />
       </div>
+
+      {/* Frist-Calculator */}
+      <details className="bg-[var(--color-bg-alt)] border border-[var(--color-border)] rounded-lg">
+        <summary className="text-sm font-medium cursor-pointer px-3 py-2 hover:bg-white">
+          Frist berechnen aus Bescheid-/Zustellungsdatum
+        </summary>
+        <div className="p-3 space-y-2 border-t border-[var(--color-border)]">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+            <input
+              type="date"
+              value={bescheidDatum}
+              onChange={e => setBescheidDatum(e.target.value)}
+              className="border border-[var(--color-border)] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[var(--color-gold)]"
+              title="Datum der Zustellung des Bescheids / Beginn-Ereignis"
+            />
+            <select
+              value={presetId}
+              onChange={e => setPresetId(e.target.value)}
+              className="md:col-span-2 border border-[var(--color-border)] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[var(--color-gold)]"
+            >
+              <option value="">— Frist-Typ wählen —</option>
+              {FRIST_PRESETS.map(p => (
+                <option key={p.id} value={p.id}>{p.label}</option>
+              ))}
+            </select>
+          </div>
+          <button
+            type="button"
+            onClick={onCalcFrist}
+            disabled={!bescheidDatum || !presetId}
+            className="text-xs bg-[var(--color-ink)] text-white rounded px-3 py-1.5 hover:opacity-90 disabled:opacity-50"
+          >
+            Frist berechnen & übernehmen
+          </button>
+          {calcResult && (
+            <div
+              className={`text-xs rounded p-2 ${
+                calcResult.istWochenende
+                  ? 'bg-amber-50 border border-amber-200 text-amber-900'
+                  : 'bg-green-50 border border-green-200 text-green-900'
+              }`}
+            >
+              <strong>Endtag: {new Date(calcResult.enddatum).toLocaleDateString('de-DE')} ({calcResult.wochentag})</strong>
+              <p className="mt-1 text-[var(--color-ink-soft)]">{calcResult.hinweis}</p>
+            </div>
+          )}
+        </div>
+      </details>
       <div className="flex items-center gap-2">
         <button
           type="submit"

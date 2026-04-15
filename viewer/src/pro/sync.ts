@@ -1,0 +1,262 @@
+/**
+ * Daten-Synchronisation.
+ *
+ * Zwei Ebenen:
+ *
+ * 1. **Manuell — JSON Export/Import** (heute, ohne Backend):
+ *    Anwält:in exportiert komplette Pro-State als JSON-Datei → schickt
+ *    Kollegin → importiert. Funktioniert sofort, kein Server, aber nicht
+ *    automatisch.
+ *
+ * 2. **Cloud-Sync via Vercel KV** (vorbereitet, aktiviert wenn KV provisioniert):
+ *    Jede Kanzlei hat einen `kanzleiKey` (UUID). Bei Save wird zusätzlich
+ *    ein POST an `/api/sync/{kanzleiKey}` gesendet (Snapshot der Pro-State).
+ *    Beim Laden GET. Last-write-wins per Entity über `updatedAt`.
+ *    Für die finale Aktivierung muss `vercel kv create` ausgeführt und
+ *    `KV_REST_API_URL` + `KV_REST_API_TOKEN` in den Vercel-Vars gesetzt
+ *    werden — dann funktioniert es transparent.
+ */
+
+import type {
+  AuditEntry,
+  CustomTemplate,
+  GeneratedLetter,
+  IntakeEntry,
+  KanzleiSettings,
+  MandantCase,
+  ParagraphNote,
+  ResearchQuery,
+} from './types'
+
+export interface ProStateSnapshot {
+  version: '1'
+  exportedAt: string
+  kanzleiKey?: string
+  settings: KanzleiSettings | null
+  cases: MandantCase[]
+  research: ResearchQuery[]
+  letters: GeneratedLetter[]
+  audit: AuditEntry[]
+  intakes: IntakeEntry[]
+  customTemplates: CustomTemplate[]
+  paragraphNotes: ParagraphNote[]
+}
+
+const KEYS = {
+  settings: 'gitlaw.pro.settings.v1',
+  cases: 'gitlaw.pro.cases.v1',
+  research: 'gitlaw.pro.research.v1',
+  letters: 'gitlaw.pro.letters.v1',
+  audit: 'gitlaw.pro.audit.v1',
+  intakes: 'gitlaw.pro.intakes.v1',
+  customTemplates: 'gitlaw.pro.customTemplates.v1',
+  paragraphNotes: 'gitlaw.pro.paragraphNotes.v1',
+  kanzleiKey: 'gitlaw.pro.kanzleiKey.v1',
+  cloudSync: 'gitlaw.pro.cloudSync.v1',
+}
+
+function readJSON<T>(key: string, fallback: T): T {
+  try {
+    const raw = localStorage.getItem(key)
+    if (!raw) return fallback
+    return JSON.parse(raw) as T
+  } catch {
+    return fallback
+  }
+}
+
+function writeJSON(key: string, value: unknown): void {
+  localStorage.setItem(key, JSON.stringify(value))
+}
+
+// --- Kanzlei-Key (zur Identifikation der Kanzlei beim Cloud-Sync) ---
+
+export function getKanzleiKey(): string {
+  let key = localStorage.getItem(KEYS.kanzleiKey)
+  if (!key) {
+    key = 'kanzlei_' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36)
+    localStorage.setItem(KEYS.kanzleiKey, key)
+  }
+  return key
+}
+
+export function setKanzleiKey(key: string): void {
+  localStorage.setItem(KEYS.kanzleiKey, key.trim())
+}
+
+export function isCloudSyncEnabled(): boolean {
+  return localStorage.getItem(KEYS.cloudSync) === '1'
+}
+
+export function setCloudSyncEnabled(on: boolean): void {
+  localStorage.setItem(KEYS.cloudSync, on ? '1' : '0')
+}
+
+// --- Snapshot bauen / einspielen ---
+
+export function buildSnapshot(): ProStateSnapshot {
+  return {
+    version: '1',
+    exportedAt: new Date().toISOString(),
+    kanzleiKey: localStorage.getItem(KEYS.kanzleiKey) || undefined,
+    settings: readJSON<KanzleiSettings | null>(KEYS.settings, null),
+    cases: readJSON(KEYS.cases, []),
+    research: readJSON(KEYS.research, []),
+    letters: readJSON(KEYS.letters, []),
+    audit: readJSON(KEYS.audit, []),
+    intakes: readJSON(KEYS.intakes, []),
+    customTemplates: readJSON(KEYS.customTemplates, []),
+    paragraphNotes: readJSON(KEYS.paragraphNotes, []),
+  }
+}
+
+/**
+ * Importiert ein Snapshot. `mode = 'merge'` führt last-write-wins per
+ * Entity über `updatedAt` zusammen; `mode = 'replace'` überschreibt
+ * vollständig. Default: merge.
+ */
+export function importSnapshot(snap: ProStateSnapshot, mode: 'merge' | 'replace' = 'merge'): {
+  cases: number; research: number; letters: number; intakes: number; templates: number; notes: number
+} {
+  if (snap.version !== '1') throw new Error('Inkompatibles Snapshot-Format: Version ' + snap.version)
+
+  if (mode === 'replace') {
+    if (snap.settings) writeJSON(KEYS.settings, snap.settings)
+    writeJSON(KEYS.cases, snap.cases)
+    writeJSON(KEYS.research, snap.research)
+    writeJSON(KEYS.letters, snap.letters)
+    writeJSON(KEYS.audit, snap.audit)
+    writeJSON(KEYS.intakes, snap.intakes)
+    writeJSON(KEYS.customTemplates, snap.customTemplates)
+    writeJSON(KEYS.paragraphNotes, snap.paragraphNotes)
+    return {
+      cases: snap.cases.length,
+      research: snap.research.length,
+      letters: snap.letters.length,
+      intakes: snap.intakes.length,
+      templates: snap.customTemplates.length,
+      notes: snap.paragraphNotes.length,
+    }
+  }
+
+  // Merge mode
+  const counts = { cases: 0, research: 0, letters: 0, intakes: 0, templates: 0, notes: 0 }
+
+  // Settings: import only if local is empty
+  if (snap.settings) {
+    const local = readJSON<KanzleiSettings | null>(KEYS.settings, null)
+    if (!local || (!local.name && !local.anwaltName)) writeJSON(KEYS.settings, snap.settings)
+  }
+
+  // Cases — merge by id, keep newer updatedAt
+  counts.cases = mergeArrayById<MandantCase>(KEYS.cases, snap.cases, c => c.updatedAt)
+  counts.research = mergeArrayById<ResearchQuery>(KEYS.research, snap.research, r => r.createdAt)
+  counts.letters = mergeArrayById<GeneratedLetter>(KEYS.letters, snap.letters, l => l.createdAt)
+
+  // Audit — append-only, dedupe by id
+  const audit = readJSON<AuditEntry[]>(KEYS.audit, [])
+  const auditIds = new Set(audit.map(e => e.id))
+  for (const e of snap.audit) {
+    if (!auditIds.has(e.id)) audit.push(e)
+  }
+  writeJSON(KEYS.audit, audit.slice(-1000))
+
+  // Intakes — merge by id
+  counts.intakes = mergeArrayById<IntakeEntry>(KEYS.intakes, snap.intakes, i => i.submittedAt)
+
+  // Custom Templates — merge by id, keep newer updatedAt
+  counts.templates = mergeArrayById<CustomTemplate>(KEYS.customTemplates, snap.customTemplates, t => t.updatedAt)
+
+  // Paragraph Notes — merge by key, keep newer updatedAt
+  const notes = readJSON<ParagraphNote[]>(KEYS.paragraphNotes, [])
+  const notesByKey = new Map(notes.map(n => [n.key, n]))
+  for (const n of snap.paragraphNotes) {
+    const existing = notesByKey.get(n.key)
+    if (!existing || existing.updatedAt < n.updatedAt) {
+      notesByKey.set(n.key, n)
+      counts.notes++
+    }
+  }
+  writeJSON(KEYS.paragraphNotes, Array.from(notesByKey.values()))
+
+  return counts
+}
+
+function mergeArrayById<T extends { id: string }>(
+  key: string,
+  incoming: T[],
+  timestampOf: (x: T) => string,
+): number {
+  const local = readJSON<T[]>(key, [])
+  const byId = new Map(local.map(x => [x.id, x]))
+  let changed = 0
+  for (const x of incoming) {
+    const existing = byId.get(x.id)
+    if (!existing) {
+      byId.set(x.id, x)
+      changed++
+    } else if (timestampOf(existing) < timestampOf(x)) {
+      byId.set(x.id, x)
+      changed++
+    }
+  }
+  writeJSON(key, Array.from(byId.values()))
+  return changed
+}
+
+// --- Manuell: Datei-Download / -Upload ---
+
+export function downloadSnapshotFile(): void {
+  const snap = buildSnapshot()
+  const blob = new Blob([JSON.stringify(snap, null, 2)], { type: 'application/json' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = `gitlawpro-export-${new Date().toISOString().slice(0, 10)}.json`
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
+  URL.revokeObjectURL(url)
+}
+
+export async function importSnapshotFile(file: File, mode: 'merge' | 'replace' = 'merge'): Promise<ReturnType<typeof importSnapshot>> {
+  const text = await file.text()
+  const snap = JSON.parse(text) as ProStateSnapshot
+  return importSnapshot(snap, mode)
+}
+
+// --- Cloud-Sync (Vercel KV) — vorbereitet, aktiviert wenn API-Endpoint da ---
+
+const SYNC_API_URL = import.meta.env.VITE_API_URL || 'https://gitlaw-xi.vercel.app'
+
+export async function pushToCloud(): Promise<void> {
+  if (!isCloudSyncEnabled()) return
+  const key = getKanzleiKey()
+  const snap = buildSnapshot()
+  try {
+    const resp = await fetch(`${SYNC_API_URL}/api/sync/${encodeURIComponent(key)}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(snap),
+    })
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`)
+  } catch (err) {
+    console.warn('Cloud-Sync-Push fehlgeschlagen', err)
+    throw err
+  }
+}
+
+export async function pullFromCloud(): Promise<{ ok: boolean; counts?: ReturnType<typeof importSnapshot>; error?: string }> {
+  if (!isCloudSyncEnabled()) return { ok: false, error: 'Cloud-Sync ist nicht aktiv' }
+  const key = getKanzleiKey()
+  try {
+    const resp = await fetch(`${SYNC_API_URL}/api/sync/${encodeURIComponent(key)}`)
+    if (resp.status === 404) return { ok: true, counts: undefined } // nichts in der Cloud
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`)
+    const snap = (await resp.json()) as ProStateSnapshot
+    const counts = importSnapshot(snap, 'merge')
+    return { ok: true, counts }
+  } catch (err) {
+    return { ok: false, error: err instanceof Error ? err.message : 'unbekannt' }
+  }
+}

@@ -6,9 +6,20 @@
  */
 
 import { useEffect, useRef, useState } from 'react'
-import { Save, Upload, Trash2, AlertTriangle, Sparkles } from 'lucide-react'
+import { Save, Upload, Trash2, AlertTriangle, Sparkles, Download, FileSignature, Cloud, RefreshCw } from 'lucide-react'
 import { eraseAllProData, getSettings, saveSettings } from './store'
 import { KANZLEI_PRESETS, loadDemoData, isDemoLoaded } from './demo-data'
+import {
+  downloadSnapshotFile,
+  getKanzleiKey,
+  importSnapshotFile,
+  isCloudSyncEnabled,
+  pullFromCloud,
+  pushToCloud,
+  setCloudSyncEnabled,
+  setKanzleiKey,
+} from './sync'
+import { generateAvvPdf } from './avv-pdf'
 import type { KanzleiSettings } from './types'
 
 const MAX_LOGO_BYTES = 200 * 1024  // 200 KB
@@ -238,6 +249,36 @@ export default function ProSettings() {
         </div>
       </section>
 
+      {/* DSGVO / AVV */}
+      <section className="bg-white border border-[var(--color-border)] rounded-2xl p-6">
+        <h2 className="font-semibold mb-1 flex items-center gap-2">
+          <FileSignature className="w-4 h-4 text-[var(--color-gold)]" /> DSGVO-Vorlagen
+        </h2>
+        <p className="text-sm text-[var(--color-ink-soft)] mb-4">
+          Auftragsverarbeitungsvertrag (AVV) als Entwurf-PDF auf deinem Briefkopf — Basis für die
+          Verträge mit deinen technischen Dienstleistern.
+        </p>
+        <button
+          onClick={() => generateAvvPdf(settings)}
+          disabled={!settings.name}
+          className="inline-flex items-center gap-1.5 text-sm bg-white border border-[var(--color-border)] rounded-lg px-3 py-1.5 hover:border-[var(--color-gold)] disabled:opacity-50"
+        >
+          <Download className="w-4 h-4" /> AVV-Entwurf als PDF
+        </button>
+        {!settings.name && (
+          <p className="text-xs text-amber-700 mt-2">
+            Bitte zuerst Kanzlei-Profil oben ausfüllen und speichern.
+          </p>
+        )}
+        <p className="text-xs text-[var(--color-ink-muted)] mt-3 italic">
+          Hinweis: Mustertext-Entwurf, nicht anwaltlich geprüft. Vor produktivem Einsatz mit deiner
+          Datenschutz-Beratung finalisieren.
+        </p>
+      </section>
+
+      {/* Sync */}
+      <SyncSection />
+
       {/* Datenschutz / Notausgang */}
       <section className="bg-white border border-red-200 rounded-2xl p-6">
         <h2 className="font-semibold mb-2 flex items-center gap-2 text-red-800">
@@ -255,6 +296,189 @@ export default function ProSettings() {
         </button>
       </section>
     </div>
+  )
+}
+
+function SyncSection() {
+  const [kanzleiKey, setKanzleiKeyLocal] = useState(getKanzleiKey())
+  const [cloudSync, setCloudSyncLocal] = useState(isCloudSyncEnabled())
+  const [importMode, setImportMode] = useState<'merge' | 'replace'>('merge')
+  const [busy, setBusy] = useState(false)
+  const [msg, setMsg] = useState<string | null>(null)
+  const fileRef = useRef<HTMLInputElement>(null)
+
+  function handleExport() {
+    downloadSnapshotFile()
+    setMsg('Snapshot heruntergeladen.')
+  }
+
+  async function handleImportFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setBusy(true)
+    setMsg(null)
+    try {
+      const counts = await importSnapshotFile(file, importMode)
+      setMsg(
+        `Import erfolgreich (${importMode}): ` +
+          [
+            counts.cases > 0 && `${counts.cases} Akten`,
+            counts.research > 0 && `${counts.research} Recherchen`,
+            counts.letters > 0 && `${counts.letters} Schreiben`,
+            counts.intakes > 0 && `${counts.intakes} Eingänge`,
+            counts.templates > 0 && `${counts.templates} Vorlagen`,
+            counts.notes > 0 && `${counts.notes} Notizen`,
+          ].filter(Boolean).join(' · ') ||
+          'Keine neuen Einträge — Daten waren bereits aktuell.',
+      )
+      setTimeout(() => window.location.reload(), 1500)
+    } catch (err) {
+      setMsg('Import fehlgeschlagen: ' + (err instanceof Error ? err.message : 'unbekannt'))
+    } finally {
+      setBusy(false)
+      if (fileRef.current) fileRef.current.value = ''
+    }
+  }
+
+  async function handlePush() {
+    setBusy(true)
+    setMsg(null)
+    try {
+      await pushToCloud()
+      setMsg('In die Cloud hochgeladen.')
+    } catch (err) {
+      setMsg('Cloud-Upload fehlgeschlagen: ' + (err instanceof Error ? err.message : 'unbekannt'))
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function handlePull() {
+    setBusy(true)
+    setMsg(null)
+    const result = await pullFromCloud()
+    setBusy(false)
+    if (result.ok && result.counts) {
+      setMsg(`Aus der Cloud aktualisiert.`)
+      setTimeout(() => window.location.reload(), 1500)
+    } else if (result.ok) {
+      setMsg('Cloud ist leer — nichts zum Synchronisieren.')
+    } else {
+      setMsg('Pull fehlgeschlagen: ' + (result.error || 'unbekannt'))
+    }
+  }
+
+  function handleToggleCloud() {
+    const next = !cloudSync
+    setCloudSyncEnabled(next)
+    setCloudSyncLocal(next)
+    setMsg(next ? 'Cloud-Sync aktiviert.' : 'Cloud-Sync deaktiviert.')
+  }
+
+  function handleSetKey() {
+    setKanzleiKey(kanzleiKey)
+    setMsg('Kanzlei-Schlüssel gespeichert.')
+  }
+
+  return (
+    <section className="bg-white border border-[var(--color-border)] rounded-2xl p-6 space-y-4">
+      <div>
+        <h2 className="font-semibold flex items-center gap-2 mb-1">
+          <Cloud className="w-4 h-4 text-[var(--color-gold)]" /> Sync &amp; Backup
+        </h2>
+        <p className="text-sm text-[var(--color-ink-soft)]">
+          Akten zwischen Browsern oder mit Kolleg:innen teilen. Zwei Wege: Datei-Export/-Import
+          (manuell, sofort einsatzbereit) oder Cloud-Sync (automatisch, sobald Vercel-KV
+          serverseitig provisioniert ist).
+        </p>
+      </div>
+
+      {/* Manuell */}
+      <div className="border border-[var(--color-border)] rounded-lg p-4 space-y-3">
+        <h3 className="font-medium text-sm">📁 Datei-Sync (sofort verfügbar)</h3>
+        <p className="text-xs text-[var(--color-ink-soft)]">
+          Exportiere alle Pro-Daten als JSON-Datei. Schicke sie z. B. per E-Mail an deine
+          Kollegin. Sie importiert die Datei → eure Akten sind synchron. Wiederhole bei Bedarf.
+        </p>
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            onClick={handleExport}
+            className="inline-flex items-center gap-1.5 text-sm bg-[var(--color-ink)] text-white rounded-lg px-3 py-1.5 hover:opacity-90"
+          >
+            <Download className="w-4 h-4" /> Snapshot exportieren
+          </button>
+          <label className="inline-flex items-center gap-1.5 text-sm bg-white border border-[var(--color-border)] rounded-lg px-3 py-1.5 hover:border-[var(--color-gold)] cursor-pointer">
+            <Upload className="w-4 h-4" /> JSON importieren
+            <input ref={fileRef} type="file" accept="application/json" onChange={handleImportFile} className="hidden" />
+          </label>
+          <select
+            value={importMode}
+            onChange={e => setImportMode(e.target.value as 'merge' | 'replace')}
+            className="text-xs border border-[var(--color-border)] rounded px-2 py-1"
+          >
+            <option value="merge">Zusammenführen (last-write-wins)</option>
+            <option value="replace">Vollständig ersetzen</option>
+          </select>
+        </div>
+      </div>
+
+      {/* Cloud */}
+      <div className="border border-[var(--color-border)] rounded-lg p-4 space-y-3">
+        <div className="flex items-baseline justify-between gap-3 flex-wrap">
+          <h3 className="font-medium text-sm">☁ Cloud-Sync (Beta — vorbereitet)</h3>
+          <label className="inline-flex items-center gap-2 text-xs">
+            <input type="checkbox" checked={cloudSync} onChange={handleToggleCloud} />
+            aktivieren
+          </label>
+        </div>
+        <p className="text-xs text-[var(--color-ink-soft)]">
+          Werner und Jasmin geben den gleichen Kanzlei-Schlüssel ein → ihre Browser synchronisieren
+          sich automatisch via verschlüsselter Cloud (Vercel KV). Der Schlüssel ist die einzige
+          „Auth" — nur teilen mit Personen, denen du voll vertraust.
+        </p>
+        <div className="flex items-center gap-2">
+          <input
+            type="text"
+            value={kanzleiKey}
+            onChange={e => setKanzleiKeyLocal(e.target.value)}
+            className="flex-1 font-mono text-xs border border-[var(--color-border)] rounded px-2 py-1 focus:outline-none focus:border-[var(--color-gold)]"
+          />
+          <button
+            onClick={handleSetKey}
+            className="text-xs bg-[var(--color-ink)] text-white rounded px-2 py-1 hover:opacity-90"
+          >
+            Schlüssel setzen
+          </button>
+        </div>
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            onClick={handlePush}
+            disabled={!cloudSync || busy}
+            className="inline-flex items-center gap-1.5 text-xs bg-white border border-[var(--color-border)] rounded-lg px-3 py-1.5 hover:border-[var(--color-gold)] disabled:opacity-50"
+          >
+            <Cloud className="w-3.5 h-3.5" /> Hochladen
+          </button>
+          <button
+            onClick={handlePull}
+            disabled={!cloudSync || busy}
+            className="inline-flex items-center gap-1.5 text-xs bg-white border border-[var(--color-border)] rounded-lg px-3 py-1.5 hover:border-[var(--color-gold)] disabled:opacity-50"
+          >
+            <RefreshCw className="w-3.5 h-3.5" /> Aus Cloud aktualisieren
+          </button>
+        </div>
+        <p className="text-xs text-amber-700 italic">
+          Hinweis: Cloud-Sync benötigt serverseitige Provisionierung (Vercel KV). Falls bei
+          „Hochladen" 503 erscheint, ist der Backend-Storage noch nicht aktiviert — dann bitte
+          weiter Datei-Sync nutzen.
+        </p>
+      </div>
+
+      {msg && (
+        <div className="text-sm text-green-800 bg-green-50 border border-green-200 rounded p-2">
+          {msg}
+        </div>
+      )}
+    </section>
   )
 }
 
