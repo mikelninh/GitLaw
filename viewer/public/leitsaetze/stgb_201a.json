@@ -1,0 +1,17 @@
+{
+  "lawId": "stgb",
+  "section": "201a",
+  "law": "StGB",
+  "displayLaw": "Strafgesetzbuch",
+  "leitsaetze": [
+    {
+      "court": "BGH",
+      "az": "4 StR 49/20",
+      "datum": "2020-07-29",
+      "kernsatz": "Selbstaufnahmen des Tatopfers können Gegenstand der unbefugten Weitergabe i.S.d. § 201a Abs. 1 Nr. 4 StGB sein; das Kernunrecht liegt im Vertrauensbruch durch unbefugte Verbreitung, unabhängig davon, wer die Aufnahmen gefertigt hat.",
+      "quelle": "https://rewis.io/urteile/urteil/a7e-29-07-2020-4-str-4920/"
+    }
+  ],
+  "stand": "2026-04-15",
+  "hinweis": "Public-Domain-Auszug aus rechtsprechung-im-internet.de. Vor Zitation in Schriftsätzen Aktualität verifizieren."
+}

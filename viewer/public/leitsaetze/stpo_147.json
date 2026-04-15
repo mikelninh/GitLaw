@@ -1,0 +1,24 @@
+{
+  "lawId": "stpo",
+  "section": "147",
+  "law": "StPO",
+  "displayLaw": "Strafprozessordnung",
+  "leitsaetze": [
+    {
+      "court": "BVerfG",
+      "az": "2 BvR 864/81",
+      "datum": "1983-01-12",
+      "kernsatz": "Von Verfassungs wegen sind dem Gericht alle Akten vorzulegen und dem Verteidiger nach § 147 StPO zugänglich zu machen, deren Inhalt für die Feststellung der vorgeworfenen Tat oder etwaige Rechtsfolgen von irgendeiner Bedeutung sein kann (BVerfGE 63, 45).",
+      "quelle": "https://dejure.org/dienste/vernetzung/rechtsprechung?Gericht=BVerfG&Datum=12.01.1983&Aktenzeichen=2+BvR+864/81"
+    },
+    {
+      "court": "BVerfG",
+      "az": "2 BvR 777/94",
+      "datum": "1994-07-11",
+      "kernsatz": "In Haftsachen darf eine gerichtliche Entscheidung nur auf Tatsachen gestützt werden, die dem Beschuldigten durch Akteneinsicht der Verteidigung bekannt sind. Einschränkungen des § 147 StPO müssen eng ausgelegt werden.",
+      "quelle": "https://dejure.org/dienste/vernetzung/rechtsprechung?Aktenzeichen=2+BvR+777/94&Datum=11.07.1994&Gericht=BVerfG"
+    }
+  ],
+  "stand": "2026-04-13",
+  "hinweis": "Public-Domain-Auszug aus dejure.org (BVerfG). Vor Zitation Aktualität verifizieren."
+}

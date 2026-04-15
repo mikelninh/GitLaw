@@ -1,0 +1,24 @@
+{
+  "lawId": "sgb_2",
+  "section": "22",
+  "law": "SGB II",
+  "displayLaw": "Sozialgesetzbuch II",
+  "leitsaetze": [
+    {
+      "court": "BSG",
+      "az": "B 4 AS 18/09 R",
+      "datum": "2009-09-22",
+      "kernsatz": "Zur Bestimmung der angemessenen Unterkunftskosten nach § 22 Abs. 1 SGB II ist ein 'schlüssiges Konzept' des Grundsicherungsträgers erforderlich, das transparent, nachvollziehbar und auf empirischen Daten basiert (BSGE 104, 192).",
+      "quelle": "https://dejure.org/dienste/vernetzung/rechtsprechung?Gericht=BSG&Datum=22.09.2009&Aktenzeichen=B+4+AS+18/09+R"
+    },
+    {
+      "court": "BSG",
+      "az": "B 14 AS 20/18 R",
+      "datum": "2019-05-08",
+      "kernsatz": "Aufwendungen für jährliche Heizmaterialbevorratung sind im Fälligkeitsmonat in tatsächlicher Höhe als Heizungsbedarf nach § 22 Abs. 1 SGB II anzuerkennen.",
+      "quelle": "https://www.bsg.bund.de/SharedDocs/Entscheidungen/DE/2019/2019_05_08_B_14_AS_20_18_R.html"
+    }
+  ],
+  "stand": "2026-04-13",
+  "hinweis": "Public-Domain-Auszug aus dejure.org und bsg.bund.de. Vor Zitation Aktualität verifizieren."
+}

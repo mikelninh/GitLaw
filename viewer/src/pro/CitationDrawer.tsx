@@ -9,9 +9,53 @@
  */
 
 import { useEffect, useState } from 'react'
-import { X, ExternalLink, BookOpen, Loader2, Pencil, Save, Scale } from 'lucide-react'
+import { X, ExternalLink, BookOpen, Loader2, Pencil, Save, Scale, Gavel } from 'lucide-react'
 import type { Citation } from './types'
 import { getParagraphNote, saveParagraphNote } from './store'
+
+/**
+ * Curated BGH-/BVerfG-/BVerwG-/BSG-Leitsätze pro Paragraph.
+ * Source: rechtsprechung-im-internet.de (BMJ Public-Domain).
+ * Files liegen in viewer/public/leitsaetze/{lawId}_{section}.json
+ * und werden von Sonnet-Recherche-Agents kuratiert + verifiziert.
+ */
+interface Leitsatz {
+  court: string       // "BGH" | "BVerfG" | "BVerwG" | "BSG"
+  az: string          // "VIII ZR 91/20"
+  datum: string       // ISO "2021-10-13"
+  kernsatz: string    // max ~200 chars
+  quelle: string      // URL zur Volltextentscheidung
+}
+interface LeitsatzFile {
+  lawId: string
+  section: string
+  law: string
+  displayLaw?: string
+  leitsaetze: Leitsatz[]
+  stand: string
+  hinweis?: string
+}
+
+const leitsaetzeCache = new Map<string, LeitsatzFile | null>()
+
+async function loadLeitsaetze(lawId: string, section: string): Promise<LeitsatzFile | null> {
+  const key = `${lawId}_${section}`
+  if (leitsaetzeCache.has(key)) return leitsaetzeCache.get(key) || null
+  try {
+    // Files werden mit Vercel deployed (im Gegensatz zu /laws/ die von GH Pages kommen)
+    const resp = await fetch(`./leitsaetze/${key}.json`)
+    if (!resp.ok) {
+      leitsaetzeCache.set(key, null)
+      return null
+    }
+    const data: LeitsatzFile = await resp.json()
+    leitsaetzeCache.set(key, data)
+    return data
+  } catch {
+    leitsaetzeCache.set(key, null)
+    return null
+  }
+}
 
 /**
  * Deep-Link-URLs zu den Profi-Rechtsprechungs-Datenbanken.
@@ -95,14 +139,18 @@ export default function CitationDrawer({ citation, onClose }: Props) {
   const [loading, setLoading] = useState(false)
   const [noteBody, setNoteBody] = useState('')
   const [noteSaved, setNoteSaved] = useState(false)
+  const [leitsaetze, setLeitsaetze] = useState<LeitsatzFile | null>(null)
 
   useEffect(() => {
     if (!citation || !citation.verified) return
     setLoading(true)
     setFullText(null)
+    setLeitsaetze(null)
     loadLawSection(citation.lawId, citation.section)
       .then(t => setFullText(t))
       .finally(() => setLoading(false))
+    // Lade Leitsätze parallel — non-blocking, kann leer sein (kein File für diesen §)
+    loadLeitsaetze(citation.lawId, citation.section).then(setLeitsaetze)
     // Load existing note for this paragraph
     const existing = getParagraphNote(citation.lawId, citation.section)
     setNoteBody(existing?.body || '')
@@ -186,6 +234,48 @@ export default function CitationDrawer({ citation, onClose }: Props) {
               <article className="law-content text-sm leading-relaxed">
                 <pre className="whitespace-pre-wrap font-sans">{fullText}</pre>
               </article>
+
+              {/* Stufe 2: Kuratierte BGH-/BVerfG-/etc-Leitsätze (wenn vorhanden) */}
+              {leitsaetze && leitsaetze.leitsaetze.length > 0 && (
+                <section className="mt-6 pt-5 border-t border-[var(--color-border)]">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Gavel className="w-4 h-4 text-[var(--color-gold)]" />
+                    <h3 className="text-sm font-semibold">
+                      Wichtige Rechtsprechung ({leitsaetze.leitsaetze.length})
+                    </h3>
+                  </div>
+                  <ul className="space-y-3">
+                    {leitsaetze.leitsaetze.map((ls, i) => (
+                      <li key={i} className="bg-[var(--color-bg-alt)] border border-[var(--color-border)] rounded-lg p-3">
+                        <div className="flex items-baseline justify-between gap-2 mb-1.5">
+                          <span className="font-semibold text-xs text-[var(--color-gold)]">
+                            {ls.court} · {ls.az}
+                          </span>
+                          <span className="text-xs text-[var(--color-ink-muted)]">
+                            {new Date(ls.datum).toLocaleDateString('de-DE')}
+                          </span>
+                        </div>
+                        <p className="text-sm text-[var(--color-ink)] leading-relaxed">{ls.kernsatz}</p>
+                        {ls.quelle && (
+                          <a
+                            href={ls.quelle}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="mt-2 inline-flex items-center gap-1 text-xs text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]"
+                          >
+                            Volltext-Entscheidung <ExternalLink className="w-3 h-3" />
+                          </a>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                  {leitsaetze.hinweis && (
+                    <p className="text-xs text-[var(--color-ink-muted)] mt-3 italic">
+                      {leitsaetze.hinweis}
+                    </p>
+                  )}
+                </section>
+              )}
 
               {/* Rechtsprechungs-Recherche — Deep-Links zu Profi-DBs.
                   Wir haben keine eigene BGH-Datenbank (würde Lizenz-Konflikte

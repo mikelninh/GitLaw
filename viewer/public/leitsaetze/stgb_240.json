@@ -1,0 +1,17 @@
+{
+  "lawId": "stgb",
+  "section": "240",
+  "law": "StGB",
+  "displayLaw": "Strafgesetzbuch",
+  "leitsaetze": [
+    {
+      "court": "BGH",
+      "az": "1 StR 162/13",
+      "datum": "2013-09-05",
+      "kernsatz": "Die anwaltliche Androhung einer Strafanzeige bei Nichtzahlung einer geltend gemachten Forderung kann Nötigung i.S.d. § 240 StGB darstellen, wenn das angedrohte Übel zur Erreichung des Zwecks verwerflich ist.",
+      "quelle": "https://juris.bundesgerichtshof.de/cgi-bin/rechtsprechung/document.py?Gericht=bgh&Art=pm&Datum=2013&nr=66178&linked=bes&Blank=1&file=dokument.pdf"
+    }
+  ],
+  "stand": "2026-04-15",
+  "hinweis": "Public-Domain-Auszug aus rechtsprechung-im-internet.de. Vor Zitation in Schriftsätzen Aktualität verifizieren."
+}

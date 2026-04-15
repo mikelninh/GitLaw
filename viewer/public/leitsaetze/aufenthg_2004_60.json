@@ -1,0 +1,24 @@
+{
+  "lawId": "aufenthg_2004",
+  "section": "60",
+  "law": "AufenthG",
+  "displayLaw": "Aufenthaltsgesetz",
+  "leitsaetze": [
+    {
+      "court": "BVerwG",
+      "az": "1 C 18.05",
+      "datum": "2006-10-17",
+      "kernsatz": "Bei individueller Erkrankung (z. B. Sarkoidose) sind die Voraussetzungen eines Abschiebungsverbots nach § 60 Abs. 7 S. 1 AufenthG erfüllt, wenn eine erhebliche Verschlechterung droht. Eine lebensgefährliche Gefahr ist nicht erforderlich.",
+      "quelle": "https://www.bverwg.de/171006U1C18.05.0"
+    },
+    {
+      "court": "BVerwG",
+      "az": "1 C 16.14",
+      "datum": "2015-03-25",
+      "kernsatz": "Abschiebungsverbote nach § 60 Abs. 5 und 7 AufenthG sind im Verwaltungsverfahren und gerichtlichen Verfahren eigenständig zu prüfen; die Ausschlussgründe nach § 60 Abs. 8 AufenthG sind zwingend anzuwenden.",
+      "quelle": "https://www.bverwg.de/250315U1C16.14.0"
+    }
+  ],
+  "stand": "2026-04-13",
+  "hinweis": "Public-Domain-Auszug aus bverwg.de und Pressemitteilung Nr. 55/2006. Vor Zitation Aktualität verifizieren."
+}

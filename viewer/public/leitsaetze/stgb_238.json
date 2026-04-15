@@ -1,0 +1,17 @@
+{
+  "lawId": "stgb",
+  "section": "238",
+  "law": "StGB",
+  "displayLaw": "Strafgesetzbuch",
+  "leitsaetze": [
+    {
+      "court": "BGH",
+      "az": "4 StR 310/20",
+      "datum": "2021-04-13",
+      "kernsatz": "Nachstellung (§ 238 StGB) tritt hinter schwerwiegendere Begleitdelikte (z.B. Körperverletzung) nicht zurück, wenn die Tathandlungen über den Angriff auf die körperliche Unversehrtheit hinausgehen.",
+      "quelle": "https://www.hrr-strafrecht.de/hrr/4/20/4-310-20.php"
+    }
+  ],
+  "stand": "2026-04-15",
+  "hinweis": "Public-Domain-Auszug aus rechtsprechung-im-internet.de. Hinweis: § 238 StGB wurde zum 01.10.2021 reformiert (Absenkung von 'schwerwiegend' auf 'nicht unerheblich'). Vor Zitation in Schriftsätzen Aktualität verifizieren."
+}

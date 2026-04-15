@@ -1,0 +1,17 @@
+{
+  "lawId": "stgb",
+  "section": "186",
+  "law": "StGB",
+  "displayLaw": "Strafgesetzbuch",
+  "leitsaetze": [
+    {
+      "court": "BGH",
+      "az": "4 StR 189/57",
+      "datum": "1958-02-12",
+      "kernsatz": "Die Nichterweislichkeit der Wahrheit ist objektive Strafbarkeitsbedingung des § 186 StGB; das Gericht hat die Wahrheit der Tatsache von Amts wegen aufzuklären; verbleibende Zweifel gehen zu Lasten des Täters.",
+      "quelle": "https://dejure.org/gesetze/StGB/186.html"
+    }
+  ],
+  "stand": "2026-04-15",
+  "hinweis": "Public-Domain-Auszug aus rechtsprechung-im-internet.de. Neuere BGH-Leitsatzentscheidungen zu § 186 StGB sind selten; grundlegende Dogmatik seit BGHSt 11, 273 unverändert. Vor Zitation in Schriftsätzen Aktualität verifizieren."
+}

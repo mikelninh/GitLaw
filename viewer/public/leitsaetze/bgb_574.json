@@ -1,0 +1,17 @@
+{
+  "lawId": "bgb",
+  "section": "574",
+  "law": "BGB",
+  "displayLaw": "Bürgerliches Gesetzbuch",
+  "leitsaetze": [
+    {
+      "court": "BGH",
+      "az": "VIII ZR 270/15",
+      "datum": "2017-03-15",
+      "kernsatz": "Macht der Mieter substanziiert schwerwiegende Gesundheitsgefahren durch einen erzwungenen Umzug geltend, hat das Gericht regelmäßig ein Sachverständigengutachten einzuholen, um die konkreten gesundheitlichen Folgen eines Umzugs festzustellen (§ 574 BGB).",
+      "quelle": "https://www.bundesgerichtshof.de/SharedDocs/Pressemitteilungen/DE/2017/2017036.html"
+    }
+  ],
+  "stand": "2026-04-13",
+  "hinweis": "Public-Domain-Auszug aus rechtsprechung-im-internet.de. Vor Zitation in Schriftsätzen Aktualität verifizieren."
+}

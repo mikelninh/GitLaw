@@ -1,0 +1,17 @@
+{
+  "lawId": "bgb",
+  "section": "195",
+  "law": "BGB",
+  "displayLaw": "Bürgerliches Gesetzbuch",
+  "leitsaetze": [
+    {
+      "court": "BGH",
+      "az": "VI ZR 1118/20",
+      "datum": "2021-07-29",
+      "kernsatz": "Die dreijährige Verjährungsfrist des § 195 BGB beginnt gem. § 199 Abs. 1 BGB, sobald der Gläubiger Kenntnis von den anspruchsbegründenden Umständen und der Person des Schuldners erlangt hat oder grob fahrlässig nicht erlangt hat.",
+      "quelle": "https://www.bundesgerichtshof.de/SharedDocs/Pressemitteilungen/DE/2021/2021150.html"
+    }
+  ],
+  "stand": "2026-04-13",
+  "hinweis": "Public-Domain-Auszug aus rechtsprechung-im-internet.de. Vor Zitation in Schriftsätzen Aktualität verifizieren."
+}

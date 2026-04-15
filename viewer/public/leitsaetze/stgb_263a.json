@@ -1,0 +1,17 @@
+{
+  "lawId": "stgb",
+  "section": "263a",
+  "law": "StGB",
+  "displayLaw": "Strafgesetzbuch",
+  "leitsaetze": [
+    {
+      "court": "BGH",
+      "az": "4 StR 292/13",
+      "datum": "2013-11-19",
+      "kernsatz": "Die Beantragung eines Mahn- und Vollstreckungsbescheids im automatisierten Mahnverfahren für eine fingierte, tatsächlich nicht bestehende Forderung stellt eine Verwendung unrichtiger Daten i.S.d. § 263a StGB dar.",
+      "quelle": "https://www.hrr-strafrecht.de/hrr/4/13/4-292-13.php"
+    }
+  ],
+  "stand": "2026-04-15",
+  "hinweis": "Public-Domain-Auszug aus rechtsprechung-im-internet.de. Vor Zitation in Schriftsätzen Aktualität verifizieren."
+}

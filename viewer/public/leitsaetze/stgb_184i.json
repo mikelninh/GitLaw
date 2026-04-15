@@ -1,0 +1,17 @@
+{
+  "lawId": "stgb",
+  "section": "184i",
+  "law": "StGB",
+  "displayLaw": "Strafgesetzbuch",
+  "leitsaetze": [
+    {
+      "court": "BGH",
+      "az": "4 StR 570/17",
+      "datum": "2018-03-13",
+      "kernsatz": "Eine Berührung in sexuell bestimmter Weise i.S.d. § 184i Abs. 1 StGB ergibt sich bereits aus den äußeren Umständen; eine sexuelle Motivation des Täters ist nicht erforderlich.",
+      "quelle": "https://www.hrr-strafrecht.de/hrr/4/17/4-570-17.php"
+    }
+  ],
+  "stand": "2026-04-15",
+  "hinweis": "Public-Domain-Auszug aus rechtsprechung-im-internet.de. Vor Zitation in Schriftsätzen Aktualität verifizieren."
+}

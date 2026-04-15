@@ -1,0 +1,17 @@
+{
+  "lawId": "sgb_2",
+  "section": "31a",
+  "law": "SGB II",
+  "displayLaw": "Sozialgesetzbuch II",
+  "leitsaetze": [
+    {
+      "court": "BVerfG",
+      "az": "1 BvL 7/16",
+      "datum": "2019-11-05",
+      "kernsatz": "§ 31a Abs. 1 SGB II ist mit Art. 1 Abs. 1 GG unvereinbar, soweit Leistungsminderungen über 30 % hinausgehen, auch bei atypischen Härten zwingend eintreten oder starr drei Monate dauern. Vollständiger Wegfall ist verfassungswidrig.",
+      "quelle": "https://www.bundesverfassungsgericht.de/SharedDocs/Entscheidungen/DE/2019/11/ls20191105_1bvl000716.html"
+    }
+  ],
+  "stand": "2026-04-13",
+  "hinweis": "Public-Domain-Auszug aus bundesverfassungsgericht.de (Pressemitteilung Nr. 74/2019). Vor Zitation Aktualität verifizieren."
+}

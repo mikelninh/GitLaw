@@ -1,0 +1,17 @@
+{
+  "lawId": "bgb",
+  "section": "1004",
+  "law": "BGB",
+  "displayLaw": "Bürgerliches Gesetzbuch",
+  "leitsaetze": [
+    {
+      "court": "BGH",
+      "az": "V ZR 121/19",
+      "datum": "2020-11-27",
+      "kernsatz": "Der Unterlassungsanspruch nach § 1004 Abs. 1 S. 2 i.V.m. § 906 BGB kann auch dann bestehen, wenn die maßgeblichen Immissionsrichtwerte eingehalten werden, sofern eine wesentliche unzumutbare Beeinträchtigung des Grundstücks im Einzelfall vorliegt.",
+      "quelle": "https://juris.bundesgerichtshof.de/cgi-bin/rechtsprechung/document.py?Gericht=bgh&Art=pm&Datum=2020&Seite=0&nr=113403&linked=urt&Blank=1&file=dokument.pdf"
+    }
+  ],
+  "stand": "2026-04-13",
+  "hinweis": "Public-Domain-Auszug aus rechtsprechung-im-internet.de. Vor Zitation in Schriftsätzen Aktualität verifizieren."
+}

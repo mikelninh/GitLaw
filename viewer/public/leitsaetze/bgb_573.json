@@ -1,0 +1,17 @@
+{
+  "lawId": "bgb",
+  "section": "573",
+  "law": "BGB",
+  "displayLaw": "Bürgerliches Gesetzbuch",
+  "leitsaetze": [
+    {
+      "court": "BGH",
+      "az": "VIII ZR 243/16",
+      "datum": "2017-09-27",
+      "kernsatz": "Eine Verwertungskündigung nach § 573 Abs. 2 Nr. 3 BGB setzt voraus, dass dem Vermieter durch den Fortbestand des Mietverhältnisses erhebliche Nachteile entstehen; eine bloße Gewinnoptimierung genügt nicht.",
+      "quelle": "https://www.bundesgerichtshof.de/SharedDocs/Pressemitteilungen/DE/2017/2017152.html"
+    }
+  ],
+  "stand": "2026-04-13",
+  "hinweis": "Public-Domain-Auszug aus rechtsprechung-im-internet.de. Vor Zitation in Schriftsätzen Aktualität verifizieren."
+}

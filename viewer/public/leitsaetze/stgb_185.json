@@ -1,0 +1,24 @@
+{
+  "lawId": "stgb",
+  "section": "185",
+  "law": "StGB",
+  "displayLaw": "Strafgesetzbuch",
+  "leitsaetze": [
+    {
+      "court": "BGH",
+      "az": "2 StR 415/17",
+      "datum": "2017-11-02",
+      "kernsatz": "Bei sexuell motivierten Äußerungen liegt ein Angriff auf die Ehre i.S.d. § 185 StGB nur vor, wenn der Täter zum Ausdruck bringt, der Betroffene weise einen ehrmindernden Makel auf.",
+      "quelle": "https://www.hrr-strafrecht.de/hrr/2/17/2-415-17.php"
+    },
+    {
+      "court": "BGH",
+      "az": "4 StR 324/19",
+      "datum": "2020-01-09",
+      "kernsatz": "Die Verhängung der Höchststrafe bei § 185 StGB bedarf besonderer Begründung in den Urteilsgründen; allgemeine Strafzumessungserwägungen genügen nicht.",
+      "quelle": "https://juris.bundesgerichtshof.de/cgi-bin/rechtsprechung/document.py?Art=en&Blank=1.pdf&Datum=2020-1-9&Gericht=bgh&anz=33&nr=104607&pos=7"
+    }
+  ],
+  "stand": "2026-04-15",
+  "hinweis": "Public-Domain-Auszug aus rechtsprechung-im-internet.de. Vor Zitation in Schriftsätzen Aktualität verifizieren."
+}

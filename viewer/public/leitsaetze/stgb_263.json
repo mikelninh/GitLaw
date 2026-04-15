@@ -1,0 +1,17 @@
+{
+  "lawId": "stgb",
+  "section": "263",
+  "law": "StGB",
+  "displayLaw": "Strafgesetzbuch",
+  "leitsaetze": [
+    {
+      "court": "BGH",
+      "az": "1 StR 496/20",
+      "datum": "2021-05-19",
+      "kernsatz": "Erwirbt der Getäuschte eine Forderung gegen ein Unternehmen, ist deren Wert anhand der vorhandenen Vermögenswerte und der prognostizierten Geschäftsentwicklung zu bestimmen und im Urteil mit wirtschaftlichen Bewertungsmethoden darzulegen.",
+      "quelle": "https://dejure.org/dienste/vernetzung/rechtsprechung?Gericht=BGH&Datum=19.05.2021&Aktenzeichen=1+StR+496/20"
+    }
+  ],
+  "stand": "2026-04-15",
+  "hinweis": "Public-Domain-Auszug aus rechtsprechung-im-internet.de. Vor Zitation in Schriftsätzen Aktualität verifizieren."
+}

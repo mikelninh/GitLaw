@@ -1,0 +1,24 @@
+{
+  "lawId": "bgb",
+  "section": "1671",
+  "law": "BGB",
+  "displayLaw": "Bürgerliches Gesetzbuch",
+  "leitsaetze": [
+    {
+      "court": "BGH",
+      "az": "XII ZB 136/04",
+      "datum": "2007-11-15",
+      "kernsatz": "Bei § 1671 BGB gibt es keine Vermutung zugunsten gemeinsamer Sorge. Das Gericht muss prüfen, ob der elterliche Konflikt so nachhaltig ist, dass kindeswohlgerechte Entscheidungen in wesentlichen Sorgeangelegenheiten künftig nicht gewährleistet sind (FamRZ 2008, 251).",
+      "quelle": "https://dejure.org/dienste/vernetzung/rechtsprechung?Gericht=BGH&Datum=15.11.2007&Aktenzeichen=XII+ZB+136/04"
+    },
+    {
+      "court": "BGH",
+      "az": "XII ZB 601/15",
+      "datum": "2017-02-01",
+      "kernsatz": "Die Übertragung des Aufenthaltsbestimmungsrechts auf einen Elternteil nach § 1671 BGB bindet spätere Entscheidungen über Umgang und Wechselmodell nicht. Kindeswohlprüfung ist stets neu vorzunehmen.",
+      "quelle": "https://dejure.org/dienste/vernetzung/rechtsprechung?Gericht=BGH&Datum=01.02.2017&Aktenzeichen=XII+ZB+601/15"
+    }
+  ],
+  "stand": "2026-04-13",
+  "hinweis": "Public-Domain-Auszug aus dejure.org (BGH). Vor Zitation Aktualität verifizieren."
+}

@@ -1,0 +1,24 @@
+{
+  "lawId": "aufenthg_2004",
+  "section": "25",
+  "law": "AufenthG",
+  "displayLaw": "Aufenthaltsgesetz",
+  "leitsaetze": [
+    {
+      "court": "BVerwG",
+      "az": "1 C 18.04",
+      "datum": "2005-11-22",
+      "kernsatz": "Erstmals zu § 25 AufenthG: Einem abgelehnten Asylbewerber mit krankheitsbedingtem Abschiebungsverbot kann eine humanitäre Aufenthaltserlaubnis erteilt werden, wenn Ausreisehindernisse dauerhaft bestehen.",
+      "quelle": "https://www.bverwg.de/221105U1C18.04.0"
+    },
+    {
+      "court": "BVerwG",
+      "az": "1 C 17.12",
+      "datum": "2013-05-14",
+      "kernsatz": "§ 25a Abs. 1 AufenthG: Die allgemeinen Erteilungsvoraussetzungen des § 5 AufenthG gelten grundsätzlich auch für humanitäre Aufenthaltstitel; Abweichung nur im Ermessen nach § 5 Abs. 3 S. 2 AufenthG.",
+      "quelle": "https://www.bverwg.de/140513U1C17.12.0"
+    }
+  ],
+  "stand": "2026-04-13",
+  "hinweis": "Public-Domain-Auszug aus bverwg.de. Vor Zitation Aktualität verifizieren."
+}

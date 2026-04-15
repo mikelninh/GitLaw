@@ -1,0 +1,17 @@
+{
+  "lawId": "bgb",
+  "section": "535",
+  "law": "BGB",
+  "displayLaw": "Bürgerliches Gesetzbuch",
+  "leitsaetze": [
+    {
+      "court": "BGH",
+      "az": "VIII ZR 270/18",
+      "datum": "2020-07-08",
+      "kernsatz": "Hat der Vermieter dem Mieter die Wohnung unrenoviert überlassen und sind Schönheitsreparaturklauseln unwirksam, kann der Mieter vom Vermieter Durchführung der Schönheitsreparaturen verlangen, muss sich aber anteilig an den Kosten beteiligen.",
+      "quelle": "https://www.bundesgerichtshof.de/SharedDocs/Pressemitteilungen/DE/2020/2020090.html"
+    }
+  ],
+  "stand": "2026-04-13",
+  "hinweis": "Public-Domain-Auszug aus rechtsprechung-im-internet.de. Vor Zitation in Schriftsätzen Aktualität verifizieren."
+}

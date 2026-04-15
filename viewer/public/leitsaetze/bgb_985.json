@@ -1,0 +1,17 @@
+{
+  "lawId": "bgb",
+  "section": "985",
+  "law": "BGB",
+  "displayLaw": "Bürgerliches Gesetzbuch",
+  "leitsaetze": [
+    {
+      "court": "BGH",
+      "az": "V ZR 89/15",
+      "datum": "2016-03-18",
+      "kernsatz": "Verweigert der bösgläubige oder verklagte Besitzer die Herausgabe nach § 985 BGB, kann der Eigentümer unter den Voraussetzungen der §§ 280 Abs. 1 und 3, 281 BGB Schadensersatz statt der Leistung verlangen.",
+      "quelle": "https://juris.bundesgerichtshof.de/cgi-bin/rechtsprechung/document.py?Gericht=bgh&Art=en&Datum=2016-3-18&nr=75456&anz=4&pos=3&Blank=1.pdf"
+    }
+  ],
+  "stand": "2026-04-13",
+  "hinweis": "Public-Domain-Auszug aus rechtsprechung-im-internet.de. Vor Zitation in Schriftsätzen Aktualität verifizieren."
+}

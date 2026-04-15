@@ -1,0 +1,24 @@
+{
+  "lawId": "aufenthg_2004",
+  "section": "8",
+  "law": "AufenthG",
+  "displayLaw": "Aufenthaltsgesetz",
+  "leitsaetze": [
+    {
+      "court": "BVerwG",
+      "az": "1 C 12.10",
+      "datum": "2011-08-16",
+      "kernsatz": "Bei Prüfung der Lebensunterhaltssicherung nach § 5 Abs. 1 Nr. 1 AufenthG sind die Bedarfe der gesamten Kernfamilie einheitlich zu betrachten; Beiträge aller Familienmitglieder sind anzurechnen.",
+      "quelle": "https://www.bverwg.de/160811U1C12.10.0"
+    },
+    {
+      "court": "BVerwG",
+      "az": "1 C 23.18",
+      "datum": "2019-08-15",
+      "kernsatz": "Nach Volljährigkeit des Ausländers richtet sich die Verlängerung der Aufenthaltserlaubnis nicht mehr nach § 35 Abs. 1 S. 1, sondern nach § 34 Abs. 3 AufenthG; alle Regelerteilungsvoraussetzungen des § 5 Abs. 1 AufenthG gelten.",
+      "quelle": "https://www.bverwg.de/de/150819U1C23.18.0"
+    }
+  ],
+  "stand": "2026-04-13",
+  "hinweis": "Public-Domain-Auszug aus rechtsprechung-im-internet.de und bverwg.de. Vor Zitation Aktualität verifizieren."
+}

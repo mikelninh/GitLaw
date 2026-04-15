@@ -1,0 +1,24 @@
+{
+  "lawId": "aufenthg_2004",
+  "section": "27",
+  "law": "AufenthG",
+  "displayLaw": "Aufenthaltsgesetz",
+  "leitsaetze": [
+    {
+      "court": "BVerwG",
+      "az": "1 C 7.09",
+      "datum": "2010-03-30",
+      "kernsatz": "Familiennachzug ist nach § 27 Abs. 1a Nr. 1 AufenthG ausgeschlossen, wenn die Ehe ausschließlich zum Zweck des Aufenthalts geschlossen wurde (Scheinehe). Den Nachzugswilligen trifft die materielle Beweislast für die eheliche Lebensgemeinschaft.",
+      "quelle": "https://www.bverwg.de/300310U1C7.09.0"
+    },
+    {
+      "court": "BVerwG",
+      "az": "1 C 21.09",
+      "datum": "2010-11-16",
+      "kernsatz": "Der Familiennachzug setzt grundsätzlich voraus, dass der Lebensunterhalt der Kernfamilie ohne Inanspruchnahme öffentlicher Sozialleistungen gesichert ist.",
+      "quelle": "https://www.bverwg.de/161110U1C21.09.0"
+    }
+  ],
+  "stand": "2026-04-13",
+  "hinweis": "Public-Domain-Auszug aus bverwg.de. Vor Zitation Aktualität verifizieren."
+}

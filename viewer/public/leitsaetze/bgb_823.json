@@ -1,0 +1,17 @@
+{
+  "lawId": "bgb",
+  "section": "823",
+  "law": "BGB",
+  "displayLaw": "Bürgerliches Gesetzbuch",
+  "leitsaetze": [
+    {
+      "court": "BGH",
+      "az": "VIa ZR 335/21",
+      "datum": "2023-06-26",
+      "kernsatz": "Der Hersteller eines Kraftfahrzeugs haftet dem Erwerber nach § 823 Abs. 2 BGB i.V.m. § 6 Abs. 1, § 27 Abs. 1 EG-FGV auf Ersatz des Differenzschadens, wenn das Fahrzeug mit einer unzulässigen Abschalteinrichtung ausgestattet ist.",
+      "quelle": "https://www.bundesgerichtshof.de/SharedDocs/Pressemitteilungen/DE/2023/2023100.html"
+    }
+  ],
+  "stand": "2026-04-13",
+  "hinweis": "Public-Domain-Auszug aus rechtsprechung-im-internet.de. Vor Zitation in Schriftsätzen Aktualität verifizieren."
+}

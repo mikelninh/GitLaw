@@ -1,0 +1,24 @@
+{
+  "lawId": "stgb",
+  "section": "130",
+  "law": "StGB",
+  "displayLaw": "Strafgesetzbuch",
+  "leitsaetze": [
+    {
+      "court": "BGH",
+      "az": "3 StR 449/15",
+      "datum": "2016-05-03",
+      "kernsatz": "Leugnen i.S.d. § 130 Abs. 3 StGB ist das Bestreiten, Verleugnen oder Negieren einer historischen Tatsache; das Bezweifeln oder Infragestellen eines Faktums genügt grundsätzlich nicht.",
+      "quelle": "https://www.hrr-strafrecht.de/hrr/3/15/3-449-15.php"
+    },
+    {
+      "court": "BGH",
+      "az": "3 StR 190/19",
+      "datum": "2019-08-06",
+      "kernsatz": "Bedingter Vorsatz beim Leugnen des Holocaust liegt vor, wenn der Täter wissenschaftliche Erkenntnisse bewusst ignoriert und Gegenbeweise willentlich ausblendet.",
+      "quelle": "https://juris.bundesgerichtshof.de/cgi-bin/rechtsprechung/document.py?Gericht=bgh&Art=pm&Datum=2019&nr=100805&linked=bes&Blank=1&file=dokument.pdf"
+    }
+  ],
+  "stand": "2026-04-15",
+  "hinweis": "Public-Domain-Auszug aus rechtsprechung-im-internet.de. Vor Zitation in Schriftsätzen Aktualität verifizieren."
+}

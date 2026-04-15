@@ -1,0 +1,17 @@
+{
+  "lawId": "stgb",
+  "section": "241",
+  "law": "StGB",
+  "displayLaw": "Strafgesetzbuch",
+  "leitsaetze": [
+    {
+      "court": "BGH",
+      "az": "4 StR 220/22",
+      "datum": "2022-07-20",
+      "kernsatz": "Nach bisheriger Rechtsprechung tritt Bedrohung (§ 241 StGB) hinter versuchte Nötigung zurück, wenn die Nötigungshandlung selbst in der Verbrechensandrohung gegenüber dem Genötigten bestand; ob daran festzuhalten ist, bedarf weiterer Klärung.",
+      "quelle": "https://www.hrr-strafrecht.de/hrr/4/22/4-220-22.php"
+    }
+  ],
+  "stand": "2026-04-15",
+  "hinweis": "Public-Domain-Auszug aus rechtsprechung-im-internet.de. § 241 StGB wurde durch das Gesetz zur Bekämpfung des Rechtsextremismus und der Hasskriminalität (2021) erweitert. Vor Zitation in Schriftsätzen Aktualität verifizieren."
+}

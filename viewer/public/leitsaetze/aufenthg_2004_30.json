@@ -1,0 +1,17 @@
+{
+  "lawId": "aufenthg_2004",
+  "section": "30",
+  "law": "AufenthG",
+  "displayLaw": "Aufenthaltsgesetz",
+  "leitsaetze": [
+    {
+      "court": "BVerwG",
+      "az": "1 C 8.09",
+      "datum": "2010-03-30",
+      "kernsatz": "Der Sprachnachweis nach § 30 Abs. 1 S. 1 Nr. 2 AufenthG verlangt einfache Kenntnisse in Wort und Schrift. Das Erfordernis verstößt weder gegen das Grundgesetz noch gegen EU-Recht.",
+      "quelle": "https://www.bverwg.de/300310U1C8.09.0"
+    }
+  ],
+  "stand": "2026-04-13",
+  "hinweis": "Public-Domain-Auszug aus bverwg.de und Pressemitteilung Nr. 19/2010. Vor Zitation Aktualität verifizieren."
+}
