@@ -296,7 +296,7 @@ export default function ProSettings() {
           onClick={handleEraseAll}
           className="text-sm text-red-700 underline hover:no-underline"
         >
-          Jetzt alle Pro-Daten dieses Browsers löschen
+          Pro-Daten dieses Browsers löschen
         </button>
       </section>
     </div>
@@ -385,7 +385,7 @@ function SyncSection() {
       )
       setTimeout(() => window.location.reload(), 1500)
     } catch (err) {
-      setMsg('Import fehlgeschlagen: ' + (err instanceof Error ? err.message : 'unbekannt'))
+      setMsg('Import abgebrochen — Server-Antwort: ' + (err instanceof Error ? err.message : 'keine Fehlermeldung zurückgegeben'))
     } finally {
       setBusy(false)
       if (fileRef.current) fileRef.current.value = ''
@@ -399,7 +399,7 @@ function SyncSection() {
       await pushToCloud()
       setMsg('In die Cloud hochgeladen.')
     } catch (err) {
-      setMsg('Cloud-Upload fehlgeschlagen: ' + (err instanceof Error ? err.message : 'unbekannt'))
+      setMsg('Cloud-Upload abgebrochen — Server-Antwort: ' + (err instanceof Error ? err.message : 'keine Fehlermeldung zurückgegeben'))
     } finally {
       setBusy(false)
     }
@@ -416,7 +416,7 @@ function SyncSection() {
     } else if (result.ok) {
       setMsg('Cloud ist leer — nichts zum Synchronisieren.')
     } else {
-      setMsg('Pull fehlgeschlagen: ' + (result.error || 'unbekannt'))
+      setMsg('Pull abgebrochen — Server-Antwort: ' + (result.error || 'keine Fehlermeldung zurückgegeben'))
     }
   }
 

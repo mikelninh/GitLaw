@@ -70,7 +70,7 @@ export default function ProResearch() {
       const cites = await verifyAllCitations(zitate)
       setCitations(cites)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'KI-Anfrage fehlgeschlagen. Bitte später erneut versuchen.')
+      setError(err instanceof Error ? err.message : 'OpenAI hat keine Antwort zurückgegeben. In 10 Sekunden erneut versuchen.')
     } finally {
       setLoading(false)
     }
@@ -176,7 +176,7 @@ export default function ProResearch() {
               className="inline-flex items-center gap-2 bg-[var(--color-ink)] text-white rounded-lg px-4 py-2 hover:opacity-90 disabled:opacity-50"
             >
               {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
-              {loading ? 'KI denkt…' : 'Frage stellen'}
+              {loading ? 'Antwort suchen · §§ prüfen' : 'Frage stellen'}
             </button>
             {piiDetected && (
               <button

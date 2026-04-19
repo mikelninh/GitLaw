@@ -197,12 +197,20 @@ export default function ProLayout() {
 
       {/* Footer disclaimer — visible on every Pro page */}
       <footer className="border-t border-[var(--color-border)] bg-white mt-12">
-        <div className="max-w-7xl mx-auto px-4 py-4 text-xs text-[var(--color-ink-muted)]">
-          <strong>Hinweis:</strong> GitLaw Pro ist ein Recherche- und Vorlagen-Tool.
-          Die KI-gestützten Antworten und Schreiben ersetzen <em>keine</em> anwaltliche Prüfung
-          und stellen <em>keine</em> Rechtsberatung dar. Bitte vor jeder Verwendung gegenprüfen.
-          Die Software befindet sich in geschlossener Beta — Funktionalität, Fehler, Datenmodell
-          können sich jederzeit ändern.
+        <div className="max-w-7xl mx-auto px-4 py-4 text-xs text-[var(--color-ink-muted)] space-y-2">
+          <p>
+            <strong>Hinweis:</strong> GitLaw Pro ist ein Recherche- und Vorlagen-Tool.
+            KI-gestützte Antworten und Schreiben ersetzen <em>keine</em> anwaltliche Prüfung
+            und stellen <em>keine</em> Rechtsberatung dar. Vor jeder Verwendung gegenprüfen.
+            Die Software befindet sich in geschlossener Beta — Funktionalität, Datenmodell
+            und Fehlerzustände können sich jederzeit ändern.
+          </p>
+          <p>
+            Betrieben von Mikel Ninh, Berlin ·{' '}
+            <a href="https://github.com/mikelninh/gitlaw" target="_blank" rel="noopener" className="underline hover:text-[var(--color-ink)]">Quellcode (BSL → MIT in 4 Jahren)</a> ·{' '}
+            <a href="https://github.com/mikelninh/gitlaw/blob/main/CHANGELOG.md" target="_blank" rel="noopener" className="underline hover:text-[var(--color-ink)]">Changelog</a> ·{' '}
+            Stand: {new Date().toISOString().slice(0, 10)}
+          </p>
         </div>
       </footer>
     </div>
@@ -215,16 +223,16 @@ function SyncIndicator({ state }: { state: { status: SyncStatus; lastSync: strin
   const cfg = (() => {
     switch (state.status) {
       case 'pushing':
-        return { icon: <RefreshCw className="w-3.5 h-3.5 animate-spin" />, text: 'Sync…', color: 'text-[var(--color-ink-muted)]' }
+        return { icon: <RefreshCw className="w-3.5 h-3.5 animate-spin" />, text: 'Lade zur Cloud hoch', color: 'text-[var(--color-ink-muted)]' }
       case 'pulling':
-        return { icon: <RefreshCw className="w-3.5 h-3.5 animate-spin" />, text: 'Lade…', color: 'text-[var(--color-ink-muted)]' }
+        return { icon: <RefreshCw className="w-3.5 h-3.5 animate-spin" />, text: 'Hole aus der Cloud', color: 'text-[var(--color-ink-muted)]' }
       case 'success': {
         const last = state.lastSync ? new Date(state.lastSync) : null
         const ago = last ? formatAgo(last) : ''
         return { icon: <CheckCircle2 className="w-3.5 h-3.5" />, text: ago, color: 'text-green-700' }
       }
       case 'error':
-        return { icon: <AlertCircle className="w-3.5 h-3.5" />, text: 'Sync-Fehler', color: 'text-[var(--color-danger)]' }
+        return { icon: <AlertCircle className="w-3.5 h-3.5" />, text: 'Sync unterbrochen', color: 'text-[var(--color-danger)]' }
       case 'idle':
       default:
         return { icon: <Cloud className="w-3.5 h-3.5" />, text: 'Cloud aktiv', color: 'text-[var(--color-ink-muted)]' }

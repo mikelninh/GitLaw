@@ -501,7 +501,7 @@ export function ProCaseDetail() {
         audit,
       })
     } catch (err) {
-      alert('ZIP-Export fehlgeschlagen: ' + (err instanceof Error ? err.message : 'unbekannt'))
+      alert('ZIP-Export abgebrochen — PDF-Generator meldet: ' + (err instanceof Error ? err.message : 'keine Meldung zurückgegeben'))
     } finally {
       setExportingZip(false)
     }

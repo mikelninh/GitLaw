@@ -75,7 +75,7 @@ export default function ProEingaenge() {
           <p className="text-sm text-[var(--color-ink-soft)] mb-2">
             {showAll
               ? 'Noch keine Mandant:innen-Eingänge.'
-              : 'Keine unbearbeiteten Eingänge. 🎉'}
+              : 'Keine unbearbeiteten Eingänge.'}
           </p>
           <p className="text-xs text-[var(--color-ink-muted)]">
             Fragebogen-Link auf einer Akten-Detailseite teilen → Mandant:in füllt aus → Eingang landet hier.

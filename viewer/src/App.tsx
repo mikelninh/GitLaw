@@ -3,7 +3,7 @@ import { Search, ArrowLeft, Scale, FileText, ExternalLink, Sparkles, GitCompare,
 import Fuse from 'fuse.js'
 import { loadExplanations, reformDiffs, type Explanations } from './explain'
 import { askLegalQuestion } from './rag'
-import { getDailyLaw, dailyLaws, getCategoryColor } from './daily-law'
+import { dailyLaws, getCategoryColor } from './daily-law'
 import { exportLawAsPDF, generateShareLink, copyToClipboard } from './export'
 import { letterTemplates } from './templates'
 import { contradictions } from './contradictions'
@@ -183,7 +183,7 @@ function App() {
                 <button onClick={async () => {
                   const link = generateShareLink(law.id, '', '')
                   const ok = await copyToClipboard(link)
-                  if (ok) alert('Link kopiert!')
+                  if (ok) alert('Link ist in der Zwischenablage.')
                 }}
                   className="flex items-center gap-1 text-xs text-ink-muted hover:text-gold transition-colors cursor-pointer"
                   title="Link teilen">
@@ -218,7 +218,7 @@ function App() {
           <div className="bg-gold-light border-b border-gold/20">
             <div className="max-w-3xl mx-auto px-5 py-3 flex items-center justify-between">
               <p className="text-sm text-ink-soft">
-                ✨ {Object.keys(explanations.explanations).length} Paragraphen in einfacher Sprache erklärt
+                {Object.keys(explanations.explanations).length} Paragraphen in einfacher Sprache erklärt
               </p>
               <button onClick={() => setShowExplain(!showExplain)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-colors cursor-pointer ${showExplain ? 'bg-gold text-white' : 'bg-white text-gold border border-gold/30'}`}>
@@ -244,7 +244,7 @@ function App() {
                     )
                     setLiveExplanation(result.answer)
                   } catch {
-                    setLiveExplanation('Fehler bei der Erklärung. Bitte stelle deine Frage im Chat-Tab.')
+                    setLiveExplanation('Die Erklärung ist nicht verfügbar — OpenAI antwortet gerade nicht. Stelle deine Frage im Chat-Tab oder versuche es in 10 Sekunden erneut.')
                   }
                   setLiveExplaining(false)
                 }}
@@ -788,12 +788,12 @@ function App() {
                   </button>
                 ))}
               </div>
-              <p className="text-center text-sm text-ink-muted mb-4">{letterTemplates.length} Musterbriefe · {letterTemplates.filter(t => !t.premium).length} kostenlos · {letterTemplates.filter(t => t.premium).length} Premium</p>
+              <p className="text-center text-sm text-ink-muted mb-4">{letterTemplates.length} Musterbriefe · {letterTemplates.filter(t => !t.premium).length} frei · {letterTemplates.filter(t => t.premium).length} Premium</p>
               <div className="grid sm:grid-cols-2 gap-3">
                 {letterTemplates.map(t => (
                   <button key={t.id} onClick={() => {
                     if (t.premium) {
-                      alert('Dieses Template ist Teil von GitLaw Premium (€4,99/Monat). Kommt bald! Aktuell sind ' + letterTemplates.filter(x => !x.premium).length + ' Musterbriefe kostenlos verfügbar.')
+                      alert('Dieses Template gehört zu GitLaw Premium (€4,99/Monat, in Vorbereitung). ' + letterTemplates.filter(x => !x.premium).length + ' Musterbriefe sind im freien Tier verfügbar.')
                       return
                     }
                     setActiveTemplate(t.id); setTemplateFields({}); setGeneratedLetter('')
@@ -820,13 +820,13 @@ function App() {
                 <h3 className="font-display text-lg mb-2">GitLaw Premium — €4,99/Monat</h3>
                 <p className="text-sm text-ink-soft mb-4">Alle {letterTemplates.length} Musterbriefe + unbegrenzte AI-Fragen + Favoriten-Sync + Beratungsstellen-Suche</p>
                 <div className="flex flex-wrap gap-3 justify-center text-xs text-ink-muted">
-                  <span>✅ {letterTemplates.filter(t => !t.premium).length} Briefe kostenlos</span>
-                  <span>⭐ {letterTemplates.filter(t => t.premium).length} Premium-Briefe</span>
-                  <span>🌍 6 Sprachen</span>
-                  <span>♾️ Unbegrenzte Fragen</span>
+                  <span>{letterTemplates.filter(t => !t.premium).length} Briefe im freien Tier</span>
+                  <span>{letterTemplates.filter(t => t.premium).length} Premium-Briefe</span>
+                  <span>6 Sprachen</span>
+                  <span>Unbegrenzte Fragen</span>
                 </div>
                 <button className="mt-4 px-6 py-2.5 bg-gold text-white rounded-xl font-medium hover:bg-gold/90 transition-colors cursor-pointer text-sm">
-                  Kommt bald — Warteliste beitreten
+                  Warteliste: E-Mail an hi@gitlaw.app
                 </button>
               </div>
             </div>
@@ -871,7 +871,7 @@ function App() {
                     <div className="p-4 border-b border-border flex items-center justify-between">
                       <span className="text-sm font-bold">Dein Brief</span>
                       <div className="flex gap-2">
-                        <button onClick={() => copyToClipboard(generatedLetter).then(() => alert('Kopiert!'))}
+                        <button onClick={() => copyToClipboard(generatedLetter).then(() => alert('Brief ist in der Zwischenablage.'))}
                           className="text-xs text-gold hover:underline cursor-pointer">Kopieren</button>
                         <button onClick={() => window.print()}
                           className="text-xs text-gold hover:underline cursor-pointer">Drucken</button>
@@ -919,47 +919,13 @@ function App() {
         </div>
       </div>
 
-      {/* Daily Law + curated content (only when NOT searching) */}
+      {/* Curated content (only when NOT searching) */}
       {!search ? (
       <main className="max-w-5xl mx-auto px-5 py-8">
-        {/* Daily Law */}
-        {(() => {
-          const daily = getDailyLaw()
-          return (
-            <div className="bg-card rounded-2xl border border-gold/20 p-6 sm:p-8 mb-8 shadow-sm">
-              <div className="flex items-center gap-2 mb-4">
-                <span className="text-2xl">{daily.emoji}</span>
-                <div>
-                  <p className="text-[11px] font-bold text-gold uppercase tracking-widest">Gesetz des Tages</p>
-                  <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${getCategoryColor(daily.category)}`}>{daily.category}</span>
-                </div>
-              </div>
-              <h3 className="font-display text-xl sm:text-2xl mb-2">{daily.title}</h3>
-              <p className="text-sm text-ink-muted mb-3">{daily.law} — {daily.paragraph} ({daily.year})</p>
-              <p className="text-ink-soft leading-relaxed mb-4">{daily.context}</p>
-              {daily.funFact && (
-                <div className="bg-gold-light rounded-xl p-4 mb-3">
-                  <p className="text-sm text-ink-soft"><strong className="text-gold">Fun Fact:</strong> {daily.funFact}</p>
-                </div>
-              )}
-              {daily.needsUpdate && (
-                <div className="bg-red-light rounded-xl p-4">
-                  <p className="text-sm text-ink-soft"><strong className="text-red">Braucht ein Update:</strong> {daily.needsUpdate}</p>
-                </div>
-              )}
-              {daily.lawId && (
-                <button onClick={() => loadLaw(daily.lawId!)} className="mt-3 text-sm text-gold hover:underline cursor-pointer">
-                  → Gesetz im Volltext lesen
-                </button>
-              )}
-            </div>
-          )
-        })()}
-
         {/* More interesting laws — expandable */}
         <p className="text-[11px] font-bold text-ink-muted uppercase tracking-widest mb-3">Spannende Gesetze entdecken</p>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-10">
-          {dailyLaws.filter(l => l.id !== getDailyLaw().id).slice(0, 9).map(law => (
+          {dailyLaws.slice(0, 9).map(law => (
             <details key={law.id} className="bg-card rounded-xl border border-border hover:border-gold/20 hover:shadow-sm transition-all group">
               <summary className="p-4 cursor-pointer list-none">
                 <div className="flex items-center gap-2 mb-2">
@@ -1033,10 +999,13 @@ function App() {
       {/* Footer */}
       <footer className="py-8 px-5 border-t border-border text-center">
         <p className="text-ink-muted text-sm">
-          GitLaw — Alle Bundesgesetze, open source. Daten von <a href="https://www.gesetze-im-internet.de" className="text-gold hover:underline" target="_blank" rel="noopener">gesetze-im-internet.de</a>
+          GitLaw — 5.936 Bundesgesetze, frei einsehbar. Daten von <a href="https://www.gesetze-im-internet.de" className="text-gold hover:underline" target="_blank" rel="noopener">gesetze-im-internet.de</a>
         </p>
-        <p className="text-ink-muted/50 text-xs mt-1">
-          <a href="https://github.com/mikelninh/gitlaw" className="hover:text-gold" target="_blank" rel="noopener">GitHub</a> · MIT Lizenz · Keine Gewähr für Richtigkeit
+        <p className="text-ink-muted/70 text-xs mt-2">
+          Betrieben von Mikel Ninh, Berlin ·{' '}
+          <a href="https://github.com/mikelninh/gitlaw" className="hover:text-gold" target="_blank" rel="noopener">Quellcode (MIT)</a> ·{' '}
+          <a href="https://github.com/mikelninh/gitlaw/blob/main/CHANGELOG.md" className="hover:text-gold" target="_blank" rel="noopener">Changelog</a> ·{' '}
+          Stand: {new Date().toISOString().slice(0, 10)} · Keine Gewähr für Richtigkeit
         </p>
       </footer>
 

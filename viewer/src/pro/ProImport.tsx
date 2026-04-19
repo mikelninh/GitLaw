@@ -46,7 +46,7 @@ export default function ProImport() {
       setParsed(result)
       setMapping(result.suggestedMapping)
     } catch (err) {
-      setError('CSV konnte nicht gelesen werden: ' + (err instanceof Error ? err.message : 'unbekannt'))
+      setError('CSV konnte nicht gelesen werden — Parser meldet: ' + (err instanceof Error ? err.message : 'keine Fehlermeldung'))
     }
   }
 

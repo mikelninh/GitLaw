@@ -7,7 +7,7 @@
  * Hürde ist Risiko + Beta-Skepsis. Garantie nimmt das weg.
  */
 
-import { Check, X, ShieldCheck, Sparkles } from 'lucide-react'
+import { Check, X, ShieldCheck } from 'lucide-react'
 
 interface Tier {
   id: 'lite' | 'solo' | 'kanzlei' | 'notar'
@@ -122,7 +122,7 @@ export default function ProPricing() {
       <header className="text-center space-y-3 pt-4">
         <h1 className="h-page mx-auto" style={{ fontSize: '2.5rem' }}>Preise für GitLaw Pro</h1>
         <p className="text-lg text-[var(--color-ink-soft)] max-w-2xl mx-auto">
-          Eine Stunde Recherche pro Woche zurück = Abo verdient. Wir versprechen mehr.
+          Vier Tiers, monatlich kündbar, 60 Tage Geld-zurück.
         </p>
       </header>
 
@@ -151,8 +151,8 @@ export default function ProPricing() {
               }`}
             >
               {t.badge && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[var(--color-gold)] text-white text-xs uppercase tracking-wide px-2 py-1 rounded-full font-semibold flex items-center gap-1">
-                  <Sparkles className="w-3 h-3" /> {t.badge}
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[var(--color-gold)] text-white text-xs uppercase tracking-wide px-2 py-1 rounded-full font-semibold">
+                  {t.badge}
                 </div>
               )}
               <h3 className="font-semibold text-lg">{t.name}</h3>
@@ -193,7 +193,7 @@ export default function ProPricing() {
           ))}
         </div>
         <p className="text-xs text-[var(--color-ink-muted)] text-center mt-4">
-          Alle Preise zzgl. 19% USt. · monatlich kündbar · Annual-Plan: 2 Monate gratis
+          Preise zzgl. 19 % USt. · monatlich kündbar · Jahres-Abo: 10 Monate zahlen, 12 Monate laufen.
         </p>
       </section>
 
