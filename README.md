@@ -1,15 +1,15 @@
 # GitLaw ⚖️
 
-**Alle 5.936 deutschen Bundesgesetze — durchsuchbar, AI-erklärbar, mit Musterbriefen.**
+**Alle 5.936 deutschen Bundesgesetze — durchsuchbar, AI-erklärbar auf Deutsch, mit Musterbriefen.**
 
 Zwei Welten unter einem Dach:
 
-- **GitLaw** — kostenlos für alle Bürger:innen. Open Source. Donations-finanziert.
+- **GitLaw** — kostenlos für alle Bürger:innen. Open Source (AGPL-3.0). Donations-finanziert.
   → [gitlaw.app](https://mikelninh.github.io/gitlaw/) bzw. [gitlaw-xi.vercel.app](https://gitlaw-xi.vercel.app/)
-- **GitLaw Pro** — Anwält:innen-Tier mit Branding, Akten, KI-Recherche-Verifikation, Fristen, Cloud-Sync.
+- **GitLaw Pro** — Anwält:innen-Tier mit Branding, Akten, KI-Recherche-Verifikation, Fristen, Cloud-Sync, mehrsprachige Mandantenaufnahme (DE/VI/TR/AR/EN).
   → [gitlaw-xi.vercel.app/#/pro/preise](https://gitlaw-xi.vercel.app/#/pro/preise) · ab €19/Mo Lite · €79 Solo · €149/RA Kanzlei
 
-1,3 Mio. Zeilen Recht. 98.367 semantische Vektoren. 31 Musterbriefe (20 Bürger + 11 Anwält:innen). 6 Sprachen.
+1,3 Mio. Zeilen Recht · 98.367 semantische Vektoren · 31 Musterbriefe (20 Bürger + 11 Anwält:innen) · UI + Core-Workflows auf Deutsch · Pro-Intake-Form in 5 Sprachen (DE/VI/TR/AR/EN) für Kanzleien mit mehrsprachiger Klientel.
 
 ---
 
@@ -18,7 +18,7 @@ Zwei Welten unter einem Dach:
 ### Features
 - 🔍 **Alle Gesetze durchsuchen** — Fuzzy + semantisch (FAISS, 98K Vektoren)
 - 💡 **AI-Erklärungen** — 112 Paragraphen in einfacher Sprache
-- 💬 **Chat mit Folgefragen** — personalisiert für 12 Profile, 6 Sprachen
+- 💬 **Chat mit Folgefragen** — personalisiert für 12 Profile · antwortet auf Deutsch (Runtime-Sprachwahl über OpenAI möglich, nicht statisch übersetzt)
 - 📝 **20 Musterbriefe** — Widerruf, Reklamation, Kündigung, DSGVO …
 - 📰 **Gesetz des Tages** + 🏠 **Themen-Buttons**
 - ♿ **A-/A+** Schriftgröße · 🌙 Darkmode · Themen-Buttons statt Tippen
