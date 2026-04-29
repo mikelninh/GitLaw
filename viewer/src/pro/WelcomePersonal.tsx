@@ -15,6 +15,7 @@ import QrCard from './QrCard'
 import { PERSONAS, type WelcomeHighlight } from './welcome-personas'
 
 export default function WelcomePersonal({ personaSlug }: { personaSlug?: string }) {
+  const baseUrl = import.meta.env.BASE_URL
   const params = useParams<{ slug: string }>()
   // Slug kommt entweder aus dem Route-Param (/willkommen/:slug) oder als
   // Prop (für hardcoded Routes wie /bao, /rubin, /werner, /jasmin).
@@ -34,7 +35,7 @@ export default function WelcomePersonal({ personaSlug }: { personaSlug?: string 
     )
   }
 
-  const proLink = `/#/pro?invite=${persona.betaToken}&preset=${persona.presetKey}`
+  const proLink = `${baseUrl}#/pro?invite=${persona.betaToken}&preset=${persona.presetKey}`
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[var(--color-gold-light)] via-[var(--color-bg)] to-[var(--color-bg)]">
@@ -129,8 +130,9 @@ export default function WelcomePersonal({ personaSlug }: { personaSlug?: string 
 }
 
 function HighlightCard({ highlight: h }: { highlight: WelcomeHighlight }) {
+  const baseUrl = import.meta.env.BASE_URL
   const intakeUrl = h.showQrFor
-    ? `${window.location.origin}${window.location.pathname}#/intake/demo${h.showQrFor.lang ? `?lang=${h.showQrFor.lang}` : ''}`
+    ? `${window.location.origin}${baseUrl}#/intake/demo${h.showQrFor.lang ? `?lang=${h.showQrFor.lang}` : ''}`
     : ''
 
   return (

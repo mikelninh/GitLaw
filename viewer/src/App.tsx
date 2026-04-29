@@ -59,6 +59,7 @@ function md(text: string): string {
 }
 
 function App() {
+  const baseUrl = import.meta.env.BASE_URL
   const [laws, setLaws] = useState<LawEntry[]>([])
   const [search, setSearch] = useState('')
   const [fontSize, setFontSize] = useState(16)
@@ -316,6 +317,26 @@ function App() {
             className="text-xs text-ink-muted hover:text-gold transition-colors cursor-pointer mb-6">
             {darkMode ? '☀️ Heller Modus' : '🌙 Dunkler Modus'}
           </button>
+
+          {/* Public handoff to the lawyer tier */}
+          <div className="mb-8">
+            <div className="inline-flex flex-wrap items-center justify-center gap-2 rounded-full border border-gold/20 bg-white/75 px-4 py-2 text-sm shadow-sm">
+              <span className="text-ink-soft">Für Anwält:innen:</span>
+              <a
+                href={`${baseUrl}#/preise`}
+                className="font-medium text-gold hover:underline"
+              >
+                GitLaw Pro ansehen
+              </a>
+              <span className="text-ink-muted">·</span>
+              <a
+                href={`${baseUrl}#/pro`}
+                className="font-medium text-ink hover:underline"
+              >
+                Beta-Login
+              </a>
+            </div>
+          </div>
 
           {/* Quick topics — geführter Einstieg für Werner (P1) */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-8 max-w-2xl mx-auto">
