@@ -49,6 +49,9 @@ function ProBridgePage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[var(--color-gold-light)] via-white to-[var(--color-bg)]">
       <div className="max-w-3xl mx-auto px-4 py-16 text-center">
+        <div className="inline-flex items-center rounded-full border border-gold/20 bg-white px-4 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-[var(--color-gold)]">
+          Live Pro Bridge
+        </div>
         <p className="text-xs uppercase tracking-[0.3em] text-[var(--color-ink-muted)] mb-4">
           GitLaw Pro
         </p>
@@ -77,6 +80,9 @@ function ProBridgePage() {
 
         <p className="mt-8 text-sm text-[var(--color-ink-muted)]">
           Direktlink für Bao: <span className="font-mono">/#/pro?invite=BETA-NGUYEN&amp;preset=nguyen</span>
+        </p>
+        <p className="mt-2 text-xs text-[var(--color-ink-muted)]">
+          Bridge route: <span className="font-mono">/pro-beta</span>
         </p>
       </div>
     </div>
