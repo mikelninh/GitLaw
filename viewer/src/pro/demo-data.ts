@@ -17,6 +17,8 @@
 
 import {
   createCase,
+  listCases,
+  saveIntake,
   saveLetter,
   saveResearch,
   saveSettings,
@@ -31,7 +33,7 @@ function daysFromNow(n: number): string {
   return d.toISOString().slice(0, 10)
 }
 
-export const DEMO_MARKER = 'gitlaw.pro.demo-loaded.v1'
+export const DEMO_MARKER = 'gitlaw.pro.demo-loaded.v2'
 
 interface DemoCase {
   case: {
@@ -287,7 +289,7 @@ const NGUYEN: KanzleiPreset = {
   tagline: 'Strafrecht · Mietrecht · Migrationsrecht (vietnamesische Mandant:innen)',
   settings: {
     name: 'Anwaltskanzlei Thai Bao Nguyen',
-    anwaltName: 'Rechtsanwalt Thai Bao Nguyen',
+    anwaltName: 'Rechtsanwalt Bao Nguyen',
     address: '[bitte im Profil ergänzen]\nBerlin',
     contact: 'thai.bao@ra-nguyen.de  ·  ra-nguyen.de',
     kammerId: 'Rechtsanwaltskammer Berlin',
@@ -346,7 +348,7 @@ const NGUYEN: KanzleiPreset = {
         mandantName: 'Pham Quoc An',
         description: 'Strafbefehl wegen § 263 StGB (Betrug) — Mandant bestreitet, Sprachbarriere bei Beschuldigten-Vernehmung.',
         mandantEmail: 'an.pham@example.com',
-        fristOffsetDays: 28,
+        fristOffsetDays: 24,
         fristBezeichnung: 'Einspruch Strafbefehl § 410 StPO',
       },
       research: {
@@ -435,6 +437,68 @@ export function loadDemoData(presetKey: string): { presetKey: string; caseCount:
           body,
         })
       }
+    }
+  }
+
+  if (preset.key === 'nguyen') {
+    const allCases = listCases()
+    const minhCase = allCases.find(c => c.aktenzeichen === '25/0301')
+    const hoaCase = allCases.find(c => c.aktenzeichen === '25/0312')
+
+    if (minhCase) {
+      saveIntake({
+        caseId: minhCase.id,
+        targetSlug: 'demo-nguyen',
+        name: 'Tran Thi Mai',
+        email: 'mai.tran@example.com',
+        phone: '+49 176 555 31 844',
+        anliegen: 'Ich habe einen Brief von der Ausländerbehörde bekommen und bin unsicher, welche Unterlagen für die Verlängerung meiner Aufenthaltserlaubnis noch fehlen.',
+        gewuenschterAusgang: 'Ich möchte wissen, was ich jetzt konkret einreichen sollte und ob mein Termin so ausreicht.',
+        dringlichkeit: 'mittel',
+        fristBekannt: true,
+        attachments: [
+          {
+            originalName: 'thu-auslaenderbehoerde.jpg',
+            internalName: 'in_20260430_mai_01.jpg',
+            mimeType: 'image/jpeg',
+            sizeBytes: 428144,
+            category: 'bescheid',
+            languageHint: 'de',
+          },
+          {
+            originalName: 'ho-chieu.pdf',
+            internalName: 'in_20260430_mai_02.pdf',
+            mimeType: 'application/pdf',
+            sizeBytes: 821332,
+            category: 'vertrag',
+            languageHint: 'vi',
+          },
+        ],
+      })
+    }
+
+    if (hoaCase) {
+      saveIntake({
+        caseId: hoaCase.id,
+        targetSlug: 'demo-nguyen',
+        name: 'Le Thi Hanh',
+        email: 'hanh.le@example.com',
+        phone: '+84 90 332 17 55',
+        anliegen: 'Mein Mann lebt in Berlin. Wir wollen den Familiennachzug vorbereiten und ich möchte wissen, welche Unterlagen und welcher Deutsch-Nachweis wirklich nötig sind.',
+        gewuenschterAusgang: 'Eine klare Checkliste für den Visumantrag bei der Botschaft in Hanoi.',
+        dringlichkeit: 'niedrig',
+        fristBekannt: false,
+        attachments: [
+          {
+            originalName: 'ket-hon.pdf',
+            internalName: 'in_20260430_hanh_01.pdf',
+            mimeType: 'application/pdf',
+            sizeBytes: 533921,
+            category: 'vertrag',
+            languageHint: 'vi',
+          },
+        ],
+      })
     }
   }
 

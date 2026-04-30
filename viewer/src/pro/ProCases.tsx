@@ -49,12 +49,12 @@ function FristPill({ c }: { c: MandantCase }) {
   const past = days < 0
   const urgent = !past && days <= 7
   const cls = past
-    ? 'bg-red-100 text-red-800 border-red-300'
+    ? 'bg-amber-100 text-amber-900 border-amber-300'
     : urgent
       ? 'bg-amber-100 text-amber-800 border-amber-300'
       : 'bg-slate-100 text-slate-700 border-slate-200'
   const label = past
-    ? `Frist vor ${-days}T abgelaufen`
+    ? `Frist überschritten (${ -days }T)`
     : days === 0
       ? 'Frist HEUTE'
       : `Frist in ${days}T`
@@ -653,7 +653,7 @@ export function ProCaseDetail() {
         <div
           className={`rounded-lg border px-4 py-3 text-sm flex items-center gap-2 ${
             frist < 0
-              ? 'bg-red-50 border-red-200 text-red-900'
+              ? 'bg-amber-50 border-amber-200 text-amber-900'
               : frist <= 7
                 ? 'bg-amber-50 border-amber-200 text-amber-900'
                 : 'bg-slate-50 border-slate-200 text-slate-700'
@@ -662,7 +662,7 @@ export function ProCaseDetail() {
           <AlertCircle className="w-4 h-4 shrink-0" />
           <span className="font-medium">
             {frist < 0
-              ? `Frist seit ${-frist} Tagen abgelaufen`
+              ? `Achtung: Frist seit ${-frist} Tagen überschritten`
               : frist === 0
                 ? 'Frist läuft heute ab'
                 : `Frist in ${frist} Tagen`}

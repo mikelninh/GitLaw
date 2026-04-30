@@ -77,7 +77,7 @@ export default function WelcomePersonal({ personaSlug }: { personaSlug?: string 
           bitte teste heute nur den Kernflow.
         </h1>
         <p className="text-lg text-[var(--color-ink-soft)] max-w-xl mx-auto leading-relaxed">
-          15 bis 20 Minuten reichen. Wenn du den Ablauf einmal komplett durchgehst, ist das wertvoller als jedes weitere Feature.
+          GitLaw Pro ist eine App für den anwaltlichen Alltag: Intake, Akte, Recherche und Schreiben in einem ruhigen Arbeitsfluss. 15 bis 20 Minuten reichen. Wenn du den Ablauf einmal komplett durchgehst, ist das wertvoller als jedes weitere Feature.
         </p>
         <p className="text-sm text-[var(--color-ink-muted)] mt-4 italic">— Mikel</p>
       </section>
@@ -137,6 +137,15 @@ export default function WelcomePersonal({ personaSlug }: { personaSlug?: string 
               <li>• was noch für echte tägliche Nutzung fehlt</li>
               <li>• was unklar oder zu langsam war</li>
             </ul>
+          </div>
+
+          <div className="bg-white border border-[var(--color-border)] rounded-2xl p-6">
+            <h2 className="font-semibold text-lg mb-2">Kurz zur Idee</h2>
+            <p className="text-sm text-[var(--color-ink-soft)] leading-relaxed">
+              Ich baue GitLaw Pro als kompaktes Kanzlei-Tool für genau die ersten Schritte im Fall:
+              Eingang strukturieren, Unterlagen sauber benennen, schnell recherchieren und daraus direkt weiterarbeiten.
+              Für dich habe ich den Flow auf vietnamesischsprachige Mandate und Migrations-/Strafrechtsnähe zugeschnitten.
+            </p>
           </div>
 
           <div className="bg-white border border-[var(--color-border)] rounded-2xl p-6">

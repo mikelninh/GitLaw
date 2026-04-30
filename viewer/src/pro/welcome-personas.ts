@@ -45,12 +45,12 @@ export const PERSONAS: Record<string, WelcomePersona> = {
   bao: {
     slug: 'bao',
     firstName: 'Bao',
-    fullName: 'Thai Bao Nguyen',
+    fullName: 'Bao Nguyen',
     heroEmoji: '🇻🇳',
-    tagline: 'Ich habe an etwas Konkretes gedacht: ein vietnamesisch-sprachiges Mandant:innen-Formular und 12 Migrationsrecht-Vorlagen — falls deine Mandantschaft das öfter braucht, als deine Website verrät 😉',
+    tagline: 'GitLaw Pro ist mein Versuch, einen echten anwaltlichen Arbeitsflow kompakter zu machen: Intake, Akte, Recherche und Schreiben an einem Ort.',
     betaToken: 'BETA-NGUYEN',
     presetKey: 'nguyen',
-    personalNote: 'Bao, du bist mein bester Freund und einer der wenigen Anwält:innen, denen ich eine vietnamesisch-sprachige Mandantschaft anvertrauen würde. Wenn du das Tool 4 Wochen testest und mir sagst was kaputt ist — gewinnen wir beide. Wenn nicht, kein Cent.',
+    personalNote: 'Du hattest neulich Interesse an so einem Tool für den Arbeitsalltag. Genau dafür ist das hier gedacht. Mich interessiert vor allem, ob sich der Flow für dich natürlich anfühlt und wo du sofort Mehrwert siehst.',
     highlights: [
       {
         emoji: '🇻🇳',
