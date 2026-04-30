@@ -1035,22 +1035,28 @@ export function ProCaseDetail() {
           <ul className="bg-white border border-[var(--color-border)] rounded-2xl divide-y divide-[var(--color-border)]">
             {research.map(r => (
               <li key={r.id}>
-                <Link
-                  to={`/pro/recherche?case=${c.id}&ref=${r.id}`}
-                  className="block px-4 py-3 text-sm hover:bg-[var(--color-bg-alt)] transition-colors"
-                >
-                  <div className="flex items-baseline justify-between gap-3">
-                    <span className="font-medium truncate">{r.question}</span>
-                    <span className="text-xs text-[var(--color-ink-muted)] shrink-0">
-                      {new Date(r.createdAt).toLocaleDateString('de-DE')}
-                    </span>
+                <div className="px-4 py-3 text-sm hover:bg-[var(--color-bg-alt)] transition-colors">
+                  <div className="flex items-start justify-between gap-3">
+                    <Link to={`/pro/recherche?case=${c.id}&ref=${r.id}`} className="min-w-0 flex-1">
+                      <div className="font-medium truncate">{r.question}</div>
+                      <div className="text-xs text-[var(--color-ink-muted)] mt-1">
+                        {r.citations.length} Zitat{r.citations.length === 1 ? '' : 'e'}
+                        {r.reviewed ? ' · ✓ geprüft' : ' · ⚠ ungeprüft'}
+                      </div>
+                    </Link>
+                    <div className="flex flex-col items-end gap-2 shrink-0">
+                      <span className="text-xs text-[var(--color-ink-muted)]">
+                        {new Date(r.createdAt).toLocaleDateString('de-DE')}
+                      </span>
+                      <Link
+                        to={`/pro/schreiben?case=${c.id}&ref=${r.id}`}
+                        className="text-[11px] inline-flex items-center gap-1 rounded-full border border-[var(--color-border)] px-2 py-1 text-[var(--color-ink-muted)] hover:border-[var(--color-gold)] hover:text-[var(--color-ink)]"
+                      >
+                        Schreiben öffnen
+                      </Link>
+                    </div>
                   </div>
-                  <div className="text-xs text-[var(--color-ink-muted)] mt-1">
-                    {r.citations.length} Zitat{r.citations.length === 1 ? '' : 'e'}
-                    {r.reviewed ? ' · ✓ geprüft' : ' · ⚠ ungeprüft'}
-                    <span className="ml-2 text-[var(--color-gold)]">Öffnen →</span>
-                  </div>
-                </Link>
+                </div>
               </li>
             ))}
           </ul>

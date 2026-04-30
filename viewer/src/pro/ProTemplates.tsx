@@ -8,7 +8,7 @@
 
 import { useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { FileText, Download, Save, Copy, ChevronLeft, Mail, Plus, Trash2, Pencil } from 'lucide-react'
+import { FileText, Download, Save, Copy, ChevronLeft, Mail, Plus, Trash2, Pencil, Star } from 'lucide-react'
 import {
   ALL_BUILTIN_TEMPLATES,
   NOTAR_TEMPLATES,
@@ -29,8 +29,12 @@ import {
   listCases,
   listCustomTemplates,
   listLetters,
+  listResearch,
+  listTemplateUsage,
   saveCustomTemplate,
   saveLetter,
+  type TemplateUsageEntry,
+  toggleTemplateFavorite,
 } from './store'
 import type { CustomTemplate, GeneratedLetter } from './types'
 
@@ -42,11 +46,123 @@ function renderCustom(t: CustomTemplate, fields: Record<string, string>): string
   return t.body.replace(/\{\{\s*([a-z_][a-z0-9_]*)\s*\}\}/gi, (_m, key) => fields[key] || `[${key}]`)
 }
 
+type TemplateSortMode = 'smart' | 'favorites' | 'usage'
+
+function makeUsageMap(entries: TemplateUsageEntry[]): Map<string, TemplateUsageEntry> {
+  return new Map(entries.map(entry => [entry.templateId, entry]))
+}
+
+function compareTemplates(
+  a: { id: string; title: string },
+  b: { id: string; title: string },
+  usage: Map<string, TemplateUsageEntry>,
+  mode: TemplateSortMode,
+): number {
+  const ua = usage.get(a.id)
+  const ub = usage.get(b.id)
+  const favA = ua?.favorite ? 1 : 0
+  const favB = ub?.favorite ? 1 : 0
+  const countA = ua?.count || 0
+  const countB = ub?.count || 0
+  const lastA = ua?.lastUsedAt || ''
+  const lastB = ub?.lastUsedAt || ''
+
+  if (mode === 'favorites') {
+    if (favB !== favA) return favB - favA
+    if (countB !== countA) return countB - countA
+    if (lastB !== lastA) return lastB.localeCompare(lastA)
+    return a.title.localeCompare(b.title, 'de')
+  }
+
+  if (mode === 'usage') {
+    if (countB !== countA) return countB - countA
+    if (favB !== favA) return favB - favA
+    if (lastB !== lastA) return lastB.localeCompare(lastA)
+    return a.title.localeCompare(b.title, 'de')
+  }
+
+  if (favB !== favA) return favB - favA
+  if (countB !== countA) return countB - countA
+  if (lastB !== lastA) return lastB.localeCompare(lastA)
+  return a.title.localeCompare(b.title, 'de')
+}
+
+function sortTemplates<T extends { id: string; title: string }>(
+  templates: T[],
+  usage: Map<string, TemplateUsageEntry>,
+  mode: TemplateSortMode,
+): T[] {
+  const list = [...templates]
+  if (mode === 'favorites') {
+    return list
+      .filter(t => usage.get(t.id)?.favorite)
+      .sort((a, b) => compareTemplates(a, b, usage, mode))
+  }
+  return list.sort((a, b) => compareTemplates(a, b, usage, mode))
+}
+
+function TemplateCard({
+  title,
+  description,
+  meta,
+  usage,
+  favorite,
+  onOpen,
+  onToggleFavorite,
+}: {
+  title: string
+  description?: string
+  meta: string
+  usage?: TemplateUsageEntry
+  favorite: boolean
+  onOpen: () => void
+  onToggleFavorite: () => void
+}) {
+  return (
+    <div className="bg-white border border-[var(--color-border)] rounded-2xl p-5 hover:border-[var(--color-gold)] transition-colors flex items-start gap-3">
+      <button type="button" onClick={onOpen} className="text-left flex-1 min-w-0">
+        <div className="flex items-start gap-3">
+          <FileText className="w-5 h-5 text-[var(--color-gold)] shrink-0 mt-0.5" />
+          <div className="flex-1 min-w-0">
+            <h3 className="font-semibold mb-1 truncate">{title}</h3>
+            {description && <p className="text-sm text-[var(--color-ink-soft)] mb-2">{description}</p>}
+            <p className="text-xs text-[var(--color-ink-muted)] italic">{meta}</p>
+            <div className="mt-2 flex flex-wrap items-center gap-2 text-[11px]">
+              <span className={`rounded-full px-2 py-1 border ${favorite ? 'bg-amber-50 border-amber-300 text-amber-900' : 'bg-[var(--color-bg-alt)] border-[var(--color-border)] text-[var(--color-ink-muted)]'}`}>
+                {favorite ? 'Favorit' : (usage?.count ? `${usage.count}x genutzt` : 'noch nicht genutzt')}
+              </span>
+              {usage?.count ? (
+                <span className="text-[var(--color-ink-muted)]">
+                  zuletzt {new Date(usage.lastUsedAt).toLocaleDateString('de-DE')}
+                </span>
+              ) : null}
+            </div>
+          </div>
+        </div>
+      </button>
+      <button
+        type="button"
+        onClick={onToggleFavorite}
+        className={`shrink-0 inline-flex items-center justify-center w-9 h-9 rounded-full border transition-colors ${
+          favorite
+            ? 'border-amber-300 bg-amber-50 text-amber-600'
+            : 'border-[var(--color-border)] text-[var(--color-ink-muted)] hover:border-[var(--color-gold)] hover:text-[var(--color-ink)]'
+        }`}
+        aria-label={favorite ? 'Favorit entfernen' : 'Als Favorit markieren'}
+        title={favorite ? 'Favorit entfernen' : 'Als Favorit markieren'}
+      >
+        <Star className="w-4 h-4" fill={favorite ? 'currentColor' : 'none'} />
+      </button>
+    </div>
+  )
+}
+
 export default function ProTemplates() {
   const [params, setParams] = useSearchParams()
   const cases = useMemo(() => listCases().filter(c => c.status === 'aktiv'), [])
   const [selectedCaseId, setSelectedCaseId] = useState(params.get('case') || '')
   const refLetterId = params.get('ref') || ''
+  const refResearchId = params.get('ref') || ''
   const [activeTemplate, setActiveTemplate] = useState<PickedTemplate | null>(null)
   const [fields, setFields] = useState<Record<string, string>>({})
   const [savedLetter, setSavedLetter] = useState<GeneratedLetter | null>(null)
@@ -55,9 +171,18 @@ export default function ProTemplates() {
   const [editingCustom, setEditingCustom] = useState<CustomTemplate | 'new' | null>(null)
   const [confirmingDelete, setConfirmingDelete] = useState<string | null>(null)
   const [closingStyle, setClosingStyle] = useState<'kollegial' | 'freundlich' | 'neutral'>('kollegial')
+  const [sortMode, setSortMode] = useState<TemplateSortMode>('smart')
 
   const customTemplates = useMemo(() => listCustomTemplates(), [tick, editingCustom])
+  const templateUsage = useMemo(() => makeUsageMap(listTemplateUsage()), [tick, savedLetter])
   const linkedLetter = selectedCaseId ? listLetters(selectedCaseId).find(l => l.id === refLetterId) : undefined
+  const linkedResearch = selectedCaseId ? listResearch(selectedCaseId).find(r => r.id === refResearchId) : undefined
+  const favoriteCount = useMemo(
+    () => listTemplateUsage().filter(entry => entry.favorite).length,
+    [tick],
+  )
+  const sortList = <T extends { id: string; title: string }>(items: T[]) =>
+    sortTemplates(items, templateUsage, sortMode)
 
   const renderedBody =
     activeTemplate?.kind === 'builtin'
@@ -80,6 +205,10 @@ export default function ProTemplates() {
     setActiveTemplate({ kind: 'custom', t })
     setFields({})
     setSavedLetter(null)
+  }
+  function toggleFavorite(id: string) {
+    toggleTemplateFavorite(id)
+    setTick(t => t + 1)
   }
   function back() {
     setActiveTemplate(null)
@@ -145,6 +274,13 @@ export default function ProTemplates() {
   }
 
   if (!activeTemplate) {
+    const customTemplatesSorted = sortList(customTemplates)
+    const lawyerTemplates = sortList(LAWYER_TEMPLATES)
+    const notarTemplates = sortList(NOTAR_TEMPLATES)
+    const migrationTemplates = sortList(MIGRATION_TEMPLATES)
+    const familTemplates = sortList(FAMILIE_TEMPLATES)
+    const sozialTemplates = sortList(SOZIAL_TEMPLATES)
+    const steuerTemplates = sortList(STEUER_TEMPLATES)
     return (
       <div className="space-y-6">
         <header>
@@ -154,29 +290,48 @@ export default function ProTemplates() {
           </p>
         </header>
 
-        {customTemplates.length > 0 && (
+        <div id="writing-template-browser" className="flex flex-wrap items-center gap-2 text-xs bg-white border border-[var(--color-border)] rounded-2xl p-2">
+          <span className="text-[var(--color-ink-muted)] px-2">Sortierung:</span>
+          {([
+            ['smart', 'Smart'],
+            ['favorites', `Favoriten${favoriteCount ? ` (${favoriteCount})` : ''}`],
+            ['usage', 'Meist genutzt'],
+          ] as const).map(([mode, label]) => (
+            <button
+              key={mode}
+              type="button"
+              onClick={() => setSortMode(mode)}
+              className={`px-3 py-1.5 rounded-lg border ${
+                sortMode === mode
+                  ? 'bg-[var(--color-ink)] text-white border-[var(--color-ink)]'
+                  : 'bg-white border-[var(--color-border)] text-[var(--color-ink-muted)] hover:border-[var(--color-gold)] hover:text-[var(--color-ink)]'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+
+        {customTemplatesSorted.length > 0 && (
           <section>
             <h2 className="font-semibold text-sm uppercase tracking-wide text-[var(--color-ink-muted)] mb-3">
-              Eigene Vorlagen ({customTemplates.length})
+              Eigene Vorlagen ({customTemplatesSorted.length})
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {customTemplates.map(t => (
-                <div key={t.id} className="bg-white border border-[var(--color-border)] rounded-2xl p-5 hover:border-[var(--color-gold)] transition-colors">
-                  <button onClick={() => pickCustom(t.id)} className="text-left w-full">
-                    <div className="flex items-start gap-3">
-                      <FileText className="w-5 h-5 text-[var(--color-gold)] shrink-0 mt-0.5" />
-                      <div className="flex-1">
-                        <h3 className="font-semibold mb-1">{t.title}</h3>
-                        {t.description && (
-                          <p className="text-sm text-[var(--color-ink-soft)] mb-2">{t.description}</p>
-                        )}
-                        <p className="text-xs text-[var(--color-ink-muted)]">
-                          {t.placeholders.length} Platzhalter · zuletzt {new Date(t.updatedAt).toLocaleDateString('de-DE')}
-                        </p>
-                      </div>
-                    </div>
-                  </button>
-                  <div className="flex items-center justify-end gap-2 mt-3 pt-3 border-t border-[var(--color-border)]">
+              {customTemplatesSorted.map(t => {
+                const usage = templateUsage.get(t.id)
+                return (
+                <div key={t.id} className="space-y-3">
+                  <TemplateCard
+                    title={t.title}
+                    description={t.description}
+                    meta={`${t.placeholders.length} Platzhalter · zuletzt ${new Date(t.updatedAt).toLocaleDateString('de-DE')}`}
+                    usage={usage}
+                    favorite={!!usage?.favorite}
+                    onOpen={() => pickCustom(t.id)}
+                    onToggleFavorite={() => toggleFavorite(t.id)}
+                  />
+                  <div className="flex items-center justify-end gap-2 pt-0">
                     <button
                       onClick={() => setEditingCustom(t)}
                       className="text-xs text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] inline-flex items-center gap-1"
@@ -216,7 +371,8 @@ export default function ProTemplates() {
                     )}
                   </div>
                 </div>
-              ))}
+                )
+              })}
             </div>
           </section>
         )}
@@ -235,21 +391,17 @@ export default function ProTemplates() {
             Eingebaute Vorlagen — Allgemein
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {LAWYER_TEMPLATES.map(t => (
-              <button
+            {lawyerTemplates.map(t => (
+              <TemplateCard
                 key={t.id}
-                onClick={() => pickBuiltin(t.id)}
-                className="text-left bg-white border border-[var(--color-border)] rounded-2xl p-5 hover:border-[var(--color-gold)] transition-colors"
-              >
-                <div className="flex items-start gap-3">
-                  <FileText className="w-5 h-5 text-[var(--color-gold)] shrink-0 mt-0.5" />
-                  <div className="flex-1">
-                    <h3 className="font-semibold mb-1">{t.title}</h3>
-                    <p className="text-sm text-[var(--color-ink-soft)] mb-2">{t.description}</p>
-                    <p className="text-xs text-[var(--color-ink-muted)] italic">Wann: {t.useCase}</p>
-                  </div>
-                </div>
-              </button>
+                title={t.title}
+                description={t.description}
+                meta={`Wann: ${t.useCase}`}
+                usage={templateUsage.get(t.id)}
+                favorite={!!templateUsage.get(t.id)?.favorite}
+                onOpen={() => pickBuiltin(t.id)}
+                onToggleFavorite={() => toggleFavorite(t.id)}
+              />
             ))}
           </div>
         </section>
@@ -259,29 +411,25 @@ export default function ProTemplates() {
             Eingebaute Vorlagen — Notariat &amp; Erbrecht
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {NOTAR_TEMPLATES.map(t => (
-              <button
+            {notarTemplates.map(t => (
+              <TemplateCard
                 key={t.id}
-                onClick={() => pickBuiltin(t.id)}
-                className="text-left bg-white border border-[var(--color-border)] rounded-2xl p-5 hover:border-[var(--color-gold)] transition-colors"
-              >
-                <div className="flex items-start gap-3">
-                  <FileText className="w-5 h-5 text-[var(--color-gold)] shrink-0 mt-0.5" />
-                  <div className="flex-1">
-                    <h3 className="font-semibold mb-1">{t.title}</h3>
-                    <p className="text-sm text-[var(--color-ink-soft)] mb-2">{t.description}</p>
-                    <p className="text-xs text-[var(--color-ink-muted)] italic">Wann: {t.useCase}</p>
-                  </div>
-                </div>
-              </button>
+                title={t.title}
+                description={t.description}
+                meta={`Wann: ${t.useCase}`}
+                usage={templateUsage.get(t.id)}
+                favorite={!!templateUsage.get(t.id)?.favorite}
+                onOpen={() => pickBuiltin(t.id)}
+                onToggleFavorite={() => toggleFavorite(t.id)}
+              />
             ))}
           </div>
         </section>
 
-        <TemplateSection title="Migrationsrecht" templates={MIGRATION_TEMPLATES} pickBuiltin={pickBuiltin} />
-        <TemplateSection title="Familienrecht" templates={FAMILIE_TEMPLATES} pickBuiltin={pickBuiltin} />
-        <TemplateSection title="Sozialrecht" templates={SOZIAL_TEMPLATES} pickBuiltin={pickBuiltin} />
-        <TemplateSection title="Steuerrecht" templates={STEUER_TEMPLATES} pickBuiltin={pickBuiltin} />
+        <TemplateSection title="Migrationsrecht" templates={migrationTemplates} pickBuiltin={pickBuiltin} usage={templateUsage} sortMode={sortMode} onToggleFavorite={toggleFavorite} />
+        <TemplateSection title="Familienrecht" templates={familTemplates} pickBuiltin={pickBuiltin} usage={templateUsage} sortMode={sortMode} onToggleFavorite={toggleFavorite} />
+        <TemplateSection title="Sozialrecht" templates={sozialTemplates} pickBuiltin={pickBuiltin} usage={templateUsage} sortMode={sortMode} onToggleFavorite={toggleFavorite} />
+        <TemplateSection title="Steuerrecht" templates={steuerTemplates} pickBuiltin={pickBuiltin} usage={templateUsage} sortMode={sortMode} onToggleFavorite={toggleFavorite} />
       </div>
     )
   }
@@ -341,6 +489,28 @@ export default function ProTemplates() {
               className="text-xs bg-[var(--color-ink)] text-white rounded-lg px-3 py-1.5 hover:opacity-90"
             >
               In Vorlage öffnen
+            </button>
+          </div>
+        </section>
+      )}
+
+      {linkedResearch && !linkedLetter && (
+        <section className="bg-sky-50 border border-sky-200 rounded-2xl p-4">
+          <div className="flex items-center justify-between gap-3 flex-wrap">
+            <div>
+              <p className="text-xs uppercase tracking-wide text-sky-800 font-semibold">Verknüpfte Recherche</p>
+              <p className="font-medium mt-1">{linkedResearch.question}</p>
+              <p className="text-xs text-sky-900/80 mt-1">
+                {new Date(linkedResearch.createdAt).toLocaleDateString('de-DE')}
+                {linkedResearch.reviewed ? ' · ✓ geprüft' : ' · ungeprüft'}
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => document.getElementById('writing-template-browser')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+              className="text-xs bg-[var(--color-ink)] text-white rounded-lg px-3 py-1.5 hover:opacity-90"
+            >
+              Vorlage auswählen
             </button>
           </div>
         </section>
@@ -573,34 +743,38 @@ function extractPlaceholdersClient(body: string): string[] {
 export { ALL_BUILTIN_TEMPLATES }
 
 function TemplateSection({
-  title, templates, pickBuiltin,
+  title, templates, pickBuiltin, usage, sortMode, onToggleFavorite,
 }: {
   title: string
   templates: LawyerTemplate[]
   pickBuiltin: (id: string) => void
+  usage: Map<string, TemplateUsageEntry>
+  sortMode: TemplateSortMode
+  onToggleFavorite: (id: string) => void
 }) {
+  const visible = sortTemplates(templates, usage, sortMode)
+  if (sortMode === 'favorites' && visible.length === 0) return null
   return (
     <section>
       <h2 className="font-semibold text-sm uppercase tracking-wide text-[var(--color-ink-muted)] mb-3">
-        Eingebaute Vorlagen — {title} <span className="text-[var(--color-ink-muted)] normal-case font-normal">({templates.length})</span>
+        Eingebaute Vorlagen — {title} <span className="text-[var(--color-ink-muted)] normal-case font-normal">({visible.length})</span>
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {templates.map(t => (
-          <button
+        {visible.map(t => {
+          const meta = usage.get(t.id)
+          return (
+          <TemplateCard
             key={t.id}
-            onClick={() => pickBuiltin(t.id)}
-            className="text-left bg-white border border-[var(--color-border)] rounded-2xl p-5 hover:border-[var(--color-gold)] transition-colors"
-          >
-            <div className="flex items-start gap-3">
-              <FileText className="w-5 h-5 text-[var(--color-gold)] shrink-0 mt-0.5" />
-              <div className="flex-1">
-                <h3 className="font-semibold mb-1">{t.title}</h3>
-                <p className="text-sm text-[var(--color-ink-soft)] mb-2">{t.description}</p>
-                <p className="text-xs text-[var(--color-ink-muted)] italic">Wann: {t.useCase}</p>
-              </div>
-            </div>
-          </button>
-        ))}
+            title={t.title}
+            description={t.description}
+            meta={`Wann: ${t.useCase}`}
+            usage={meta}
+            favorite={!!meta?.favorite}
+            onOpen={() => pickBuiltin(t.id)}
+            onToggleFavorite={() => onToggleFavorite(t.id)}
+          />
+          )
+        })}
       </div>
     </section>
   )

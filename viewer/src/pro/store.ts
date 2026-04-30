@@ -35,6 +35,7 @@ const KEY_AUDIT = 'gitlaw.pro.audit.v1'
 const KEY_INVITE = 'gitlaw.pro.invite.v1'
 const KEY_INTAKES = 'gitlaw.pro.intakes.v1'
 const KEY_CUSTOM_TEMPLATES = 'gitlaw.pro.customTemplates.v1'
+const KEY_TEMPLATE_USAGE = 'gitlaw.pro.templateUsage.v1'
 const KEY_PARAGRAPH_NOTES = 'gitlaw.pro.paragraphNotes.v1'
 const KEY_ACCESS_CTX = 'gitlaw.pro.access.v1'
 const KEY_LAST_ACTIVE = 'gitlaw.pro.lastActive.v1'
@@ -508,7 +509,67 @@ export function saveLetter(l: Omit<GeneratedLetter, 'id' | 'createdAt'>): Genera
     const c = getCase(item.caseId)
     if (c) updateCase(c.id, { letterIds: [...c.letterIds, item.id] })
   }
+  recordTemplateUsage(item.templateId)
   log('letter.generate', `template=${item.templateId}`, item.caseId)
+  return item
+}
+
+export interface TemplateUsageEntry {
+  templateId: string
+  count: number
+  lastUsedAt: string
+  favorite?: boolean
+}
+
+export function listTemplateUsage(): TemplateUsageEntry[] {
+  return readJSON<TemplateUsageEntry[]>(KEY_TEMPLATE_USAGE, []).sort((a, b) => {
+    if (a.favorite !== b.favorite) return a.favorite ? -1 : 1
+    if (b.count !== a.count) return b.count - a.count
+    return b.lastUsedAt.localeCompare(a.lastUsedAt)
+  })
+}
+
+export function getTemplateUsage(templateId: string): TemplateUsageEntry | undefined {
+  return listTemplateUsage().find(t => t.templateId === templateId)
+}
+
+export function recordTemplateUsage(templateId: string): TemplateUsageEntry {
+  const all = readJSON<TemplateUsageEntry[]>(KEY_TEMPLATE_USAGE, [])
+  const now = new Date().toISOString()
+  const idx = all.findIndex(t => t.templateId === templateId)
+  let item: TemplateUsageEntry
+  if (idx >= 0) {
+    item = {
+      ...all[idx],
+      count: all[idx].count + 1,
+      lastUsedAt: now,
+    }
+    all[idx] = item
+  } else {
+    item = { templateId, count: 1, lastUsedAt: now }
+    all.push(item)
+  }
+  writeJSON(KEY_TEMPLATE_USAGE, all)
+  return item
+}
+
+export function toggleTemplateFavorite(templateId: string): TemplateUsageEntry {
+  const all = readJSON<TemplateUsageEntry[]>(KEY_TEMPLATE_USAGE, [])
+  const idx = all.findIndex(t => t.templateId === templateId)
+  const now = new Date().toISOString()
+  let item: TemplateUsageEntry
+  if (idx >= 0) {
+    item = {
+      ...all[idx],
+      favorite: !all[idx].favorite,
+      lastUsedAt: now,
+    }
+    all[idx] = item
+  } else {
+    item = { templateId, count: 0, lastUsedAt: now, favorite: true }
+    all.push(item)
+  }
+  writeJSON(KEY_TEMPLATE_USAGE, all)
   return item
 }
 
