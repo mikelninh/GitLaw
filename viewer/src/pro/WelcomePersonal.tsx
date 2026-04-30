@@ -36,6 +36,11 @@ export default function WelcomePersonal({ personaSlug }: { personaSlug?: string 
   }
 
   const proLink = `${baseUrl}#/pro?invite=${persona.betaToken}&preset=${persona.presetKey}`
+  const intakeViLink = `${baseUrl}#/intake/demo-nguyen?lang=vi`
+  const publicLink = `${baseUrl}#/`
+  const proCasesLink = `${baseUrl}#/pro/akten`
+  const proResearchLink = `${baseUrl}#/pro/recherche`
+  const isBao = slug === 'bao'
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[var(--color-gold-light)] via-[var(--color-bg)] to-[var(--color-bg)]">
@@ -106,6 +111,58 @@ export default function WelcomePersonal({ personaSlug }: { personaSlug?: string 
           ))}
         </div>
       </section>
+
+      {isBao && (
+        <section className="max-w-4xl mx-auto px-4 pb-16 space-y-6">
+          <div className="bg-white border border-[var(--color-border)] rounded-2xl p-6">
+            <h2 className="font-semibold text-lg mb-2">Was neu ist (April 2026)</h2>
+            <ul className="text-sm text-[var(--color-ink-soft)] space-y-1.5">
+              <li>• Mehrsprachiger Intake (DE/VI/TR/AR/EN) mit konsistenter Übersetzung.</li>
+              <li>• Intake-Triage: Dringlichkeit + Frist-Hinweis für schnellere Priorisierung.</li>
+              <li>• Anhänge mit internem Dateinamen (inkl. Kategorie + Sprache), z. B. für VI-Fotos/PDFs.</li>
+              <li>• Recherche mit Folgefragen und Verlauf: vertiefen, einzeln speichern, prüfen, exportieren.</li>
+              <li>• Compliance-Cockpit + Datenschutz-Preflight vor KI-Versand.</li>
+            </ul>
+          </div>
+
+          <div className="bg-white border border-[var(--color-border)] rounded-2xl p-6">
+            <h2 className="font-semibold text-lg mb-2">Testplan (ca. 20 Minuten)</h2>
+            <ol className="text-sm text-[var(--color-ink-soft)] space-y-2 list-decimal list-inside">
+              <li>
+                Public zu Pro Einstieg testen:
+                {' '}<a href={publicLink} className="underline">GitLaw Public</a>
+              </li>
+              <li>
+                Intake auf Vietnamesisch ausfüllen:
+                {' '}<a href={intakeViLink} className="underline">VN Intake</a>
+              </li>
+              <li>
+                In Pro Eingänge prüfen und als Akte anlegen:
+                {' '}<a href={proCasesLink} className="underline">Akte/Inbox</a>
+              </li>
+              <li>
+                In Recherche Erstfrage + 2 Folgefragen stellen, jede Antwort speichern:
+                {' '}<a href={proResearchLink} className="underline">Recherche</a>
+              </li>
+              <li>Mindestens eine Antwort als „geprüft“ markieren und PDF exportieren.</li>
+            </ol>
+          </div>
+
+          <div className="bg-[var(--color-bg-alt)] border border-[var(--color-border)] rounded-2xl p-6">
+            <h2 className="font-semibold text-lg mb-2">Feedback, das uns am meisten hilft</h2>
+            <p className="text-sm text-[var(--color-ink-soft)] mb-2">
+              Bitte kurz als Stichpunkte schicken:
+            </p>
+            <ul className="text-sm text-[var(--color-ink-soft)] space-y-1.5">
+              <li>• Was spart dir sofort Zeit (und wie viel pro Fall)?</li>
+              <li>• Was fehlt für echte tägliche Nutzung?</li>
+              <li>• Wo war etwas unklar oder zu langsam?</li>
+              <li>• Würdest du das deiner Assistenz geben? Wenn nein: warum?</li>
+              <li>• Welche 1-2 Features müssen als Nächstes kommen?</li>
+            </ul>
+          </div>
+        </section>
+      )}
 
       {/* Personal note */}
       <section className="max-w-2xl mx-auto px-4 pb-16">
