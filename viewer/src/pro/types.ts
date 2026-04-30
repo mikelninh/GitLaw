@@ -42,6 +42,17 @@ export interface MandantCase {
   fristBezeichnung?: string
   /** Optional Mandant:in email — used to prefill mailto: when sending letters. */
   mandantEmail?: string
+  /** Lightweight collaboration tasks for the case team. */
+  tasks?: CaseTask[]
+}
+
+export interface CaseTask {
+  id: string
+  title: string
+  done: boolean
+  assignee?: string
+  createdAt: string
+  completedAt?: string
 }
 
 export interface ResearchQuery {
@@ -92,6 +103,8 @@ export interface AuditEntry {
     | 'login'
     | 'case.create'
     | 'case.archive'
+    | 'case.task.add'
+    | 'case.task.done'
     | 'research.query'
     | 'letter.generate'
     | 'pdf.export'
@@ -105,6 +118,9 @@ export interface AuditEntry {
   tenantId?: string
   /** Optional role context for least-privilege tracing. */
   actorRole?: 'owner' | 'anwalt' | 'assistenz' | 'read_only'
+  /** Hash-chain reference for tamper-evident audit verification. */
+  prevHash?: string
+  hash?: string
 }
 
 /**

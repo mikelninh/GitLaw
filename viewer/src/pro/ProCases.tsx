@@ -14,6 +14,7 @@ import {
 import Fuse from 'fuse.js'
 import {
   archiveCase,
+  addCaseTask,
   createCase,
   getCase,
   getSettings,
@@ -23,6 +24,7 @@ import {
   listLetters,
   listResearch,
   markIntakeReviewed,
+  toggleCaseTask,
   updateCase,
 } from './store'
 import { exportAuditPDF } from './pdf'
@@ -458,6 +460,8 @@ export function ProCaseDetail() {
   const [showIntakeShare, setShowIntakeShare] = useState(false)
   const [copied, setCopied] = useState(false)
   const [confirmingArchive, setConfirmingArchive] = useState(false)
+  const [newTaskTitle, setNewTaskTitle] = useState('')
+  const [newTaskAssignee, setNewTaskAssignee] = useState('')
   const c = useMemo(() => (id ? getCase(id) : undefined), [id, tick])
   const research = useMemo(() => (id ? listResearch(id) : []), [id, tick])
   const letters = useMemo(() => (id ? listLetters(id) : []), [id, tick])
@@ -721,6 +725,68 @@ export function ProCaseDetail() {
               ))}
           </ul>
         )}
+      </section>
+
+      <section>
+        <div className="flex items-baseline justify-between mb-2 gap-3 flex-wrap">
+          <h2 className="font-semibold">Team-Aufgaben ({c.tasks?.length || 0})</h2>
+        </div>
+        <div className="bg-white border border-[var(--color-border)] rounded-2xl p-4 space-y-3">
+          <div className="flex gap-2 flex-wrap">
+            <input
+              type="text"
+              value={newTaskTitle}
+              onChange={e => setNewTaskTitle(e.target.value)}
+              placeholder="Neue Aufgabe, z. B. Bescheid nachfordern"
+              className="flex-1 min-w-[220px] border border-[var(--color-border)] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[var(--color-gold)]"
+            />
+            <input
+              type="text"
+              value={newTaskAssignee}
+              onChange={e => setNewTaskAssignee(e.target.value)}
+              placeholder="Zuständig (optional)"
+              className="w-48 border border-[var(--color-border)] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[var(--color-gold)]"
+            />
+            <button
+              onClick={() => {
+                if (!c || !newTaskTitle.trim()) return
+                addCaseTask(c.id, { title: newTaskTitle.trim(), assignee: newTaskAssignee.trim() || undefined })
+                setNewTaskTitle('')
+                setNewTaskAssignee('')
+                setTick(t => t + 1)
+              }}
+              className="text-sm bg-[var(--color-ink)] text-white rounded-lg px-3 py-2 hover:opacity-90"
+            >
+              Aufgabe anlegen
+            </button>
+          </div>
+          {!c.tasks || c.tasks.length === 0 ? (
+            <p className="text-sm text-[var(--color-ink-muted)]">Noch keine Team-Aufgaben für diese Akte.</p>
+          ) : (
+            <ul className="divide-y divide-[var(--color-border)]">
+              {c.tasks.map(task => (
+                <li key={task.id} className="py-2 flex items-center justify-between gap-3">
+                  <label className="flex items-center gap-3 min-w-0 flex-1">
+                    <input
+                      type="checkbox"
+                      checked={task.done}
+                      onChange={() => {
+                        toggleCaseTask(c.id, task.id)
+                        setTick(t => t + 1)
+                      }}
+                    />
+                    <span className={`text-sm ${task.done ? 'line-through text-[var(--color-ink-muted)]' : ''}`}>
+                      {task.title}
+                    </span>
+                  </label>
+                  <span className="text-xs text-[var(--color-ink-muted)] shrink-0">
+                    {task.assignee || 'offen'}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </section>
 
       <section>

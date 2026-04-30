@@ -13,6 +13,7 @@
 
 import type {
   AuditEntry,
+  CaseTask,
   CustomTemplate,
   GeneratedLetter,
   IntakeEntry,
@@ -69,6 +70,15 @@ function uid(): string {
   return (
     Date.now().toString(36) + Math.random().toString(36).slice(2, 8)
   )
+}
+
+function hashString(input: string): string {
+  let h = 2166136261
+  for (let i = 0; i < input.length; i++) {
+    h ^= input.charCodeAt(i)
+    h = Math.imul(h, 16777619)
+  }
+  return (h >>> 0).toString(16).padStart(8, '0')
 }
 
 // --- Settings ---
@@ -169,6 +179,7 @@ export function createCase(input: {
     researchIds: [],
     letterIds: [],
     status: 'aktiv',
+    tasks: [],
   }
   const all = readJSON<MandantCase[]>(KEY_CASES, [])
   all.push(c)
@@ -188,6 +199,42 @@ export function updateCase(id: string, patch: Partial<MandantCase>): void {
 export function archiveCase(id: string): void {
   updateCase(id, { status: 'archiviert' })
   log('case.archive', `id=${id}`, id)
+}
+
+export function addCaseTask(caseId: string, input: { title: string; assignee?: string }): CaseTask | null {
+  const all = readJSON<MandantCase[]>(KEY_CASES, [])
+  const idx = all.findIndex(c => c.id === caseId)
+  if (idx < 0) return null
+  const task: CaseTask = {
+    id: uid(),
+    title: input.title,
+    assignee: input.assignee,
+    done: false,
+    createdAt: new Date().toISOString(),
+  }
+  all[idx] = {
+    ...all[idx],
+    tasks: [...(all[idx].tasks || []), task],
+    updatedAt: new Date().toISOString(),
+  }
+  writeJSON(KEY_CASES, all)
+  log('case.task.add', `${task.title}${task.assignee ? ` -> ${task.assignee}` : ''}`, caseId)
+  return task
+}
+
+export function toggleCaseTask(caseId: string, taskId: string): void {
+  const all = readJSON<MandantCase[]>(KEY_CASES, [])
+  const idx = all.findIndex(c => c.id === caseId)
+  if (idx < 0) return
+  const tasks = (all[idx].tasks || []).map(t => {
+    if (t.id !== taskId) return t
+    const done = !t.done
+    return { ...t, done, completedAt: done ? new Date().toISOString() : undefined }
+  })
+  all[idx] = { ...all[idx], tasks, updatedAt: new Date().toISOString() }
+  writeJSON(KEY_CASES, all)
+  const task = tasks.find(t => t.id === taskId)
+  if (task?.done) log('case.task.done', task.title, caseId)
 }
 
 // --- Research ---
@@ -270,6 +317,8 @@ export function log(
 ): void {
   const settings = getSettings()
   const access = getAccessContext()
+  const all = readJSON<AuditEntry[]>(KEY_AUDIT, [])
+  const prevHash = all.length > 0 ? all[all.length - 1].hash : 'root'
   const entry: AuditEntry = {
     id: uid(),
     at: new Date().toISOString(),
@@ -279,12 +328,31 @@ export function log(
     action,
     detail,
     caseId,
+    prevHash,
   }
-  const all = readJSON<AuditEntry[]>(KEY_AUDIT, [])
+  entry.hash = hashString([
+    entry.id, entry.at, entry.actor, entry.action, entry.detail,
+    entry.caseId || '', entry.tenantId || '', entry.actorRole || '', prevHash,
+  ].join('|'))
   all.push(entry)
   // Cap at 1000 entries to avoid localStorage bloat. Real implementation
   // ships logs to a server.
   writeJSON(KEY_AUDIT, all.slice(-1000))
+}
+
+export function verifyAuditChain(entries: AuditEntry[]): { ok: boolean; brokenAt?: string } {
+  let prev = 'root'
+  for (const e of [...entries].sort((a, b) => a.at.localeCompare(b.at))) {
+    const expected = hashString([
+      e.id, e.at, e.actor, e.action, e.detail,
+      e.caseId || '', e.tenantId || '', e.actorRole || '', prev,
+    ].join('|'))
+    if (e.prevHash !== prev || e.hash !== expected) {
+      return { ok: false, brokenAt: e.id }
+    }
+    prev = e.hash || ''
+  }
+  return { ok: true }
 }
 
 // --- Intakes (Mandant:innen-Fragebogen-Eingänge) ---

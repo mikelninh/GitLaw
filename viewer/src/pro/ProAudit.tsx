@@ -3,8 +3,8 @@
  */
 
 import { useMemo, useState } from 'react'
-import { Download, Filter } from 'lucide-react'
-import { getSettings, listAudit } from './store'
+import { Download, Filter, ShieldAlert, ShieldCheck } from 'lucide-react'
+import { getSettings, listAudit, verifyAuditChain } from './store'
 import { exportAuditPDF } from './pdf'
 
 const ACTION_LABELS: Record<string, string> = {
@@ -22,6 +22,7 @@ export default function ProAudit() {
   const [filterAction, setFilterAction] = useState<string>('')
   const filtered = filterAction ? all.filter(a => a.action === filterAction) : all
   const actions = Array.from(new Set(all.map(a => a.action)))
+  const auditIntegrity = useMemo(() => verifyAuditChain(all), [all])
 
   function onExport() {
     exportAuditPDF({ settings: getSettings(), entries: filtered })
@@ -36,6 +37,14 @@ export default function ProAudit() {
             Lückenlose Aufzeichnung aller Aktionen — exportierbar für BHV-Versicherung
             und interne Compliance.
           </p>
+          <div className={`mt-2 inline-flex items-center gap-1.5 text-xs px-2 py-1 rounded border ${
+            auditIntegrity.ok
+              ? 'bg-green-50 text-green-800 border-green-200'
+              : 'bg-red-50 text-red-800 border-red-200'
+          }`}>
+            {auditIntegrity.ok ? <ShieldCheck className="w-3.5 h-3.5" /> : <ShieldAlert className="w-3.5 h-3.5" />}
+            {auditIntegrity.ok ? 'Hash-Kette intakt' : `Hash-Kette fehlerhaft bei ${auditIntegrity.brokenAt?.slice(0, 6) || 'unbekannt'}`}
+          </div>
         </div>
         {filtered.length > 0 && (
           <button
@@ -83,6 +92,7 @@ export default function ProAudit() {
               {a.actor && (
                 <div className="text-xs text-[var(--color-ink-muted)] mt-0.5">
                   durch: {a.actor}
+                  {a.actorRole && <span className="ml-2 uppercase">{a.actorRole}</span>}
                   {a.caseId && <span className="ml-2 font-mono">akte:{a.caseId.slice(0, 6)}</span>}
                 </div>
               )}
