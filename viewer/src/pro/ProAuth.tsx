@@ -14,9 +14,13 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { Scale } from 'lucide-react'
 import {
   getStoredInvite,
+  getAccessContext,
+  isSessionExpired,
   isInviteValid,
   log,
+  setAccessContext,
   setStoredInvite,
+  touchSessionActivity,
 } from './store'
 import { isDemoLoaded, loadDemoData, getPreset, DEMO_MARKER } from './demo-data'
 
@@ -29,6 +33,24 @@ export default function ProAuth({ children }: Props) {
   const [token, setToken] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [searchParams, setSearchParams] = useSearchParams()
+
+  function bootstrapAccess(tokenRaw: string) {
+    const token = tokenRaw.trim().toUpperCase()
+    const existing = getAccessContext()
+    if (existing && !isSessionExpired()) {
+      touchSessionActivity()
+      return
+    }
+    const map: Record<string, { tenantId: string; userId: string; role: 'owner' | 'anwalt' | 'assistenz' | 'read_only' }> = {
+      'BETA-NGUYEN': { tenantId: 'kanzlei-nguyen', userId: 'nguyen-owner', role: 'owner' },
+      'BETA-RUBIN': { tenantId: 'kanzlei-rubin', userId: 'rubin-owner', role: 'owner' },
+      'BETA-WERNER': { tenantId: 'kanzlei-gniosdorz', userId: 'werner-owner', role: 'owner' },
+      'BETA-JASMIN': { tenantId: 'kanzlei-gniosdorz', userId: 'jasmin-anwalt', role: 'anwalt' },
+    }
+    const fallback = { tenantId: 'beta-shared', userId: `beta-${token.toLowerCase()}`, role: 'anwalt' as const }
+    setAccessContext(map[token] || fallback)
+    touchSessionActivity()
+  }
 
   // Auto-unlock if a previously saved token is still valid, OR if a fresh
   // token is in the URL (#/pro?invite=BETA-…&preset=rubin)
@@ -44,6 +66,7 @@ export default function ProAuth({ children }: Props) {
 
     if (fromUrl && isInviteValid(fromUrl)) {
       setStoredInvite(fromUrl)
+      bootstrapAccess(fromUrl)
       log('login', `via URL token`)
 
       if (presetFromUrl && getPreset(presetFromUrl)) {
@@ -72,7 +95,8 @@ export default function ProAuth({ children }: Props) {
       return
     }
     const stored = getStoredInvite()
-    if (stored && isInviteValid(stored)) {
+    if (stored && isInviteValid(stored) && !isSessionExpired()) {
+      bootstrapAccess(stored)
       log('login', `via stored token`)
       setUnlocked(true)
     }
@@ -86,6 +110,7 @@ export default function ProAuth({ children }: Props) {
       return
     }
     setStoredInvite(token)
+    bootstrapAccess(token)
     log('login', `via form`)
     setUnlocked(true)
   }

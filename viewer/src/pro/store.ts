@@ -32,12 +32,21 @@ const KEY_INVITE = 'gitlaw.pro.invite.v1'
 const KEY_INTAKES = 'gitlaw.pro.intakes.v1'
 const KEY_CUSTOM_TEMPLATES = 'gitlaw.pro.customTemplates.v1'
 const KEY_PARAGRAPH_NOTES = 'gitlaw.pro.paragraphNotes.v1'
+const KEY_ACCESS_CTX = 'gitlaw.pro.access.v1'
+const KEY_LAST_ACTIVE = 'gitlaw.pro.lastActive.v1'
 
 const DEFAULT_SETTINGS: KanzleiSettings = {
   name: '',
   address: '',
   contact: '',
   anwaltName: '',
+}
+
+export interface AccessContext {
+  tenantId: string
+  userId: string
+  role: 'owner' | 'anwalt' | 'assistenz' | 'read_only'
+  email?: string
 }
 
 function readJSON<T>(key: string, fallback: T): T {
@@ -107,6 +116,29 @@ export function setStoredInvite(token: string): void {
 
 export function clearStoredInvite(): void {
   localStorage.removeItem(KEY_INVITE)
+  localStorage.removeItem(KEY_ACCESS_CTX)
+  localStorage.removeItem(KEY_LAST_ACTIVE)
+}
+
+export function getAccessContext(): AccessContext | null {
+  return readJSON<AccessContext | null>(KEY_ACCESS_CTX, null)
+}
+
+export function setAccessContext(ctx: AccessContext): void {
+  localStorage.setItem(KEY_ACCESS_CTX, JSON.stringify(ctx))
+  touchSessionActivity()
+}
+
+export function touchSessionActivity(): void {
+  localStorage.setItem(KEY_LAST_ACTIVE, String(Date.now()))
+}
+
+export function isSessionExpired(timeoutMinutes = 120): boolean {
+  const raw = localStorage.getItem(KEY_LAST_ACTIVE)
+  if (!raw) return true
+  const last = Number(raw)
+  if (!Number.isFinite(last)) return true
+  return Date.now() - last > timeoutMinutes * 60 * 1000
 }
 
 // --- Cases ---
@@ -237,10 +269,13 @@ export function log(
   caseId?: string,
 ): void {
   const settings = getSettings()
+  const access = getAccessContext()
   const entry: AuditEntry = {
     id: uid(),
     at: new Date().toISOString(),
     actor: settings.anwaltName || 'unbenannt',
+    tenantId: access?.tenantId,
+    actorRole: access?.role,
     action,
     detail,
     caseId,
@@ -394,5 +429,6 @@ export function eraseAllProData(): void {
     KEY_SETTINGS, KEY_CASES, KEY_RESEARCH, KEY_LETTERS,
     KEY_AUDIT, KEY_INVITE, KEY_INTAKES,
     KEY_CUSTOM_TEMPLATES, KEY_PARAGRAPH_NOTES,
+    KEY_ACCESS_CTX, KEY_LAST_ACTIVE,
   ].forEach(k => localStorage.removeItem(k))
 }

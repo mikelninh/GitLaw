@@ -8,7 +8,8 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { Scale, FolderOpen, FileText, Search, Settings, Shield, LogOut, ExternalLink, Inbox, Cloud, RefreshCw, AlertCircle, CheckCircle2, Upload } from 'lucide-react'
-import { clearStoredInvite, getSettings, listIntakes } from './store'
+import { clearStoredInvite, getAccessContext, getSettings, isSessionExpired, listIntakes, touchSessionActivity } from './store'
+import { hasRole, type ProRole } from './access'
 import {
   getSyncState,
   isCloudSyncEnabled,
@@ -20,18 +21,19 @@ import { eraseAllProData } from './store'
 import { loadDemoData, getPreset } from './demo-data'
 
 const NAV_ITEMS = [
-  { to: '/pro', icon: Scale, label: 'Übersicht', end: true, badge: 0 as const },
-  { to: '/pro/akten', icon: FolderOpen, label: 'Mandant:innen-Akten', badge: 0 as const },
-  { to: '/pro/eingaenge', icon: Inbox, label: 'Eingänge', badge: 'pending' as const },
-  { to: '/pro/recherche', icon: Search, label: 'Recherche', badge: 0 as const },
-  { to: '/pro/schreiben', icon: FileText, label: 'Schreiben', badge: 0 as const },
-  { to: '/pro/audit', icon: Shield, label: 'Audit-Log', badge: 0 as const },
-  { to: '/pro/import', icon: Upload, label: 'Akten-Import', badge: 0 as const },
-  { to: '/pro/einstellungen', icon: Settings, label: 'Einstellungen', badge: 0 as const },
+  { to: '/pro', icon: Scale, label: 'Übersicht', end: true, badge: 0 as const, minRole: 'read_only' as ProRole },
+  { to: '/pro/akten', icon: FolderOpen, label: 'Mandant:innen-Akten', badge: 0 as const, minRole: 'assistenz' as ProRole },
+  { to: '/pro/eingaenge', icon: Inbox, label: 'Eingänge', badge: 'pending' as const, minRole: 'assistenz' as ProRole },
+  { to: '/pro/recherche', icon: Search, label: 'Recherche', badge: 0 as const, minRole: 'assistenz' as ProRole },
+  { to: '/pro/schreiben', icon: FileText, label: 'Schreiben', badge: 0 as const, minRole: 'assistenz' as ProRole },
+  { to: '/pro/audit', icon: Shield, label: 'Audit-Log', badge: 0 as const, minRole: 'anwalt' as ProRole },
+  { to: '/pro/import', icon: Upload, label: 'Akten-Import', badge: 0 as const, minRole: 'assistenz' as ProRole },
+  { to: '/pro/einstellungen', icon: Settings, label: 'Einstellungen', badge: 0 as const, minRole: 'owner' as ProRole },
 ]
 
 export default function ProLayout() {
   const settings = getSettings()
+  const access = getAccessContext()
   const location = useLocation()
   const navigate = useNavigate()
   const [syncState, setSyncState] = useState(getSyncState())
@@ -67,6 +69,24 @@ export default function ProLayout() {
 
   // Sync-State subscription
   useEffect(() => subscribeSyncState(setSyncState), [])
+
+  // Session hygiene for beta: local idle timeout + activity touch.
+  useEffect(() => {
+    const onActivity = () => touchSessionActivity()
+    const events = ['click', 'keydown', 'mousemove', 'touchstart'] as const
+    events.forEach(e => window.addEventListener(e, onActivity, { passive: true }))
+    const id = window.setInterval(() => {
+      if (isSessionExpired(120)) {
+        clearStoredInvite()
+        window.location.hash = '#/pro'
+        window.location.reload()
+      }
+    }, 60 * 1000)
+    return () => {
+      window.clearInterval(id)
+      events.forEach(e => window.removeEventListener(e, onActivity))
+    }
+  }, [])
 
   // Auto-Pull beim ersten Mount, falls Cloud-Sync aktiv (für den anderen
   // Browser im Werner+Jasmin-Setup: jedes neue Tab zieht zuerst die
@@ -109,6 +129,11 @@ export default function ProLayout() {
             <span className="text-[var(--color-ink-soft)]">
               {settings.anwaltName || <span className="italic text-[var(--color-ink-muted)]">Profil unvollständig</span>}
             </span>
+            {access && (
+              <span className="text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200" title={`tenant=${access.tenantId}`}>
+                {access.role}
+              </span>
+            )}
             <button
               onClick={handleLogout}
               className="text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]"
@@ -150,7 +175,7 @@ export default function ProLayout() {
         {/* Sidebar */}
         <nav className="col-span-12 md:col-span-3 lg:col-span-2">
           <ul className="space-y-1">
-            {NAV_ITEMS.map(item => {
+            {NAV_ITEMS.filter(item => hasRole(item.minRole)).map(item => {
               const showBadge = item.badge === 'pending' && pendingIntakes > 0
               return (
                 <li key={item.to}>

@@ -16,6 +16,7 @@ import ProTemplates from './ProTemplates'
 import ProAudit from './ProAudit'
 import ProEingaenge from './ProEingaenge'
 import ProImport from './ProImport'
+import { canAccessRoute } from './access'
 // Welcome pages + Pricing live on top-level (main.tsx) for short URLs.
 // Don't import them here.
 
@@ -25,17 +26,22 @@ export default function ProApp() {
       <Routes>
         <Route path="/" element={<ProLayout />}>
           <Route index element={<ProDashboard />} />
-          <Route path="akten" element={<ProCasesList />} />
-          <Route path="akten/:id" element={<ProCaseDetail />} />
-          <Route path="recherche" element={<ProResearch />} />
-          <Route path="schreiben" element={<ProTemplates />} />
-          <Route path="eingaenge" element={<ProEingaenge />} />
-          <Route path="audit" element={<ProAudit />} />
-          <Route path="import" element={<ProImport />} />
-          <Route path="einstellungen" element={<ProSettings />} />
+          <Route path="akten" element={<Guarded path="/pro/akten"><ProCasesList /></Guarded>} />
+          <Route path="akten/:id" element={<Guarded path="/pro/akten"><ProCaseDetail /></Guarded>} />
+          <Route path="recherche" element={<Guarded path="/pro/recherche"><ProResearch /></Guarded>} />
+          <Route path="schreiben" element={<Guarded path="/pro/schreiben"><ProTemplates /></Guarded>} />
+          <Route path="eingaenge" element={<Guarded path="/pro/eingaenge"><ProEingaenge /></Guarded>} />
+          <Route path="audit" element={<Guarded path="/pro/audit"><ProAudit /></Guarded>} />
+          <Route path="import" element={<Guarded path="/pro/import"><ProImport /></Guarded>} />
+          <Route path="einstellungen" element={<Guarded path="/pro/einstellungen"><ProSettings /></Guarded>} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </ProAuth>
   )
+}
+
+function Guarded({ path, children }: { path: string; children: React.ReactNode }) {
+  if (!canAccessRoute(path)) return <Navigate to="/pro" replace />
+  return <>{children}</>
 }

@@ -101,6 +101,10 @@ export interface AuditEntry {
   detail: string
   /** Optional case context. */
   caseId?: string
+  /** Optional tenant context for future server-side audit correlation. */
+  tenantId?: string
+  /** Optional role context for least-privilege tracing. */
+  actorRole?: 'owner' | 'anwalt' | 'assistenz' | 'read_only'
 }
 
 /**
