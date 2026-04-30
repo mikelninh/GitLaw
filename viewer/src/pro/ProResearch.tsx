@@ -26,6 +26,13 @@ import { anonymize, hasPII, isDsgvoModusActive } from './anonymize'
 import CitationDrawer from './CitationDrawer'
 import type { Citation, ResearchQuery } from './types'
 
+interface ResearchTurn {
+  question: string
+  answer: string
+  citations: Citation[]
+  savedItem: ResearchQuery | null
+}
+
 export default function ProResearch() {
   const [params, setParams] = useSearchParams()
   const initialCaseId = params.get('case') || ''
@@ -39,6 +46,7 @@ export default function ProResearch() {
   const [error, setError] = useState<string | null>(null)
   const [openCitation, setOpenCitation] = useState<Citation | null>(null)
   const [showPrivacyGate, setShowPrivacyGate] = useState(false)
+  const [history, setHistory] = useState<ResearchTurn[]>([])
 
   useEffect(() => {
     if (initialCaseId) setSelectedCaseId(initialCaseId)
@@ -53,6 +61,12 @@ export default function ProResearch() {
     }
     setLoading(true)
     setError(null)
+    if (answer) {
+      setHistory(prev => [
+        ...prev,
+        { question, answer, citations, savedItem },
+      ])
+    }
     setAnswer('')
     setCitations([])
     setSavedItem(null)
@@ -70,7 +84,13 @@ export default function ProResearch() {
       }
     }
     try {
-      const { antwort, zitate } = await proAsk(questionForAi)
+      const context = history.slice(-2).map((t, i) => (
+        `Vorfrage ${i + 1}: ${t.question}\nVorantwort ${i + 1}: ${t.answer}`
+      )).join('\n\n')
+      const prompt = context
+        ? `${context}\n\nAktuelle Frage: ${questionForAi}`
+        : questionForAi
+      const { antwort, zitate } = await proAsk(prompt)
       setAnswer(antwort)
       const cites = await verifyAllCitations(zitate)
       setCitations(cites)
@@ -119,6 +139,36 @@ export default function ProResearch() {
       reviewed: false,
     })
     setSavedItem(saved)
+  }
+
+  function onSaveHistory(index: number) {
+    const t = history[index]
+    if (!t || t.savedItem) return
+    const saved = saveResearch({
+      caseId: selectedCaseId || undefined,
+      question: t.question,
+      answer: t.answer,
+      citations: t.citations,
+      reviewed: false,
+    })
+    setHistory(prev => prev.map((x, i) => (i === index ? { ...x, savedItem: saved } : x)))
+  }
+
+  function onMarkReviewedHistory(index: number) {
+    const t = history[index]
+    if (!t?.savedItem) return
+    markResearchReviewed(t.savedItem.id)
+    setHistory(prev => prev.map((x, i) => (
+      i === index && x.savedItem ? { ...x, savedItem: { ...x.savedItem, reviewed: true } } : x
+    )))
+  }
+
+  function onExportHistoryPDF(index: number) {
+    const t = history[index]
+    if (!t?.savedItem) return
+    const settings = getSettings()
+    const caseInfo = t.savedItem.caseId ? getCase(t.savedItem.caseId) : undefined
+    exportResearchPDF({ settings, research: t.savedItem, caseInfo })
   }
 
   function onMarkReviewed() {
@@ -247,6 +297,60 @@ export default function ProResearch() {
           <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-sm text-red-800">{error}</div>
         )}
 
+        {history.length > 0 && (
+          <section className="bg-white border border-[var(--color-border)] rounded-2xl p-5 space-y-4">
+            <div className="flex items-center justify-between gap-3">
+              <h2 className="font-semibold text-sm uppercase tracking-wide text-[var(--color-ink-muted)]">
+                Verlauf ({history.length})
+              </h2>
+              <button
+                type="button"
+                onClick={() => setHistory([])}
+                className="text-xs text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]"
+              >
+                Verlauf leeren
+              </button>
+            </div>
+            <ul className="space-y-3">
+              {history.map((t, i) => (
+                <li key={i} className="border border-[var(--color-border)] rounded-xl p-3">
+                  <p className="text-sm font-medium mb-1">{t.question}</p>
+                  <p className="text-xs text-[var(--color-ink-soft)] line-clamp-3 whitespace-pre-wrap">{t.answer}</p>
+                  <div className="mt-2 flex flex-wrap items-center gap-2">
+                    {!t.savedItem && (
+                      <button
+                        type="button"
+                        onClick={() => onSaveHistory(i)}
+                        className="inline-flex items-center gap-1.5 text-xs bg-[var(--color-ink)] text-white rounded-lg px-2 py-1"
+                      >
+                        <Save className="w-3.5 h-3.5" /> Speichern
+                      </button>
+                    )}
+                    {t.savedItem && !t.savedItem.reviewed && (
+                      <button
+                        type="button"
+                        onClick={() => onMarkReviewedHistory(i)}
+                        className="inline-flex items-center gap-1.5 text-xs bg-green-700 text-white rounded-lg px-2 py-1"
+                      >
+                        <CheckCircle2 className="w-3.5 h-3.5" /> Als geprüft markieren
+                      </button>
+                    )}
+                    {t.savedItem && (
+                      <button
+                        type="button"
+                        onClick={() => onExportHistoryPDF(i)}
+                        className="inline-flex items-center gap-1.5 text-xs bg-white border border-[var(--color-border)] rounded-lg px-2 py-1"
+                      >
+                        <Download className="w-3.5 h-3.5" /> PDF
+                      </button>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
         {showPrivacyGate && (
           <div className="bg-amber-50 border-2 border-amber-300 rounded-2xl p-4 space-y-3">
             <p className="text-sm text-amber-900 font-semibold">
@@ -370,6 +474,19 @@ export default function ProResearch() {
             </section>
 
             <footer className="flex flex-wrap items-center gap-3 pt-4 border-t border-[var(--color-border)]">
+              <button
+                type="button"
+                onClick={() => {
+                  const q = question.trim()
+                  const follow = answer
+                    ? `${q ? `${q}\n` : ''}Bitte vertiefe die vorige Antwort und nenne Gegenargumente, Risiken und prozesstaktische Optionen.`
+                    : 'Bitte vertiefe die vorige Antwort und nenne Gegenargumente, Risiken und prozesstaktische Optionen.'
+                  setQuestion(follow)
+                }}
+                className="inline-flex items-center gap-1.5 text-sm bg-white border border-[var(--color-border)] rounded-lg px-3 py-1.5 hover:border-[var(--color-gold)]"
+              >
+                Vertiefungsfrage vorbereiten
+              </button>
               {!savedItem && (
                 <button
                   onClick={onSave}

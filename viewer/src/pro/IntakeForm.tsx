@@ -277,7 +277,7 @@ export default function IntakeForm() {
           </FormField>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <FormField label="Dringlichkeit">
+            <FormField label={t.fieldUrgency}>
               <select
                 value={dringlichkeit}
                 onChange={e => setDringlichkeit(e.target.value as typeof dringlichkeit)}
@@ -289,21 +289,21 @@ export default function IntakeForm() {
                 <option value="akut">akut</option>
               </select>
             </FormField>
-            <FormField label="Frist bekannt?">
+            <FormField label={t.fieldDeadlineKnown}>
               <label className="inline-flex items-center gap-2 border border-[var(--color-border)] rounded-lg px-3 py-2">
                 <input
                   type="checkbox"
                   checked={fristBekannt}
                   onChange={e => setFristBekannt(e.target.checked)}
                 />
-                <span className="text-sm">Ja, es gibt eine Frist / einen Termin</span>
+                <span className="text-sm">{t.fieldDeadlineKnownYes}</span>
               </label>
             </FormField>
           </div>
 
           <FormField
-            label="Fotos / Dateien (optional)"
-            hint="Nur Metadaten werden gespeichert, keine Datei-Uploads in dieser Beta."
+            label={t.fieldAttachments}
+            hint={t.fieldAttachmentsHint}
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-2">
               <select
@@ -311,23 +311,23 @@ export default function IntakeForm() {
                 onChange={e => setAttachmentCategory(e.target.value as typeof attachmentCategory)}
                 className="w-full border border-[var(--color-border)] rounded-lg px-3 py-2 bg-white focus:outline-none focus:border-[var(--color-gold)] text-sm"
               >
-                <option value="sonstiges">Kategorie: Sonstiges</option>
-                <option value="foto">Kategorie: Foto</option>
-                <option value="bescheid">Kategorie: Bescheid</option>
-                <option value="vertrag">Kategorie: Vertrag</option>
-                <option value="chat">Kategorie: Chat/WhatsApp</option>
+                <option value="sonstiges">{t.attachmentCategoryLabel}: {t.categoryOther}</option>
+                <option value="foto">{t.attachmentCategoryLabel}: {t.categoryPhoto}</option>
+                <option value="bescheid">{t.attachmentCategoryLabel}: {t.categoryNotice}</option>
+                <option value="vertrag">{t.attachmentCategoryLabel}: {t.categoryContract}</option>
+                <option value="chat">{t.attachmentCategoryLabel}: {t.categoryChat}</option>
               </select>
               <select
                 value={attachmentLanguage}
                 onChange={e => setAttachmentLanguage(e.target.value as typeof attachmentLanguage)}
                 className="w-full border border-[var(--color-border)] rounded-lg px-3 py-2 bg-white focus:outline-none focus:border-[var(--color-gold)] text-sm"
               >
-                <option value="de">Sprache: Deutsch</option>
-                <option value="vi">Sprache: Vietnamesisch</option>
-                <option value="en">Sprache: Englisch</option>
-                <option value="tr">Sprache: Türkisch</option>
-                <option value="ar">Sprache: Arabisch</option>
-                <option value="other">Sprache: Andere</option>
+                <option value="de">{t.attachmentLanguageLabel}: {t.langDe}</option>
+                <option value="vi">{t.attachmentLanguageLabel}: {t.langVi}</option>
+                <option value="en">{t.attachmentLanguageLabel}: {t.langEn}</option>
+                <option value="tr">{t.attachmentLanguageLabel}: {t.langTr}</option>
+                <option value="ar">{t.attachmentLanguageLabel}: {t.langAr}</option>
+                <option value="other">{t.attachmentLanguageLabel}: {t.langOther}</option>
               </select>
             </div>
             <input

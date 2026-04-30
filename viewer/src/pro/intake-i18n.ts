@@ -35,6 +35,24 @@ interface IntakeStrings {
   fieldConcern: string
   fieldConcernHint: string
   fieldOutcome: string
+  fieldUrgency: string
+  fieldDeadlineKnown: string
+  fieldDeadlineKnownYes: string
+  fieldAttachments: string
+  fieldAttachmentsHint: string
+  attachmentCategoryLabel: string
+  attachmentLanguageLabel: string
+  categoryOther: string
+  categoryPhoto: string
+  categoryNotice: string
+  categoryContract: string
+  categoryChat: string
+  langDe: string
+  langVi: string
+  langEn: string
+  langTr: string
+  langAr: string
+  langOther: string
   consent: string
   submit: string
   thankYouTitle: string
@@ -59,6 +77,24 @@ const STRINGS: Record<IntakeLang, IntakeStrings> = {
     fieldConcern: 'Worum geht es?',
     fieldConcernHint: 'Bitte schildern Sie Ihr Anliegen in eigenen Worten. 2-5 Sätze reichen.',
     fieldOutcome: 'Was möchten Sie konkret erreichen? (optional)',
+    fieldUrgency: 'Dringlichkeit',
+    fieldDeadlineKnown: 'Frist bekannt?',
+    fieldDeadlineKnownYes: 'Ja, es gibt eine Frist / einen Termin',
+    fieldAttachments: 'Fotos / Dateien (optional)',
+    fieldAttachmentsHint: 'Nur Metadaten werden gespeichert, keine Datei-Uploads in dieser Beta.',
+    attachmentCategoryLabel: 'Kategorie',
+    attachmentLanguageLabel: 'Sprache',
+    categoryOther: 'Sonstiges',
+    categoryPhoto: 'Foto',
+    categoryNotice: 'Bescheid',
+    categoryContract: 'Vertrag',
+    categoryChat: 'Chat/WhatsApp',
+    langDe: 'Deutsch',
+    langVi: 'Vietnamesisch',
+    langEn: 'Englisch',
+    langTr: 'Türkisch',
+    langAr: 'Arabisch',
+    langOther: 'Andere',
     consent: 'Ich willige ein, dass meine Angaben an die Kanzlei übermittelt und zur Bearbeitung meines Anliegens gespeichert werden dürfen. Eine Einwilligung zur Mandatierung ist damit nicht verbunden.',
     submit: 'Angaben übermitteln',
     thankYouTitle: 'Vielen Dank für Ihre Angaben',
@@ -83,6 +119,24 @@ const STRINGS: Record<IntakeLang, IntakeStrings> = {
     fieldConcern: 'Bạn cần tư vấn về vấn đề gì?',
     fieldConcernHint: 'Vui lòng mô tả vấn đề của bạn bằng lời của mình. 2-5 câu là đủ.',
     fieldOutcome: 'Bạn mong muốn đạt được điều gì cụ thể? (không bắt buộc)',
+    fieldUrgency: 'Mức độ khẩn cấp',
+    fieldDeadlineKnown: 'Có thời hạn không?',
+    fieldDeadlineKnownYes: 'Có, có thời hạn / lịch hẹn',
+    fieldAttachments: 'Ảnh / tệp đính kèm (không bắt buộc)',
+    fieldAttachmentsHint: 'Trong bản beta này chỉ lưu siêu dữ liệu, chưa tải tệp thực lên.',
+    attachmentCategoryLabel: 'Loại tài liệu',
+    attachmentLanguageLabel: 'Ngôn ngữ',
+    categoryOther: 'Khác',
+    categoryPhoto: 'Ảnh',
+    categoryNotice: 'Thông báo / quyết định',
+    categoryContract: 'Hợp đồng',
+    categoryChat: 'Tin nhắn / WhatsApp',
+    langDe: 'Tiếng Đức',
+    langVi: 'Tiếng Việt',
+    langEn: 'Tiếng Anh',
+    langTr: 'Tiếng Thổ Nhĩ Kỳ',
+    langAr: 'Tiếng Ả Rập',
+    langOther: 'Ngôn ngữ khác',
     consent: 'Tôi đồng ý rằng thông tin của tôi được gửi đến văn phòng luật sư và được lưu trữ để xử lý yêu cầu của tôi. Việc này chưa cấu thành ủy quyền chính thức.',
     submit: 'Gửi thông tin',
     thankYouTitle: 'Cảm ơn bạn đã cung cấp thông tin',
@@ -107,6 +161,24 @@ const STRINGS: Record<IntakeLang, IntakeStrings> = {
     fieldConcern: 'Konunuz nedir?',
     fieldConcernHint: 'Lütfen sorununuzu kendi sözcüklerinizle anlatın. 2-5 cümle yeterlidir.',
     fieldOutcome: 'Somut olarak neyi başarmak istiyorsunuz? (isteğe bağlı)',
+    fieldUrgency: 'Aciliyet',
+    fieldDeadlineKnown: 'Süre biliniyor mu?',
+    fieldDeadlineKnownYes: 'Evet, bir süre / randevu var',
+    fieldAttachments: 'Fotoğraf / dosya (isteğe bağlı)',
+    fieldAttachmentsHint: 'Bu beta sürümde yalnızca meta veriler kaydedilir, gerçek dosya yüklenmez.',
+    attachmentCategoryLabel: 'Kategori',
+    attachmentLanguageLabel: 'Dil',
+    categoryOther: 'Diğer',
+    categoryPhoto: 'Fotoğraf',
+    categoryNotice: 'Tebligat / karar',
+    categoryContract: 'Sözleşme',
+    categoryChat: 'Mesaj / WhatsApp',
+    langDe: 'Almanca',
+    langVi: 'Vietnamca',
+    langEn: 'İngilizce',
+    langTr: 'Türkçe',
+    langAr: 'Arapça',
+    langOther: 'Diğer dil',
     consent: 'Bilgilerimin avukatlık bürosuna iletilmesine ve talebimin işlenmesi için saklanmasına izin veriyorum. Bu, vekalet vermek anlamına gelmez.',
     submit: 'Bilgileri gönder',
     thankYouTitle: 'Bilgileriniz için teşekkürler',
@@ -131,6 +203,24 @@ const STRINGS: Record<IntakeLang, IntakeStrings> = {
     fieldConcern: 'ما هو موضوعك؟',
     fieldConcernHint: 'يرجى وصف القضية بكلماتك الخاصة. 2-5 جمل تكفي.',
     fieldOutcome: 'ما الذي تريد تحقيقه بشكل ملموس؟ (اختياري)',
+    fieldUrgency: 'درجة الاستعجال',
+    fieldDeadlineKnown: 'هل توجد مهلة؟',
+    fieldDeadlineKnownYes: 'نعم، توجد مهلة / موعد',
+    fieldAttachments: 'صور / ملفات (اختياري)',
+    fieldAttachmentsHint: 'في هذه النسخة التجريبية يتم حفظ البيانات الوصفية فقط، دون رفع الملفات فعلياً.',
+    attachmentCategoryLabel: 'الفئة',
+    attachmentLanguageLabel: 'اللغة',
+    categoryOther: 'أخرى',
+    categoryPhoto: 'صورة',
+    categoryNotice: 'إشعار / قرار',
+    categoryContract: 'عقد',
+    categoryChat: 'دردشة / واتساب',
+    langDe: 'الألمانية',
+    langVi: 'الفيتنامية',
+    langEn: 'الإنجليزية',
+    langTr: 'التركية',
+    langAr: 'العربية',
+    langOther: 'لغة أخرى',
     consent: 'أوافق على إرسال بياناتي إلى مكتب المحاماة وتخزينها لمعالجة طلبي. هذا لا يشكل توكيلاً قانونياً.',
     submit: 'إرسال البيانات',
     thankYouTitle: 'شكراً لتقديم بياناتك',
@@ -155,6 +245,24 @@ const STRINGS: Record<IntakeLang, IntakeStrings> = {
     fieldConcern: 'What is your matter about?',
     fieldConcernHint: 'Please describe your matter in your own words. 2-5 sentences are enough.',
     fieldOutcome: 'What specifically would you like to achieve? (optional)',
+    fieldUrgency: 'Urgency',
+    fieldDeadlineKnown: 'Known deadline?',
+    fieldDeadlineKnownYes: 'Yes, there is a deadline / appointment',
+    fieldAttachments: 'Photos / files (optional)',
+    fieldAttachmentsHint: 'In this beta, only metadata is stored; no file upload yet.',
+    attachmentCategoryLabel: 'Category',
+    attachmentLanguageLabel: 'Language',
+    categoryOther: 'Other',
+    categoryPhoto: 'Photo',
+    categoryNotice: 'Official notice',
+    categoryContract: 'Contract',
+    categoryChat: 'Chat/WhatsApp',
+    langDe: 'German',
+    langVi: 'Vietnamese',
+    langEn: 'English',
+    langTr: 'Turkish',
+    langAr: 'Arabic',
+    langOther: 'Other',
     consent: 'I consent that my data will be transmitted to the law firm and stored for processing my request. This does not constitute a formal mandate.',
     submit: 'Submit',
     thankYouTitle: 'Thank you for your information',
