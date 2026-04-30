@@ -54,6 +54,7 @@ export default function ProTemplates() {
   const [tick, setTick] = useState(0)
   const [editingCustom, setEditingCustom] = useState<CustomTemplate | 'new' | null>(null)
   const [confirmingDelete, setConfirmingDelete] = useState<string | null>(null)
+  const [closingStyle, setClosingStyle] = useState<'kollegial' | 'freundlich' | 'neutral'>('kollegial')
 
   const customTemplates = useMemo(() => listCustomTemplates(), [tick, editingCustom])
   const linkedLetter = selectedCaseId ? listLetters(selectedCaseId).find(l => l.id === refLetterId) : undefined
@@ -64,6 +65,7 @@ export default function ProTemplates() {
       : activeTemplate?.kind === 'custom'
         ? renderCustom(activeTemplate.t, fields)
         : ''
+  const bodyWithClosing = applyClosing(renderedBody, closingStyle)
 
   function pickBuiltin(id: string) {
     const t = getAnyBuiltinTemplate(id)
@@ -93,7 +95,7 @@ export default function ProTemplates() {
       templateId: t.id,
       templateTitle: t.title,
       fields,
-      body: renderedBody,
+      body: bodyWithClosing,
     })
     setSavedLetter(saved)
   }
@@ -107,7 +109,7 @@ export default function ProTemplates() {
 
   async function onCopy() {
     try {
-      await navigator.clipboard.writeText(renderedBody)
+      await navigator.clipboard.writeText(bodyWithClosing)
       setCopyOk(true)
       setTimeout(() => setCopyOk(false), 2000)
     } catch { /* ignore */ }
@@ -122,10 +124,10 @@ export default function ProTemplates() {
     const subject = subjectParts.join(' — ')
     const maxBodyLen = 1500
     const body =
-      renderedBody.length > maxBodyLen
-        ? renderedBody.slice(0, maxBodyLen) +
+      bodyWithClosing.length > maxBodyLen
+        ? bodyWithClosing.slice(0, maxBodyLen) +
           '\n\n[…verkürzt — bitte vollständigen Brief als PDF-Anhang mitsenden]'
-        : renderedBody
+        : bodyWithClosing
     window.location.href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
   }
 
@@ -387,17 +389,44 @@ export default function ProTemplates() {
                   className="w-full border border-[var(--color-border)] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[var(--color-gold)]"
                 />
               )}
+              {f.id === 'rechtsgrundlage' && (
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                  {['§ 147 StPO', '§ 406e StPO', '§ 29 VwVfG', '§ 25 SGB X'].map(opt => (
+                    <button
+                      key={opt}
+                      type="button"
+                      onClick={() => setFields({ ...fields, rechtsgrundlage: opt })}
+                      className="text-[11px] px-2 py-1 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-alt)] hover:border-[var(--color-gold)] hover:bg-white"
+                    >
+                      {opt}
+                    </button>
+                  ))}
+                </div>
+              )}
               {'hint' in f && f.hint && (
                 <p className="text-xs text-[var(--color-ink-muted)] mt-1 italic">{f.hint}</p>
               )}
             </div>
           ))}
+
+          <div className="pt-2 border-t border-[var(--color-border)]">
+            <label className="block text-xs font-medium mb-1">Schlussformel</label>
+            <select
+              value={closingStyle}
+              onChange={e => setClosingStyle(e.target.value as typeof closingStyle)}
+              className="w-full border border-[var(--color-border)] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[var(--color-gold)]"
+            >
+              <option value="kollegial">Mit freundlichen kollegialen Grüßen</option>
+              <option value="freundlich">Mit freundlichen Grüßen</option>
+              <option value="neutral">Beste Grüße</option>
+            </select>
+          </div>
         </form>
 
         <div className="bg-white border border-[var(--color-border)] rounded-2xl p-5 space-y-3">
           <h2 className="font-semibold text-sm uppercase tracking-wide text-[var(--color-ink-muted)]">Vorschau</h2>
           <pre className="text-xs leading-relaxed whitespace-pre-wrap font-sans bg-[var(--color-bg-alt)] border border-[var(--color-border)] rounded-lg p-3 max-h-[500px] overflow-y-auto">
-            {renderedBody}
+            {bodyWithClosing}
           </pre>
           <div className="flex flex-wrap items-center gap-2 pt-2">
             <button onClick={onCopy} className="inline-flex items-center gap-1.5 text-sm bg-white border border-[var(--color-border)] rounded-lg px-3 py-1.5 hover:border-[var(--color-gold)]">
@@ -424,6 +453,16 @@ export default function ProTemplates() {
       </div>
     </div>
   )
+}
+
+function applyClosing(body: string, style: 'kollegial' | 'freundlich' | 'neutral'): string {
+  const replacement =
+    style === 'freundlich'
+      ? 'Mit freundlichen Grüßen'
+      : style === 'neutral'
+        ? 'Beste Grüße'
+        : 'Mit freundlichen kollegialen Grüßen'
+  return body.replace(/Mit freundlichen(?: kollegialen)? Grüßen/g, replacement)
 }
 
 function CustomTemplateEditor({
