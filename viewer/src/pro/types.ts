@@ -44,6 +44,8 @@ export interface MandantCase {
   mandantEmail?: string
   /** Lightweight collaboration tasks for the case team. */
   tasks?: CaseTask[]
+  /** Lightweight document-processing jobs (OCR/translation) attached to the case. */
+  documentJobs?: DocumentJob[]
 }
 
 export interface CaseTask {
@@ -105,6 +107,8 @@ export interface AuditEntry {
     | 'case.archive'
     | 'case.task.add'
     | 'case.task.done'
+    | 'doc.ocr.queue'
+    | 'doc.translate.queue'
     | 'research.query'
     | 'letter.generate'
     | 'pdf.export'
@@ -189,6 +193,18 @@ export interface IntakeAttachmentMeta {
   category?: 'foto' | 'bescheid' | 'vertrag' | 'chat' | 'sonstiges'
   /** Optional language hint for OCR/translation pipeline planning. */
   languageHint?: 'de' | 'vi' | 'en' | 'tr' | 'ar' | 'other'
+}
+
+export interface DocumentJob {
+  id: string
+  attachmentInternalName: string
+  type: 'ocr' | 'translate'
+  status: 'queued' | 'processing' | 'done'
+  requestedAt: string
+  requestedBy?: string
+  sourceLanguage?: IntakeAttachmentMeta['languageHint']
+  targetLanguage?: 'de'
+  note?: string
 }
 
 /** Simple wrapper for paragraph lookup result. */

@@ -24,6 +24,7 @@ import {
   listLetters,
   listResearch,
   markIntakeReviewed,
+  queueDocumentJob,
   toggleCaseTask,
   updateCase,
 } from './store'
@@ -714,13 +715,66 @@ export function ProCaseDetail() {
               .sort((x, y) => y.i.submittedAt.localeCompare(x.i.submittedAt))
               .map(({ i, a }) => (
                 <li key={`${i.id}-${a.internalName}`} className="px-4 py-2 text-xs flex items-center justify-between gap-3">
-                  <span className="truncate">
-                    <span className="font-mono mr-2">{a.internalName}</span>
-                    von {i.name} · {a.category || 'sonstiges'} · {a.languageHint || 'de'}
-                  </span>
-                  <span className="text-[var(--color-ink-muted)] shrink-0">
-                    {new Date(i.submittedAt).toLocaleString('de-DE')}
-                  </span>
+                  <div className="min-w-0 flex-1">
+                    <span className="truncate block">
+                      <span className="font-mono mr-2">{a.internalName}</span>
+                      von {i.name} · {a.category || 'sonstiges'} · {a.languageHint || 'de'}
+                    </span>
+                    {c.documentJobs && c.documentJobs.filter(j => j.attachmentInternalName === a.internalName).length > 0 && (
+                      <div className="mt-1 flex flex-wrap gap-1">
+                        {c.documentJobs
+                          .filter(j => j.attachmentInternalName === a.internalName)
+                          .map(job => (
+                            <span
+                              key={job.id}
+                              className="inline-flex items-center rounded border border-slate-200 bg-slate-50 px-1.5 py-0.5 text-[10px] uppercase text-slate-700"
+                            >
+                              {job.type} · {job.status}
+                            </span>
+                          ))}
+                      </div>
+                    )}
+                  </div>
+                  <div className="shrink-0 text-right">
+                    <span className="text-[var(--color-ink-muted)] block">
+                      {new Date(i.submittedAt).toLocaleString('de-DE')}
+                    </span>
+                    <div className="mt-1 flex gap-1 justify-end">
+                      <button
+                        onClick={() => {
+                          if (!c) return
+                          queueDocumentJob(c.id, {
+                            attachmentInternalName: a.internalName,
+                            type: 'ocr',
+                            sourceLanguage: a.languageHint,
+                            note: 'Beta queue',
+                          })
+                          setTick(t => t + 1)
+                        }}
+                        className="rounded border border-[var(--color-border)] px-1.5 py-0.5 hover:border-[var(--color-gold)]"
+                      >
+                        OCR
+                      </button>
+                      {a.languageHint && a.languageHint !== 'de' && (
+                        <button
+                          onClick={() => {
+                            if (!c) return
+                            queueDocumentJob(c.id, {
+                              attachmentInternalName: a.internalName,
+                              type: 'translate',
+                              sourceLanguage: a.languageHint,
+                              targetLanguage: 'de',
+                              note: 'Maschinelle Uebersetzung vorbereiten',
+                            })
+                            setTick(t => t + 1)
+                          }}
+                          className="rounded border border-[var(--color-border)] px-1.5 py-0.5 hover:border-[var(--color-gold)]"
+                        >
+                          VI/EN/TR/AR → DE
+                        </button>
+                      )}
+                    </div>
+                  </div>
                 </li>
               ))}
           </ul>

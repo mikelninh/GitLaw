@@ -15,6 +15,7 @@ import type {
   AuditEntry,
   CaseTask,
   CustomTemplate,
+  DocumentJob,
   GeneratedLetter,
   IntakeEntry,
   KanzleiSettings,
@@ -235,6 +236,42 @@ export function toggleCaseTask(caseId: string, taskId: string): void {
   writeJSON(KEY_CASES, all)
   const task = tasks.find(t => t.id === taskId)
   if (task?.done) log('case.task.done', task.title, caseId)
+}
+
+export function queueDocumentJob(caseId: string, input: {
+  attachmentInternalName: string
+  type: 'ocr' | 'translate'
+  sourceLanguage?: DocumentJob['sourceLanguage']
+  targetLanguage?: 'de'
+  note?: string
+}): DocumentJob | null {
+  const all = readJSON<MandantCase[]>(KEY_CASES, [])
+  const idx = all.findIndex(c => c.id === caseId)
+  if (idx < 0) return null
+  const settings = getSettings()
+  const job: DocumentJob = {
+    id: uid(),
+    attachmentInternalName: input.attachmentInternalName,
+    type: input.type,
+    status: 'queued',
+    requestedAt: new Date().toISOString(),
+    requestedBy: settings.anwaltName || undefined,
+    sourceLanguage: input.sourceLanguage,
+    targetLanguage: input.targetLanguage,
+    note: input.note,
+  }
+  all[idx] = {
+    ...all[idx],
+    documentJobs: [...(all[idx].documentJobs || []), job],
+    updatedAt: new Date().toISOString(),
+  }
+  writeJSON(KEY_CASES, all)
+  log(
+    input.type === 'ocr' ? 'doc.ocr.queue' : 'doc.translate.queue',
+    `${job.attachmentInternalName}${job.sourceLanguage ? ` [${job.sourceLanguage}]` : ''}`,
+    caseId,
+  )
+  return job
 }
 
 // --- Research ---

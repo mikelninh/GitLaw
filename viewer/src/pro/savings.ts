@@ -27,6 +27,8 @@ const MINUTES_PER_ACTION: Record<AuditEntry['action'], number> = {
   'case.archive': 0,
   'case.task.add': 2,
   'case.task.done': 1,
+  'doc.ocr.queue': 4,
+  'doc.translate.queue': 6,
   'settings.update': 0,
   'login': 0,
 }
