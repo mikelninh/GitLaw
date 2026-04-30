@@ -25,10 +25,12 @@ const MINUTES_PER_ACTION: Record<AuditEntry['action'], number> = {
   'pdf.export': 2,
   'intake.received': 8,   // eingesparte Erstintake-Zeit am Telefon
   'case.archive': 0,
+  'case.document.upload': 3,
   'case.task.add': 2,
   'case.task.done': 1,
   'doc.ocr.queue': 4,
   'doc.translate.queue': 6,
+  'doc.review.done': 2,
   'settings.update': 0,
   'login': 0,
 }

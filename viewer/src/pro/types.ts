@@ -44,6 +44,8 @@ export interface MandantCase {
   mandantEmail?: string
   /** Lightweight collaboration tasks for the case team. */
   tasks?: CaseTask[]
+  /** Local beta document records until server-side storage goes live. */
+  documents?: CaseDocument[]
   /** Lightweight document-processing jobs (OCR/translation) attached to the case. */
   documentJobs?: DocumentJob[]
 }
@@ -55,6 +57,23 @@ export interface CaseTask {
   assignee?: string
   createdAt: string
   completedAt?: string
+}
+
+export interface CaseDocument {
+  id: string
+  originalName: string
+  internalName: string
+  mimeType: string
+  sizeBytes: number
+  uploadedAt: string
+  uploadedBy?: string
+  category?: IntakeAttachmentMeta['category']
+  languageHint?: IntakeAttachmentMeta['languageHint']
+  dataUrl?: string
+  textContent?: string
+  ocrText?: string
+  translatedTextDe?: string
+  translationReviewed?: boolean
 }
 
 export interface ResearchQuery {
@@ -107,8 +126,10 @@ export interface AuditEntry {
     | 'case.archive'
     | 'case.task.add'
     | 'case.task.done'
+    | 'case.document.upload'
     | 'doc.ocr.queue'
     | 'doc.translate.queue'
+    | 'doc.review.done'
     | 'research.query'
     | 'letter.generate'
     | 'pdf.export'
@@ -197,6 +218,7 @@ export interface IntakeAttachmentMeta {
 
 export interface DocumentJob {
   id: string
+  documentId?: string
   attachmentInternalName: string
   type: 'ocr' | 'translate'
   status: 'queued' | 'processing' | 'done'

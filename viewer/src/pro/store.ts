@@ -13,6 +13,7 @@
 
 import type {
   AuditEntry,
+  CaseDocument,
   CaseTask,
   CustomTemplate,
   DocumentJob,
@@ -191,6 +192,7 @@ export function createCase(input: {
     letterIds: [],
     status: 'aktiv',
     tasks: [],
+    documents: [],
   }
   const all = readJSON<MandantCase[]>(KEY_CASES, [])
   all.push(c)
@@ -233,6 +235,62 @@ export function addCaseTask(caseId: string, input: { title: string; assignee?: s
   return task
 }
 
+export function addCaseDocument(caseId: string, input: {
+  originalName: string
+  internalName: string
+  mimeType: string
+  sizeBytes: number
+  uploadedBy?: string
+  category?: CaseDocument['category']
+  languageHint?: CaseDocument['languageHint']
+  dataUrl?: string
+  textContent?: string
+}): CaseDocument | null {
+  const all = readJSON<MandantCase[]>(KEY_CASES, [])
+  const idx = all.findIndex(c => c.id === caseId)
+  if (idx < 0) return null
+  const doc: CaseDocument = {
+    id: uid(),
+    originalName: input.originalName,
+    internalName: input.internalName,
+    mimeType: input.mimeType,
+    sizeBytes: input.sizeBytes,
+    uploadedAt: new Date().toISOString(),
+    uploadedBy: input.uploadedBy,
+    category: input.category,
+    languageHint: input.languageHint,
+    dataUrl: input.dataUrl,
+    textContent: input.textContent,
+  }
+  all[idx] = {
+    ...all[idx],
+    documents: [...(all[idx].documents || []), doc],
+    updatedAt: new Date().toISOString(),
+  }
+  writeJSON(KEY_CASES, all)
+  log('case.document.upload', `${doc.internalName} (${Math.round(doc.sizeBytes / 1024)} KB)`, caseId)
+  return doc
+}
+
+function updateDocumentInCase(
+  caseId: string,
+  documentId: string,
+  patch: Partial<CaseDocument>,
+): CaseDocument | null {
+  const all = readJSON<MandantCase[]>(KEY_CASES, [])
+  const caseIdx = all.findIndex(c => c.id === caseId)
+  if (caseIdx < 0) return null
+  let updated: CaseDocument | null = null
+  const documents = (all[caseIdx].documents || []).map(d => {
+    if (d.id !== documentId) return d
+    updated = { ...d, ...patch }
+    return updated
+  })
+  all[caseIdx] = { ...all[caseIdx], documents, updatedAt: new Date().toISOString() }
+  writeJSON(KEY_CASES, all)
+  return updated
+}
+
 export function toggleCaseTask(caseId: string, taskId: string): void {
   const all = readJSON<MandantCase[]>(KEY_CASES, [])
   const idx = all.findIndex(c => c.id === caseId)
@@ -249,6 +307,7 @@ export function toggleCaseTask(caseId: string, taskId: string): void {
 }
 
 export function queueDocumentJob(caseId: string, input: {
+  documentId?: string
   attachmentInternalName: string
   type: 'ocr' | 'translate'
   sourceLanguage?: DocumentJob['sourceLanguage']
@@ -261,6 +320,7 @@ export function queueDocumentJob(caseId: string, input: {
   const settings = getSettings()
   const job: DocumentJob = {
     id: uid(),
+    documentId: input.documentId,
     attachmentInternalName: input.attachmentInternalName,
     type: input.type,
     status: 'queued',
@@ -282,6 +342,55 @@ export function queueDocumentJob(caseId: string, input: {
     caseId,
   )
   return job
+}
+
+export function runDocumentJob(caseId: string, jobId: string): DocumentJob | null {
+  const all = readJSON<MandantCase[]>(KEY_CASES, [])
+  const caseIdx = all.findIndex(c => c.id === caseId)
+  if (caseIdx < 0) return null
+  const c = all[caseIdx]
+  let targetJob: DocumentJob | null = null
+  const jobs = (c.documentJobs || []).map(job => {
+    if (job.id !== jobId) return job
+    targetJob = { ...job, status: 'processing' }
+    return targetJob
+  })
+  if (!targetJob) return null
+  const currentJob: DocumentJob = targetJob
+
+  const docs = c.documents || []
+  const doc = docs.find(d => d.id === currentJob.documentId || d.internalName === currentJob.attachmentInternalName)
+  const nextJobs = jobs.map(job => {
+    if (job.id !== jobId) return job
+    return { ...job, status: 'done' as const }
+  })
+  let nextDocs = docs
+  if (doc && currentJob.type === 'ocr') {
+    const ocrText = doc.textContent?.trim()
+      ? doc.textContent
+      : `OCR Beta-Ergebnis fuer ${doc.originalName}.\n\n` +
+        `Noch kein echter OCR-Provider verbunden. Dieses Dokument ist fuer den spaeteren Produktions-Flow markiert.`
+    nextDocs = docs.map(d => d.id === doc.id ? { ...d, ocrText } : d)
+  }
+  if (doc && currentJob.type === 'translate') {
+    const source = doc.ocrText || doc.textContent || `Inhalt von ${doc.originalName}`
+    const translatedTextDe =
+      `Maschinelle DE-Arbeitsfassung (Beta)\n\nQuelle: ${doc.languageHint || 'unknown'}\n\n${source}`
+    nextDocs = nextDocs.map(d => d.id === doc.id ? { ...d, translatedTextDe } : d)
+  }
+  all[caseIdx] = {
+    ...c,
+    documentJobs: nextJobs,
+    documents: nextDocs,
+    updatedAt: new Date().toISOString(),
+  }
+  writeJSON(KEY_CASES, all)
+  return nextJobs.find(j => j.id === jobId) || null
+}
+
+export function markDocumentTranslationReviewed(caseId: string, documentId: string): void {
+  const updated = updateDocumentInCase(caseId, documentId, { translationReviewed: true })
+  if (updated) log('doc.review.done', updated.internalName, caseId)
 }
 
 // --- Research ---

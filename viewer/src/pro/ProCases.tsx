@@ -13,6 +13,7 @@ import {
 } from 'lucide-react'
 import Fuse from 'fuse.js'
 import {
+  addCaseDocument,
   archiveCase,
   addCaseTask,
   createCase,
@@ -23,8 +24,10 @@ import {
   listIntakes,
   listLetters,
   listResearch,
+  markDocumentTranslationReviewed,
   markIntakeReviewed,
   queueDocumentJob,
+  runDocumentJob,
   toggleCaseTask,
   updateCase,
 } from './store'
@@ -463,6 +466,9 @@ export function ProCaseDetail() {
   const [confirmingArchive, setConfirmingArchive] = useState(false)
   const [newTaskTitle, setNewTaskTitle] = useState('')
   const [newTaskAssignee, setNewTaskAssignee] = useState('')
+  const [docCategory, setDocCategory] = useState<'foto' | 'bescheid' | 'vertrag' | 'chat' | 'sonstiges'>('sonstiges')
+  const [docLanguage, setDocLanguage] = useState<'de' | 'vi' | 'en' | 'tr' | 'ar' | 'other'>('de')
+  const [selectedDocumentId, setSelectedDocumentId] = useState<string | null>(null)
   const c = useMemo(() => (id ? getCase(id) : undefined), [id, tick])
   const research = useMemo(() => (id ? listResearch(id) : []), [id, tick])
   const letters = useMemo(() => (id ? listLetters(id) : []), [id, tick])
@@ -513,6 +519,38 @@ export function ProCaseDetail() {
   }
 
   const frist = c.fristDatum ? daysUntil(c.fristDatum) : null
+  const selectedDocument = (c.documents || []).find(d => d.id === selectedDocumentId) || (c.documents || [])[0] || null
+
+  function slugPart(input: string): string {
+    return input.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '').slice(0, 24) || 'doc'
+  }
+
+  async function onUploadDocument(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file || !c) return
+    const internalName = `case_${c.aktenzeichen.replace(/[^a-zA-Z0-9]+/g, '_').toLowerCase()}_${Date.now().toString(36)}_${slugPart(file.name)}`
+    const textContent = file.type.startsWith('text/') ? await file.text() : undefined
+    const dataUrl = await new Promise<string | undefined>(resolve => {
+      if (!file.type.startsWith('image/') && file.type !== 'application/pdf') return resolve(undefined)
+      const reader = new FileReader()
+      reader.onload = () => resolve(reader.result as string)
+      reader.onerror = () => resolve(undefined)
+      reader.readAsDataURL(file)
+    })
+    addCaseDocument(c.id, {
+      originalName: file.name,
+      internalName,
+      mimeType: file.type || 'application/octet-stream',
+      sizeBytes: file.size,
+      category: docCategory,
+      languageHint: docLanguage,
+      uploadedBy: getSettings().anwaltName || undefined,
+      dataUrl,
+      textContent,
+    })
+    setTick(t => t + 1)
+    e.target.value = ''
+  }
 
   return (
     <div className="space-y-6">
@@ -704,6 +742,152 @@ export function ProCaseDetail() {
           </ul>
         </section>
       )}
+
+      <section>
+        <h2 className="font-semibold mb-2">Dokumente ({c.documents?.length || 0})</h2>
+        <div className="bg-white border border-[var(--color-border)] rounded-2xl p-4 space-y-4">
+          <div className="flex gap-2 flex-wrap">
+            <select
+              value={docCategory}
+              onChange={e => setDocCategory(e.target.value as typeof docCategory)}
+              className="border border-[var(--color-border)] rounded-lg px-3 py-2 text-sm"
+            >
+              <option value="sonstiges">Kategorie: Sonstiges</option>
+              <option value="foto">Kategorie: Foto</option>
+              <option value="bescheid">Kategorie: Bescheid</option>
+              <option value="vertrag">Kategorie: Vertrag</option>
+              <option value="chat">Kategorie: Chat</option>
+            </select>
+            <select
+              value={docLanguage}
+              onChange={e => setDocLanguage(e.target.value as typeof docLanguage)}
+              className="border border-[var(--color-border)] rounded-lg px-3 py-2 text-sm"
+            >
+              <option value="de">Sprache: Deutsch</option>
+              <option value="vi">Sprache: Vietnamesisch</option>
+              <option value="en">Sprache: Englisch</option>
+              <option value="tr">Sprache: Türkisch</option>
+              <option value="ar">Sprache: Arabisch</option>
+              <option value="other">Sprache: Andere</option>
+            </select>
+            <label className="inline-flex items-center gap-2 bg-[var(--color-ink)] text-white rounded-lg px-3 py-2 cursor-pointer hover:opacity-90 text-sm">
+              <Plus className="w-4 h-4" /> Dokument hochladen
+              <input type="file" onChange={onUploadDocument} className="hidden" />
+            </label>
+          </div>
+
+          {!c.documents || c.documents.length === 0 ? (
+            <p className="text-sm text-[var(--color-ink-muted)]">Noch keine lokalen Beta-Dokumente in dieser Akte.</p>
+          ) : (
+            <div className="grid grid-cols-1 lg:grid-cols-[320px,1fr] gap-4">
+              <ul className="border border-[var(--color-border)] rounded-xl divide-y divide-[var(--color-border)]">
+                {c.documents.map(d => (
+                  <li key={d.id}>
+                    <button
+                      onClick={() => setSelectedDocumentId(d.id)}
+                      className={`w-full text-left px-3 py-2 hover:bg-[var(--color-bg-alt)] ${selectedDocument?.id === d.id ? 'bg-[var(--color-bg-alt)]' : ''}`}
+                    >
+                      <div className="font-mono text-xs text-[var(--color-gold)] truncate">{d.internalName}</div>
+                      <div className="text-sm truncate">{d.originalName}</div>
+                      <div className="text-[11px] text-[var(--color-ink-muted)] mt-1">
+                        {d.category || 'sonstiges'} · {d.languageHint || 'de'}
+                      </div>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+
+              {selectedDocument && (
+                <div className="border border-[var(--color-border)] rounded-xl p-4 space-y-3">
+                  <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                    <div>
+                      <div className="font-mono text-xs text-[var(--color-gold)]">{selectedDocument.internalName}</div>
+                      <h3 className="font-semibold">{selectedDocument.originalName}</h3>
+                    </div>
+                    <div className="text-xs text-[var(--color-ink-muted)]">
+                      {Math.round(selectedDocument.sizeBytes / 1024)} KB
+                    </div>
+                  </div>
+
+                  <div className="flex gap-2 flex-wrap text-xs">
+                    <button
+                      onClick={() => {
+                        const job = queueDocumentJob(c.id, {
+                          documentId: selectedDocument.id,
+                          attachmentInternalName: selectedDocument.internalName,
+                          type: 'ocr',
+                          sourceLanguage: selectedDocument.languageHint,
+                          note: 'Local beta OCR',
+                        })
+                        if (job) runDocumentJob(c.id, job.id)
+                        setTick(t => t + 1)
+                      }}
+                      className="rounded-lg border border-[var(--color-border)] px-2 py-1 hover:border-[var(--color-gold)]"
+                    >
+                      OCR starten
+                    </button>
+                    {selectedDocument.languageHint && selectedDocument.languageHint !== 'de' && (
+                      <button
+                        onClick={() => {
+                          const job = queueDocumentJob(c.id, {
+                            documentId: selectedDocument.id,
+                            attachmentInternalName: selectedDocument.internalName,
+                            type: 'translate',
+                            sourceLanguage: selectedDocument.languageHint,
+                            targetLanguage: 'de',
+                            note: 'Local beta translation',
+                          })
+                          if (job) runDocumentJob(c.id, job.id)
+                          setTick(t => t + 1)
+                        }}
+                        className="rounded-lg border border-[var(--color-border)] px-2 py-1 hover:border-[var(--color-gold)]"
+                      >
+                        Uebersetzung DE erzeugen
+                      </button>
+                    )}
+                    {selectedDocument.translatedTextDe && !selectedDocument.translationReviewed && (
+                      <button
+                        onClick={() => {
+                          markDocumentTranslationReviewed(c.id, selectedDocument.id)
+                          setTick(t => t + 1)
+                        }}
+                        className="rounded-lg border border-green-300 bg-green-50 px-2 py-1 text-green-800"
+                      >
+                        DE-Fassung freigeben
+                      </button>
+                    )}
+                  </div>
+
+                  {selectedDocument.dataUrl && selectedDocument.mimeType.startsWith('image/') && (
+                    <img
+                      src={selectedDocument.dataUrl}
+                      alt={selectedDocument.originalName}
+                      className="max-h-64 rounded border border-[var(--color-border)] object-contain bg-white"
+                    />
+                  )}
+
+                  <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
+                    <div className="rounded-lg border border-[var(--color-border)] p-3">
+                      <div className="text-xs uppercase text-[var(--color-ink-muted)] mb-2">OCR / Text</div>
+                      <div className="text-sm whitespace-pre-wrap text-[var(--color-ink-soft)]">
+                        {selectedDocument.ocrText || selectedDocument.textContent || 'Noch kein OCR/Text vorhanden.'}
+                      </div>
+                    </div>
+                    <div className="rounded-lg border border-[var(--color-border)] p-3">
+                      <div className="text-xs uppercase text-[var(--color-ink-muted)] mb-2">
+                        DE-Arbeitsfassung {selectedDocument.translationReviewed ? '· freigegeben' : '· ungeprueft'}
+                      </div>
+                      <div className="text-sm whitespace-pre-wrap text-[var(--color-ink-soft)]">
+                        {selectedDocument.translatedTextDe || 'Noch keine DE-Fassung erzeugt.'}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </section>
 
       <section>
         <h2 className="font-semibold mb-2">Dokument-Chronologie</h2>
