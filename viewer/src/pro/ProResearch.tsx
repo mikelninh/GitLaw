@@ -9,15 +9,18 @@
  *   5. Save to case + export branded PDF
  */
 
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Search, Loader2, Save, Download, CheckCircle2, AlertTriangle, Lightbulb, RotateCcw, Shield } from 'lucide-react'
 import { EXAMPLE_QUESTIONS, proAsk } from './ai'
 import {
+  getApprovedMemoryExamples,
   getCase,
   getSettings,
   listCases,
+  listApprovedAnswerMemory,
   markResearchReviewed,
+  saveApprovedAnswerMemory,
   saveResearch,
 } from './store'
 import { verifyAllCitations } from './verify'
@@ -36,7 +39,7 @@ interface ResearchTurn {
 export default function ProResearch() {
   const [params, setParams] = useSearchParams()
   const initialCaseId = params.get('case') || ''
-  const cases = useMemo(() => listCases().filter(c => c.status === 'aktiv'), [])
+  const cases = listCases().filter(c => c.status === 'aktiv')
   const [selectedCaseId, setSelectedCaseId] = useState(initialCaseId)
   const [question, setQuestion] = useState('')
   const [loading, setLoading] = useState(false)
@@ -47,6 +50,7 @@ export default function ProResearch() {
   const [openCitation, setOpenCitation] = useState<Citation | null>(null)
   const [showPrivacyGate, setShowPrivacyGate] = useState(false)
   const [history, setHistory] = useState<ResearchTurn[]>([])
+  const [approvedAnswerDraft, setApprovedAnswerDraft] = useState('')
 
   useEffect(() => {
     if (initialCaseId) setSelectedCaseId(initialCaseId)
@@ -90,10 +94,13 @@ export default function ProResearch() {
       const prompt = context
         ? `${context}\n\nAktuelle Frage: ${questionForAi}`
         : questionForAi
-      const { antwort, zitate } = await proAsk(prompt)
+      const { antwort, zitate } = await proAsk(prompt, {
+        approvedMemory: getApprovedMemoryExamples(questionForAi, 3),
+      })
       setAnswer(antwort)
       const cites = await verifyAllCitations(zitate)
       setCitations(cites)
+      setApprovedAnswerDraft(antwort)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'OpenAI hat keine Antwort zurückgegeben. In 10 Sekunden erneut versuchen.')
     } finally {
@@ -107,6 +114,7 @@ export default function ProResearch() {
     setCitations([])
     setSavedItem(null)
     setError(null)
+    setApprovedAnswerDraft('')
   }
 
   function onAnonymize() {
@@ -157,9 +165,17 @@ export default function ProResearch() {
   function onMarkReviewedHistory(index: number) {
     const t = history[index]
     if (!t?.savedItem) return
-    markResearchReviewed(t.savedItem.id)
+    markResearchReviewed(t.savedItem.id, t.savedItem.answer)
+    saveApprovedAnswerMemory({
+      caseId: t.savedItem.caseId,
+      question: t.savedItem.question,
+      approvedAnswer: t.savedItem.answer,
+      sourceResearchId: t.savedItem.id,
+    })
     setHistory(prev => prev.map((x, i) => (
-      i === index && x.savedItem ? { ...x, savedItem: { ...x.savedItem, reviewed: true } } : x
+      i === index && x.savedItem
+        ? { ...x, savedItem: { ...x.savedItem, reviewed: true, approvedAnswer: x.savedItem.answer } }
+        : x
     )))
   }
 
@@ -173,8 +189,19 @@ export default function ProResearch() {
 
   function onMarkReviewed() {
     if (!savedItem) return
-    markResearchReviewed(savedItem.id)
-    setSavedItem({ ...savedItem, reviewed: true })
+    const finalApprovedAnswer = approvedAnswerDraft.trim() || savedItem.answer
+    markResearchReviewed(savedItem.id, finalApprovedAnswer)
+    saveApprovedAnswerMemory({
+      caseId: savedItem.caseId,
+      question: savedItem.question,
+      approvedAnswer: finalApprovedAnswer,
+      sourceResearchId: savedItem.id,
+    })
+    setSavedItem({
+      ...savedItem,
+      reviewed: true,
+      approvedAnswer: finalApprovedAnswer,
+    })
   }
 
   function onExportPDF() {
@@ -185,6 +212,7 @@ export default function ProResearch() {
   }
 
   const verifiedCount = citations.filter(c => c.verified).length
+  const memoryItems = listApprovedAnswerMemory().slice(0, 5)
 
   return (
     <>
@@ -351,6 +379,22 @@ export default function ProResearch() {
           </section>
         )}
 
+        {memoryItems.length > 0 && (
+          <section className="bg-white border border-[var(--color-border)] rounded-2xl p-5 space-y-3">
+            <h2 className="font-semibold text-sm uppercase tracking-wide text-[var(--color-ink-muted)]">
+              Freigegebene Kanzlei-Memory ({memoryItems.length})
+            </h2>
+            <ul className="space-y-2">
+              {memoryItems.map(m => (
+                <li key={m.id} className="border border-[var(--color-border)] rounded-xl p-3">
+                  <p className="text-sm font-medium">{m.question}</p>
+                  <p className="text-xs text-[var(--color-ink-soft)] mt-1 line-clamp-3 whitespace-pre-wrap">{m.approvedAnswer}</p>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
         {showPrivacyGate && (
           <div className="bg-amber-50 border-2 border-amber-300 rounded-2xl p-4 space-y-3">
             <p className="text-sm text-amber-900 font-semibold">
@@ -381,10 +425,19 @@ export default function ProResearch() {
                   setCitations([])
                   setSavedItem(null)
                   try {
-                    const { antwort, zitate } = await proAsk(question)
+                    const context = history.slice(-2).map((t, i) => (
+                      `Vorfrage ${i + 1}: ${t.question}\nVorantwort ${i + 1}: ${t.answer}`
+                    )).join('\n\n')
+                    const prompt = context
+                      ? `${context}\n\nAktuelle Frage: ${question}`
+                      : question
+                    const { antwort, zitate } = await proAsk(prompt, {
+                      approvedMemory: getApprovedMemoryExamples(question, 3),
+                    })
                     setAnswer(antwort)
                     const cites = await verifyAllCitations(zitate)
                     setCitations(cites)
+                    setApprovedAnswerDraft(antwort)
                   } catch (err) {
                     setError(err instanceof Error ? err.message : 'OpenAI hat keine Antwort zurückgegeben. In 10 Sekunden erneut versuchen.')
                   } finally {
@@ -424,6 +477,19 @@ export default function ProResearch() {
                 Antwort
               </h2>
               <div className="text-sm leading-relaxed whitespace-pre-wrap">{answer}</div>
+            </section>
+
+            <section>
+              <h2 className="font-semibold mb-2 text-sm uppercase tracking-wide text-[var(--color-ink-muted)]">
+                Freigabefassung
+              </h2>
+              <textarea
+                value={approvedAnswerDraft}
+                onChange={e => setApprovedAnswerDraft(e.target.value)}
+                rows={8}
+                className="w-full border border-[var(--color-border)] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[var(--color-gold)]"
+                placeholder="Hier kann die finale anwaltlich gepruefte Fassung angepasst werden. Diese Version wird spaeter als Memory-Beispiel genutzt."
+              />
             </section>
 
             <section>

@@ -21,6 +21,7 @@
  */
 
 import OpenAI from 'openai'
+import type { ApprovedAnswerMemory } from './types'
 
 const API_KEY = import.meta.env.VITE_OPENAI_API_KEY || ''
 const API_URL = import.meta.env.VITE_API_URL || 'https://gitlaw-xi.vercel.app'
@@ -37,6 +38,10 @@ export interface ProCitation {
 export interface ProAnswer {
   antwort: string
   zitate: ProCitation[]
+}
+
+export interface ProAskOptions {
+  approvedMemory?: ApprovedAnswerMemory[]
 }
 
 const PRO_SYSTEM_PROMPT = `Du bist juristische Recherche-Assistenz für eine deutsche Rechtsanwältin oder einen deutschen Rechtsanwalt.
@@ -92,14 +97,24 @@ const PRO_JSON_SCHEMA = {
   },
 }
 
-export async function proAsk(question: string): Promise<ProAnswer> {
+function buildMemoryPrompt(memory?: ApprovedAnswerMemory[]): string {
+  if (!memory || memory.length === 0) return ''
+  return '\n\nKANZLEI-INTERNER ERFAHRUNGSSCHATZ\n' +
+    memory.map((m, i) =>
+      `Beispiel ${i + 1}\nFrage: ${m.question}\nFreigegebene Antwort: ${m.approvedAnswer}`
+    ).join('\n\n') +
+    '\n\nNutze diese Beispiele als Stil- und Strukturhilfe, aber nur wenn sie sachlich zur neuen Frage passen.'
+}
+
+export async function proAsk(question: string, options?: ProAskOptions): Promise<ProAnswer> {
+  const systemPrompt = PRO_SYSTEM_PROMPT + buildMemoryPrompt(options?.approvedMemory)
   // Preferred path: direct OpenAI call with structured outputs.
   if (API_KEY) {
     const client = new OpenAI({ apiKey: API_KEY, dangerouslyAllowBrowser: true })
     const resp = await client.chat.completions.create({
       model: 'gpt-4o-mini',
       messages: [
-        { role: 'system', content: PRO_SYSTEM_PROMPT },
+        { role: 'system', content: systemPrompt },
         { role: 'user', content: question },
       ],
       max_tokens: 800,
@@ -119,7 +134,7 @@ export async function proAsk(question: string): Promise<ProAnswer> {
   const resp = await fetch(`${API_URL}/api/ask-pro`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ question }),
+    body: JSON.stringify({ question, approvedMemory: options?.approvedMemory }),
   })
   if (!resp.ok) {
     throw new Error(`KI-Service nicht erreichbar (HTTP ${resp.status}). Bitte später erneut.`)

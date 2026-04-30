@@ -86,6 +86,8 @@ export interface ResearchQuery {
   createdAt: string
   /** Was the answer marked as "geprüft" by the Anwält:in? */
   reviewed: boolean
+  /** Optional lawyer-corrected final version used for memory building. */
+  approvedAnswer?: string
 }
 
 export interface Citation {
@@ -227,6 +229,17 @@ export interface DocumentJob {
   sourceLanguage?: IntakeAttachmentMeta['languageHint']
   targetLanguage?: 'de'
   note?: string
+}
+
+export interface ApprovedAnswerMemory {
+  id: string
+  tenantId?: string
+  caseId?: string
+  question: string
+  approvedAnswer: string
+  practiceHint?: string
+  createdAt: string
+  sourceResearchId?: string
 }
 
 /** Simple wrapper for paragraph lookup result. */

@@ -12,6 +12,7 @@
  */
 
 import type {
+  ApprovedAnswerMemory,
   AuditEntry,
   CaseDocument,
   CaseTask,
@@ -38,6 +39,7 @@ const KEY_PARAGRAPH_NOTES = 'gitlaw.pro.paragraphNotes.v1'
 const KEY_ACCESS_CTX = 'gitlaw.pro.access.v1'
 const KEY_LAST_ACTIVE = 'gitlaw.pro.lastActive.v1'
 const KEY_ONBOARDING_DISMISSED = 'gitlaw.pro.onboardingDismissed.v1'
+const KEY_APPROVED_MEMORY = 'gitlaw.pro.approvedMemory.v1'
 
 const DEFAULT_SETTINGS: KanzleiSettings = {
   name: '',
@@ -423,12 +425,65 @@ export function saveResearch(r: Omit<ResearchQuery, 'id' | 'createdAt'>): Resear
   return item
 }
 
-export function markResearchReviewed(id: string): void {
+export function markResearchReviewed(id: string, approvedAnswer?: string): void {
   const all = readJSON<ResearchQuery[]>(KEY_RESEARCH, [])
   const idx = all.findIndex(r => r.id === id)
   if (idx < 0) return
   all[idx].reviewed = true
+  if (approvedAnswer?.trim()) {
+    all[idx].approvedAnswer = approvedAnswer.trim()
+  }
   writeJSON(KEY_RESEARCH, all)
+}
+
+export function saveApprovedAnswerMemory(input: {
+  caseId?: string
+  question: string
+  approvedAnswer: string
+  sourceResearchId?: string
+  practiceHint?: string
+}): ApprovedAnswerMemory {
+  const access = getAccessContext()
+  const item: ApprovedAnswerMemory = {
+    id: uid(),
+    tenantId: access?.tenantId,
+    caseId: input.caseId,
+    question: input.question,
+    approvedAnswer: input.approvedAnswer,
+    practiceHint: input.practiceHint,
+    sourceResearchId: input.sourceResearchId,
+    createdAt: new Date().toISOString(),
+  }
+  const all = readJSON<ApprovedAnswerMemory[]>(KEY_APPROVED_MEMORY, [])
+  all.push(item)
+  writeJSON(KEY_APPROVED_MEMORY, all.slice(-200))
+  return item
+}
+
+export function listApprovedAnswerMemory(): ApprovedAnswerMemory[] {
+  const access = getAccessContext()
+  const tenantId = access?.tenantId
+  const all = readJSON<ApprovedAnswerMemory[]>(KEY_APPROVED_MEMORY, [])
+  return all
+    .filter(m => !tenantId || m.tenantId === tenantId)
+    .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+}
+
+function scoreMemory(question: string, memory: ApprovedAnswerMemory): number {
+  const qWords = new Set(question.toLowerCase().split(/[^a-zA-Z0-9äöüÄÖÜß]+/).filter(w => w.length >= 4))
+  const mWords = new Set(`${memory.question} ${memory.approvedAnswer}`.toLowerCase().split(/[^a-zA-Z0-9äöüÄÖÜß]+/).filter(w => w.length >= 4))
+  let score = 0
+  qWords.forEach(w => { if (mWords.has(w)) score += 1 })
+  return score
+}
+
+export function getApprovedMemoryExamples(question: string, limit = 3): ApprovedAnswerMemory[] {
+  return listApprovedAnswerMemory()
+    .map(m => ({ m, score: scoreMemory(question, m) }))
+    .filter(x => x.score > 0)
+    .sort((a, b) => b.score - a.score || b.m.createdAt.localeCompare(a.m.createdAt))
+    .slice(0, limit)
+    .map(x => x.m)
 }
 
 // --- Letters ---

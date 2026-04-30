@@ -44,6 +44,11 @@ export type LawyerProfile = {
   firmContext?: string        // eine Zeile, z.B. "Kanzlei für Migrationsrecht seit 2012"
 }
 
+type ApprovedAnswerMemory = {
+  question: string
+  approvedAnswer: string
+}
+
 /**
  * Build the system prompt for a specific lawyer. Falls through to the base
  * prompt when no profile fields are set — preserves legacy behaviour.
@@ -70,6 +75,15 @@ export function buildProSystemPrompt(profile?: LawyerProfile | null): string {
 
   if (hints.length === 0) return BASE_PRO_PROMPT
   return `${BASE_PRO_PROMPT}\n\nKONTEXT DIESES PROFILS\n${hints.join('\n')}`
+}
+
+function buildMemoryPrompt(memory?: ApprovedAnswerMemory[]): string {
+  if (!memory || memory.length === 0) return ''
+  return '\n\nKANZLEI-INTERNER ERFAHRUNGSSCHATZ\n' +
+    memory.slice(0, 3).map((m, i) =>
+      `Beispiel ${i + 1}\nFrage: ${sanitize(m.question)}\nFreigegebene Antwort: ${sanitize(m.approvedAnswer)}`
+    ).join('\n\n') +
+    '\n\nNutze diese Beispiele nur wenn sie sachlich zur aktuellen Frage passen.'
 }
 
 /** Strip newlines + collapse whitespace so injected user-strings can't split the prompt structure. */
@@ -123,13 +137,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const { question, lawyerProfile } = req.body as {
     question?: unknown
     lawyerProfile?: LawyerProfile
+    approvedMemory?: ApprovedAnswerMemory[]
   }
 
   if (!question || typeof question !== 'string') {
     return res.status(400).json({ error: 'Question (string) required' })
   }
 
-  const systemPrompt = buildProSystemPrompt(lawyerProfile)
+  const systemPrompt = buildProSystemPrompt(lawyerProfile) + buildMemoryPrompt(req.body?.approvedMemory)
 
   try {
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
