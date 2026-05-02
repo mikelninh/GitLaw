@@ -1,0 +1,84 @@
+process_client_intake:
+  description: >
+    Process a multilingual legal intake for tenant {tenant_id}. Extract client details, case summary,
+    urgency, possible deadlines, case-type hints, missing facts, and whether immediate human review is needed.
+    Do not give legal advice. Prepare a structured intake record for assistant or lawyer review.
+  expected_output: >
+    Structured intake object with tenant_id, client details, source language, urgency, deadline signals,
+    case summary, probable case type, and missing-information prompts.
+  agent: intake_agent
+
+classify_case_documents:
+  description: >
+    Analyze uploaded files for case {case_id}. Rename them using a consistent internal convention,
+    classify document types, preserve source language and provenance, and attach them to the right case context.
+  expected_output: >
+    Document handling report with internal filenames, document classes, language tags, provenance metadata,
+    vault references, and items requiring human review.
+  agent: document_agent
+  context:
+    - process_client_intake
+
+run_ocr_and_translation:
+  description: >
+    For documents in case {case_id}, extract text from scans or images and create German working translations
+    for non-German content. Mark confidence limits and preserve review checkpoints for the legal team.
+  expected_output: >
+    OCR and translation output with extracted text, German working text, unresolved terminology notes,
+    and review-required markers.
+  agent: ocr_translation_agent
+  context:
+    - classify_case_documents
+
+recommend_next_best_step:
+  description: >
+    Analyze the current state of case {case_id} using deadlines, document status, OCR status,
+    unfinished reviews, and workflow position. Recommend the next best operational step and 1 to 2 backups.
+  expected_output: >
+    Ranked next-step recommendation with justification, urgency level, and dependencies.
+  agent: workflow_recommendation_agent
+  context:
+    - process_client_intake
+    - classify_case_documents
+    - run_ocr_and_translation
+
+produce_legal_research:
+  description: >
+    Create a structured German legal research answer for {legal_question} in case {case_id}.
+    Use firm-approved memory where relevant. Return concise reasoning and explicit structured citations.
+  expected_output: >
+    Structured legal research object containing answer text, citations, uncertainty notes, and review status draft.
+  agent: research_agent
+  context:
+    - recommend_next_best_step
+
+verify_citations:
+  description: >
+    Validate the structured legal citations produced for case {case_id}. Distinguish verified references,
+    uncertain references, and references requiring manual legal review.
+  expected_output: >
+    Citation verification report with verified, uncertain, and review-required references.
+  agent: citation_verification_agent
+  context:
+    - produce_legal_research
+
+generate_first_draft:
+  description: >
+    Create a first legal draft for case {case_id} using the selected template, the verified research,
+    the case facts, and chosen legal grounds. The draft must remain editable and explicitly pending lawyer approval.
+  expected_output: >
+    First legal draft with placeholders resolved, cited reasoning integrated where appropriate,
+    and an explicit review-needed status.
+  agent: drafting_agent
+  context:
+    - verify_citations
+
+store_approved_memory:
+  description: >
+    After lawyer approval, store the approved legal answer or approved draft pattern for tenant {tenant_id}
+    so it can improve future research and drafting. Do not store rejected or unreviewed material.
+  expected_output: >
+    Memory entry with tenant scope, approval provenance, reusable pattern tags, and safe retrieval metadata.
+  agent: memory_agent
+  context:
+    - generate_first_draft

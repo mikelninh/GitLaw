@@ -156,7 +156,19 @@ export default function WelcomePersonal({ personaSlug }: { personaSlug?: string 
               <li>• Anhänge mit internem Dateinamen (inkl. Kategorie + Sprache), z. B. für VI-Fotos/PDFs.</li>
               <li>• Recherche mit Folgefragen und Verlauf: vertiefen, einzeln speichern, prüfen, exportieren.</li>
               <li>• Compliance-Cockpit + Datenschutz-Preflight vor KI-Versand.</li>
+              <li>• Neue Pro-Session mit Tenant-/Rollen-Schutz statt nur Browser-Beta-Token.</li>
+              <li>• Serverseitiger Dokument-Vault als erster Schritt zu echtem Production-Upload.</li>
             </ul>
+          </div>
+
+          <div className="bg-white border border-[var(--color-border)] rounded-2xl p-6">
+            <h2 className="font-semibold text-lg mb-2">Neu im Kern</h2>
+            <p className="text-sm text-[var(--color-ink-soft)] leading-relaxed">
+              GitLaw Pro ist jetzt klarer als beaufsichtigter Agenten-Workflow gedacht:
+              <span className="font-medium"> Intake → Dokumente → Recherche → Entwurf → Freigabe.</span>
+              Für deinen Test heißt das: bitte nicht nur auf die Antwortqualität schauen, sondern ob der
+              gesamte Arbeitsfluss sinnvoll, schnell und vertrauenswürdig wirkt.
+            </p>
           </div>
 
           <div className="bg-white border border-[var(--color-border)] rounded-2xl p-6">
@@ -190,7 +202,7 @@ export default function WelcomePersonal({ personaSlug }: { personaSlug?: string 
             <h2 className="font-semibold text-lg mb-2">Heute noch nicht entscheidend</h2>
             <ul className="text-sm text-amber-900 space-y-1.5">
               <li>• Noch kein finaler produktiver Multi-User-/Mitarbeiterbetrieb.</li>
-              <li>• Noch kein echter sicherer Datei-Upload in EU-Storage.</li>
+              <li>• Upload ist jetzt serverseitig angebunden, aber noch nicht der finale EU-Storage-/Worker-Stand.</li>
               <li>• Heute bitte vor allem UX, Intake, Recherche und Arbeitsfluss bewerten.</li>
             </ul>
           </div>

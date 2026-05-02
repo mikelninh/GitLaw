@@ -6,7 +6,7 @@ Zwei Welten unter einem Dach:
 
 - **GitLaw** — kostenlos für alle Bürger:innen. Open Source (AGPL-3.0). Donations-finanziert.
   → [gitlaw.app](https://mikelninh.github.io/gitlaw/) bzw. [gitlaw-xi.vercel.app](https://gitlaw-xi.vercel.app/)
-- **GitLaw Pro** — Anwält:innen-Tier mit Branding, Akten, KI-Recherche-Verifikation, Fristen, Cloud-Sync, mehrsprachige Mandantenaufnahme (DE/VI/TR/AR/EN).
+- **GitLaw Pro** — Anwält:innen-Tier mit Branding, Akten, KI-Recherche-Verifikation, Fristen, Cloud-Sync, mehrsprachige Mandantenaufnahme (DE/VI/TR/AR/EN) und erster agentischer Workflow-Grundlage.
   → [gitlaw-xi.vercel.app/#/pro/preise](https://gitlaw-xi.vercel.app/#/pro/preise) · ab €19/Mo Lite · €79 Solo · €149/RA Kanzlei
 
 1,3 Mio. Zeilen Recht · 98.367 semantische Vektoren · 31 Musterbriefe (20 Bürger + 11 Anwält:innen) · UI + Core-Workflows auf Deutsch · Pro-Intake-Form in 5 Sprachen (DE/VI/TR/AR/EN) für Kanzleien mit mehrsprachiger Klientel.
@@ -53,7 +53,9 @@ Eigenständiger Bereich unter `/#/pro` — Beta, Invite-only.
 | **CSV-Akten-Import** | Auto-Spalten-Erkennung aus DATEV / RA-Micro / advoware / Excel — Mapping → Bulk-Create |
 | **Audit-Log** | Lückenlose Aktions-Chronologie, BHV-tauglich als PDF exportierbar |
 | **DSGVO-Schutz-Modus** | Auto-Anonymisierung vor jeder KI-Anfrage: 14 PII-Pattern (Namen, Adressen, IBAN, BIC, Steuer-ID, SV-Nr., Aktenzeichen, Geb-Datum, Firmen) + Whitelist gegen Falsch-Anonymisierung von Rechtsbegriffen |
-| **Cloud-Sync** | Auto-Push an Upstash-Redis Frankfurt. Werner+Jasmin teilen Akten via Kanzlei-Schlüssel. Sync-Indikator im Header |
+| **Cloud-Sync** | Tenant-gebundener Auto-Push an Upstash-Redis Frankfurt über signierte Pro-Session statt nur ratebarem Kanzlei-Schlüssel |
+| **Pro Session + RBAC** | Signierte Pro-Session mit `tenantId` + `role`, serverseitige API-Gates für Recherche, Sync, Upload |
+| **Dokument-Vault (Beta)** | Serverseitiger Dokumentpfad mit Tenant-Bindung als erster Schritt zum finalen EU-Storage |
 | **Personal Welcome-Pages** | `/#/bao`, `/#/rubin`, `/#/werner`, `/#/jasmin` — 1-Klick-Login + Branding pre-loaded |
 | **AVV-Vorlagen-PDF** | Mustertext-Generator auf eigenem Briefkopf |
 | **Wöchentliches Auto-Update** | GitHub-Action prüft jeden Sonntag mit OpenAI Structured Outputs ob neue BGH-Urteile zu den Top-30 § → öffnet PR mit Diff |
@@ -97,7 +99,7 @@ Eigenständiger Bereich unter `/#/pro` — Beta, Invite-only.
 | Routing | HashRouter (GH-Pages-kompatibel) + react-router-dom 7 |
 | Bürger-RAG | LangChain + FAISS + OpenAI Embeddings |
 | Pro-AI | OpenAI gpt-4o-mini mit JSON-Schema Structured Outputs |
-| Pro-Backend | Vercel Serverless Functions + Upstash Redis (Frankfurt) |
+| Pro-Backend | Vercel Serverless Functions + Upstash Redis (Frankfurt) + signierte Pro-Sessions |
 | Citations-Verifikation | Lokal gegen 5.936 Markdown-Files (`### § N`-Heading-Lookup) |
 | Rechtsprechung Stufe 1 | Deep-Links zu Beck-Online / dejure.org / openjur.de |
 | Rechtsprechung Stufe 2 | 30 kuratierte JSON-Files mit BGH/BVerfG-Leitsätzen aus rechtsprechung-im-internet.de (Public Domain), wöchentlich automatisch aktualisiert via GitHub-Action |
@@ -109,6 +111,31 @@ Eigenständiger Bereich unter `/#/pro` — Beta, Invite-only.
 | Anonymizer | 14 Regex-Pattern + 50 Whitelist-Tokens, Auto-Modus persistiert in localStorage |
 | Updates | GitHub Actions (Gesetze + BGH-Leitsätze) |
 | Hosting | GitHub Pages (Bürger) + Vercel + Upstash Frankfurt (Pro + APIs) |
+
+---
+
+## 🤖 Agentic GitLaw Pro
+
+GitLaw Pro wird bewusst nicht als generischer Legal-Chat gebaut, sondern als beaufsichtigter Multi-Agent-Workflow:
+
+`intake -> dokumente -> recherche -> entwurf -> freigabe`
+
+Aktuelle Agenten-/Workflow-Artefakte:
+
+- [GITLAW_AGENT_ARCHITECTURE_DE.md](/Users/mikel/gitlaw/GITLAW_AGENT_ARCHITECTURE_DE.md)
+- [GITLAW_AGENT_VISUAL_MAP_DE.md](/Users/mikel/gitlaw/GITLAW_AGENT_VISUAL_MAP_DE.md)
+- [GITLAW_AGENT_CODE_MAP_DE.md](/Users/mikel/gitlaw/GITLAW_AGENT_CODE_MAP_DE.md)
+- [GITLAW_AGENT_EVAL_MATRIX_DE.md](/Users/mikel/gitlaw/GITLAW_AGENT_EVAL_MATRIX_DE.md)
+- [GITLAW_CREWAI_AUTOMATION_PROMPT_EN.md](/Users/mikel/gitlaw/GITLAW_CREWAI_AUTOMATION_PROMPT_EN.md)
+- [GITLAW_CREWAI_AGENTS.yaml](/Users/mikel/gitlaw/GITLAW_CREWAI_AGENTS.yaml)
+- [GITLAW_CREWAI_TASKS.yaml](/Users/mikel/gitlaw/GITLAW_CREWAI_TASKS.yaml)
+- [GITLAW_CREWAI_COMPARISON_DE.md](/Users/mikel/gitlaw/GITLAW_CREWAI_COMPARISON_DE.md)
+
+Aktueller Stand:
+
+- `REAL`: Research Agent, Drafting-Grundflow, Session/RBAC, tenant-bound sync, serverseitiger Dokumentpfad
+- `BETA`: Intake-Klassifikation, OCR/Translation, Citation Verification Layer, approved memory
+- `NEXT`: Workflow Recommendation Agent, tiefer Server-Persistenzkern, echter EU-Storage/Worker-Stack
 
 ---
 
