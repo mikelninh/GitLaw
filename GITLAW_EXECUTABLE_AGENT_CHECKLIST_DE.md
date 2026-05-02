@@ -43,6 +43,7 @@ Ziel:
 6. Server-Dokument-Vault kann kleine Datei speichern
 7. OCR-Endpunkt verarbeitet serverseitige Textdokumente
 8. Translation-Endpunkt erzeugt eine DE-Arbeitsfassung
+9. PDF mit Textlayer wird serverseitig extrahiert
 
 ## Manuelle Checks
 
@@ -84,5 +85,6 @@ Ziel:
 - Research Agent: PASS
 - OCR fuer Textdokumente: PASS
 - Translation fuer Textdokumente: PASS
-- PDF-OCR-Worker: BETA/NEXT
+- PDF-Textlayer-Extraktion: PASS
+- Scan-PDF-OCR-Worker: BETA/NEXT
 - Workflow Recommendation: FAIL/NEXT

@@ -31,6 +31,7 @@ Verifiziert wurden:
 - serverseitiger Dokument-Vault
 - OCR fuer Textdokumente
 - DE-Uebersetzung fuer Textdokumente
+- PDF-Textlayer-Extraktion
 
 ## Was sich seitdem verbessert hat
 
@@ -43,7 +44,7 @@ Der OCR-/Translation-Pfad wurde von einem reinen Stub auf einen echten serversei
 Damit verschiebt sich der verbleibende Haupt-Beta-Block:
 
 - nicht mehr `OCR/Translation fuer Textdokumente`
-- sondern `voller PDF-OCR-Worker + finaler EU-Storage/Worker-Stack`
+- sondern `Scan-PDF-OCR + finaler EU-Storage/Worker-Stack`
 
 ## Was fuer einen Pilot heute stark genug ist
 
@@ -53,6 +54,7 @@ Damit verschiebt sich der verbleibende Haupt-Beta-Block:
 - serverseitiger Uploadpfad fuer Dokumente
 - strukturierte Recherche mit Zitatobjekten
 - dokumentgebundene OCR-/Translation-Jobs
+- PDF-Texte mit eingebettetem Textlayer
 - erster Dokument-zu-Entwurf-Pfad
 - approved-memory-Grundlage
 

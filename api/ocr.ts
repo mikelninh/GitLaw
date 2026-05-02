@@ -5,6 +5,50 @@ import { applyCors, applySecurityHeaders } from './_http'
 
 const redis = Redis.fromEnv()
 
+function decodePdfEscapes(input: string): string {
+  return input
+    .replace(/\\([nrtbf()\\])/g, (_m, ch: string) => {
+      if (ch === 'n') return '\n'
+      if (ch === 'r') return '\r'
+      if (ch === 't') return '\t'
+      if (ch === 'b') return '\b'
+      if (ch === 'f') return '\f'
+      return ch
+    })
+    .replace(/\\([0-7]{1,3})/g, (_m, oct: string) => String.fromCharCode(parseInt(oct, 8)))
+}
+
+function extractTextFromPdfBase64(base64: string): string {
+  const binary = Buffer.from(base64, 'base64').toString('latin1')
+  const pieces: string[] = []
+
+  const literalMatches = binary.matchAll(/\(([^()]*(?:\\.[^()]*)*)\)/g)
+  for (const match of literalMatches) {
+    const decoded = decodePdfEscapes(match[1]).trim()
+    if (decoded && /[A-Za-zÄÖÜäöüß0-9]/.test(decoded)) pieces.push(decoded)
+  }
+
+  const hexMatches = binary.matchAll(/<([0-9A-Fa-f\s]{6,})>/g)
+  for (const match of hexMatches) {
+    const hex = match[1].replace(/\s+/g, '')
+    if (hex.length % 2 !== 0) continue
+    try {
+      const decoded = Buffer.from(hex, 'hex').toString('utf8').trim()
+      if (decoded && /[A-Za-zÄÖÜäöüß0-9]/.test(decoded)) pieces.push(decoded)
+    } catch {
+      // ignore malformed hex chunks
+    }
+  }
+
+  const normalized = pieces
+    .join('\n')
+    .replace(/[ \t]+\n/g, '\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim()
+
+  return normalized
+}
+
 async function openAIChat(messages: Array<Record<string, unknown>>, maxTokens = 1000): Promise<string> {
   const OPENAI_API_KEY = process.env.OPENAI_API_KEY
   if (!OPENAI_API_KEY) throw new Error('OpenAI key not configured')
@@ -62,6 +106,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if (mimeType.startsWith('text/')) {
         const ocrText = Buffer.from(base64, 'base64').toString('utf8')
         return res.status(200).json({ ok: true, status: 'done', provider: 'native-text', ocrText })
+      }
+      if (mimeType === 'application/pdf') {
+        const ocrText = extractTextFromPdfBase64(base64)
+        if (ocrText) {
+          return res.status(200).json({ ok: true, status: 'done', provider: 'pdf-text-layer', ocrText })
+        }
+        return res.status(501).json({
+          ok: false,
+          status: 'not_supported_yet',
+          message: 'PDF was uploaded, but no text layer could be extracted. Scan-PDF OCR worker is the next step.',
+        })
       }
       if (mimeType.startsWith('image/')) {
         const dataUrl = `data:${mimeType};base64,${base64}`

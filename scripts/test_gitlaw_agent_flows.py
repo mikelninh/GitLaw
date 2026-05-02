@@ -7,6 +7,43 @@ import urllib.request
 
 BASE_URL = sys.argv[1] if len(sys.argv) > 1 else "https://gitlaw-xi.vercel.app"
 INVITE = sys.argv[2] if len(sys.argv) > 2 else "BETA-NGUYEN"
+MINIMAL_PDF = b"""%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Count 1 /Kids [3 0 R] >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 300 144] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 55 >>
+stream
+BT
+/F1 18 Tf
+40 80 Td
+(GitLaw PDF OCR Test) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000241 00000 n 
+0000000346 00000 n 
+trailer
+<< /Root 1 0 R /Size 6 >>
+startxref
+416
+%%EOF
+"""
 
 
 def request(path, method="GET", data=None, token=None):
@@ -134,8 +171,8 @@ def main():
     else:
         print_result("server_document_vault", "FAIL", f"HTTP {code} payload={payload}")
         total["FAIL"] += 1
+    text_document_id = payload.get("documentId") if isinstance(payload, dict) else None
 
-    document_id = payload.get("documentId") if isinstance(payload, dict) else None
     code, payload = request(
         "/api/ocr",
         method="POST",
@@ -146,7 +183,7 @@ def main():
             "mode": "ocr",
             "sourceLanguage": "vi",
             "targetLanguage": "de",
-            "serverDocumentId": document_id,
+            "serverDocumentId": text_document_id,
         },
     )
     if code == 200 and isinstance(payload, dict) and isinstance(payload.get("ocrText"), str):
@@ -172,7 +209,7 @@ def main():
             "mode": "translate",
             "sourceLanguage": "en",
             "targetLanguage": "de",
-            "serverDocumentId": document_id,
+            "serverDocumentId": text_document_id,
             "sourceText": ocr_text or "GitLaw upload test for translation.",
         },
     )
@@ -181,6 +218,48 @@ def main():
         total["PASS"] += 1
     else:
         print_result("translation_text_document", "FAIL", f"expected 200/done, got {code} payload={payload}")
+        total["FAIL"] += 1
+
+    code, payload = request(
+        "/api/pro/upload",
+        method="POST",
+        token=token,
+        data={
+            "caseId": "case-test",
+            "fileName": "ocr-test.pdf",
+            "mimeType": "application/pdf",
+            "sizeBytes": len(MINIMAL_PDF),
+            "base64": base64.b64encode(MINIMAL_PDF).decode("ascii"),
+        },
+    )
+    pdf_document_id = payload.get("documentId") if code == 200 and isinstance(payload, dict) else None
+    if code == 200 and pdf_document_id:
+        print_result("server_pdf_vault", "PASS", f"documentId={pdf_document_id}")
+        total["PASS"] += 1
+    else:
+        print_result("server_pdf_vault", "FAIL", f"HTTP {code} payload={payload}")
+        total["FAIL"] += 1
+
+    code, payload = request(
+        "/api/ocr",
+        method="POST",
+        token=token,
+        data={
+            "caseId": "case-test",
+            "attachmentInternalName": "pdf_internal",
+            "mode": "ocr",
+            "sourceLanguage": "de",
+            "serverDocumentId": pdf_document_id,
+        },
+    )
+    if code == 200 and isinstance(payload, dict) and isinstance(payload.get("ocrText"), str):
+        print_result("ocr_pdf_text_layer", "PASS", f"provider={payload.get('provider')} chars={len(payload.get('ocrText', ''))}")
+        total["PASS"] += 1
+    elif code == 501 and isinstance(payload, dict) and payload.get("status") == "not_supported_yet":
+        print_result("ocr_pdf_text_layer", "BETA", payload.get("message"))
+        total["BETA"] += 1
+    else:
+        print_result("ocr_pdf_text_layer", "FAIL", f"expected 200/done or 501/not_supported_yet, got {code} payload={payload}")
         total["FAIL"] += 1
 
     print("\nSummary")
