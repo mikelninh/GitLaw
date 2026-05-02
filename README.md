@@ -56,6 +56,7 @@ Eigenständiger Bereich unter `/#/pro` — Beta, Invite-only.
 | **Cloud-Sync** | Tenant-gebundener Auto-Push an Upstash-Redis Frankfurt über signierte Pro-Session statt nur ratebarem Kanzlei-Schlüssel |
 | **Pro Session + RBAC** | Signierte Pro-Session mit `tenantId` + `role`, serverseitige API-Gates für Recherche, Sync, Upload |
 | **Dokument-Vault (Beta)** | Serverseitiger Dokumentpfad mit Tenant-Bindung als erster Schritt zum finalen EU-Storage |
+| **Getesteter Kernloop** | Zuletzt intern verifiziert mit `7 PASS / 1 BETA / 0 FAIL`; der fruehere OCR-Stub wird inzwischen auf echten Serverpfad fuer Text/Bild umgestellt |
 | **Personal Welcome-Pages** | `/#/bao`, `/#/rubin`, `/#/werner`, `/#/jasmin` — 1-Klick-Login + Branding pre-loaded |
 | **AVV-Vorlagen-PDF** | Mustertext-Generator auf eigenem Briefkopf |
 | **Wöchentliches Auto-Update** | GitHub-Action prüft jeden Sonntag mit OpenAI Structured Outputs ob neue BGH-Urteile zu den Top-30 § → öffnet PR mit Diff |
@@ -126,6 +127,7 @@ Aktuelle Agenten-/Workflow-Artefakte:
 - [GITLAW_AGENT_VISUAL_MAP_DE.md](/Users/mikel/gitlaw/GITLAW_AGENT_VISUAL_MAP_DE.md)
 - [GITLAW_AGENT_CODE_MAP_DE.md](/Users/mikel/gitlaw/GITLAW_AGENT_CODE_MAP_DE.md)
 - [GITLAW_AGENT_EVAL_MATRIX_DE.md](/Users/mikel/gitlaw/GITLAW_AGENT_EVAL_MATRIX_DE.md)
+- [GITLAW_PILOT_READINESS_REPORT_DE.md](/Users/mikel/gitlaw/GITLAW_PILOT_READINESS_REPORT_DE.md)
 - [GITLAW_CREWAI_AUTOMATION_PROMPT_EN.md](/Users/mikel/gitlaw/GITLAW_CREWAI_AUTOMATION_PROMPT_EN.md)
 - [GITLAW_CREWAI_AGENTS.yaml](/Users/mikel/gitlaw/GITLAW_CREWAI_AGENTS.yaml)
 - [GITLAW_CREWAI_TASKS.yaml](/Users/mikel/gitlaw/GITLAW_CREWAI_TASKS.yaml)
@@ -136,6 +138,12 @@ Aktueller Stand:
 - `REAL`: Research Agent, Drafting-Grundflow, Session/RBAC, tenant-bound sync, serverseitiger Dokumentpfad
 - `BETA`: Intake-Klassifikation, OCR/Translation, Citation Verification Layer, approved memory
 - `NEXT`: Workflow Recommendation Agent, tiefer Server-Persistenzkern, echter EU-Storage/Worker-Stack
+
+Letzter ausgefuehrter Live-Check:
+
+- `PASS`: 7
+- `BETA`: 1
+- `FAIL`: 0
 
 ---
 

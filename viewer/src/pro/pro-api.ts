@@ -93,3 +93,22 @@ export async function downloadServerDocument(documentId: string): Promise<void> 
   document.body.removeChild(a)
   URL.revokeObjectURL(url)
 }
+
+export async function runRemoteDocumentProcessing(input: {
+  caseId: string
+  attachmentInternalName: string
+  mode: 'ocr' | 'translate'
+  sourceLanguage?: string
+  targetLanguage?: 'de'
+  serverDocumentId?: string
+  sourceText?: string
+}): Promise<{ ok: boolean; status: string; provider?: string; ocrText?: string; translatedTextDe?: string; message?: string }> {
+  const resp = await fetchWithProSession('/api/ocr', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(input),
+  })
+  const payload = await resp.json().catch(() => ({}))
+  if (!resp.ok) throw new Error(payload?.error || payload?.message || `Processing failed (HTTP ${resp.status})`)
+  return payload as { ok: boolean; status: string; provider?: string; ocrText?: string; translatedTextDe?: string; message?: string }
+}

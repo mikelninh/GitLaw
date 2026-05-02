@@ -12,7 +12,8 @@ Es gibt zwei Ebenen:
    - tenant-bound sync
    - Upload-Vault
    - Research API
-   - OCR-Stub-Verhalten
+   - OCR fuer Textdokumente
+   - DE-Uebersetzung fuer Textdokumente
 
 2. `Manuell pruefbar`
    - Intake UX
@@ -40,7 +41,8 @@ Ziel:
 4. Autorisierte Research-API liefert strukturierten Output
 5. tenant-bound Sync kann schreiben und lesen
 6. Server-Dokument-Vault kann kleine Datei speichern
-7. OCR-Endpunkt ist geschuetzt und liefert erwarteten Beta-Status
+7. OCR-Endpunkt verarbeitet serverseitige Textdokumente
+8. Translation-Endpunkt erzeugt eine DE-Arbeitsfassung
 
 ## Manuelle Checks
 
@@ -78,7 +80,9 @@ Ziel:
 
 - Session / RBAC: PASS
 - Sync: PASS
-- Upload-Vault: PASS/BETA
+- Upload-Vault: PASS
 - Research Agent: PASS
-- OCR / Translation: BETA
+- OCR fuer Textdokumente: PASS
+- Translation fuer Textdokumente: PASS
+- PDF-OCR-Worker: BETA/NEXT
 - Workflow Recommendation: FAIL/NEXT

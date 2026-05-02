@@ -135,6 +135,7 @@ def main():
         print_result("server_document_vault", "FAIL", f"HTTP {code} payload={payload}")
         total["FAIL"] += 1
 
+    document_id = payload.get("documentId") if isinstance(payload, dict) else None
     code, payload = request(
         "/api/ocr",
         method="POST",
@@ -145,13 +146,41 @@ def main():
             "mode": "ocr",
             "sourceLanguage": "vi",
             "targetLanguage": "de",
+            "serverDocumentId": document_id,
         },
     )
-    if code == 501 and isinstance(payload, dict) and payload.get("status") == "not_enabled":
-        print_result("ocr_beta_stub", "BETA", payload.get("message"))
+    if code == 200 and isinstance(payload, dict) and isinstance(payload.get("ocrText"), str):
+        ocr_text = payload.get("ocrText", "")
+        print_result("ocr_text_document", "PASS", f"provider={payload.get('provider')} chars={len(ocr_text)}")
+        total["PASS"] += 1
+    elif code == 501 and isinstance(payload, dict) and payload.get("status") == "not_supported_yet":
+        print_result("ocr_text_document", "BETA", payload.get("message"))
         total["BETA"] += 1
+        ocr_text = ""
     else:
-        print_result("ocr_beta_stub", "FAIL", f"expected 501/not_enabled, got {code} payload={payload}")
+        print_result("ocr_text_document", "FAIL", f"expected 200/done or 501/not_supported_yet, got {code} payload={payload}")
+        total["FAIL"] += 1
+        ocr_text = ""
+
+    code, payload = request(
+        "/api/ocr",
+        method="POST",
+        token=token,
+        data={
+            "caseId": "case-test",
+            "attachmentInternalName": "test_internal",
+            "mode": "translate",
+            "sourceLanguage": "en",
+            "targetLanguage": "de",
+            "serverDocumentId": document_id,
+            "sourceText": ocr_text or "GitLaw upload test for translation.",
+        },
+    )
+    if code == 200 and isinstance(payload, dict) and isinstance(payload.get("translatedTextDe"), str):
+        print_result("translation_text_document", "PASS", f"provider={payload.get('provider')} chars={len(payload.get('translatedTextDe', ''))}")
+        total["PASS"] += 1
+    else:
+        print_result("translation_text_document", "FAIL", f"expected 200/done, got {code} payload={payload}")
         total["FAIL"] += 1
 
     print("\nSummary")

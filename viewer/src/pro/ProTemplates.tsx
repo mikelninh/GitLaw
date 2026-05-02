@@ -57,6 +57,18 @@ function joinMultiValue(values: string[]): string {
   return values.join(' · ')
 }
 
+function preferredContextField(
+  fieldDefs: Array<{ id: string; type: string }>,
+): string | null {
+  const preferredIds = ['sachverhalt', 'begruendung', 'anliegen', 'details']
+  for (const id of preferredIds) {
+    const hit = fieldDefs.find(f => f.id === id)
+    if (hit) return hit.id
+  }
+  const firstTextarea = fieldDefs.find(f => f.type === 'textarea')
+  return firstTextarea?.id || null
+}
+
 type TemplateSortMode = 'smart' | 'favorites' | 'usage'
 type QuickAccessItem = {
   key: string
@@ -212,6 +224,7 @@ export default function ProTemplates() {
   const templateUsage = useMemo(() => makeUsageMap(listTemplateUsage()), [tick, savedLetter])
   const linkedLetter = selectedCaseId ? listLetters(selectedCaseId).find(l => l.id === refLetterId) : undefined
   const linkedResearch = selectedCaseId ? listResearch(selectedCaseId).find(r => r.id === refResearchId) : undefined
+  const selectedCase = selectedCaseId ? getCase(selectedCaseId) : undefined
   const favoriteCount = useMemo(
     () => listTemplateUsage().filter(entry => entry.favorite).length,
     [tick],
@@ -597,6 +610,10 @@ export default function ProTemplates() {
           type: 'text' as const,
           required: false,
         }))
+  const documentContextTarget = preferredContextField(fieldDefs)
+  const caseDocuments = (selectedCase?.documents || []).filter(doc =>
+    Boolean(doc.translatedTextDe || doc.ocrText || doc.textContent),
+  )
 
   return (
     <div className="space-y-6">
@@ -685,6 +702,63 @@ export default function ProTemplates() {
           ))}
         </select>
       </div>
+
+      {selectedCase && caseDocuments.length > 0 && (
+        <section className="bg-amber-50 border border-amber-200 rounded-2xl p-4 space-y-3">
+          <div className="flex items-center justify-between gap-3 flex-wrap">
+            <div>
+              <p className="text-xs uppercase tracking-wide text-amber-800 font-semibold">Dokumentkontext aus der Akte</p>
+              <p className="text-sm text-amber-900/80 mt-1">
+                OCR-Text und DE-Arbeitsfassungen lassen sich direkt in den Entwurf uebernehmen.
+              </p>
+            </div>
+            {documentContextTarget && (
+              <div className="text-xs text-amber-900/70">
+                Ziel-Feld: <span className="font-medium">{documentContextTarget}</span>
+              </div>
+            )}
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+            {caseDocuments.slice(0, 4).map(doc => {
+              const bestText = doc.translatedTextDe || doc.ocrText || doc.textContent || ''
+              const sourceLabel = doc.translatedTextDe
+                ? 'DE-Arbeitsfassung'
+                : doc.ocrText
+                  ? 'OCR-Text'
+                  : 'Dateitext'
+              return (
+                <div key={doc.id} className="bg-white border border-amber-200 rounded-xl p-3 space-y-2">
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <p className="text-sm font-medium">{doc.originalName}</p>
+                      <p className="text-[11px] text-amber-900/70 mt-1">{sourceLabel}</p>
+                    </div>
+                    {documentContextTarget && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const existing = fields[documentContextTarget] || ''
+                          const block = `${doc.originalName}\n${bestText}`.trim()
+                          setFields({
+                            ...fields,
+                            [documentContextTarget]: existing ? `${existing}\n\n${block}` : block,
+                          })
+                        }}
+                        className="text-xs bg-[var(--color-ink)] text-white rounded-lg px-3 py-1.5 hover:opacity-90 shrink-0"
+                      >
+                        In Entwurf uebernehmen
+                      </button>
+                    )}
+                  </div>
+                  <p className="text-xs text-[var(--color-ink-soft)] line-clamp-4 whitespace-pre-wrap">
+                    {bestText}
+                  </p>
+                </div>
+              )
+            })}
+          </div>
+        </section>
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <form onSubmit={e => e.preventDefault()} className="bg-white border border-[var(--color-border)] rounded-2xl p-5 space-y-3">

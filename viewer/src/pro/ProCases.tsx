@@ -24,6 +24,7 @@ import {
   listIntakes,
   listLetters,
   listResearch,
+  applyDocumentJobResult,
   markDocumentTranslationReviewed,
   markIntakeReviewed,
   queueDocumentJob,
@@ -31,7 +32,7 @@ import {
   toggleCaseTask,
   updateCase,
 } from './store'
-import { downloadServerDocument, uploadDocumentToVault } from './pro-api'
+import { downloadServerDocument, runRemoteDocumentProcessing, uploadDocumentToVault } from './pro-api'
 import { exportAuditPDF } from './pdf'
 import { exportCaseBundle } from './zip'
 import { berechneFristAusPreset, FRIST_PRESETS, presetToBezeichnung } from './frist-calc'
@@ -833,7 +834,7 @@ export function ProCaseDetail() {
 
                   <div className="flex gap-2 flex-wrap text-xs">
                     <button
-                      onClick={() => {
+                      onClick={async () => {
                         const job = queueDocumentJob(c.id, {
                           documentId: selectedDocument.id,
                           attachmentInternalName: selectedDocument.internalName,
@@ -841,7 +842,24 @@ export function ProCaseDetail() {
                           sourceLanguage: selectedDocument.languageHint,
                           note: 'Local beta OCR',
                         })
-                        if (job) runDocumentJob(c.id, job.id)
+                        if (job) {
+                          if (selectedDocument.serverDocumentId) {
+                            try {
+                              const result = await runRemoteDocumentProcessing({
+                                caseId: c.id,
+                                attachmentInternalName: selectedDocument.internalName,
+                                mode: 'ocr',
+                                sourceLanguage: selectedDocument.languageHint,
+                                serverDocumentId: selectedDocument.serverDocumentId,
+                              })
+                              applyDocumentJobResult(c.id, job.id, { status: 'done', ocrText: result.ocrText })
+                            } catch {
+                              runDocumentJob(c.id, job.id)
+                            }
+                          } else {
+                            runDocumentJob(c.id, job.id)
+                          }
+                        }
                         setTick(t => t + 1)
                       }}
                       className="rounded-lg border border-[var(--color-border)] px-2 py-1 hover:border-[var(--color-gold)]"
@@ -850,7 +868,7 @@ export function ProCaseDetail() {
                     </button>
                     {selectedDocument.languageHint && selectedDocument.languageHint !== 'de' && (
                       <button
-                        onClick={() => {
+                        onClick={async () => {
                           const job = queueDocumentJob(c.id, {
                             documentId: selectedDocument.id,
                             attachmentInternalName: selectedDocument.internalName,
@@ -859,7 +877,27 @@ export function ProCaseDetail() {
                             targetLanguage: 'de',
                             note: 'Local beta translation',
                           })
-                          if (job) runDocumentJob(c.id, job.id)
+                          if (job) {
+                            const source = selectedDocument.ocrText || selectedDocument.textContent
+                            if (source) {
+                              try {
+                                const result = await runRemoteDocumentProcessing({
+                                  caseId: c.id,
+                                  attachmentInternalName: selectedDocument.internalName,
+                                  mode: 'translate',
+                                  sourceLanguage: selectedDocument.languageHint,
+                                  targetLanguage: 'de',
+                                  serverDocumentId: selectedDocument.serverDocumentId,
+                                  sourceText: source,
+                                })
+                                applyDocumentJobResult(c.id, job.id, { status: 'done', translatedTextDe: result.translatedTextDe })
+                              } catch {
+                                runDocumentJob(c.id, job.id)
+                              }
+                            } else {
+                              runDocumentJob(c.id, job.id)
+                            }
+                          }
                           setTick(t => t + 1)
                         }}
                         className="rounded-lg border border-[var(--color-border)] px-2 py-1 hover:border-[var(--color-gold)]"

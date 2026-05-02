@@ -503,6 +503,38 @@ export function runDocumentJob(caseId: string, jobId: string): DocumentJob | nul
   return nextJobs.find(j => j.id === jobId) || null
 }
 
+export function applyDocumentJobResult(caseId: string, jobId: string, result: {
+  status?: DocumentJob['status']
+  ocrText?: string
+  translatedTextDe?: string
+}): DocumentJob | null {
+  const all = readJSON<MandantCase[]>(KEY_CASES, [])
+  const caseIdx = all.findIndex(c => c.id === caseId)
+  if (caseIdx < 0) return null
+  const currentCase = all[caseIdx]
+  const job = (currentCase.documentJobs || []).find(j => j.id === jobId)
+  if (!job) return null
+  const nextJobs = (currentCase.documentJobs || []).map(j =>
+    j.id === jobId ? { ...j, status: result.status || 'done' } : j,
+  )
+  const nextDocs = (currentCase.documents || []).map(d => {
+    if (d.id !== job.documentId && d.internalName !== job.attachmentInternalName) return d
+    return {
+      ...d,
+      ...(result.ocrText ? { ocrText: result.ocrText } : {}),
+      ...(result.translatedTextDe ? { translatedTextDe: result.translatedTextDe } : {}),
+    }
+  })
+  all[caseIdx] = {
+    ...currentCase,
+    documentJobs: nextJobs,
+    documents: nextDocs,
+    updatedAt: new Date().toISOString(),
+  }
+  writeJSON(KEY_CASES, all)
+  return nextJobs.find(j => j.id === jobId) || null
+}
+
 export function markDocumentTranslationReviewed(caseId: string, documentId: string): void {
   if (!guardAction('doc.translation.review')) return
   const updated = updateDocumentInCase(caseId, documentId, { translationReviewed: true })

@@ -169,6 +169,10 @@ export default function WelcomePersonal({ personaSlug }: { personaSlug?: string 
               Für deinen Test heißt das: bitte nicht nur auf die Antwortqualität schauen, sondern ob der
               gesamte Arbeitsfluss sinnvoll, schnell und vertrauenswürdig wirkt.
             </p>
+            <p className="text-xs text-[var(--color-ink-muted)] mt-3">
+              Interner Live-Check zuletzt: <span className="font-medium">7 PASS / 1 BETA / 0 FAIL</span>.
+              Der verbleibende groesste Beta-Block war OCR/Translation; der Serverpfad dafuer wird jetzt ersetzt.
+            </p>
           </div>
 
           <div className="bg-white border border-[var(--color-border)] rounded-2xl p-6">
