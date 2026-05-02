@@ -170,8 +170,8 @@ export default function WelcomePersonal({ personaSlug }: { personaSlug?: string 
               gesamte Arbeitsfluss sinnvoll, schnell und vertrauenswürdig wirkt.
             </p>
             <p className="text-xs text-[var(--color-ink-muted)] mt-3">
-              Interner Live-Check zuletzt: <span className="font-medium">7 PASS / 1 BETA / 0 FAIL</span>.
-              Der verbleibende groesste Beta-Block war OCR/Translation; der Serverpfad dafuer wird jetzt ersetzt.
+              Interner Live-Check zuletzt: <span className="font-medium">9 PASS / 0 BETA / 0 FAIL</span>.
+              Sessions, Sync, Vault, Research sowie OCR und DE-Uebersetzung fuer Textdokumente laufen im Kernpfad.
             </p>
           </div>
 

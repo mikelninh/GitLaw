@@ -56,7 +56,7 @@ Eigenständiger Bereich unter `/#/pro` — Beta, Invite-only.
 | **Cloud-Sync** | Tenant-gebundener Auto-Push an Upstash-Redis Frankfurt über signierte Pro-Session statt nur ratebarem Kanzlei-Schlüssel |
 | **Pro Session + RBAC** | Signierte Pro-Session mit `tenantId` + `role`, serverseitige API-Gates für Recherche, Sync, Upload |
 | **Dokument-Vault (Beta)** | Serverseitiger Dokumentpfad mit Tenant-Bindung als erster Schritt zum finalen EU-Storage |
-| **Getesteter Kernloop** | Zuletzt intern verifiziert mit `7 PASS / 1 BETA / 0 FAIL`; der fruehere OCR-Stub wird inzwischen auf echten Serverpfad fuer Text/Bild umgestellt |
+| **Getesteter Kernloop** | Zuletzt intern verifiziert mit `9 PASS / 0 BETA / 0 FAIL`; Sessions, Sync, Vault, Research, OCR und Translation fuer Textdokumente laufen im Live-Check |
 | **Personal Welcome-Pages** | `/#/bao`, `/#/rubin`, `/#/werner`, `/#/jasmin` — 1-Klick-Login + Branding pre-loaded |
 | **AVV-Vorlagen-PDF** | Mustertext-Generator auf eigenem Briefkopf |
 | **Wöchentliches Auto-Update** | GitHub-Action prüft jeden Sonntag mit OpenAI Structured Outputs ob neue BGH-Urteile zu den Top-30 § → öffnet PR mit Diff |
@@ -141,8 +141,8 @@ Aktueller Stand:
 
 Letzter ausgefuehrter Live-Check:
 
-- `PASS`: 7
-- `BETA`: 1
+- `PASS`: 9
+- `BETA`: 0
 - `FAIL`: 0
 
 ---

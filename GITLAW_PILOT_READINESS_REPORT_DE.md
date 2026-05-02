@@ -16,8 +16,8 @@ ist nicht mehr nur UI, sondern bereits durch signierte Sessions, Tenant-Bindung,
 
 Aus dem zuletzt ausgefuehrten Live-Check:
 
-- `PASS`: 7
-- `BETA`: 1
+- `PASS`: 9
+- `BETA`: 0
 - `FAIL`: 0
 
 Verifiziert wurden:
@@ -29,11 +29,12 @@ Verifiziert wurden:
 - tenant-bound Sync Write
 - tenant-bound Sync Read
 - serverseitiger Dokument-Vault
-- OCR/Translation damals noch als Beta-Stub
+- OCR fuer Textdokumente
+- DE-Uebersetzung fuer Textdokumente
 
 ## Was sich seitdem verbessert hat
 
-Der OCR-/Translation-Pfad wurde inzwischen von einem reinen Stub auf einen echten serverseitigen Verarbeitungspfad fuer Text- und Bilddokumente umgestellt:
+Der OCR-/Translation-Pfad wurde von einem reinen Stub auf einen echten serverseitigen Verarbeitungspfad fuer Text- und Bilddokumente umgestellt:
 
 - `Textdokumente`: direktes OCR/Extraktion serverseitig
 - `Bilder`: OCR ueber Vision-Modell
@@ -41,7 +42,7 @@ Der OCR-/Translation-Pfad wurde inzwischen von einem reinen Stub auf einen echte
 
 Damit verschiebt sich der verbleibende Haupt-Beta-Block:
 
-- nicht mehr `OCR/Translation allgemein`
+- nicht mehr `OCR/Translation fuer Textdokumente`
 - sondern `voller PDF-OCR-Worker + finaler EU-Storage/Worker-Stack`
 
 ## Was fuer einen Pilot heute stark genug ist

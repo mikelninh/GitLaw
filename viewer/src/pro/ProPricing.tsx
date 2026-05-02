@@ -182,6 +182,10 @@ export default function ProPricing() {
         <p className="text-sm text-[var(--color-ink-muted)] max-w-2xl mx-auto">
           Der richtige Einstieg ist aktuell nicht „welches Self-Serve-Tier?“, sondern ein klarer Kanzlei-Pilot mit echtem Workflow.
         </p>
+        <div className="inline-flex items-center gap-2 rounded-full border border-green-200 bg-green-50 px-4 py-2 text-sm text-green-900">
+          <ShieldCheck className="w-4 h-4" />
+          Getesteter Kernloop: 9 PASS / 0 BETA / 0 FAIL
+        </div>
         <div className="flex flex-wrap justify-center gap-3 pt-2">
           <a
             href="mailto:mikel_ninh@yahoo.de?subject=GitLaw%20Pro%20Pilot%20anfragen"
