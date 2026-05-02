@@ -1,10 +1,12 @@
 /**
- * Pricing-Page — sichtbar auch ohne Beta-Token (über Footer-Link von der
- * Auth-Page), damit interessierte Anwält:innen die Tiers + die Money-back-
- * Garantie sehen können bevor sie Zugang anfragen.
+ * Pricing-Page — sichtbar auch ohne Beta-Token.
  *
- * Kern-Botschaft: 60 Tage Geld-zurück. Die Hürde sind nicht €79 — die
- * Hürde ist Risiko + Beta-Skepsis. Garantie nimmt das weg.
+ * Company focus now:
+ * - pilot first
+ * - one strong workflow
+ * - small firms with high document / intake friction
+ *
+ * The page therefore sells the pilot before it sells the later standard tiers.
  */
 
 import { Check, X, ShieldCheck } from 'lucide-react'
@@ -21,6 +23,59 @@ interface Tier {
   cta: string
   bgClass: string
 }
+
+interface PilotPlan {
+  name: string
+  setup: string
+  monthly: string
+  fit: string
+  points: string[]
+  ctaSubject: string
+  emphasized?: boolean
+}
+
+const PILOT_PLANS: PilotPlan[] = [
+  {
+    name: 'Solo / Small Pilot',
+    setup: '€1.500',
+    monthly: '€349/Monat',
+    fit: '1-2 Anwält:innen · 2-5 reale Testmandate',
+    points: [
+      'Setup + Workflow-Mapping',
+      'Killer-Demo-Flow für deine Kanzlei',
+      'Direkter Founder-Support',
+      'Ideal für erste echte Fälle im kleinen Rahmen',
+    ],
+    ctaSubject: 'GitLaw Pro Pilot — Solo / Small Pilot',
+  },
+  {
+    name: 'Team Pilot',
+    setup: '€3.000',
+    monthly: '€890/Monat',
+    fit: '3-8 aktive Nutzer:innen · gemeinsamer Kanzlei-Workflow',
+    points: [
+      'Gemeinsamer Intake-, Recherche- und Schreiben-Flow',
+      'Engere Begleitung im Team-Setup',
+      'Mehrere Rollen im Pilotbetrieb',
+      'Gut für kleine Kanzleien mit echter Delegation',
+    ],
+    ctaSubject: 'GitLaw Pro Pilot — Team Pilot',
+    emphasized: true,
+  },
+  {
+    name: 'Migration / Document-Heavy Pilot',
+    setup: '€4.500',
+    monthly: '€1.200/Monat',
+    fit: 'hoher Doku-Druck · mehrsprachiger Intake · OCR-/Übersetzungsnähe',
+    points: [
+      'Stärkster Fit für Migrations-/Bescheid-/Foto-Workflows',
+      'Dokumentpfad als Schwerpunkt',
+      'Geeignet für Kanzleien mit viel Sprach- und Dateichaos',
+      'Bester Test für den echten GitLaw-Moat',
+    ],
+    ctaSubject: 'GitLaw Pro Pilot — Migration / Document-Heavy',
+  },
+]
 
 const TIERS: Tier[] = [
   {
@@ -122,9 +177,52 @@ export default function ProPricing() {
       <header className="text-center space-y-3 pt-4">
         <h1 className="h-page mx-auto" style={{ fontSize: '2.5rem' }}>Preise für GitLaw Pro</h1>
         <p className="text-lg text-[var(--color-ink-soft)] max-w-2xl mx-auto">
-          Vier Tiers, monatlich kündbar, 60 Tage Geld-zurück.
+          Von multilingualem Intake und Dateichaos zu verifizierter Recherche und erstem Schriftsatz in einem Workflow.
         </p>
+        <p className="text-sm text-[var(--color-ink-muted)] max-w-2xl mx-auto">
+          Der richtige Einstieg ist aktuell nicht „welches Self-Serve-Tier?“, sondern ein klarer Kanzlei-Pilot mit echtem Workflow.
+        </p>
+        <div className="flex flex-wrap justify-center gap-3 pt-2">
+          <a
+            href="mailto:mikel_ninh@yahoo.de?subject=GitLaw%20Pro%20Pilot%20anfragen"
+            className="inline-block bg-[var(--color-ink)] text-white rounded-lg px-6 py-3 font-medium hover:opacity-90"
+          >
+            Pilot anfragen
+          </a>
+          <a
+            href="mailto:mikel_ninh@yahoo.de?subject=GitLaw%20Pro%20Demo%20anfragen"
+            className="inline-block bg-white border border-[var(--color-border)] text-[var(--color-ink)] rounded-lg px-6 py-3 font-medium hover:border-[var(--color-gold)]"
+          >
+            Demo anfragen
+          </a>
+        </div>
       </header>
+
+      {/* Wedge / workflow */}
+      <section className="bg-[var(--color-bg-alt)] border border-[var(--color-border)] rounded-2xl p-6">
+        <div className="grid md:grid-cols-2 gap-6 items-start">
+          <div>
+            <p className="text-xs uppercase tracking-wider text-[var(--color-gold)] font-semibold mb-2">Wofür Kanzleien GitLaw Pro kaufen</p>
+            <h2 className="text-2xl font-semibold mb-3">Nicht „AI für Recht“. Sondern ein sauberer Weg von Eingang zu erstem Entwurf.</h2>
+            <p className="text-[var(--color-ink-soft)]">
+              GitLaw Pro ist am stärksten dort, wo E-Mails, Fotos, PDFs, Sprachbarrieren, Recherche und Schreiben heute noch als Medienbruch stattfinden.
+            </p>
+          </div>
+          <div className="grid gap-3">
+            {[
+              '1. Mehrsprachiger Intake kommt rein',
+              '2. Dateien werden benannt, triagiert und der Akte zugeordnet',
+              '3. Recherche wird mit §-Verifikation aufgebaut',
+              '4. Schreiben entsteht aus freigegebener Recherche',
+              '5. Anwält:in prüft, exportiert, sendet',
+            ].map((step) => (
+              <div key={step} className="bg-white border border-[var(--color-border)] rounded-xl px-4 py-3 text-sm">
+                {step}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Money-back banner */}
       <div className="bg-gradient-to-r from-green-50 via-white to-green-50 border border-green-200 rounded-2xl p-6 flex items-start gap-4">
@@ -140,8 +238,69 @@ export default function ProPricing() {
         </div>
       </div>
 
+      {/* Pilot plans */}
+      <section>
+        <div className="text-center mb-6">
+          <h2 className="text-2xl font-semibold mb-1">Pilot-Angebot für Kanzleien</h2>
+          <p className="text-sm text-[var(--color-ink-soft)] max-w-2xl mx-auto">
+            Für den jetzigen Stand ist das der ehrliche Einstieg: begrenzter, ernsthafter Pilot statt beliebiger Self-Serve-Abo-Entscheidung.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          {PILOT_PLANS.map((plan) => (
+            <div
+              key={plan.name}
+              className={`rounded-2xl p-6 border-2 ${
+                plan.emphasized
+                  ? 'border-[var(--color-gold)] bg-gradient-to-b from-[var(--color-gold-light)] to-white shadow-sm'
+                  : 'border-[var(--color-border)] bg-white'
+              }`}
+            >
+              <div className="mb-4">
+                <h3 className="text-xl font-semibold">{plan.name}</h3>
+                <p className="text-sm text-[var(--color-ink-soft)] mt-1">{plan.fit}</p>
+              </div>
+              <div className="grid grid-cols-2 gap-3 mb-4">
+                <div className="bg-[var(--color-bg-alt)] rounded-xl p-3">
+                  <p className="text-xs uppercase tracking-wide text-[var(--color-ink-muted)]">Setup</p>
+                  <p className="text-xl font-semibold mt-1">{plan.setup}</p>
+                </div>
+                <div className="bg-[var(--color-bg-alt)] rounded-xl p-3">
+                  <p className="text-xs uppercase tracking-wide text-[var(--color-ink-muted)]">Pilot</p>
+                  <p className="text-xl font-semibold mt-1">{plan.monthly}</p>
+                </div>
+              </div>
+              <ul className="space-y-2 text-sm mb-6">
+                {plan.points.map((point) => (
+                  <li key={point} className="flex items-start gap-2">
+                    <Check className="w-4 h-4 text-green-700 shrink-0 mt-0.5" />
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+              <a
+                href={`mailto:mikel_ninh@yahoo.de?subject=${encodeURIComponent(plan.ctaSubject)}`}
+                className={`block text-center text-sm rounded-lg px-4 py-2.5 transition-colors ${
+                  plan.emphasized
+                    ? 'bg-[var(--color-ink)] text-white hover:opacity-90'
+                    : 'border border-[var(--color-border)] text-[var(--color-ink)] hover:border-[var(--color-gold)]'
+                }`}
+              >
+                Pilot anfragen
+              </a>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Tiers */}
       <section>
+        <div className="text-center mb-6">
+          <h2 className="text-2xl font-semibold mb-1">Spätere Standardpläne</h2>
+          <p className="text-sm text-[var(--color-ink-soft)] max-w-2xl mx-auto">
+            Diese Tiers bleiben relevant, sobald der Pilot- und Kanzlei-Workflow stabiler in den Regelbetrieb übergeht.
+          </p>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {TIERS.map(t => (
             <div
@@ -276,15 +435,15 @@ export default function ProPricing() {
       </section>
 
       <section className="text-center bg-[var(--color-bg-alt)] rounded-2xl p-8">
-        <h2 className="text-xl font-semibold mb-2">Bereit?</h2>
+        <h2 className="text-xl font-semibold mb-2">Bereit für einen echten Kanzlei-Pilot?</h2>
         <p className="text-sm text-[var(--color-ink-soft)] mb-4">
-          Beta-Zugänge geben wir gerade Stück für Stück raus. Eine kurze Mail reicht.
+          Der beste nächste Schritt ist eine kurze Mail mit Praxisbereich, Kanzleigröße und dem Workflow, der heute am meisten Zeit frisst.
         </p>
         <a
-          href="mailto:mikel_ninh@yahoo.de?subject=Beta-Zugang%20zu%20GitLaw%20Pro"
+          href="mailto:mikel_ninh@yahoo.de?subject=GitLaw%20Pro%20Pilot%20anfragen"
           className="inline-block bg-[var(--color-ink)] text-white rounded-lg px-6 py-3 font-medium hover:opacity-90"
         >
-          Beta-Zugang anfragen
+          Pilot anfragen
         </a>
       </section>
     </div>

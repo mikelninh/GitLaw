@@ -2,9 +2,9 @@
  * Beta invite-token gate.
  *
  * Not real auth — just a soft barrier so we can hand out specific tokens to
- * test Anwält:innen. Tokens are validated client-side against a small allowlist
- * in `store.ts`. Once approved, the token is persisted in localStorage so the
- * user doesn't see the gate again on the same browser.
+ * test Anwält:innen and pilot firms. Tokens are validated client-side against
+ * a small allowlist in `store.ts`. Once approved, the token is persisted in
+ * localStorage so the user doesn't see the gate again on the same browser.
  *
  * Real auth (magic-link / Supabase) follows once we have a paying customer.
  */
@@ -126,9 +126,10 @@ export default function ProAuth({ children }: Props) {
         </div>
 
         <p className="text-sm text-[var(--color-ink-soft)] mb-6 leading-relaxed">
-          Geschlossene Beta für Anwält:innen und Kanzleien. Du brauchst einen
-          persönlichen Beta-Token. Falls du keinen hast, schreib uns kurz —
-          wir geben gerade Stück für Stück Zugänge raus.
+          Geschlossene Beta für Anwält:innen und Kanzleien. Wenn du bereits
+          einen persönlichen Beta-Token hast, kannst du hier direkt rein.
+          Wenn nicht, ist der richtige nächste Schritt aktuell ein kurzer
+          Demo- oder Pilotkontakt.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-3">
@@ -155,7 +156,7 @@ export default function ProAuth({ children }: Props) {
         <div className="mt-6 pt-6 border-t border-[var(--color-border)] text-xs text-[var(--color-ink-muted)] space-y-2">
           <p>
             <Link to="/preise" className="underline font-medium text-[var(--color-ink)]">
-              → Preise &amp; 60-Tage-Garantie ansehen
+              → Pilot-Angebot, Preise &amp; 60-Tage-Garantie ansehen
             </Link>
           </p>
           <p>
@@ -163,7 +164,7 @@ export default function ProAuth({ children }: Props) {
             <Link to="/" className="underline">gitlaw.app</Link>
           </p>
           <p>
-            Beta-Zugang anfragen: <a href="mailto:mikel_ninh@yahoo.de" className="underline">mikel_ninh@yahoo.de</a>
+            Demo / Pilot anfragen: <a href="mailto:mikel_ninh@yahoo.de?subject=GitLaw%20Pro%20Pilot%20anfragen" className="underline">mikel_ninh@yahoo.de</a>
           </p>
         </div>
       </div>
