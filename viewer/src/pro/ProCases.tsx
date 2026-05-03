@@ -36,6 +36,7 @@ import { downloadServerDocument, runRemoteDocumentProcessing, uploadDocumentToVa
 import { exportAuditPDF } from './pdf'
 import { exportCaseBundle } from './zip'
 import { berechneFristAusPreset, FRIST_PRESETS, presetToBezeichnung } from './frist-calc'
+import { getCaseRecommendations } from './recommendations'
 import QrCard from './QrCard'
 import type { MandantCase } from './types'
 
@@ -522,6 +523,7 @@ export function ProCaseDetail() {
 
   const frist = c.fristDatum ? daysUntil(c.fristDatum) : null
   const selectedDocument = (c.documents || []).find(d => d.id === selectedDocumentId) || (c.documents || [])[0] || null
+  const recommendations = getCaseRecommendations(c).slice(0, 3)
 
   function slugPart(input: string): string {
     return input.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '').slice(0, 24) || 'doc'
@@ -694,6 +696,46 @@ export function ProCaseDetail() {
             </span>
           </span>
         </div>
+      )}
+
+      {recommendations.length > 0 && (
+        <section className="bg-white border border-[var(--color-border)] rounded-2xl p-4">
+          <div className="flex items-start justify-between gap-3 flex-wrap mb-3">
+            <div>
+              <h2 className="font-semibold">Naechster sinnvoller Schritt</h2>
+              <p className="text-sm text-[var(--color-ink-soft)]">
+                Transparent aus Fallstatus, Dokumenten, OCR, Uebersetzung, Recherche und Entwurf abgeleitet.
+              </p>
+            </div>
+            <span className="text-[10px] uppercase px-1.5 py-0.5 rounded border bg-[var(--color-bg-alt)] border-[var(--color-border)] text-[var(--color-ink-muted)]">
+              rule-based
+            </span>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+            {recommendations.map(rec => (
+              <Link
+                key={rec.id}
+                to={rec.to}
+                className={`rounded-xl border p-3 ${
+                  rec.tone === 'urgent'
+                    ? 'bg-amber-50 border-amber-300'
+                    : rec.tone === 'review'
+                      ? 'bg-blue-50 border-blue-200'
+                      : 'bg-[var(--color-bg-alt)] border-[var(--color-border)]'
+                }`}
+              >
+                <div className="text-[10px] uppercase tracking-wide text-[var(--color-ink-muted)] font-semibold">
+                  {rec.stage}
+                </div>
+                <div className="font-medium mt-1">{rec.title}</div>
+                <p className="text-sm text-[var(--color-ink-soft)] mt-1">{rec.reason}</p>
+                <span className="inline-flex mt-2 text-sm text-[var(--color-gold)] hover:underline">
+                  {rec.cta}
+                </span>
+              </Link>
+            ))}
+          </div>
+        </section>
       )}
 
       {/* Sachverhalt-Eingänge von Mandant:in */}

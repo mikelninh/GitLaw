@@ -18,6 +18,7 @@ import {
 } from './store'
 import { savingsThisWeek } from './savings'
 import { roleLabel } from './access'
+import { getGlobalRecommendations } from './recommendations'
 
 function getSettingsName(): string {
   const s = getSettings()
@@ -72,6 +73,7 @@ export default function ProDashboard() {
     .slice(0, 3)
 
   const todaysActivity = [...research, ...letters].filter(x => isToday(x.createdAt))
+  const recommendations = getGlobalRecommendations(cases)
 
   const hour = new Date().getHours()
   const greeting = hour < 11 ? 'Guten Morgen' : hour < 14 ? 'Mittag' : hour < 18 ? 'Nachmittag' : 'Guten Abend'
@@ -321,6 +323,51 @@ export default function ProDashboard() {
         <Stat icon={<Search />} label="Recherche-Notizen" value={research.length} to="/pro/recherche" />
         <Stat icon={<FileText />} label="Generierte Schreiben" value={letters.length} to="/pro/schreiben" />
       </section>
+
+      {recommendations.length > 0 && (
+        <section className="bg-white border border-[var(--color-border)] rounded-2xl p-5">
+          <div className="flex items-start justify-between gap-3 flex-wrap mb-4">
+            <div>
+              <h2 className="font-semibold">Naechste beste Schritte</h2>
+              <p className="text-sm text-[var(--color-ink-soft)]">
+                Regelbasiert aus Frist, Dokumentstatus, OCR, Uebersetzung, Recherche und Entwurf abgeleitet.
+              </p>
+            </div>
+            <div className="text-xs text-[var(--color-ink-muted)]">
+              Workflow Recommendation Agent · transparent
+            </div>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+            {recommendations.map(rec => (
+              <Link
+                key={rec.id}
+                to={rec.to}
+                className={`rounded-xl border p-4 transition-colors ${
+                  rec.tone === 'urgent'
+                    ? 'bg-amber-50 border-amber-300 hover:border-amber-400'
+                    : rec.tone === 'review'
+                      ? 'bg-blue-50 border-blue-200 hover:border-blue-300'
+                      : 'bg-[var(--color-bg-alt)] border-[var(--color-border)] hover:border-[var(--color-gold)]'
+                }`}
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <span className="text-[10px] uppercase tracking-wide font-semibold text-[var(--color-ink-muted)]">
+                    {rec.stage}
+                  </span>
+                  <span className="text-[10px] font-mono text-[var(--color-ink-muted)]">
+                    prio {rec.priority}
+                  </span>
+                </div>
+                <h3 className="font-semibold mt-1">{rec.title}</h3>
+                <p className="text-sm text-[var(--color-ink-soft)] mt-1">{rec.reason}</p>
+                <span className="inline-flex mt-3 text-sm text-[var(--color-gold)] hover:underline">
+                  {rec.cta}
+                </span>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       <section className="bg-white border border-[var(--color-border)] rounded-2xl p-5">
         <div className="flex items-start justify-between gap-3 flex-wrap mb-4">

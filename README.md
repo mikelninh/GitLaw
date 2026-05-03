@@ -127,6 +127,9 @@ Aktuelle Agenten-/Workflow-Artefakte:
 - [GITLAW_AGENT_VISUAL_MAP_DE.md](/Users/mikel/gitlaw/GITLAW_AGENT_VISUAL_MAP_DE.md)
 - [GITLAW_AGENT_CODE_MAP_DE.md](/Users/mikel/gitlaw/GITLAW_AGENT_CODE_MAP_DE.md)
 - [GITLAW_AGENT_EVAL_MATRIX_DE.md](/Users/mikel/gitlaw/GITLAW_AGENT_EVAL_MATRIX_DE.md)
+- [GITLAW_AGENT_EVAL_SUITE_DE.md](/Users/mikel/gitlaw/GITLAW_AGENT_EVAL_SUITE_DE.md)
+- [GITLAW_AGENT_MANUAL_TEST_RUN_SHEET_DE.md](/Users/mikel/gitlaw/GITLAW_AGENT_MANUAL_TEST_RUN_SHEET_DE.md)
+- [GITLAW_AGENT_IMPROVEMENTS_DE.md](/Users/mikel/gitlaw/GITLAW_AGENT_IMPROVEMENTS_DE.md)
 - [GITLAW_5_MINUTE_AGENT_TEST_GUIDE_DE.md](/Users/mikel/gitlaw/GITLAW_5_MINUTE_AGENT_TEST_GUIDE_DE.md)
 - [GITLAW_PILOT_READINESS_REPORT_DE.md](/Users/mikel/gitlaw/GITLAW_PILOT_READINESS_REPORT_DE.md)
 - [GITLAW_CREWAI_AUTOMATION_PROMPT_EN.md](/Users/mikel/gitlaw/GITLAW_CREWAI_AUTOMATION_PROMPT_EN.md)
@@ -136,13 +139,13 @@ Aktuelle Agenten-/Workflow-Artefakte:
 
 Aktueller Stand:
 
-- `REAL`: Research Agent, Drafting-Grundflow, Session/RBAC, tenant-bound sync, serverseitiger Dokumentpfad
-- `BETA`: Intake-Klassifikation, OCR/Translation, Citation Verification Layer, approved memory
-- `NEXT`: Workflow Recommendation Agent, tiefer Server-Persistenzkern, echter EU-Storage/Worker-Stack
+- `REAL`: Research Agent, Drafting-Grundflow, Workflow Recommendation Agent, Session/RBAC, tenant-bound sync, serverseitiger Dokumentpfad
+- `BETA`: Intake-Klassifikation, OCR/Translation fuer schwierige Scan-PDFs, Citation Verification Layer, approved memory
+- `NEXT`: tiefer Server-Persistenzkern, echter EU-Storage/Worker-Stack
 
 Letzter ausgefuehrter Live-Check:
 
-- `PASS`: 9
+- `PASS`: 13
 - `BETA`: 0
 - `FAIL`: 0
 
