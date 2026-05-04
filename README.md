@@ -1,5 +1,11 @@
 # GitLaw ⚖️
 
+See also:
+- [AGENTS.md](/Users/mikel/gitlaw/AGENTS.md) — repo priorities and low-interruption collaboration rules
+- [GITLAW_COMPANY_THESIS_DE.md](/Users/mikel/gitlaw/GITLAW_COMPANY_THESIS_DE.md)
+- [GITLAW_EXECUTION_PLAN_DE.md](/Users/mikel/gitlaw/GITLAW_EXECUTION_PLAN_DE.md)
+- [GITLAW_FOUNDER_ROADMAP_DE.md](/Users/mikel/gitlaw/GITLAW_FOUNDER_ROADMAP_DE.md)
+
 **Alle 5.936 deutschen Bundesgesetze — durchsuchbar, AI-erklärbar auf Deutsch, mit Musterbriefen.**
 
 Zwei Welten unter einem Dach:
@@ -142,6 +148,12 @@ Aktueller Stand:
 - `REAL`: Research Agent, Drafting-Grundflow, Workflow Recommendation Agent, Session/RBAC, tenant-bound sync, serverseitiger Dokumentpfad
 - `BETA`: Intake-Klassifikation, OCR/Translation fuer schwierige Scan-PDFs, Citation Verification Layer, approved memory
 - `NEXT`: tiefer Server-Persistenzkern, echter EU-Storage/Worker-Stack
+
+Operativer Kontext:
+- [AGENTS.md](/Users/mikel/gitlaw/AGENTS.md)
+- [GITLAW_COMPANY_THESIS_DE.md](/Users/mikel/gitlaw/GITLAW_COMPANY_THESIS_DE.md)
+- [GITLAW_EXECUTION_PLAN_DE.md](/Users/mikel/gitlaw/GITLAW_EXECUTION_PLAN_DE.md)
+- [GITLAW_FOUNDER_ROADMAP_DE.md](/Users/mikel/gitlaw/GITLAW_FOUNDER_ROADMAP_DE.md)
 
 Letzter ausgefuehrter Live-Check:
 

@@ -214,6 +214,8 @@ export default function ProResearch() {
   }
 
   const verifiedCount = citations.filter(c => c.verified).length
+  const unverifiedCount = citations.length - verifiedCount
+  const readyForDraft = citations.length > 0 && verifiedCount === citations.length
   const memoryItems = listApprovedAnswerMemory().slice(0, 5)
   const linkedResearch = selectedCaseId ? listResearch(selectedCaseId).find(r => r.id === refResearchId) : undefined
 
@@ -529,12 +531,28 @@ export default function ProResearch() {
             <section>
               <h2 className="font-semibold mb-2 text-sm uppercase tracking-wide text-[var(--color-ink-muted)]">
                 Zitierte Vorschriften ({citations.length})
-                {citations.length > 0 && (
-                  <span className="ml-2 text-xs">
-                    {verifiedCount}/{citations.length} verifiziert · klicken für Volltext
-                  </span>
-                )}
               </h2>
+              {citations.length > 0 && (
+                <div className="mb-3 flex flex-wrap gap-2 text-xs">
+                  <span className="rounded-full border border-green-200 bg-green-50 text-green-900 px-2.5 py-1">
+                    {verifiedCount}/{citations.length} verifiziert
+                  </span>
+                  {unverifiedCount > 0 && (
+                    <span className="rounded-full border border-amber-200 bg-amber-50 text-amber-900 px-2.5 py-1">
+                      {unverifiedCount} ungeprueft
+                    </span>
+                  )}
+                  <span className={`rounded-full border px-2.5 py-1 ${
+                    readyForDraft
+                      ? 'border-sky-200 bg-sky-50 text-sky-900'
+                      : 'border-slate-200 bg-slate-50 text-slate-700'
+                  }`}>
+                    {readyForDraft
+                      ? 'fuer Schriftsatz gut anschlussfaehig'
+                      : 'vor Schriftsatz noch pruefen'}
+                  </span>
+                </div>
+              )}
               {citations.length === 0 ? (
                 <p className="text-sm text-[var(--color-ink-muted)] italic">
                   Die KI hat keine konkreten Paragraphen zitiert. Antwort vorsichtig prüfen.
