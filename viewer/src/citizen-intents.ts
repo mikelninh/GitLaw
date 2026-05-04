@@ -17,6 +17,13 @@ export interface CitizenIntent {
   sources: CitizenIntentSource[]
 }
 
+interface CitizenTopicFallback {
+  id: string
+  title: string
+  terms: string[]
+  clarification: string
+}
+
 export const citizenIntents: CitizenIntent[] = [
   {
     id: 'rent-eigenbedarf',
@@ -340,6 +347,51 @@ export const citizenIntents: CitizenIntent[] = [
   },
 ]
 
+const citizenTopicFallbacks: CitizenTopicFallback[] = [
+  {
+    id: 'rent-topic',
+    title: 'Mietrecht',
+    terms: ['miete', 'vermieter', 'wohnung', 'nebenkosten', 'kaution', 'schimmel'],
+    clarification: 'Das klingt nach Mietrecht. Geht es eher um Kündigung, Mieterhöhung, Nebenkosten, Kaution oder einen Mangel in der Wohnung?',
+  },
+  {
+    id: 'job-topic',
+    title: 'Arbeitsrecht',
+    terms: ['chef', 'arbeitgeber', 'job', 'arbeitsvertrag', 'kündigung', 'abmahnung', 'krankgeschrieben'],
+    clarification: 'Das klingt nach Arbeitsrecht. Geht es eher um Kündigung, Abmahnung, Krankheit, Arbeitszeit oder Lohn?',
+  },
+  {
+    id: 'health-topic',
+    title: 'Krankenversicherung',
+    terms: ['krankenkasse', 'medikament', 'arzt', 'behandlung', 'zuzahlung', 'rezept'],
+    clarification: 'Das klingt nach Krankenversicherung oder Gesundheitsrecht. Geht es um Medikamente, Behandlungskosten, Krankengeld oder eine Entscheidung der Krankenkasse?',
+  },
+  {
+    id: 'family-topic',
+    title: 'Familie & Kinder',
+    terms: ['kind', 'unterhalt', 'elterngeld', 'elternzeit', 'familienkasse', 'sorgerecht'],
+    clarification: 'Das klingt nach Familienrecht oder Familienleistungen. Geht es eher um Unterhalt, Kindergeld, Elterngeld, Elternzeit oder Sorgefragen?',
+  },
+  {
+    id: 'social-topic',
+    title: 'Sozialleistungen',
+    terms: ['jobcenter', 'bürgergeld', 'bescheid', 'wohngeld', 'grundsicherung', 'familienkasse'],
+    clarification: 'Das klingt nach Sozialleistungen. Von welcher Stelle kommt der Bescheid oder die Frage genau, zum Beispiel Jobcenter, Wohngeldstelle, Familienkasse oder Krankenkasse?',
+  },
+  {
+    id: 'digital-topic',
+    title: 'Internet & Recht',
+    terms: ['online', 'instagram', 'facebook', 'tiktok', 'kommentar', 'beleidigt', 'internet'],
+    clarification: 'Das klingt nach einem Problem im Internet. Geht es eher um Beleidigung, Bedrohung, Daten, Plattform-Meldung oder Betrug?',
+  },
+  {
+    id: 'migration-topic',
+    title: 'Aufenthalt & Migration',
+    terms: ['aufenthalt', 'visum', 'abschiebung', 'einbürgerung', 'familie nachholen'],
+    clarification: 'Das klingt nach Aufenthaltsrecht. Geht es eher um Aufenthaltstitel, Visum, Einbürgerung, Arbeitserlaubnis oder eine drohende Maßnahme?',
+  },
+]
+
 export function scoreCitizenIntents(question: string) {
   const q = question.toLowerCase()
   return citizenIntents
@@ -365,6 +417,30 @@ export function detectCitizenClarification(question: string): string | null {
   const top = scored[0]
   const second = scored[1]
 
+  if (
+    q.includes('vermieter') &&
+    !q.includes('eigenbedarf') &&
+    !q.includes('mieterhöhung') &&
+    !q.includes('mieterhoehung') &&
+    !q.includes('heizung') &&
+    !q.includes('schimmel') &&
+    !q.includes('nebenkosten') &&
+    !q.includes('kaution')
+  ) {
+    return 'Das klingt nach Mietrecht. Geht es eher um Kündigung, Mieterhöhung, Nebenkosten, Kaution oder einen Mangel in der Wohnung?'
+  }
+
+  if (
+    q.includes('krankenkasse') &&
+    !q.includes('medikament') &&
+    !q.includes('arznei') &&
+    !q.includes('rezept') &&
+    !q.includes('zuzahlung') &&
+    !q.includes('krankengeld')
+  ) {
+    return 'Das klingt nach Krankenversicherung oder Gesundheitsrecht. Geht es um Medikamente, Behandlungskosten, Krankengeld oder eine Entscheidung der Krankenkasse?'
+  }
+
   if (q.includes('kündig') && !q.includes('vermieter') && !q.includes('chef') && !q.includes('arbeitgeber')) {
     return 'Geht es bei der Kündigung um deinen Job oder um deine Wohnung?'
   }
@@ -379,6 +455,13 @@ export function detectCitizenClarification(question: string): string | null {
 
   if (top && second && top.score - second.score <= 8 && top.intent.id !== second.intent.id) {
     return `Ich bin noch nicht sicher, welches Problem genau gemeint ist. Meinst du eher "${top.intent.title}" oder "${second.intent.title}"?`
+  }
+
+  const topicFallback = citizenTopicFallbacks.find(topic =>
+    topic.terms.some(term => q.includes(term)),
+  )
+  if (!top && topicFallback) {
+    return topicFallback.clarification
   }
 
   return null
