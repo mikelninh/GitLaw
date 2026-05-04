@@ -153,11 +153,196 @@ export const citizenIntents: CitizenIntent[] = [
       { law: 'SGB 2', section: '§ 31' },
     ],
   },
+  {
+    id: 'housing-benefit',
+    title: 'Wohngeld',
+    category: 'Miete & Wohnen',
+    terms: ['wohngeld', 'miete zu hoch', 'wohnen nicht leisten'],
+    sourceLawIds: ['wofg'],
+    preferredSections: ['§ 3', '§ 13'],
+    summary: 'Ob du Wohngeld bekommen kannst, hängt vor allem von Einkommen, Miete und Haushaltsgröße ab.',
+    legalCore: 'Wohngeld ist keine Standardleistung für alle, sondern hängt von deinen Lebensumständen ab. Entscheidend sind meist Einkommen, Zahl der Haushaltsmitglieder und wie hoch die berücksichtigungsfähige Miete ist.',
+    nextSteps: [
+      'Monatliches Einkommen und Haushaltsgröße notieren.',
+      'Mietvertrag und aktuelle Miethöhe bereitlegen.',
+      'Prüfen, ob bereits andere Leistungen bezogen werden, die Wohngeld ausschließen können.',
+      'Dann den Wohngeldantrag bei der zuständigen Stelle prüfen oder stellen.',
+    ],
+    sources: [
+      { law: 'WoFG', section: '§ 3' },
+      { law: 'WoFG', section: '§ 13' },
+    ],
+  },
+  {
+    id: 'online-insult',
+    title: 'Online-Beleidigung',
+    category: 'Internet & Recht',
+    terms: ['online beleidigt', 'beleidigt', 'beleidigung', 'instagram', 'tiktok', 'facebook', 'kommentar'],
+    sourceLawIds: ['stgb', 'netzdg'],
+    preferredSections: ['§ 185'],
+    summary: 'Online-Beleidigungen können rechtlich relevant sein und du musst sie nicht einfach hinnehmen.',
+    legalCore: 'Entscheidend ist, was genau geschrieben wurde, ob du es sichern kannst und ob zusätzlich Plattform-Meldungen oder Strafanzeige sinnvoll sind. Ohne Beweise wird es später oft schwerer.',
+    nextSteps: [
+      'Screenshots mit Datum und Profil sichern.',
+      'Beitrag oder Nachricht bei der Plattform melden.',
+      'Prüfen, ob eine Strafanzeige oder zivilrechtliche Schritte sinnvoll sind.',
+      'Keine Beweise löschen oder nur auf Erinnerung vertrauen.',
+    ],
+    sources: [
+      { law: 'StGB', section: '§ 185' },
+      { law: 'NetzDG', section: '§ 3' },
+    ],
+  },
+  {
+    id: 'child-support',
+    title: 'Unterhalt fürs Kind',
+    category: 'Familie & Kinder',
+    terms: ['unterhalt', 'vater zahlt nicht', 'mutter zahlt nicht', 'kindesunterhalt'],
+    sourceLawIds: ['bgb'],
+    preferredSections: ['§ 1601', '§ 1602'],
+    summary: 'Eltern sind ihrem Kind grundsätzlich zum Unterhalt verpflichtet.',
+    legalCore: 'Entscheidend ist, ob ein Unterhaltsanspruch besteht, wer zahlen muss und ob bereits Titel, Jugendamtsurkunde oder andere Unterlagen vorliegen. Oft geht es auch um schnelle Sicherung für das Kind.',
+    nextSteps: [
+      'Unterlagen zum Kind und zum anderen Elternteil sammeln.',
+      'Prüfen, ob bereits ein Unterhaltstitel oder eine Jugendamtsurkunde existiert.',
+      'Bei Ausfall des anderen Elternteils auch Unterhaltsvorschuss prüfen.',
+      'Früh dokumentieren, seit wann nicht gezahlt wird.',
+    ],
+    sources: [
+      { law: 'BGB', section: '§ 1601' },
+      { law: 'BGB', section: '§ 1602' },
+    ],
+  },
+  {
+    id: 'child-benefit',
+    title: 'Kindergeld',
+    category: 'Familie & Kinder',
+    terms: ['kindergeld', 'familienkasse', 'geld für mein kind'],
+    sourceLawIds: ['estg'],
+    preferredSections: ['§ 62', '§ 66'],
+    summary: 'Kindergeld steht nicht automatisch jeder Person zu, sondern knüpft an gesetzliche Voraussetzungen an.',
+    legalCore: 'Wichtig sind vor allem, für welches Kind du Leistungen beantragst, wer anspruchsberechtigt ist und ob die Familienkasse schon entschieden hat. Bei Ablehnung zählen Bescheid und Fristen.',
+    nextSteps: [
+      'Bescheid der Familienkasse sichern oder Antrag vorbereiten.',
+      'Kind, Haushalt und Sorgeverhältnis sauber dokumentieren.',
+      'Fristen bei Ablehnung oder Rückforderung prüfen.',
+    ],
+    sources: [
+      { law: 'EStG', section: '§ 62' },
+      { law: 'EStG', section: '§ 66' },
+    ],
+  },
+  {
+    id: 'parental-benefit',
+    title: 'Elterngeld / Elternzeit',
+    category: 'Familie & Kinder',
+    terms: ['elterngeld', 'elternzeit', 'mutterschutz vorbei', 'baby geboren'],
+    sourceLawIds: ['beeg'],
+    preferredSections: ['§ 1', '§ 15'],
+    summary: 'Elterngeld und Elternzeit hängen von Erwerbssituation, Kind und Antrag ab.',
+    legalCore: 'Wichtig ist, ob es um Geld, Freistellung oder beides geht. Häufig sind Einkommen vor der Geburt, Arbeitsverhältnis und der rechtzeitige Antrag entscheidend.',
+    nextSteps: [
+      'Klären, ob es um Elterngeld, Elternzeit oder beides geht.',
+      'Geburtsdatum und Erwerbssituation notieren.',
+      'Antragsfristen und Arbeitgeber-Mitteilung prüfen.',
+    ],
+    sources: [
+      { law: 'BEEG', section: '§ 1' },
+      { law: 'BEEG', section: '§ 15' },
+    ],
+  },
+  {
+    id: 'discrimination',
+    title: 'Diskriminierung',
+    category: 'Internet & Recht',
+    terms: ['diskriminierung', 'benachteiligt', 'rassismus', 'wegen meiner herkunft', 'wegen meines geschlechts'],
+    sourceLawIds: ['agg'],
+    preferredSections: ['§ 1', '§ 21'],
+    summary: 'Benachteiligung wegen bestimmter persönlicher Merkmale kann rechtswidrig sein.',
+    legalCore: 'Wichtig ist, wodurch du benachteiligt wurdest, in welchem Bereich das passiert ist und ob du Belege hast. Ohne Dokumentation wird es später oft schwerer.',
+    nextSteps: [
+      'Vorfall mit Datum, Ort und Beteiligten dokumentieren.',
+      'Nachrichten, E-Mails oder Zeugen sichern.',
+      'Prüfen, ob es um Arbeit, Wohnen oder Dienstleistungen geht.',
+    ],
+    sources: [
+      { law: 'AGG', section: '§ 1' },
+      { law: 'AGG', section: '§ 21' },
+    ],
+  },
+  {
+    id: 'sick-note',
+    title: 'Krankmeldung im Job',
+    category: 'Arbeit & Job',
+    terms: ['krankmeldung', 'krankgeschrieben', 'krank im job', 'arbeitsunfaehig', 'arbeitsunfähig'],
+    sourceLawIds: ['bgb'],
+    preferredSections: ['§ 611a', '§ 616'],
+    summary: 'Wenn du krank bist, sind Meldung, Nachweis und Zeitpunkt oft das Wichtigste.',
+    legalCore: 'Streit entsteht häufig nicht, weil man krank ist, sondern weil Arbeitgeber sagen, dass Meldung oder Nachweis zu spät waren. Deshalb zählen Kommunikation und Dokumentation besonders.',
+    nextSteps: [
+      'Arbeitgeber sofort informieren.',
+      'Arbeitsunfähigkeitsbescheinigung rechtzeitig sichern.',
+      'Nachfragen, ab wann dein Arbeitgeber einen Nachweis verlangt.',
+    ],
+    sources: [
+      { law: 'BGB', section: '§ 611a' },
+      { law: 'BGB', section: '§ 616' },
+    ],
+  },
+  {
+    id: 'warning-at-work',
+    title: 'Abmahnung im Job',
+    category: 'Arbeit & Job',
+    terms: ['abmahnung', 'abgemahnt', 'warnung vom chef'],
+    sourceLawIds: ['bgb'],
+    preferredSections: ['§ 314'],
+    summary: 'Eine Abmahnung ist nicht automatisch wirksam, aber sie sollte ernst genommen werden.',
+    legalCore: 'Wichtig ist, was dir konkret vorgeworfen wird, ob der Vorwurf stimmt und ob die Abmahnung später für weitere arbeitsrechtliche Schritte genutzt werden könnte.',
+    nextSteps: [
+      'Abmahnung vollständig sichern.',
+      'Vorwurf und Datum genau prüfen.',
+      'Eigene Darstellung und mögliche Belege sammeln.',
+      'Nicht vorschnell inhaltlich zustimmen.',
+    ],
+    sources: [{ law: 'BGB', section: '§ 314' }],
+  },
+  {
+    id: 'service-charge',
+    title: 'Nebenkostenabrechnung',
+    category: 'Miete & Wohnen',
+    terms: ['nebenkosten', 'abrechnung', 'heizkostenabrechnung', 'zu hoch'],
+    sourceLawIds: ['bgb'],
+    preferredSections: ['§ 556'],
+    summary: 'Eine hohe Nebenkostenabrechnung ist nicht automatisch richtig.',
+    legalCore: 'Wichtig ist, ob die Abrechnung formell stimmt, rechtzeitig kam und ob die einzelnen Positionen nachvollziehbar sind. Nicht jede Ausgabe darf einfach auf Mieter umgelegt werden.',
+    nextSteps: [
+      'Abrechnung und Zugangstag sichern.',
+      'Einzelpositionen und Zeitraum prüfen.',
+      'Belegeinsicht oder genauere Aufschlüsselung verlangen, wenn etwas unklar ist.',
+    ],
+    sources: [{ law: 'BGB', section: '§ 556' }],
+  },
+  {
+    id: 'deposit',
+    title: 'Mietkaution',
+    category: 'Miete & Wohnen',
+    terms: ['kaution', 'mietkaution', 'kaution zurück', 'kaution zurueck'],
+    sourceLawIds: ['bgb'],
+    preferredSections: ['§ 551'],
+    summary: 'Die Mietkaution gehört nicht einfach dauerhaft dem Vermieter.',
+    legalCore: 'Nach dem Mietende darf der Vermieter die Kaution nicht unbegrenzt ohne Grund einbehalten. Es kommt darauf an, ob noch berechtigte Forderungen offen sind und wie lange die Prüfung dauern darf.',
+    nextSteps: [
+      'Auszug und Übergabeprotokoll sichern.',
+      'Schriftlich nach dem Stand der Kaution fragen.',
+      'Prüfen, ob der Vermieter konkrete Gegenforderungen nennt.',
+    ],
+    sources: [{ law: 'BGB', section: '§ 551' }],
+  },
 ]
 
-export function detectCitizenIntent(question: string): CitizenIntent | null {
+export function scoreCitizenIntents(question: string) {
   const q = question.toLowerCase()
-  const scored = citizenIntents
+  return citizenIntents
     .map(intent => ({
       intent,
       score: intent.terms.reduce((acc, term) => {
@@ -168,8 +353,35 @@ export function detectCitizenIntent(question: string): CitizenIntent | null {
     }))
     .filter(item => item.score > 0)
     .sort((a, b) => b.score - a.score)
+}
 
-  return scored[0]?.intent || null
+export function detectCitizenIntent(question: string): CitizenIntent | null {
+  return scoreCitizenIntents(question)[0]?.intent || null
+}
+
+export function detectCitizenClarification(question: string): string | null {
+  const q = question.toLowerCase()
+  const scored = scoreCitizenIntents(question)
+  const top = scored[0]
+  const second = scored[1]
+
+  if (q.includes('kündig') && !q.includes('vermieter') && !q.includes('chef') && !q.includes('arbeitgeber')) {
+    return 'Geht es bei der Kündigung um deinen Job oder um deine Wohnung?'
+  }
+
+  if ((q.includes('kasse') || q.includes('zahlt')) && !q.includes('medikament') && !q.includes('arzt') && !q.includes('krankenkasse')) {
+    return 'Geht es um Medikamente, eine Behandlung oder etwas anderes? Und bist du gesetzlich oder privat versichert?'
+  }
+
+  if (q.includes('bescheid') && !q.includes('jobcenter') && !q.includes('familienkasse') && !q.includes('krankenkasse')) {
+    return 'Von welcher Stelle kommt der Bescheid genau, zum Beispiel Jobcenter, Familienkasse oder Krankenkasse?'
+  }
+
+  if (top && second && top.score - second.score <= 8 && top.intent.id !== second.intent.id) {
+    return `Ich bin noch nicht sicher, welches Problem genau gemeint ist. Meinst du eher "${top.intent.title}" oder "${second.intent.title}"?`
+  }
+
+  return null
 }
 
 export function renderCitizenIntentAnswer(intent: CitizenIntent): string {

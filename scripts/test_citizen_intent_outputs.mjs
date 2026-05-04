@@ -7,6 +7,16 @@ const tests = [
   'Ich kann mir meine Medikamente nicht leisten — gibt es Hilfe?',
   'Meine Heizung ist kaputt - darf ich die Miete kürzen?',
   'Das Jobcenter kürzt mein Bürgergeld. Was kann ich tun?',
+  'Wie viel Wohngeld bekomme ich?',
+  'Ich werde online beleidigt. Welche Rechte habe ich?',
+  'Der Vater zahlt keinen Unterhalt - was kann ich tun?',
+  'Wie viel Kindergeld steht mir zu?',
+  'Wie lange habe ich Elternzeit und wie viel Elterngeld bekomme ich?',
+  'Ich werde wegen meiner Herkunft benachteiligt. Was kann ich tun?',
+  'Ich bin krankgeschrieben. Was muss ich meinem Arbeitgeber sagen?',
+  'Mein Chef hat mir eine Abmahnung gegeben. Was jetzt?',
+  'Meine Nebenkostenabrechnung ist viel zu hoch. Was kann ich tun?',
+  'Wann bekomme ich meine Kaution zurück?',
 ]
 
 let pass = 0

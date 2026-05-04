@@ -10,7 +10,7 @@
 
 import OpenAI from 'openai'
 import Fuse from 'fuse.js'
-import { citizenIntents, detectCitizenIntent, renderCitizenIntentAnswer } from './citizen-intents'
+import { citizenIntents, detectCitizenClarification, detectCitizenIntent, renderCitizenIntentAnswer } from './citizen-intents'
 
 const API_KEY = import.meta.env.VITE_OPENAI_API_KEY || ''
 const PUBLIC_BASE = import.meta.env.BASE_URL || '/'
@@ -329,6 +329,14 @@ export async function askLegalQuestion(
   answer: string
   sources: { law: string; section: string }[]
 }> {
+  const clarification = detectCitizenClarification(question)
+  if (clarification) {
+    return {
+      answer: `Bevor ich dir sicher antworte:\n${clarification}`,
+      sources: [],
+    }
+  }
+
   const detectedIntent = detectCitizenIntent(question)
   if (detectedIntent) {
     return {

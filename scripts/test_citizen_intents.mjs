@@ -53,13 +53,53 @@ const tests = [
   },
   {
     question: 'Wie viel Wohngeld bekomme ich?',
-    expectedIntent: null,
-    expectedLaw: null,
+    expectedIntent: 'housing-benefit',
+    expectedLaw: 'WoFG',
   },
   {
     question: 'Ich werde online beleidigt. Welche Rechte habe ich?',
-    expectedIntent: null,
-    expectedLaw: null,
+    expectedIntent: 'online-insult',
+    expectedLaw: 'StGB',
+  },
+  {
+    question: 'Der Vater zahlt keinen Unterhalt - was kann ich tun?',
+    expectedIntent: 'child-support',
+    expectedLaw: 'BGB',
+  },
+  {
+    question: 'Wie viel Kindergeld steht mir zu?',
+    expectedIntent: 'child-benefit',
+    expectedLaw: 'EStG',
+  },
+  {
+    question: 'Wie lange habe ich Elternzeit und wie viel Elterngeld bekomme ich?',
+    expectedIntent: 'parental-benefit',
+    expectedLaw: 'BEEG',
+  },
+  {
+    question: 'Ich werde wegen meiner Herkunft benachteiligt. Was kann ich tun?',
+    expectedIntent: 'discrimination',
+    expectedLaw: 'AGG',
+  },
+  {
+    question: 'Ich bin krankgeschrieben. Was muss ich meinem Arbeitgeber sagen?',
+    expectedIntent: 'sick-note',
+    expectedLaw: 'BGB',
+  },
+  {
+    question: 'Mein Chef hat mir eine Abmahnung gegeben. Was jetzt?',
+    expectedIntent: 'warning-at-work',
+    expectedLaw: 'BGB',
+  },
+  {
+    question: 'Meine Nebenkostenabrechnung ist viel zu hoch. Was kann ich tun?',
+    expectedIntent: 'service-charge',
+    expectedLaw: 'BGB',
+  },
+  {
+    question: 'Wann bekomme ich meine Kaution zurück?',
+    expectedIntent: 'deposit',
+    expectedLaw: 'BGB',
   },
 ]
 
