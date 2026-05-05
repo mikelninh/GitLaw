@@ -153,9 +153,11 @@ const topicMap: Record<string, string[]> = {
   'befristet': ['bgb'], 'zeitmietvertrag': ['bgb'], 'laufzeit': ['bgb'],
 
   // Ausbildung
-  'ausbildung': ['bgb', 'arbzg'], 'ausbildungsvertrag': ['bgb', 'arbzg'],
-  'azubi': ['bgb', 'arbzg'], 'auszubildende': ['bgb', 'arbzg'],
-  'lehrling': ['bgb', 'arbzg'], 'berufsschule': ['bgb', 'arbzg'],
+  'ausbildung': ['bbig', 'bgb', 'arbzg'], 'ausbildungsvertrag': ['bbig', 'bgb', 'arbzg'],
+  'azubi': ['bbig', 'bgb', 'arbzg'], 'auszubildende': ['bbig', 'bgb', 'arbzg'],
+  'ausbildung kündigen': ['bbig'], 'azubi kündigen': ['bbig'],
+  'lehrling': ['bbig', 'bgb', 'arbzg'], 'berufsschule': ['bbig', 'bgb', 'arbzg'],
+  'berufsausbildung': ['bbig'], 'ausbildungsbetrieb': ['bbig'],
 
   // Selbstständig — maps to multiple relevant laws
   'selbstständig': ['estg', 'sgb_5', 'sgb_6', 'ao_1977'],
@@ -181,7 +183,7 @@ const personaLaws: Record<string, string[]> = {
   'rentner': ['sgb_6', 'estg', 'sgb_5'],
   'mieter': ['bgb'],
   'vermieter': ['bgb', 'estg'],
-  'azubi': ['bgb', 'arbzg'],
+  'azubi': ['bbig', 'bgb', 'arbzg'],
   'migrant': ['aufenthg_2004', 'agg', 'sgb_2'],
   'schwanger': ['muschg', 'beeg', 'kschg'],
   'arbeitslos': ['sgb_2', 'sgb_5'],
@@ -315,7 +317,18 @@ async function findRelevantChunks(question: string, persona?: string): Promise<L
     })
     const results = fuse.search(question)
     if (results.length > 0) {
-      return results.slice(0, 5).map(r => r.item)
+      // Stable sort: primary = score (ascending = better), secondary = law+section lexicographic
+      // This ensures ties always resolve in the same deterministic order
+      const sorted = results
+        .slice(0, 10)
+        .sort((a, b) => {
+          const scoreDiff = (a.score ?? 1) - (b.score ?? 1)
+          if (Math.abs(scoreDiff) > 1e-6) return scoreDiff
+          const aKey = `${a.item.law}|${a.item.section}`
+          const bKey = `${b.item.law}|${b.item.section}`
+          return aKey < bKey ? -1 : aKey > bKey ? 1 : 0
+        })
+      return sorted.slice(0, 5).map(r => r.item)
     }
   }
 
