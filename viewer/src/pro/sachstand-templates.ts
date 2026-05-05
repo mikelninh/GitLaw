@@ -270,7 +270,7 @@ Kính mong quý vị chờ đợi trong giây lát để chúng tôi làm rõ.
 
     mittelsperson_de: `{mandant_anrede}
 
-{behoerde} hat Nachunterlagen zu {mandant_name}'s Verfahren (Aktenzeichen {aktenzeichen}) angefordert. Wir klären gerade die Details und melden uns mit einer genauen Liste. Bitte geben Sie diese Information an {mandant_name} weiter.
+{behoerde} hat Nachunterlagen zum Verfahren von {mandant_name} (Aktenzeichen {aktenzeichen}) angefordert. Wir klären gerade die Details und melden uns mit einer genauen Liste. Bitte geben Sie diese Information an {mandant_name} weiter.
 
 {kanzlei_unterschrift}`,
 
@@ -293,7 +293,7 @@ Kính mong quý vị chờ đợi trong giây lát để chúng tôi làm rõ.
 
 Sobald Datum, Ort oder weitere Informationen vorliegen, informieren wir Sie sofort. Für den Termin selbst werden wir Sie rechtzeitig vorbereiten und begleiten.
 
-Bitte halten Sie sich für eine kurzfristige Rückmeldung bereit.
+Bitte achten Sie in den nächsten Tagen auf eine Nachricht von uns.
 
 {kanzlei_unterschrift}`,
 
@@ -329,7 +329,7 @@ Kính mong quý vị sẵn sàng để phản hồi trong thời gian ngắn.
     status: 'verfahren_abgeschlossen',
     mandant_de: `{mandant_anrede}
 
-Ihr Verfahren (Aktenzeichen {aktenzeichen}, Mandatsart: {mandatsart}) ist abgeschlossen. Der entsprechende Bescheid liegt uns vor und wurde Ihnen zugeleitet.
+Ihr Verfahren zur {mandatsart} (Aktenzeichen {aktenzeichen}) ist abgeschlossen. Der entsprechende Bescheid liegt uns vor und wurde Ihnen zugeleitet.
 
 Die Akte wird auf unserer Seite ordnungsgemäß dokumentiert und archiviert. Alle relevanten Unterlagen stehen Ihnen auf Anfrage jederzeit zur Verfügung.
 
