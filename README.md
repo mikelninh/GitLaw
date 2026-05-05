@@ -55,6 +55,9 @@ Eigenständiger Bereich unter `/#/pro` — Beta, Invite-only.
 |---|---|
 | **Daily Companion** | Dashboard mit Fristen-Übersicht, Mandant:innen-Eingängen, „Diese Woche gespart"-Widget, persönlicher Begrüßung |
 | **Recherche mit 3-Stufen-Belegen** | KI-Antwort mit verifizierten Zitaten + Folgefragen mit Kontext-Verlauf (mehrere Vertiefungen hintereinander, einzeln speicherbar) + (1) kuratierte BGH/BVerfG-Leitsätze + (2) Live-Lookup OpenLegalData (1.000+ Treffer/§) + (3) Deep-Links Beck/dejure/openjur |
+| **Verwandte Paragraphen** | Aus dem Citation-Graph (94K Knoten / 200K Edges): jeder zitierte § zeigt im Drawer automatisch wer ihn zitiert + was er zitiert. § 185 → § 188 + § 192 + § 11 — ohne Cross-Reading. |
+| **Anti-Halluzinations-Badges** | Strukturierte Verifikations-Stati: ✓ verifiziert · ⚠ Gesetz unbekannt · ⚠ § nicht gefunden · 🚨 aufgehoben (weggefallen). Erkennt auch Range-Marker (`§§ 2 bis 3f weggefallen` deckt § 3 NetzDG ab). 53/53 Eval-Cases passing in CI. |
+| **Word-Export (.docx)** | Editierbares Word-Dokument neben dem PDF — direkt in Word/Office weiterarbeiten ohne Copy-Paste. Briefkopf, Verifikations-Status pro Zitat, Page-Footer. |
 | **Mandant:innen-Akten** | CRUD mit Frist-Tracker (Calc aus Bescheid-Datum, §§ 187/188 BGB-konform), Mandant:in-E-Mail, Status, Such- & Filter-Tabs |
 | **59 Schreiben-Templates** | 5 allgemein + 12 Notariat + 12 Migration + 10 Familien + 10 Sozial + 10 Steuer + Custom mit `{{placeholder}}` |
 | **Branded PDF-Export** | Logo + Kanzlei-Anschrift + Disclaimer-Footer auf jedem Dokument |
@@ -91,11 +94,14 @@ Eigenständiger Bereich unter `/#/pro` — Beta, Invite-only.
 |--------|-------|
 | Gesetze | **5.936** |
 | Zeilen | **1.303.451** |
+| Korpus-Paragraphen (Graph-Knoten) | **94.178** |
+| Extrahierte Cross-References (Graph-Edges) | **200.464** (199K intra-law · 1.163 cross-law) |
 | FAISS-Vektoren | **98.367** |
 | Bürger-Musterbriefe | **20** (16 frei, 4 Premium) |
 | Anwalts-Musterbriefe (Pro) | **59** (5 Allgemein + 12 Notariat + 12 Migration + 10 Familie + 10 Sozial + 10 Steuer) |
 | Verifizierte BGH/BVerfG-Leitsätze | **40** zu Top-30 Paragraphen (BGB · StGB · AufenthG · SGB · StPO · GewSchG) |
 | Live-Rechtsprechungs-Index | **150 K+ Urteile** über OpenLegalData-Proxy |
+| Citation-Eval (CI) | **53/53 hand-gelabelte Cases · 100% Pass-Rate** |
 | Sprachen | **5 Pro-Intake** (DE/VI/TR/AR/EN) + **6 Bürger** (DE/Leicht/TR/AR/EN/UK) |
 | Aktualisierung | **Wöchentlich automatisch** (Gesetze + Leitsätze) |
 
@@ -121,12 +127,18 @@ Eigenständiger Bereich unter `/#/pro` — Beta, Invite-only.
 | Anonymizer | 14 Regex-Pattern + 50 Whitelist-Tokens, Auto-Modus persistiert in localStorage |
 | Updates | GitHub Actions (Gesetze + BGH-Leitsätze) |
 | Hosting | GitHub Pages (Bürger) + Vercel + Upstash Frankfurt (Pro + APIs) |
+| Knowledge Graph | 94K Paragraphen + 200K Cross-References, extrahiert via `gitlaw_mcp/graph_builder.py`, als per-law JSON-Shards in `viewer/public/data/citation-graph/` ausgeliefert |
+| MCP Cloud-Deploy | Fly.io (`fly.toml`) für SSE in Frankfurt + AWS Terraform IaC (`deploy/aws/`) für ECS Fargate |
+| Observability | JSON-strukturierte Logs pro MCP-Tool-Call (request_id, latency_ms, status) — Datadog/Loki/Sentry/Axiom-fähig |
+| Test-Eval | 53 hand-gelabelte Citation-Cases in CI (real, halluziniert, edge-cases, multi-token-Abkürzungen, repealed-Erkennung) |
 
 ---
 
 ## 🔌 MCP Server — GitLaw als Tool für jeden LLM-Client
 
-Der gesamte Korpus + Citation-Verification ist als **Model Context Protocol Server** verfügbar (`gitlaw_mcp/`). Das heißt: Claude Desktop, Cursor, Continue oder jeder eigene Agent kann GitLaw-Tools nativ aufrufen — semantische Suche, Zitat-Verifikation, exakte Paragraphen-Lookups.
+[![MCP CI](https://github.com/mikelninh/gitlaw/actions/workflows/mcp-ci.yml/badge.svg)](https://github.com/mikelninh/gitlaw/actions/workflows/mcp-ci.yml) [![Citation Eval: 53/53](https://img.shields.io/badge/citation_eval-53%2F53_(100%25)-brightgreen)](gitlaw_mcp/tests/cases.json) [![Transport: stdio + SSE](https://img.shields.io/badge/transport-stdio_%2B_SSE-blue)](gitlaw_mcp/README.md)
+
+Der gesamte Korpus + Citation-Verification ist als **Model Context Protocol Server** verfügbar (`gitlaw_mcp/`). Das heißt: Claude Desktop, Cursor, Continue oder jeder eigene Agent kann GitLaw-Tools nativ aufrufen — semantische Suche, Zitat-Verifikation, exakte Paragraphen-Lookups, Graph-Traversierung.
 
 ```python
 # Beispiel: ein LLM ruft verify_citation("§ 999 StGB") auf
@@ -138,7 +150,22 @@ Der gesamte Korpus + Citation-Verification ist als **Model Context Protocol Serv
 }
 ```
 
-Vier Tools: `search_laws` (FAISS-Retrieval), `verify_citation` (Anti-Halluzination), `lookup_paragraph` (exakter Lookup), `list_laws` (Korpus-Enumeration). Plus die Resource `gitlaw://law/{abbr}` für ganze Gesetzestexte. Setup-Anleitung + Claude-Desktop-Config: [`gitlaw_mcp/README.md`](gitlaw_mcp/README.md).
+**Sechs Tools:**
+- `search_laws` — FAISS-Retrieval (98K Vektoren)
+- `verify_citation` — Anti-Halluzination mit strukturierten Failure-Modes (53/53 Eval-Cases passing)
+- `lookup_paragraph` — exakter Lookup
+- `list_laws` — Korpus-Enumeration (4.852 Abkürzungen)
+- `find_related_paragraphs` — Citation-Graph-Traversierung (94K Knoten / 200K Edges)
+- `hybrid_search` — Vector + Graph kombiniert in einem Call
+
+Plus die Resource `gitlaw://law/{abbr}` für ganze Gesetzestexte.
+
+**Drei Deploy-Pfade:**
+- **stdio** lokal — Claude Desktop / Cursor / eigene Agenten ([Setup](gitlaw_mcp/README.md))
+- **HTTP/SSE** auf Fly.io Frankfurt — push-to-deploy GitHub Action, scale-to-zero ([`fly.toml`](fly.toml))
+- **AWS ECS Fargate** via Terraform — VPC + ALB + EFS + Secrets Manager + Autoscaling, ~$31/Monat ([`deploy/aws/`](deploy/aws/README.md))
+
+JSON-strukturierte Logs pro Tool-Call (request_id, latency_ms, status) — Datadog/Loki/Sentry/Axiom-fähig ohne Parser.
 
 Demo ohne API-Key:
 ```bash

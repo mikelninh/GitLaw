@@ -120,6 +120,46 @@ export default function WelcomePersonal({ personaSlug }: { personaSlug?: string 
             </div>
           </div>
 
+          {/* Was-ist-neu Block — wird nach jedem Sprint aktualisiert.
+              Zeigt Bao gezielt, welche Verbesserungen seit seinem letzten
+              Login lohnen, nochmal getestet zu werden. */}
+          <div className="bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-300 rounded-2xl p-6">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-xs uppercase tracking-wider text-amber-800 font-bold bg-amber-200/60 rounded-full px-2.5 py-0.5">Diese Woche neu</span>
+              <span className="text-xs text-amber-800/70">Mai 2026</span>
+            </div>
+            <h2 className="font-semibold text-lg mb-3 text-amber-950">Vier Sachen, die du gleich wieder testen solltest</h2>
+            <ul className="space-y-3 text-sm text-amber-950/90">
+              <li className="flex gap-3">
+                <span className="text-base">🔗</span>
+                <div>
+                  <strong>Verwandte Paragraphen</strong> in der Recherche — klick auf ein Zitat-Badge, der Drawer zeigt jetzt automatisch verwandte §§ aus dem Citation-Graph (94K Knoten / 200K Refs). § 185 → automatisch § 188 + § 192. Spart 10–15 Min Cross-Reading pro Strafanzeige.
+                </div>
+              </li>
+              <li className="flex gap-3">
+                <span className="text-base">🚨</span>
+                <div>
+                  <strong>Aufgehoben-Erkennung</strong> bei der Zitat-Verifikation — wenn der LLM einen weggefallenen § zitiert (z.B. § 3 NetzDG), zeigt das Badge das jetzt rot statt nur „nicht verifiziert". BHV-relevant.
+                </div>
+              </li>
+              <li className="flex gap-3">
+                <span className="text-base">📄</span>
+                <div>
+                  <strong>Export als Word (.docx)</strong> neben dem PDF-Button — editierbares Word-Dokument mit Briefkopf, du arbeitest direkt in Word weiter ohne Copy-Paste-Schritt.
+                </div>
+              </li>
+              <li className="flex gap-3">
+                <span className="text-base">🪪</span>
+                <div>
+                  <strong>Class of 2026 · Founding Member</strong> — du bist als einer der ersten Pilot-Anwälte automatisch lifelong Founding Member. Status taucht im Pass auf, kann nie wieder vergeben werden.
+                </div>
+              </li>
+            </ul>
+            <p className="text-xs text-amber-900/70 mt-4 italic">
+              Was beim Test rauskommt fließt direkt in den nächsten Sprint zurück. Kein Detail zu klein.
+            </p>
+          </div>
+
           <div className="bg-white border border-[var(--color-border)] rounded-2xl p-6">
             <h2 className="font-semibold text-lg mb-2">Kurz zur Idee</h2>
             <p className="text-sm text-[var(--color-ink-soft)] leading-relaxed">
