@@ -7,7 +7,7 @@
 import { useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 import StatusBadge from './StatusBadge'
-import { CASE_STATUSES, canTransition, getStatusInfo } from './case-status'
+import { CASE_STATUSES, canTransition, getStatusInfo, computeBehoerdenFrist } from './case-status'
 import type { CaseStatus } from './case-status'
 import type { MandantCase } from './types'
 
@@ -18,6 +18,7 @@ interface Props {
 
 export default function StatusDropdown({ case: c, onChange }: Props) {
   const [open, setOpen] = useState(false)
+  const [fristHinweis, setFristHinweis] = useState<string | null>(null)
 
   const currentStatus = (c.caseStatus as CaseStatus | undefined) ?? 'unterlagen_fehlen'
   const currentInfo = getStatusInfo(currentStatus)
@@ -25,12 +26,38 @@ export default function StatusDropdown({ case: c, onChange }: Props) {
 
   function handleSelect(next: CaseStatus) {
     if (!canTransition(currentStatus, next)) return
-    onChange({ ...c, caseStatus: next })
+
+    let patch: Partial<MandantCase> = { caseStatus: next }
+
+    if (next === 'antrag_eingereicht') {
+      const antragDatum = new Date()
+      const result = computeBehoerdenFrist(c.mandatsartId, antragDatum)
+      if (result) {
+        const existingFrist = c.fristDatum ? new Date(c.fristDatum) : null
+        const neueFrist = new Date(result.fristDatum)
+        const sollSetzen = !existingFrist || neueFrist > existingFrist
+
+        if (sollSetzen) {
+          patch = {
+            ...patch,
+            fristDatum: result.fristDatum,
+            fristBezeichnung: result.fristBezeichnung,
+          }
+          const formatted = neueFrist.toLocaleDateString('de-DE')
+          setFristHinweis(`Frist auf ${formatted} gesetzt (${result.fristBezeichnung})`)
+          console.log('[StatusDropdown] Auto-Frist gesetzt:', result)
+        }
+      }
+    } else {
+      setFristHinweis(null)
+    }
+
+    onChange({ ...c, ...patch })
     setOpen(false)
   }
 
   return (
-    <div className="relative inline-block">
+    <div className="relative inline-block space-y-2">
       <div className="flex items-center gap-2">
         <span className="text-xs font-medium text-[var(--color-ink-muted)] uppercase tracking-wide">
           Status
@@ -50,6 +77,18 @@ export default function StatusDropdown({ case: c, onChange }: Props) {
           {!isTerminal && <ChevronDown className={`w-3.5 h-3.5 text-[var(--color-ink-muted)] transition-transform ${open ? 'rotate-180' : ''}`} />}
         </button>
       </div>
+
+      {fristHinweis && (
+        <div className="mt-1 rounded-lg border border-green-200 bg-green-50 px-3 py-2 text-xs text-green-800">
+          {fristHinweis}
+          <button
+            onClick={() => setFristHinweis(null)}
+            className="ml-2 text-green-600 hover:text-green-800 underline"
+          >
+            ausblenden
+          </button>
+        </div>
+      )}
 
       {open && (
         <>

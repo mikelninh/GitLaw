@@ -11,14 +11,15 @@
 
 import { Link } from 'react-router-dom'
 import {
-  FolderOpen, Search, FileText, Plus, Clock, AlertCircle, Inbox, Sparkles, TrendingUp, CheckCircle2,
+  FolderOpen, Search, FileText, Plus, Clock, AlertCircle, Inbox, Sparkles, TrendingUp, CheckCircle2, Gavel,
 } from 'lucide-react'
 import {
-  getAccessContext, getAnalyticsSnapshot, getSettings, isOnboardingDismissed, listAudit, listCases, listIntakes, listLetters, listResearch, setOnboardingDismissed,
+  getAccessContext, getAnalyticsSnapshot, getSettings, isOnboardingDismissed, listAudit, listAlerts, listCases, listIntakes, listLetters, listResearch, setOnboardingDismissed,
 } from './store'
 import { savingsThisWeek } from './savings'
 import { roleLabel } from './access'
 import { getGlobalRecommendations } from './recommendations'
+import TodayWidget from './TodayWidget'
 
 function getSettingsName(): string {
   const s = getSettings()
@@ -87,6 +88,8 @@ export default function ProDashboard() {
 
   return (
     <div className="space-y-8">
+      <TodayWidget />
+
       <header className="bg-gradient-to-r from-[var(--color-gold-light)] via-[var(--color-bg-alt)] to-transparent rounded-2xl p-6 -mx-2">
         <h1 className="h-page">
           {greeting}
@@ -195,6 +198,8 @@ export default function ProDashboard() {
           </div>
         </section>
       )}
+
+      <RechtsprechungsAlertWidget />
 
       {featuredCases.length > 0 && (
         <section>
@@ -568,6 +573,40 @@ function HeuteCard({
       <div className="text-2xl font-bold leading-tight">{value}</div>
       {sublabel && <div className="text-xs opacity-70 mt-0.5">{sublabel}</div>}
     </Link>
+  )
+}
+
+function RechtsprechungsAlertWidget() {
+  const alerts = listAlerts().slice(0, 5)
+  if (alerts.length === 0) return null
+  return (
+    <section className="bg-white border border-[var(--color-border)] rounded-2xl p-5">
+      <h2 className="font-semibold mb-3 flex items-center gap-2">
+        <Gavel className="w-4 h-4 text-[var(--color-gold)]" />
+        Rechtsprechungs-News
+      </h2>
+      <div className="space-y-2">
+        {alerts.map(a => (
+          <div key={a.id} className="rounded-lg border border-[var(--color-border)] p-3 bg-[var(--color-bg-alt)]">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <p className="text-sm font-medium truncate">{a.title}</p>
+                <p className="text-xs text-[var(--color-ink-muted)] mt-0.5">{a.court} · {new Date(a.rulingDate).toLocaleDateString('de-DE')}</p>
+              </div>
+              <span className="text-[10px] uppercase px-1.5 py-0.5 rounded bg-amber-50 border border-amber-200 text-amber-800 shrink-0">
+                {a.paragraph.display}
+              </span>
+            </div>
+            {a.summary && <p className="text-xs text-[var(--color-ink-soft)] mt-2 line-clamp-2">{a.summary}</p>}
+            {a.url && (
+              <a href={a.url} target="_blank" rel="noopener noreferrer" className="text-xs text-[var(--color-gold)] hover:underline mt-1 inline-block">
+                Zum Volltext →
+              </a>
+            )}
+          </div>
+        ))}
+      </div>
+    </section>
   )
 }
 

@@ -9,6 +9,7 @@
 import { useState } from 'react'
 import { getChecklistById } from './mandatsart-checklists'
 import type { MandantCase } from './types'
+import ChecklistUploadZone from './ChecklistUploadZone'
 
 type ItemState = 'received' | 'pending' | 'problem'
 
@@ -121,6 +122,9 @@ export default function CaseChecklist({ case: c, onChange }: Props) {
 
   return (
     <div className="space-y-4">
+      {/* OCR-Drop-Zone */}
+      <ChecklistUploadZone case={c} onChange={onChange} />
+
       {/* Header */}
       <div>
         <div className="flex items-baseline gap-2 flex-wrap">

@@ -132,6 +132,100 @@ export function canTransition(from: CaseStatus, to: CaseStatus): boolean {
 }
 
 // ---------------------------------------------------------------------------
+// B.2 — Auto-Frist-Berechnung bei Status-Wechsel zu 'antrag_eingereicht'
+// ---------------------------------------------------------------------------
+
+interface FristResult {
+  fristDatum: string      // ISO date string (YYYY-MM-DD)
+  fristBezeichnung: string
+}
+
+interface FristConfig {
+  months?: number
+  days?: number
+  bezeichnung: string
+}
+
+const BEHOERDEN_FRIST_CONFIG: Record<string, FristConfig> = {
+  'aufenthaltstitel-verlaengerung': {
+    months: 3,
+    bezeichnung: 'Behördliche Bearbeitungsfrist nach § 75 VwVfG',
+  },
+  'familiennachzug-ehegatte': {
+    months: 3,
+    bezeichnung: 'Behördliche Bearbeitungsfrist nach § 75 VwVfG',
+  },
+  'familiennachzug-kind': {
+    months: 3,
+    bezeichnung: 'Behördliche Bearbeitungsfrist nach § 75 VwVfG',
+  },
+  'visumsverfahren-national': {
+    months: 3,
+    bezeichnung: 'Behördliche Bearbeitungsfrist nach § 75 VwVfG',
+  },
+  'einbuergerung': {
+    months: 6,
+    bezeichnung: 'Erfahrungswert Bearbeitung Einbürgerung',
+  },
+  'niederlassungserlaubnis': {
+    months: 3,
+    bezeichnung: 'Behördliche Bearbeitungsfrist nach § 75 VwVfG',
+  },
+  'chancenkarte': {
+    months: 2,
+    bezeichnung: 'Behördliche Bearbeitungsfrist nach § 75 VwVfG',
+  },
+  'beschaeftigungserlaubnis': {
+    months: 2,
+    bezeichnung: 'Behördliche Bearbeitungsfrist nach § 75 VwVfG',
+  },
+  'eilantrag-abschiebung': {
+    days: 7,
+    bezeichnung: 'Eilverfahren — sehr kurze Frist',
+  },
+  'untaetigkeitsklage': {
+    months: 3,
+    bezeichnung: 'Untätigkeitsfrist nach § 75 VwGO',
+  },
+  'haertefall': {
+    months: 6,
+    bezeichnung: 'Erfahrungswert Bearbeitung Härtefall',
+  },
+}
+
+const DEFAULT_FRIST_CONFIG: FristConfig = {
+  months: 3,
+  bezeichnung: 'Behördliche Bearbeitungsfrist nach § 75 VwVfG',
+}
+
+/**
+ * Berechnet die erwartete Bearbeitungsfrist der Behörde ab einem Antragsdatum.
+ * Gibt null zurück wenn kein Antragsdatum übergeben wird.
+ */
+export function computeBehoerdenFrist(
+  mandatsartId: string | undefined,
+  antragDatum: Date
+): FristResult | null {
+  if (!antragDatum || isNaN(antragDatum.getTime())) return null
+
+  const config =
+    (mandatsartId ? BEHOERDEN_FRIST_CONFIG[mandatsartId] : undefined) ??
+    DEFAULT_FRIST_CONFIG
+
+  const frist = new Date(antragDatum)
+
+  if (config.days) {
+    frist.setDate(frist.getDate() + config.days)
+  } else if (config.months) {
+    frist.setMonth(frist.getMonth() + config.months)
+  }
+
+  const fristDatum = frist.toISOString().slice(0, 10)
+
+  return { fristDatum, fristBezeichnung: config.bezeichnung }
+}
+
+// ---------------------------------------------------------------------------
 // B.3 — Helper functions
 // ---------------------------------------------------------------------------
 
