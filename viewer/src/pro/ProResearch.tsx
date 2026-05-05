@@ -26,6 +26,7 @@ import {
 } from './store'
 import { verifyAllCitations } from './verify'
 import { exportResearchPDF } from './pdf'
+import { exportResearchDOCX } from './docx'
 import { anonymize, hasPII, isDsgvoModusActive } from './anonymize'
 import CitationDrawer from './CitationDrawer'
 import type { Citation, ResearchQuery } from './types'
@@ -211,6 +212,13 @@ export default function ProResearch() {
     const settings = getSettings()
     const caseInfo = savedItem.caseId ? getCase(savedItem.caseId) : undefined
     exportResearchPDF({ settings, research: savedItem, caseInfo })
+  }
+
+  function onExportDOCX() {
+    if (!savedItem) return
+    const settings = getSettings()
+    const caseInfo = savedItem.caseId ? getCase(savedItem.caseId) : undefined
+    void exportResearchDOCX({ settings, research: savedItem, caseInfo })
   }
 
   const verifiedCount = citations.filter(c => c.verified).length
@@ -660,6 +668,15 @@ export default function ProResearch() {
                   className="inline-flex items-center gap-1.5 text-sm bg-white border border-[var(--color-border)] rounded-lg px-3 py-1.5 hover:border-[var(--color-gold)]"
                 >
                   <Download className="w-4 h-4" /> Branded PDF
+                </button>
+              )}
+              {savedItem && (
+                <button
+                  onClick={onExportDOCX}
+                  title="Editierbares Word-Dokument — direkt in Word/Office öffnen, weiterarbeiten, eigene Notizen ergänzen."
+                  className="inline-flex items-center gap-1.5 text-sm bg-white border border-[var(--color-border)] rounded-lg px-3 py-1.5 hover:border-[var(--color-gold)]"
+                >
+                  <Download className="w-4 h-4" /> Als Word (.docx)
                 </button>
               )}
               {savedItem?.reviewed && (
