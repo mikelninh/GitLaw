@@ -103,10 +103,11 @@ const topicMap: Record<string, string[]> = {
   'werbungskosten': ['estg'], 'sonderausgaben': ['estg'],
   'steuerhinterziehung': ['ao_1977'], 'finanzamt': ['ao_1977', 'estg'],
   'freelancer': ['estg', 'ao_1977'], 'gewerbe': ['estg'],
-  'freiberufler': ['estg'],
+  'freiberufler': ['estg'], 'freiberuflerin': ['estg'], 'freiberuflich': ['estg'],
 
   // Strafrecht
-  'beleidigung': ['stgb'], 'stalking': ['stgb'], 'diebstahl': ['stgb'],
+  'beleidigung': ['stgb'], 'beleidigt': ['stgb'], 'beschimpf': ['stgb'],
+  'stalking': ['stgb'], 'diebstahl': ['stgb'],
   'betrug': ['stgb'], 'körperverletzung': ['stgb'], 'bedrohung': ['stgb'],
   'schwarzfahren': ['stgb'], 'sachbeschädigung': ['stgb'],
   'straftat': ['stgb', 'stpo'], 'anzeige': ['stgb', 'stpo'],
@@ -114,8 +115,9 @@ const topicMap: Record<string, string[]> = {
   'online beleidigung': ['stgb', 'netzdg'],
 
   // Familie & Kinder
-  'schwangerschaft': ['muschg'], 'mutterschutz': ['muschg'],
+  'schwangerschaft': ['muschg'], 'schwanger': ['muschg'], 'mutterschutz': ['muschg'],
   'elternzeit': ['beeg'], 'elterngeld': ['beeg'], 'kindergeld': ['estg'],
+  'geburt': ['beeg', 'muschg'], 'nach der geburt': ['beeg', 'muschg'],
   'unterhalt': ['bgb'], 'sorgerecht': ['bgb'], 'scheidung': ['bgb'],
   'kind': ['bgb', 'beeg'], 'familie': ['bgb', 'beeg'],
 
@@ -135,8 +137,11 @@ const topicMap: Record<string, string[]> = {
   // Aufenthalt & Migration
   'aufenthalt': ['aufenthg_2004'], 'asyl': ['aufenthg_2004', 'gg'],
   'visum': ['aufenthg_2004'], 'abschiebung': ['aufenthg_2004'],
+  'abgeschoben': ['aufenthg_2004'], 'abschieben': ['aufenthg_2004'],
   'aufenthaltstitel': ['aufenthg_2004'], 'migration': ['aufenthg_2004'],
   'staatsbürgerschaft': ['aufenthg_2004'],
+  'familiennachzug': ['aufenthg_2004'], 'nachzug': ['aufenthg_2004'],
+  'türkei': ['aufenthg_2004'], 'holen': ['aufenthg_2004'],
 
   // Grundrechte
   'grundgesetz': ['gg'], 'grundrecht': ['gg'], 'meinungsfreiheit': ['gg'],
@@ -144,7 +149,13 @@ const topicMap: Record<string, string[]> = {
   'religionsfreiheit': ['gg'],
 
   // Gebäude
-  'heizung': ['geg'], 'wärmepumpe': ['geg'], 'sanierung': ['geg'],
+  'heizung': ['bgb', 'geg'], 'wärmepumpe': ['geg'], 'sanierung': ['geg'],
+  'befristet': ['bgb'], 'zeitmietvertrag': ['bgb'], 'laufzeit': ['bgb'],
+
+  // Ausbildung
+  'ausbildung': ['bgb', 'arbzg'], 'ausbildungsvertrag': ['bgb', 'arbzg'],
+  'azubi': ['bgb', 'arbzg'], 'auszubildende': ['bgb', 'arbzg'],
+  'lehrling': ['bgb', 'arbzg'], 'berufsschule': ['bgb', 'arbzg'],
 
   // Selbstständig — maps to multiple relevant laws
   'selbstständig': ['estg', 'sgb_5', 'sgb_6', 'ao_1977'],
@@ -164,7 +175,7 @@ const topicMap: Record<string, string[]> = {
 const personaLaws: Record<string, string[]> = {
   'student': ['bgb', 'stgb', 'sgb_5'],
   'arbeitnehmer': ['arbzg', 'kschg', 'bgb', 'sgb_6'],
-  'selbststaendig': ['estg', 'ao_1977', 'sgb_5', 'sgb_6', 'bgb'],
+  'selbststaendig': ['estg', 'ao_1977', 'sgb_5', 'sgb_6'],
   'elternteil': ['bgb', 'beeg', 'estg'],
   'alleinerziehend': ['bgb', 'beeg', 'sgb_2'],
   'rentner': ['sgb_6', 'estg', 'sgb_5'],
