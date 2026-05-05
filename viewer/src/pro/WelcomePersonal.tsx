@@ -10,7 +10,7 @@
  */
 
 import { useState } from 'react'
-import { Link, useParams, useNavigate } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { Scale, Sparkles, ArrowRight } from 'lucide-react'
 import QrCard from './QrCard'
 import { PERSONAS, type WelcomeHighlight } from './welcome-personas'
@@ -20,7 +20,6 @@ import { getSettings, listCases, updateCase } from './store'
 export default function WelcomePersonal({ personaSlug }: { personaSlug?: string }) {
   const baseUrl = import.meta.env.BASE_URL
   const params = useParams<{ slug: string }>()
-  const navigate = useNavigate()
   // Slug kommt entweder aus dem Route-Param (/willkommen/:slug) oder als
   // Prop (für hardcoded Routes wie /bao, /rubin, /werner, /jasmin).
   const slug = personaSlug || params.slug
@@ -63,8 +62,12 @@ export default function WelcomePersonal({ personaSlug }: { personaSlug?: string 
       localStorage.setItem('gitlaw.pro.cases.v1', JSON.stringify(stored))
       setDemoStatus('created')
     }
-    // Kurz warten dann zur Akten-Übersicht navigieren
-    setTimeout(() => navigate('/pro/akten'), 1800)
+    // Kurz warten, dann zur Akten-Übersicht — über den Invite-Link, damit
+    // ProAuth den Beta-Token konsumiert und das Preset lädt (sonst landet
+    // man im Login-Screen, obwohl die Demo-Akte schon im localStorage ist).
+    setTimeout(() => {
+      window.location.hash = `#/pro/akten?invite=${persona!.betaToken}&preset=${persona!.presetKey}`
+    }, 1800)
   }
 
   return (
