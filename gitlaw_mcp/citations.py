@@ -12,6 +12,7 @@ Handles common citation formats:
 The corpus stores paragraphs as `### § 185 — Beleidigung` (StGB style)
 or `### Art 5` (GG style). We extract by matching that exact heading.
 """
+
 from __future__ import annotations
 
 import re
@@ -47,8 +48,8 @@ CITATION_RE = re.compile(
 @dataclass
 class Citation:
     raw: str
-    marker: str       # "§" or "Art"
-    number: str       # "185" or "5"
+    marker: str  # "§" or "Art"
+    number: str  # "185" or "5"
     subsection: str | None
     abbreviation: str  # "StGB"
 
@@ -109,10 +110,10 @@ def find_law_file(abbreviation: str) -> Path | None:
 
 @dataclass
 class Paragraph:
-    heading: str       # "§ 185 — Beleidigung" or "Art 5"
+    heading: str  # "§ 185 — Beleidigung" or "Art 5"
     title: str | None  # "Beleidigung" or None
-    number: str        # "§ 185" or "Art 5"
-    text: str          # full paragraph body (without the heading line)
+    number: str  # "§ 185" or "Art 5"
+    text: str  # full paragraph body (without the heading line)
 
 
 def extract_paragraph(law_path: Path, marker: str, number: str) -> Paragraph | None:
@@ -140,7 +141,11 @@ def extract_paragraph(law_path: Path, marker: str, number: str) -> Paragraph | N
             # check if this line is OUR section
             stripped = line.rstrip()
             # tolerate variants: "### § 185 — Beleidigung", "### § 185", "### § 185a"
-            if stripped == prefix or stripped.startswith(prefix + " ") or stripped.startswith(prefix + "—"):
+            if (
+                stripped == prefix
+                or stripped.startswith(prefix + " ")
+                or stripped.startswith(prefix + "—")
+            ):
                 in_section = True
                 heading = stripped[4:].strip()  # strip "### "
         elif in_section:

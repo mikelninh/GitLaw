@@ -1,0 +1,32 @@
+# Used by the gitlaw_mcp/Dockerfile (build context = repo root)
+# Keep the build context small to speed up `docker build` and avoid
+# leaking secrets / local artefacts into the image.
+
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/.venv/
+**/.pytest_cache/
+**/node_modules/
+**/.next/
+**/dist/
+**/build/
+**/.DS_Store
+
+# Frontend / Pro app — not used by the MCP server
+viewer/
+api/
+
+# Heavy local artefacts that should be mounted, not baked in
+rag/vectorstore/
+
+# VCS + IDE
+.git/
+.github/
+.idea/
+.vscode/
+
+# Local env / secrets — never bake into image
+.env
+.env.*
+*.local

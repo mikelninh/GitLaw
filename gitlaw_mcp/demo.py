@@ -9,6 +9,7 @@ Useful as:
 Run from repo root:
     python -m gitlaw_mcp.demo
 """
+
 from __future__ import annotations
 
 import json
@@ -28,15 +29,15 @@ from gitlaw_mcp.server import (  # type: ignore
 
 CASES: list[tuple[str, str, str]] = [
     # (label, kind, args)
-    ("Real citation — Beleidigung",       "verify", "§ 185 StGB"),
-    ("Real citation — Computerbetrug",    "verify", "§ 263a StGB"),
-    ("Real citation — Meinungsfreiheit",  "verify", "Art. 5 GG"),
-    ("Real citation with subsections",    "verify", "Art 5 Abs. 1 S. 1 GG"),
-    ("HALLUCINATION — paragraph",         "verify", "§ 999 StGB"),
-    ("HALLUCINATION — law abbr",          "verify", "§ 185 XYZ"),
-    ("Free text (not a citation)",        "verify", "Mit freundlichen Grüßen"),
-    ("Exact lookup",                      "lookup", ("BGB", "823")),
-    ("Filter laws by 'bgb'",              "list",   "bgb"),
+    ("Real citation — Beleidigung", "verify", "§ 185 StGB"),
+    ("Real citation — Computerbetrug", "verify", "§ 263a StGB"),
+    ("Real citation — Meinungsfreiheit", "verify", "Art. 5 GG"),
+    ("Real citation with subsections", "verify", "Art 5 Abs. 1 S. 1 GG"),
+    ("HALLUCINATION — paragraph", "verify", "§ 999 StGB"),
+    ("HALLUCINATION — law abbr", "verify", "§ 185 XYZ"),
+    ("Free text (not a citation)", "verify", "Mit freundlichen Grüßen"),
+    ("Exact lookup", "lookup", ("BGB", "823")),
+    ("Filter laws by 'bgb'", "list", "bgb"),
 ]
 
 

@@ -145,6 +145,9 @@ Calls `verify_citation('§ 999 StGB')` and reports it does not exist.
 gitlaw_mcp/
 ├── server.py        — FastMCP server, 4 @tool decorators + 1 @resource
 ├── citations.py     — German legal-citation regex parser + paragraph extractor
+├── demo.py          — runnable smoke test (no API key needed)
+├── Dockerfile       — multi-stage prod build, non-root user, healthcheck
+├── ARCHITECTURE.md  — cloud migration path (AWS Fargate / Azure Container Apps)
 ├── pyproject.toml
 └── README.md
 
@@ -152,6 +155,31 @@ gitlaw_mcp/
   laws/             — 5,936 markdown files (one per law, paragraphs as ### headings)
   rag/vectorstore/  — FAISS index (paragraph-level chunks, OpenAI embeddings)
 ```
+
+### Docker
+
+```bash
+# Build (from repo root):
+docker build -t gitlaw-mcp:0.1.0 -f gitlaw_mcp/Dockerfile .
+
+# Smoke-test inside the container:
+docker run --rm gitlaw-mcp:0.1.0 python -m gitlaw_mcp.demo
+
+# Run as MCP server (with bind-mounted vectorstore):
+docker run --rm -i \
+  -e OPENAI_API_KEY=$OPENAI_API_KEY \
+  -v $(pwd)/rag/vectorstore:/app/rag/vectorstore:ro \
+  gitlaw-mcp:0.1.0
+```
+
+### CI
+
+`.github/workflows/mcp-ci.yml` runs three jobs in parallel on every push touching `gitlaw_mcp/` or `laws/`:
+- **smoke** — install + run `demo.py` (validates 4,852+ laws indexed, anti-hallucination cases pass)
+- **lint** — ruff check + format + mypy
+- **docker** — multi-stage build with BuildKit cache, then run the demo inside the resulting image
+
+Total wall-time ~2-3 min. See [`ARCHITECTURE.md`](ARCHITECTURE.md) for the full cloud-deployment path (AWS Fargate / Azure Container Apps).
 
 The server is **stateless across requests** but loads:
 - the abbreviation→file index lazily on first call (~50ms scan of `laws/*.md` headers)

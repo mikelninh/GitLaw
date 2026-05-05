@@ -20,6 +20,7 @@ or:
 
 Hook into Claude Desktop / Cursor / any MCP client via stdio — see README.
 """
+
 from __future__ import annotations
 
 import os
@@ -34,7 +35,6 @@ sys.path.insert(0, str(ROOT))
 from mcp.server.fastmcp import FastMCP  # type: ignore
 
 from gitlaw_mcp.citations import (  # type: ignore
-    Citation,
     extract_paragraph,
     find_law_file,
     get_abbr_index,
@@ -61,8 +61,7 @@ def _get_vectorstore():
 
     if not VECTORSTORE_DIR.exists():
         raise RuntimeError(
-            f"Vector store not found at {VECTORSTORE_DIR}. "
-            f"Run: python rag/build_vectorstore.py"
+            f"Vector store not found at {VECTORSTORE_DIR}. Run: python rag/build_vectorstore.py"
         )
     if not os.getenv("OPENAI_API_KEY"):
         raise RuntimeError(

@@ -1,0 +1,122 @@
+# GitLaw MCP — CI pipeline
+#
+# Runs on every push/PR that touches the MCP server or the underlying corpus.
+# Three jobs in parallel:
+#   1. smoke    — install + run the offline demo (verifies citation logic)
+#   2. lint     — ruff + mypy on the MCP package
+#   3. docker   — build the production image and run the smoke test inside it
+#
+# Total wall time: ~2-3 min. Fast enough that the developer feedback loop is tight.
+
+name: MCP CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "gitlaw_mcp/**"
+      - "laws/**"
+      - ".github/workflows/mcp-ci.yml"
+  pull_request:
+    paths:
+      - "gitlaw_mcp/**"
+      - "laws/**"
+      - ".github/workflows/mcp-ci.yml"
+  workflow_dispatch: {}  # allow manual runs from the Actions tab
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mcp-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ─────────────────────────────────────────────────────────────────
+  # 1. Smoke — fastest signal that nothing is broken
+  # ─────────────────────────────────────────────────────────────────
+  smoke:
+    name: Smoke (offline demo)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install MCP package (no heavy deps for offline tools)
+        run: |
+          pip install --upgrade pip
+          pip install mcp  # SDK only — verify_citation / lookup / list don't need OpenAI/FAISS
+
+      - name: Run offline demo
+        run: python -m gitlaw_mcp.demo
+
+      - name: Sanity-check abbr index
+        run: |
+          python -c "
+          from gitlaw_mcp.citations import get_abbr_index
+          idx = get_abbr_index()
+          assert len(idx) > 1000, f'corpus has only {len(idx)} abbreviations'
+          assert 'STGB' in idx, 'StGB missing from index'
+          assert 'GG' in idx, 'GG missing from index'
+          print(f'OK · {len(idx)} laws indexed')
+          "
+
+  # ─────────────────────────────────────────────────────────────────
+  # 2. Lint — ruff for style, mypy for types
+  # ─────────────────────────────────────────────────────────────────
+  lint:
+    name: Lint + types
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install lint tools
+        run: pip install ruff mypy
+
+      - name: Ruff (lint)
+        run: ruff check gitlaw_mcp/ --output-format=github
+
+      - name: Ruff (format check)
+        run: ruff format --check gitlaw_mcp/
+
+      - name: Mypy
+        run: mypy gitlaw_mcp/ --ignore-missing-imports --no-error-summary
+
+  # ─────────────────────────────────────────────────────────────────
+  # 3. Docker — build prod image + run smoke inside it
+  # ─────────────────────────────────────────────────────────────────
+  docker:
+    name: Docker build + in-image smoke
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Buildx (BuildKit)
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build image (cached)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: gitlaw_mcp/Dockerfile
+          tags: gitlaw-mcp:ci
+          load: true            # keep image in the local docker daemon
+          push: false
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Run offline demo inside container
+        run: |
+          docker run --rm gitlaw-mcp:ci python -m gitlaw_mcp.demo
+
+      - name: Image size
+        run: docker images gitlaw-mcp:ci --format "{{.Repository}}:{{.Tag}} → {{.Size}}"
