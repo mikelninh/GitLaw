@@ -41,6 +41,7 @@ import { getCaseRecommendations } from './recommendations'
 import QrCard from './QrCard'
 import CaseChecklist from './CaseChecklist'
 import MandatsartSelector from './MandatsartSelector'
+import BehoerdenSelector from './BehoerdenSelector'
 import StatusDropdown from './StatusDropdown'
 import SachstandsGenerator from './SachstandsGenerator'
 import type { MandantCase } from './types'
@@ -672,6 +673,15 @@ export function ProCaseDetail() {
             setTick(t => t + 1)
           }}
         />
+        <div className="pt-1 border-t border-[var(--color-border)]">
+          <BehoerdenSelector
+            value={c.behoerde}
+            onChange={name => {
+              updateCase(c.id, { behoerde: name })
+              setTick(t => t + 1)
+            }}
+          />
+        </div>
         {/* Modul B — Status-Dropdown + Sachstands-Generator */}
         <div className="flex items-center gap-3 flex-wrap pt-1 border-t border-[var(--color-border)]">
           <StatusDropdown

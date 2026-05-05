@@ -204,7 +204,7 @@ export function buildSachstandsContext(
     mandant_name: c.mandantName,
     aktenzeichen: c.aktenzeichen,
     mandatsart: mandatsartLabel,
-    behoerde: lang === 'vi' ? 'Cơ quan có thẩm quyền' : 'zuständige Behörde',
+    behoerde: c.behoerde || (lang === 'vi' ? 'Cơ quan có thẩm quyền' : 'der zuständigen Behörde'),
     antrag_datum: antragDatum,
     fehlende_unterlagen: formatFehlendeUnterlagen(c, lang),
     naechster_schritt:

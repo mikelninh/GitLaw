@@ -9,18 +9,23 @@
  * persönlicher Ton in den richtigen Momenten.
  */
 
-import { Link, useParams } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 import { Scale, Sparkles, ArrowRight } from 'lucide-react'
 import QrCard from './QrCard'
 import { PERSONAS, type WelcomeHighlight } from './welcome-personas'
+import { createDemoCase } from './demo-seed'
+import { getSettings, listCases, updateCase } from './store'
 
 export default function WelcomePersonal({ personaSlug }: { personaSlug?: string }) {
   const baseUrl = import.meta.env.BASE_URL
   const params = useParams<{ slug: string }>()
+  const navigate = useNavigate()
   // Slug kommt entweder aus dem Route-Param (/willkommen/:slug) oder als
   // Prop (für hardcoded Routes wie /bao, /rubin, /werner, /jasmin).
   const slug = personaSlug || params.slug
   const persona = slug ? PERSONAS[slug] : undefined
+  const [demoStatus, setDemoStatus] = useState<'idle' | 'created' | 'updated'>('idle')
 
   if (!persona) {
     return (
@@ -41,6 +46,26 @@ export default function WelcomePersonal({ personaSlug }: { personaSlug?: string 
   const feedbackMailto = `mailto:mikel_ninh@yahoo.de?subject=${encodeURIComponent(`GitLaw Pro Beta Feedback — ${persona.fullName}`)}&body=${encodeURIComponent(
     `Hi Mikel,\n\nhier mein kurzes Beta-Feedback zu GitLaw Pro:\n\n1. Was war sofort nützlich?\n- \n\n2. Was war unklar oder zu langsam?\n- \n\n3. Was fehlt für echte tägliche Nutzung?\n- \n\n4. Würde ich das Assistenz/Mitarbeiter:innen geben?\n- \n\n5. Mein wichtigster Wunsch fürs nächste Release:\n- \n`
   )}`
+
+  function handleCreateDemoCase() {
+    const settings = getSettings()
+    const demo = createDemoCase(settings)
+    const all = listCases()
+    const existing = all.find(c => c.aktenzeichen === demo.aktenzeichen)
+    if (existing) {
+      // Idempotent: bestehende Demo-Akte aktualisieren statt Duplikat anlegen
+      updateCase(existing.id, { ...demo, id: existing.id })
+      setDemoStatus('updated')
+    } else {
+      // Neue Akte direkt in localStorage schreiben (ohne role-guard, da Demo)
+      const stored = JSON.parse(localStorage.getItem('gitlaw.pro.cases.v1') ?? '[]') as typeof all
+      stored.push(demo)
+      localStorage.setItem('gitlaw.pro.cases.v1', JSON.stringify(stored))
+      setDemoStatus('created')
+    }
+    // Kurz warten dann zur Akten-Übersicht navigieren
+    setTimeout(() => navigate('/pro/akten'), 1800)
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[var(--color-gold-light)] via-[var(--color-bg)] to-[var(--color-bg)]">
@@ -158,6 +183,35 @@ export default function WelcomePersonal({ personaSlug }: { personaSlug?: string 
             <p className="text-xs text-amber-900/70 mt-4 italic">
               Was beim Test rauskommt fließt direkt in den nächsten Sprint zurück. Kein Detail zu klein.
             </p>
+          </div>
+
+          {/* Demo-Akte — Sprint 1 Polish */}
+          <div className="bg-white border border-[var(--color-border)] rounded-2xl p-6">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-lg">🎯</span>
+              <h2 className="font-semibold text-base">Demo-Akte zum Durchklicken</h2>
+            </div>
+            <p className="text-sm text-[var(--color-ink-soft)] mb-4 leading-relaxed">
+              Eine fertige Beispiel-Akte — Phạm Văn Đức, Aufenthaltstitel-Verlängerung, halb-gefüllte
+              Checkliste (6 eingegangen, 1 Problem, 3 noch offen), Status „Antrag in Vorbereitung".
+              Ein Klick und du kannst alle neuen Funktionen direkt durchspielen, ohne erst Daten
+              einzugeben.
+            </p>
+            {demoStatus === 'idle' ? (
+              <button
+                onClick={handleCreateDemoCase}
+                className="inline-flex items-center gap-2 bg-[var(--color-ink)] text-white rounded-lg px-4 py-2 text-sm hover:opacity-90 transition-opacity"
+              >
+                Demo-Akte anlegen
+              </button>
+            ) : (
+              <div className="flex items-center gap-2 text-sm text-green-700 bg-green-50 border border-green-200 rounded-lg px-3 py-2">
+                <span>✓</span>
+                <span>
+                  Demo-Akte AZ-2026-0042 {demoStatus === 'updated' ? 'aktualisiert' : 'angelegt'} — du wirst gleich zur Akten-Übersicht weitergeleitet.
+                </span>
+              </div>
+            )}
           </div>
 
           <div className="bg-white border border-[var(--color-border)] rounded-2xl p-6">

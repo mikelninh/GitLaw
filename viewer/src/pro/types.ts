@@ -66,6 +66,14 @@ export interface MandantCase {
    * Defaults to 'unterlagen_fehlen' when not set.
    */
   caseStatus?: string
+  /**
+   * Konkrete Behörde, die diesen Fall bearbeitet — wird in
+   * Sachstands-Templates anstelle des generischen "zuständige Behörde"
+   * genutzt. Free-text, aber aus BehoerdenSelector befüllbar.
+   */
+  behoerde?: string
+  /** PLZ-Präfix für Behörden-Suggestions (optional). */
+  behoerdePLZ?: string
 }
 
 export interface CaseTask {
