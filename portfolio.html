@@ -157,9 +157,9 @@
 
       <div class="card">
         <div class="num">MCP</div>
-        <div class="label">Model Context Protocol</div>
+        <div class="label">Model Context Protocol · stdio + SSE</div>
         <h3>Eigener MCP-Server</h3>
-        <p>FastMCP-Server, der GitLaw als Tools für jeden LLM-Client (Claude Desktop, Cursor, eigene Agenten) bereitstellt. Fünf Tools: search_laws, verify_citation, lookup_paragraph, list_laws, find_related_paragraphs. Anti-Halluzinations-Mechanik mit strukturierten Failure-Modes.</p>
+        <p>FastMCP-Server, der GitLaw als <strong>6 Tools</strong> für jeden LLM-Client bereitstellt: search_laws, verify_citation, lookup_paragraph, list_laws, find_related_paragraphs, hybrid_search. <strong>53/53 Citation-Eval-Tests in CI</strong>. JSON-strukturierte Logs. Fly.io-Deploy + AWS-Terraform.</p>
         <a class="tag" href="https://github.com/mikelninh/gitlaw/tree/main/gitlaw_mcp">→ gitlaw_mcp/</a>
       </div>
 
@@ -227,9 +227,9 @@
 
       <div class="map-row">
         <div class="jd">"Develop and integrate solutions with MCP servers to support advanced legal tech workflows."</div>
-        <div class="built"><strong>Eigener produktiver MCP-Server</strong>
-          FastMCP-basiert, fünf Tools, eine Resource. Multi-Stage Docker, CI mit smoke + lint + in-image-test. Cloud-Migration-Pfad dokumentiert (AWS Fargate / Azure Container Apps).<br>
-          <code><a href="https://github.com/mikelninh/gitlaw/blob/main/gitlaw_mcp/README.md">gitlaw_mcp/README.md</a></code> · <code><a href="https://github.com/mikelninh/gitlaw/blob/main/gitlaw_mcp/server.py">gitlaw_mcp/server.py</a></code>
+        <div class="built"><strong>Eigener produktiver MCP-Server mit stdio + HTTP/SSE</strong>
+          FastMCP-basiert, sechs Tools (search · verify · lookup · list · related · hybrid_search), eine Resource. Multi-Stage Docker, drei deploy-fähige Pfade (lokal stdio / Fly.io SSE / AWS Fargate via Terraform), 53/53 Citation-Eval-Tests in CI, JSON-strukturierte Logs.<br>
+          <code><a href="https://github.com/mikelninh/gitlaw/blob/main/gitlaw_mcp/README.md">gitlaw_mcp/README.md</a></code> · <code><a href="https://github.com/mikelninh/gitlaw/blob/main/gitlaw_mcp/server.py">server.py</a></code> · <code><a href="https://github.com/mikelninh/gitlaw/blob/main/fly.toml">fly.toml</a></code>
         </div>
       </div>
 
@@ -248,9 +248,9 @@
 
       <div class="map-row">
         <div class="jd">"Architect and deploy AI services on cloud platforms (Azure/AWS) using containerization and CI/CD pipelines."</div>
-        <div class="built"><strong>Multi-Stage Dockerfile + dokumentierter Migration-Pfad</strong>
-          Builder/Runtime-Split, non-root user, healthcheck, Bind-Mount für 150MB-Vectorstore. AWS-Pfad: ECS Fargate + ALB + EFS + Secrets Manager (eu-central-1). Azure-Pfad: Container Apps + Key Vault + AppGW (Germany West Central).<br>
-          <code><a href="https://github.com/mikelninh/gitlaw/blob/main/gitlaw_mcp/Dockerfile">gitlaw_mcp/Dockerfile</a></code> · <code><a href="https://github.com/mikelninh/gitlaw/blob/main/gitlaw_mcp/ARCHITECTURE.md">gitlaw_mcp/ARCHITECTURE.md</a></code>
+        <div class="built"><strong>Multi-Stage Dockerfile + Fly.io Live-Deploy + AWS Terraform IaC</strong>
+          Zwei deploy-fähige Pfade: (1) <code>fly.toml</code> + push-to-deploy GitHub Action → Frankfurt SSE-Endpoint in 60s. (2) <code>deploy/aws/</code> — 10 Terraform-Files mit VPC + ECS Fargate + ALB + ACM + EFS + Secrets Manager + WAF + CloudWatch + Autoscaling, ~$31/Monat. Plan, plan-able, applicable.<br>
+          <code><a href="https://github.com/mikelninh/gitlaw/blob/main/fly.toml">fly.toml</a></code> · <code><a href="https://github.com/mikelninh/gitlaw/tree/main/deploy/aws">deploy/aws/</a></code> · <code><a href="https://github.com/mikelninh/gitlaw/blob/main/gitlaw_mcp/Dockerfile">gitlaw_mcp/Dockerfile</a></code>
         </div>
       </div>
 
@@ -264,9 +264,9 @@
 
       <div class="map-row">
         <div class="jd">"Monitor and maintain system reliability through automated testing and observability tools."</div>
-        <div class="built"><strong>3-Job-Parallel-CI + Eval-Matrix + Logging-Pattern</strong>
-          smoke (offline-Demo + Korpus-Sanity) + lint (ruff + mypy) + docker (BuildKit-Cache, in-image-Test). Eval-Matrix für Citizen-Agent-Flows mit 9-PASS/0-FAIL Live-Check.<br>
-          <code><a href="https://github.com/mikelninh/gitlaw/blob/main/.github/workflows/mcp-ci.yml">.github/workflows/mcp-ci.yml</a></code> · <code><a href="https://github.com/mikelninh/gitlaw/blob/main/GITLAW_AGENT_EVAL_MATRIX_DE.md">EVAL_MATRIX_DE.md</a></code>
+        <div class="built"><strong>53/53 Citation-Eval + JSON-Logs + 3-Job-Parallel-CI</strong>
+          53 hand-gelabelte Citation-Verification-Cases (real, halluziniert, edge-cases) als pytest-Suite, in CI getrackt — pass-rate 100%. JSON-strukturierte Logs pro Tool-Call (request_id, latency_ms, status) — pipe-fähig in Datadog/Loki/Sentry/Axiom ohne Parser. CI: smoke + lint (ruff+mypy) + docker mit BuildKit-Cache.<br>
+          <code><a href="https://github.com/mikelninh/gitlaw/blob/main/.github/workflows/mcp-ci.yml">mcp-ci.yml</a></code> · <code><a href="https://github.com/mikelninh/gitlaw/blob/main/gitlaw_mcp/tests/cases.json">tests/cases.json (53)</a></code>
         </div>
       </div>
     </div>
