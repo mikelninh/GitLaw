@@ -2,7 +2,7 @@
 
 **Adressat:** Bao Nguyen (Kanzlei)
 **Absender:** Mikel
-**Stand:** 2026-05-05
+**Stand:** 2026-05-06 (vor unserem Treffen heute)
 **Bezug:** Lastenheft "Arbeitsgrundlage: KI-gestützte Datenverarbeitung und Mandantenkommunikation für die Kanzlei" vom (Datum aus dem Dokument)
 
 ---
@@ -20,7 +20,7 @@ Diese Antwort folgt deiner Struktur Abschnitt für Abschnitt. Pro Abschnitt find
 - **Was wir realistisch ergänzen können** mit Aufwandseinschätzung
 - **Offene Fragen** dort, wo wir vor Umsetzung etwas von dir brauchen
 
-Im hinteren Teil findest du den konkreten Sprint-Plan, fünf Klärungsfragen für unser nächstes Gespräch und einen Anhang mit den Datenschemen, die wir heute bereits angelegt haben.
+Im hinteren Teil findest du den konkreten Sprint-Plan, fünf Klärungsfragen für unser Gespräch und einen Anhang mit dem konkreten Liefer-Stand. **Zwischen Lastenheft-Eingang und unserem Treffen heute habe ich Sprint 0, Sprint 1 (Module A + B) und drei zusätzliche Features fertig committed** — nicht als Versprechen, sondern als laufende Demo-Akte, die du gleich klicken kannst (`/#/bao` → „Demo-Akte anlegen"). Details in Anhang C.
 
 ---
 
@@ -199,23 +199,26 @@ Die zwölf Zielbild-Punkte aus deinem Dokument sind 1:1 in den Sprints 1-4 verte
 
 ## 12. Funktionale Anforderungen
 
-### 12.1 Mandats- und Statusverwaltung — Status ✓ überwiegend vorhanden
+### 12.1 Mandats- und Statusverwaltung — Status ✓ überwiegend live
 
-Deine 15 Felder sind heute schon in unserem Akten-Datenmodell — bis auf folgende Ergänzungen:
-- **Sprache des Mandanten** (Dropdown DE/VI) — neu in Sprint 1
-- **Autorisierte Mittelsperson** — neu in Sprint 4
-- **Externe Stelle (Behörde/Gericht)** — neu in Sprint 1
+Deine 15 Felder sind im Akten-Datenmodell — Stand heute:
+- **Mandatsart** (11 Migrations-Optionen) ✓ live
+- **8-Stati-Workflow** mit Übergangs-Regeln ✓ live
+- **Externe Stelle (Behörde/Gericht)** mit 17-Behörden-Combobox ✓ live
+- **Sprache des Mandanten** (Dropdown DE/VI) — kommt in Sprint 1 Modul C, sobald wir deine Voice-Anchor-Mails durchgegangen sind
+- **Autorisierte Mittelsperson** — Templates vorbereitet, Datenmodell in Sprint 4
 
-### 12.2 Dokumentenmanagement — Status ~ teilweise
+### 12.2 Dokumentenmanagement — Status ~ teilweise live
 
-Upload + Verknüpfung zu Akte: ✓
-OCR: ✓ (in Stabilisierung)
-Klassifikation, Plausi, Dubletten, Quality: Sprint 3
+Upload + Verknüpfung zur Akte: ✓ live
+OCR mit Keyword-Match gegen Mandatsart-Checkliste: ✓ live (heute Abend committed, als Beta-Erkennung gelabelt)
+Semantische Klassifikation, Plausi-Checks, Dubletten-Erkennung, Quality-Scores: Sprint 3
 
-### 12.3 Mehrsprachige Kommunikation — Status ✓ überwiegend
+### 12.3 Mehrsprachige Kommunikation — Status ✓ überwiegend live
 
-Standardisierte Textbausteine, rechtlich geprüfte Vorlagen, Speicherung in Akte: ✓
-DE/VI Übersetzungs-Pipeline: Sprint 1
+Standardisierte Textbausteine, rechtlich geprüfte Vorlagen, Speicherung in Akte: ✓ live
+**32 Sachstand-Templates DE+VI** (8 Stati × Mandant/Mittelsperson × Sprache): ✓ live (Modul B)
+DE/VI Übersetzungs-Pipeline für freie Recherche: Sprint 1 Modul C — wartet auf deine Voice-Anchor
 KI-gestützte Anpassung an Sachverhalt mit Anti-Halluzination: ✓ (53/53 Eval-Cases passing in CI)
 
 ### 12.4 Automatisierung mit Freigabeprinzip — Status ✓ konzeptionell, Implementierung in Sprints
@@ -308,16 +311,21 @@ Deine "geeignete vs. nicht ohne anwaltliche Kontrolle"-Trennung ist die operativ
 
 Deine 9 Punkte werden in zwei Sprints geliefert:
 
-**Sprint 1 (Modul A+B+C+D, ~3 Wochen):**
-1. ✓ Mandatsart auswählen *(heute schon)*
-2. ✓ Checkliste generieren *(Modul A — heute angelegt)*
-3. ⌥ eingegangene Unterlagen erfassen *(heute schon, Klassifikation kommt Sprint 3)*
-4. ⌥ fehlende Unterlagen anzeigen *(Modul A heute, Auto-Match Sprint 3)*
-5. ⌥ Erinnerung DE/VI erzeugen *(Modul C, Sprint 1 als Draft, Auto-Versand Sprint 2)*
-6. ⌥ Statuskategorie festlegen *(Modul B, Sprint 1)*
-7. ⌥ Sachstandsantwort erzeugen *(Modul B, Sprint 1)*
-8. ⌥ interne Aufgabe erstellen *(Modul D, Sprint 1)*
-9. ✓ Export Advoware *(heute schon)*
+**Sprint 1 (Modul A+B+C+D, ~3 Wochen) — Stand 2026-05-06:**
+1. ✓ Mandatsart auswählen *(live, 11 Optionen)*
+2. ✓ Checkliste generieren *(Modul A — live, 108 Items)*
+3. ✓ eingegangene Unterlagen erfassen *(live, plus OCR-Drop-Zone mit Keyword-Match seit heute Abend)*
+4. ✓ fehlende Unterlagen anzeigen *(Modul A live + neues Heute-Widget im Dashboard)*
+5. ⌥ Erinnerung DE/VI erzeugen *(Sachstand-Templates DE+VI sind live für 8 Stati; freie Erinnerungs-Generierung in Modul C, wartet auf deine Voice-Anchor)*
+6. ✓ Statuskategorie festlegen *(Modul B live, 8 Stati mit Übergangs-Regeln)*
+7. ✓ Sachstandsantwort erzeugen *(Modul B live, 32 Templates Mandant/Mittelsperson × DE/VI)*
+8. ⌥ interne Aufgabe erstellen *(Modul D, Sprint 1 Rest)*
+9. ✓ Export Advoware *(CSV-Bidirectional bereits live)*
+
+**Bonus (heute Abend nachgeschoben):**
+- ✓ **Heute-Widget** im Dashboard — drei Sektionen (Fristen ≤ 14 Tage, Behörden-Rückfragen, fehlende Pflicht-Unterlagen)
+- ✓ **Auto-Frist-Berechnung** beim Status-Wechsel auf „Antrag eingereicht" (3 Monate AufenthG nach § 75 VwVfG, 6 Monate Einbürgerung, 7 Tage Eilantrag)
+- ✓ **OCR-Drop-Zone** in der Checkliste mit Keyword-Match-Vorschlägen (Bestätigung manuell)
 
 **Sprint 2 (Auto-Erinnerungs-Engine, ~2 Wochen):** der eigentliche Zeitspar-Hebel — automatische Detection + Draft + Refa-Freigabe + Send.
 
@@ -502,13 +510,56 @@ Dies ist der heute angelegte Daten-Seed für die ersten 11 Mandatsarten. Die Lis
 
 ---
 
-## Anhang C: Was heute (2026-05-05) bereits committed wurde
+## Anhang C: Was zwischen Lastenheft-Eingang und heute committed wurde
 
-Commit-Hash und Inhalt findest du im Repo. Konkret:
+Stand 2026-05-06, alles auf `main`-Branch, live unter `gitlaw-xi.vercel.app`. Sieben Commits, ungefähr in dieser Reihenfolge:
 
-- `viewer/src/pro/mandatsart-checklists.ts` — Datenschema + Seed-Daten für 11 Mandatsarten
-- `viewer/src/pro/types.ts` — `MandatsartChecklist`, `ChecklistItem` Interfaces
-- Diese Datei (`BAO_KI_DATENVERARBEITUNG_ANTWORT.md`) als persistierte Antwort
+### Sprint 0 — Foundation (`faee6db`)
+Datenschema + Seed-Daten für 11 Migrations-Mandatsarten mit insgesamt 108 kuratierten Pflicht- und Optional-Unterlagen.
+- `viewer/src/pro/mandatsart-checklists.ts` (1.085 Zeilen)
+- `viewer/src/pro/types.ts` — `MandatsartChecklist`, `ChecklistItem`, Erweiterung von `MandantCase` um `mandatsartId`, `checklistStates`, `caseStatus`, `behoerde`
+
+### Sprint 1 Modul A — Checklisten in der UI (`45f4002`)
+- `MandatsartSelector.tsx` — Dropdown-Auswahl aus 11 Mandatsarten beim Akten-Anlegen
+- `CaseChecklist.tsx` — Section in der Akten-Detail-View. Zeigt jedes Item mit Status `received` / `pending` / `problem`, ein Klick toggelt. Filter „nur fehlende Pflicht-Unterlagen". Fortschrittsbalken.
+
+### Sprint 1 Modul B — 8-Stati + Sachstands-Generator (`1909330`)
+- `case-status.ts` — 8 Stati mit Übergangs-Regeln (siehe Anhang A)
+- `sachstand-templates.ts` — 32 Antwort-Templates (8 Stati × Mandant/Mittelsperson × DE/VI)
+- `StatusDropdown.tsx` — zeigt nur erlaubte Folge-Stati
+- `SachstandsGenerator.tsx` — Drawer mit DE+VI parallel, Empfänger-Toggle Mandant/Mittelsperson, Copy-to-Clipboard
+
+### Sprint 1 Polish — Demo-Akte + Behörden-DB (`759d54e`, `7c0d9fb`)
+- `demo-seed.ts` — fertige Beispiel-Akte für Phạm Văn Đức, Aufenthaltstitel-Verlängerung, halb gefüllte Checkliste
+- `behoerden.ts` + `BehoerdenSelector.tsx` — 17 Berliner Migrations-Stellen (LEA, BAMF, VG Berlin, Botschaften Vietnam) als Combobox
+- Bug-Fix: Demo-Button konsumiert Invite-Token sauber
+
+### DE-Voice-Sweep + Demo-Skript (`0f84984`)
+- 32 Sachstand-Templates auf Deppen-Apostroph, Formular-Doppelpunkte und militärischen Ton durchgesehen
+- `BAO_DEMO_SKRIPT_2026-05-06.md` — 5-Schritte-Demo-Walkthrough für unser Treffen
+
+### Drei Bonus-Features für die Demo (`87028d4`)
+- **TodayWidget** im Dashboard ganz oben — drei Sektionen: Fristen ≤ 14 Tage, Akten mit `behoerde_nachforderung` oder `unterlagen_fehlen`, Akten mit fehlenden Pflicht-Unterlagen. Click-to-Akte.
+- **Auto-Frist-Berechnung** beim Status-Wechsel auf `antrag_eingereicht` — Lookup-Tabelle pro Mandatsart, setzt Behörden-Bearbeitungsfrist nach § 75 VwVfG (3 Monate für Aufenthaltstitel, 6 Monate Einbürgerung, 7 Tage Eilantrag etc.) automatisch ein.
+- **OCR-Drop-Zone** in der Checkliste — wirft du ein Foto/PDF rein, OCR (PDF-Text-Layer oder OpenAI Vision für Scans) läuft, Keyword-Match gegen Checklisten-Item-Namen mit Aliassen (DE/EN/VI: Reisepass/passport/hộ chiếu, krankenversicherung/TK/AOK/Barmer, etc.). **Nichts wird automatisch akzeptiert** — jeder Match erscheint als Vorschlag mit „Bestätigen" / „Verwerfen". OCR ist als Beta-Erkennung gelabelt, weil ich deine echten PDFs nicht kenne.
+
+### Was *bewusst* noch nicht da ist
+- E-Mail-Auto-Versand (Sprint 2)
+- OCR-Klassifikation auf semantischer Ebene (Sprint 3 — der OCR-Block oben ist nur Keyword-Match, kein vollständiges Document-Understanding)
+- Mittelspersonen-Datenmodell (Sprint 4 — Templates sind vorbereitet, Datenmodell folgt)
+- Mandanten-Portal (Phase 4)
+- Advoware-Anbindung (offen, wartet auf deine Entscheidung in §15)
+
+### So klickst du das in 60 Sekunden durch
+1. `gitlaw-xi.vercel.app/#/bao` öffnen
+2. „Demo-Akte anlegen" klicken → Phạm Văn Đức (AZ-2026-0042) erscheint
+3. Akte öffnen — Checkliste, Status-Dropdown, Sachstands-Generator (DE+VI)
+4. Status auf „Antrag eingereicht" → Frist wird automatisch gesetzt
+5. Foto in die OCR-Drop-Zone werfen → Match-Vorschläge erscheinen
+
+---
+
+**Diese Datei** (`BAO_KI_DATENVERARBEITUNG_ANTWORT.md`) ist die persistierte, lebende Antwort auf dein Lastenheft. Ich aktualisiere sie nach jedem Sprint.
 
 ---
 
