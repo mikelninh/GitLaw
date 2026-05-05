@@ -50,6 +50,16 @@ export interface MandantCase {
   documentJobs?: DocumentJob[]
   /** Paragraphs cited in research or letters that are relevant for Rechtsprechungs-Alerts. */
   relevantParagraphs?: RelevantParagraph[]
+  /**
+   * ID of the assigned MandatsartChecklist (foreign key into mandatsart-checklists.ts).
+   * Optional — legacy cases without explicit mandatsart still work.
+   */
+  mandatsartId?: string
+  /**
+   * Per-checklist-item state for THIS case. Map from item.id → state.
+   * Items not in the map are treated as 'pending'.
+   */
+  checklistStates?: Record<string, 'received' | 'pending' | 'problem'>
 }
 
 export interface CaseTask {

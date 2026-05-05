@@ -32,12 +32,15 @@ import {
   toggleCaseTask,
   updateCase,
 } from './store'
-import { downloadServerDocument, runRemoteDocumentProcessing, uploadDocumentToVault } from './pro-api'
+import { downloadServerDocument, fetchServerDocumentBlob, runRemoteDocumentProcessing, uploadDocumentToVault } from './pro-api'
+import { ocrScanPdf } from './pdf-render'
 import { exportAuditPDF } from './pdf'
 import { exportCaseBundle } from './zip'
 import { berechneFristAusPreset, FRIST_PRESETS, presetToBezeichnung } from './frist-calc'
 import { getCaseRecommendations } from './recommendations'
 import QrCard from './QrCard'
+import CaseChecklist from './CaseChecklist'
+import MandatsartSelector from './MandatsartSelector'
 import type { MandantCase } from './types'
 
 /** Returns days until the ISO date, negative if past. */
@@ -472,6 +475,7 @@ export function ProCaseDetail() {
   const [docCategory, setDocCategory] = useState<'foto' | 'bescheid' | 'vertrag' | 'chat' | 'sonstiges'>('sonstiges')
   const [docLanguage, setDocLanguage] = useState<'de' | 'vi' | 'en' | 'tr' | 'ar' | 'other'>('de')
   const [selectedDocumentId, setSelectedDocumentId] = useState<string | null>(null)
+  const [ocrProgress, setOcrProgress] = useState<{ page: number; total: number; stage: string } | null>(null)
   const c = useMemo(() => (id ? getCase(id) : undefined), [id, tick])
   const research = useMemo(() => (id ? listResearch(id) : []), [id, tick])
   const letters = useMemo(() => (id ? listLetters(id) : []), [id, tick])
@@ -656,6 +660,17 @@ export function ProCaseDetail() {
         </div>
       </header>
 
+      {/* Mandatsart-Auswahl */}
+      <div className="bg-white border border-[var(--color-border)] rounded-xl px-4 py-3">
+        <MandatsartSelector
+          value={c.mandatsartId}
+          onChange={id => {
+            updateCase(c.id, { mandatsartId: id })
+            setTick(t => t + 1)
+          }}
+        />
+      </div>
+
       {/* Intake share dialog */}
       {showIntakeShare && c && (
         <IntakeShareDialog
@@ -737,6 +752,18 @@ export function ProCaseDetail() {
           </div>
         </section>
       )}
+
+      {/* Unterlagen-Checkliste */}
+      <section className="bg-white border border-[var(--color-border)] rounded-2xl p-4">
+        <h2 className="font-semibold mb-3">Unterlagen-Checkliste</h2>
+        <CaseChecklist
+          case={c}
+          onChange={updated => {
+            updateCase(c.id, { checklistStates: updated.checklistStates })
+            setTick(t => t + 1)
+          }}
+        />
+      </section>
 
       {/* Sachverhalt-Eingänge von Mandant:in */}
       {intakes.length > 0 && (
@@ -886,40 +913,71 @@ export function ProCaseDetail() {
                     </div>
                   </div>
 
-                  <div className="flex gap-2 flex-wrap text-xs">
+                  <div className="flex gap-2 flex-wrap text-xs items-center">
                     <button
                       onClick={async () => {
+                        setOcrProgress(null)
                         const job = queueDocumentJob(c.id, {
                           documentId: selectedDocument.id,
                           attachmentInternalName: selectedDocument.internalName,
                           type: 'ocr',
                           sourceLanguage: selectedDocument.languageHint,
-                          note: 'Local beta OCR',
+                          note: 'OCR with scan-PDF fallback',
                         })
-                        if (job) {
-                          if (selectedDocument.serverDocumentId) {
-                            try {
-                              const result = await runRemoteDocumentProcessing({
-                                caseId: c.id,
-                                attachmentInternalName: selectedDocument.internalName,
-                                mode: 'ocr',
-                                sourceLanguage: selectedDocument.languageHint,
-                                serverDocumentId: selectedDocument.serverDocumentId,
-                              })
+                        if (!job) {
+                          setTick(t => t + 1)
+                          return
+                        }
+
+                        if (selectedDocument.serverDocumentId) {
+                          try {
+                            const result = await runRemoteDocumentProcessing({
+                              caseId: c.id,
+                              attachmentInternalName: selectedDocument.internalName,
+                              mode: 'ocr',
+                              sourceLanguage: selectedDocument.languageHint,
+                              serverDocumentId: selectedDocument.serverDocumentId,
+                            })
+                            if (result.status === 'needs_render') {
+                              // Scan PDF: download blob → client-side render → Vision OCR
+                              const blob = await fetchServerDocumentBlob(selectedDocument.serverDocumentId)
+                              const pdfBuffer = await blob.arrayBuffer()
+                              const scanResult = await ocrScanPdf(
+                                pdfBuffer,
+                                uploadDocumentToVault,
+                                async (input) => runRemoteDocumentProcessing({ ...input, mode: 'ocr' }),
+                                c.id,
+                                selectedDocument.internalName,
+                                (page, total, stage) => setOcrProgress({ page, total, stage }),
+                              )
+                              if (scanResult.ok) {
+                                applyDocumentJobResult(c.id, job.id, { status: 'done', ocrText: scanResult.ocrText })
+                              } else {
+                                applyDocumentJobResult(c.id, job.id, { status: 'done', ocrText: `[Scan-PDF OCR fehlgeschlagen: ${scanResult.message}]` })
+                              }
+                            } else {
                               applyDocumentJobResult(c.id, job.id, { status: 'done', ocrText: result.ocrText })
-                            } catch {
-                              runDocumentJob(c.id, job.id)
                             }
-                          } else {
+                          } catch {
                             runDocumentJob(c.id, job.id)
                           }
+                        } else {
+                          runDocumentJob(c.id, job.id)
                         }
+                        setOcrProgress(null)
                         setTick(t => t + 1)
                       }}
                       className="rounded-lg border border-[var(--color-border)] px-2 py-1 hover:border-[var(--color-gold)]"
                     >
                       OCR starten
                     </button>
+                    {ocrProgress && (
+                      <span className="text-[11px] text-[var(--color-ink-muted)] animate-pulse">
+                        {ocrProgress.stage === 'render' && 'PDF wird gerendert…'}
+                        {ocrProgress.stage === 'upload' && `Seite ${ocrProgress.page}/${ocrProgress.total} hochladen…`}
+                        {ocrProgress.stage === 'ocr' && `Seite ${ocrProgress.page}/${ocrProgress.total} OCR…`}
+                      </span>
+                    )}
                     {selectedDocument.languageHint && selectedDocument.languageHint !== 'de' && (
                       <button
                         onClick={async () => {
