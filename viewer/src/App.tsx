@@ -65,7 +65,24 @@ function md(text: string): string {
     .join('\n')
 }
 
+// Heavy static assets (`laws/`, `explanations/`, `law-index.json`) are excluded
+// from the Vercel deploy via .vercelignore — they live on GitHub Pages as the
+// canonical CDN. Route those to GH Pages from any non-GH/non-local host.
+const GH_PAGES_FALLBACK = 'https://mikelninh.github.io/gitlaw/'
+
 function publicPath(baseUrl: string, path: string): string {
+  if (typeof window !== 'undefined') {
+    const host = window.location.hostname
+    const isOnGhPages = host.includes('mikelninh.github.io')
+    const isLocal = host === 'localhost' || host === '127.0.0.1'
+    const isHeavyAsset =
+      path.startsWith('laws/') ||
+      path.startsWith('explanations/') ||
+      path === 'law-index.json'
+    if (!isOnGhPages && !isLocal && isHeavyAsset) {
+      return `${GH_PAGES_FALLBACK}${path}`
+    }
+  }
   return `${baseUrl || '/'}${path}`.replace(/([^:]\/)\/+/g, '$1')
 }
 

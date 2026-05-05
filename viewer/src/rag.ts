@@ -15,7 +15,26 @@ import { citizenIntents, detectCitizenClarification, detectCitizenIntent, render
 const API_KEY = import.meta.env.VITE_OPENAI_API_KEY || ''
 const PUBLIC_BASE = import.meta.env.BASE_URL || '/'
 
+// Heavy static assets (`laws/`, `explanations/`) are intentionally excluded
+// from the Vercel deploy (`.vercelignore`) to avoid uploading 5,936 small
+// files. They live on GitHub Pages as the canonical CDN. When the citizen
+// app runs on Vercel or a custom domain, route those specific paths to
+// GH Pages — anything else stays on the current origin.
+const GH_PAGES_FALLBACK = 'https://mikelninh.github.io/gitlaw/'
+
 function publicPath(path: string) {
+  if (typeof window !== 'undefined') {
+    const host = window.location.hostname
+    const isOnGhPages = host.includes('mikelninh.github.io')
+    const isLocal = host === 'localhost' || host === '127.0.0.1'
+    const isHeavyAsset =
+      path.startsWith('laws/') ||
+      path.startsWith('explanations/') ||
+      path === 'law-index.json'
+    if (!isOnGhPages && !isLocal && isHeavyAsset) {
+      return `${GH_PAGES_FALLBACK}${path}`
+    }
+  }
   return `${PUBLIC_BASE}${path}`.replace(/([^:]\/)\/+/g, '$1')
 }
 

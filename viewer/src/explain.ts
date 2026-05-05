@@ -18,7 +18,23 @@ export interface Explanations {
 const cache: Record<string, Explanations> = {}
 const PUBLIC_BASE = import.meta.env.BASE_URL || '/'
 
+// Heavy static assets are excluded from the Vercel deploy via .vercelignore
+// (see comment in rag.ts) — fall back to GitHub Pages where they live.
+const GH_PAGES_FALLBACK = 'https://mikelninh.github.io/gitlaw/'
+
 function publicPath(path: string) {
+  if (typeof window !== 'undefined') {
+    const host = window.location.hostname
+    const isOnGhPages = host.includes('mikelninh.github.io')
+    const isLocal = host === 'localhost' || host === '127.0.0.1'
+    const isHeavyAsset =
+      path.startsWith('laws/') ||
+      path.startsWith('explanations/') ||
+      path === 'law-index.json'
+    if (!isOnGhPages && !isLocal && isHeavyAsset) {
+      return `${GH_PAGES_FALLBACK}${path}`
+    }
+  }
   return `${PUBLIC_BASE}${path}`.replace(/([^:]\/)\/+/g, '$1')
 }
 
