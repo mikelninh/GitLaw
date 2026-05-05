@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react'
 import { X, ExternalLink, BookOpen, Loader2, Pencil, Save, Scale, Gavel } from 'lucide-react'
 import type { Citation } from './types'
 import { getParagraphNote, saveParagraphNote } from './store'
+import { RelatedParagraphs } from './RelatedParagraphs'
 
 /**
  * Curated BGH-/BVerfG-/BVerwG-/BSG-Leitsätze pro Paragraph.
@@ -379,6 +380,14 @@ export default function CitationDrawer({ citation, onClose }: Props) {
                     </p>
                   )}
                 </section>
+              )}
+
+              {/* Verwandte Paragraphen — Citation-Graph 1-Hop Nachbarschaft.
+                  Aus den 200.464 extrahierten Cross-References im Korpus
+                  berechnet (gitlaw_mcp/graph_builder.py), pro Gesetz als
+                  JSON-Shard in viewer/public/data/citation-graph/. */}
+              {citation.verified && citation.lawId && (
+                <RelatedParagraphs lawId={citation.lawId} section={citation.section} />
               )}
 
               {/* Rechtsprechungs-Recherche — Deep-Links zu Profi-DBs.

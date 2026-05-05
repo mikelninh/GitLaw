@@ -48,6 +48,8 @@ export interface MandantCase {
   documents?: CaseDocument[]
   /** Lightweight document-processing jobs (OCR/translation) attached to the case. */
   documentJobs?: DocumentJob[]
+  /** Paragraphs cited in research or letters that are relevant for Rechtsprechungs-Alerts. */
+  relevantParagraphs?: RelevantParagraph[]
 }
 
 export interface CaseTask {
@@ -94,6 +96,18 @@ export interface ResearchQuery {
   approvedAnswer?: string
 }
 
+/**
+ * Why a citation could NOT be verified — surfaces as a structured signal
+ * to the UI instead of a raw boolean. Lets the lawyer see *why* a citation
+ * failed (paragraph repealed vs. law unknown vs. just couldn't parse), which
+ * is materially different for legal research.
+ */
+export type VerificationReason =
+  | 'law_not_found' // The abbreviation (StGB, BGB, ...) wasn't recognised
+  | 'paragraph_not_found' // Law exists, paragraph number doesn't (probably wrong)
+  | 'repealed' // Paragraph was found but explicitly marked "(weggefallen)" in the corpus
+  | 'could_not_parse' // Couldn't even parse the citation string
+
 export interface Citation {
   /** "§ 573 BGB" — display string. */
   display: string
@@ -105,6 +119,10 @@ export interface Citation {
   verified: boolean
   /** Excerpt of the actual paragraph text (when verified). */
   excerpt?: string
+  /** When verified=false, why. Surfaced as a tooltip + icon in the UI. */
+  verificationReason?: VerificationReason
+  /** Human-readable explanation for the lawyer (matches the MCP tool's `hint`). */
+  verificationHint?: string
 }
 
 export interface GeneratedLetter {
@@ -207,6 +225,10 @@ export interface IntakeEntry {
   fristBekannt?: boolean
   /** Optional metadata for uploaded intake files/photos (no binary stored). */
   attachments?: IntakeAttachmentMeta[]
+  /** Source of the intake: 'form' (default) or 'email'. */
+  source?: 'form' | 'email'
+  /** Original sender email when source is 'email'. */
+  senderEmail?: string
   /** True sobald Anwält:in es gelesen hat. */
   reviewed: boolean
 }
@@ -252,4 +274,27 @@ export interface ParagraphLookup {
   lawId: string
   section: string
   text?: string
+}
+
+/** Paragraph reference tracked for Rechtsprechungs-Alerts. */
+export interface RelevantParagraph {
+  lawId: string
+  section: string
+  display: string
+  /** Source: e.g. "research:abc123" or "letter:def456" */
+  source: string
+  addedAt: string
+}
+
+/** Weekly Rechtsprechungs-Alert for dashboard. */
+export interface RechtsprechungsAlert {
+  id: string
+  caseId?: string
+  paragraph: { lawId: string; section: string; display: string }
+  court: string
+  rulingDate: string
+  title: string
+  summary: string
+  url?: string
+  createdAt: string
 }

@@ -94,19 +94,55 @@ export async function verifyCitation(c: ProCitation): Promise<Citation> {
   const lawId = LAW_ABBREV_MAP[abbr]
 
   if (!lawId) {
-    return { display, lawId: '', section: c.paragraph, verified: false }
+    return {
+      display,
+      lawId: '',
+      section: c.paragraph,
+      verified: false,
+      verificationReason: 'law_not_found',
+      verificationHint: `Abkürzung "${abbr}" ist im Korpus nicht bekannt. Möglicherweise Schreibfehler oder Gesetz aus anderer Jurisdiktion.`,
+    }
   }
 
   const text = await loadLaw(lawId)
   if (!text) {
-    return { display, lawId, section: c.paragraph, verified: false }
+    return {
+      display,
+      lawId,
+      section: c.paragraph,
+      verified: false,
+      verificationReason: 'law_not_found',
+      verificationHint: `Datei "laws/${lawId}.md" konnte nicht geladen werden — temporärer Netzwerk-Fehler oder Ressource fehlt.`,
+    }
+  }
+
+  // Detect explicit "weggefallen" markers covering this paragraph BEFORE
+  // checking the heading — covers the StGB §-aufgehoben and NetzDG-style
+  // collective markers (e.g. `### (XXXX) §§ 2 bis 3f — (weggefallen)`).
+  const repealed = isRepealed(text, c.paragraph)
+  if (repealed) {
+    return {
+      display,
+      lawId,
+      section: c.paragraph,
+      verified: false,
+      verificationReason: 'repealed',
+      verificationHint: 'Dieser Paragraph wurde aufgehoben (weggefallen) und ist nicht mehr in Kraft. Bitte Folge-Vorschrift recherchieren.',
+    }
   }
 
   // Find `### § 573` but not `### § 5` when we're looking for 573.
   const headingRe = new RegExp(`^###\\s+§\\s+${escapeRegex(c.paragraph)}(?![\\dA-Za-z])`, 'm')
   const m = headingRe.exec(text)
   if (!m) {
-    return { display, lawId, section: c.paragraph, verified: false }
+    return {
+      display,
+      lawId,
+      section: c.paragraph,
+      verified: false,
+      verificationReason: 'paragraph_not_found',
+      verificationHint: `${abbr} existiert, aber § ${c.paragraph} wurde im Korpus nicht gefunden. Möglich: falsch zitiert, umbenannt, oder neue Vorschrift, die noch nicht im Korpus ist.`,
+    }
   }
 
   // Short excerpt from the matched heading onwards, stopping before the next
@@ -125,6 +161,34 @@ export async function verifyCitation(c: ProCitation): Promise<Citation> {
     verified: true,
     excerpt,
   }
+}
+
+/**
+ * Detects whether the cited paragraph is covered by a "(weggefallen)" marker.
+ * Two patterns to handle:
+ *   1. Single-paragraph: `### § 5a — (weggefallen)`
+ *   2. Range collective: `### (XXXX) §§ 2 bis 3f — (weggefallen)`
+ *      → repeals all paragraphs from N to M (with optional letter suffix)
+ */
+function isRepealed(text: string, paragraph: string): boolean {
+  // Pattern 1 — exact match
+  const single = new RegExp(
+    `^###\\s+§\\s+${escapeRegex(paragraph)}(?![\\dA-Za-z])[^\\n]*\\(weggefallen\\)`,
+    'm',
+  )
+  if (single.test(text)) return true
+
+  // Pattern 2 — range markers like "§§ 2 bis 3f"
+  const num = parseFloat(paragraph)
+  if (Number.isNaN(num)) return false
+  const rangeRe = /^###[^\n]*§§\s*(\d+[a-z]?)\s*bis\s*(\d+[a-z]?)[^\n]*\(weggefallen\)/gm
+  let m: RegExpExecArray | null
+  while ((m = rangeRe.exec(text)) !== null) {
+    const lo = parseFloat(m[1])
+    const hi = parseFloat(m[2])
+    if (!Number.isNaN(lo) && !Number.isNaN(hi) && num >= lo && num <= hi) return true
+  }
+  return false
 }
 
 export async function verifyAllCitations(citations: ProCitation[]): Promise<Citation[]> {

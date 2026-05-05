@@ -559,34 +559,67 @@ export default function ProResearch() {
                 </p>
               ) : (
                 <ul className="space-y-2">
-                  {citations.map((c, i) => (
-                    <li
-                      key={i}
-                      onClick={() => setOpenCitation(c)}
-                      style={{ animationDelay: `${i * 70}ms` }}
-                      className={`border rounded-lg px-3 py-2 text-sm cursor-pointer transition-colors animate-fade-slide-up active:scale-[0.98] ${
-                        c.verified
-                          ? 'border-green-200 bg-green-50 hover:border-green-400'
-                          : 'border-amber-200 bg-amber-50 hover:border-amber-400'
-                      }`}
-                    >
-                      <div className="flex items-baseline justify-between gap-2">
-                        <span className="font-mono font-semibold">{c.display}</span>
-                        {c.verified ? (
-                          <span className="text-xs text-green-700 inline-flex items-center gap-1">
-                            <CheckCircle2 className="w-3.5 h-3.5" /> verifiziert
-                          </span>
-                        ) : (
-                          <span className="text-xs text-amber-800 inline-flex items-center gap-1">
-                            <AlertTriangle className="w-3.5 h-3.5" /> nicht verifiziert
-                          </span>
+                  {citations.map((c, i) => {
+                    // Strukturierte Failure-Modes — sagen Bao *warum* etwas nicht
+                    // verifizierbar ist. "Repealed" bekommt eigene rote Färbung
+                    // weil das ein materielles Recherche-Problem ist (Anwalt
+                    // zitiert sonst aufgehobenen §) — die anderen amber.
+                    const isRepealed = c.verificationReason === 'repealed'
+                    const isUnverified = !c.verified
+                    const cardCls = c.verified
+                      ? 'border-green-200 bg-green-50 hover:border-green-400'
+                      : isRepealed
+                        ? 'border-red-300 bg-red-50 hover:border-red-500'
+                        : 'border-amber-200 bg-amber-50 hover:border-amber-400'
+
+                    const reasonLabel: Record<string, string> = {
+                      law_not_found: 'Gesetz unbekannt',
+                      paragraph_not_found: '§ nicht gefunden',
+                      repealed: 'aufgehoben (weggefallen)',
+                      could_not_parse: 'Zitat unklar',
+                    }
+
+                    return (
+                      <li
+                        key={i}
+                        onClick={() => setOpenCitation(c)}
+                        style={{ animationDelay: `${i * 70}ms` }}
+                        className={`border rounded-lg px-3 py-2 text-sm cursor-pointer transition-colors animate-fade-slide-up active:scale-[0.98] ${cardCls}`}
+                      >
+                        <div className="flex items-baseline justify-between gap-2">
+                          <span className="font-mono font-semibold">{c.display}</span>
+                          {c.verified ? (
+                            <span className="text-xs text-green-700 inline-flex items-center gap-1">
+                              <CheckCircle2 className="w-3.5 h-3.5" /> verifiziert
+                            </span>
+                          ) : isRepealed ? (
+                            <span
+                              className="text-xs text-red-700 inline-flex items-center gap-1 font-semibold"
+                              title={c.verificationHint}
+                            >
+                              <AlertTriangle className="w-3.5 h-3.5" /> aufgehoben
+                            </span>
+                          ) : (
+                            <span
+                              className="text-xs text-amber-800 inline-flex items-center gap-1"
+                              title={c.verificationHint}
+                            >
+                              <AlertTriangle className="w-3.5 h-3.5" />{' '}
+                              {(c.verificationReason && reasonLabel[c.verificationReason]) || 'nicht verifiziert'}
+                            </span>
+                          )}
+                        </div>
+                        {c.excerpt && (
+                          <p className="text-xs text-[var(--color-ink-soft)] mt-1.5 leading-snug">{c.excerpt}</p>
                         )}
-                      </div>
-                      {c.excerpt && (
-                        <p className="text-xs text-[var(--color-ink-soft)] mt-1.5 leading-snug">{c.excerpt}</p>
-                      )}
-                    </li>
-                  ))}
+                        {isUnverified && c.verificationHint && (
+                          <p className={`text-xs mt-1.5 leading-snug ${isRepealed ? 'text-red-800' : 'text-amber-900'}`}>
+                            ⚠ {c.verificationHint}
+                          </p>
+                        )}
+                      </li>
+                    )
+                  })}
                 </ul>
               )}
             </section>

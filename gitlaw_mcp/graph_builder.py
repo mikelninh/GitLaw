@@ -40,6 +40,9 @@ DATA_DIR = Path(__file__).parent / "data"
 GRAPH_FILE = DATA_DIR / "citation_graph.json"
 GRAPH_TOP_FILE = DATA_DIR / "citation_graph_top.json"
 GRAPH_LAWS_FILE = DATA_DIR / "citation_graph_laws.json"
+# Per-law shards for the Pro frontend — one file per active law,
+# keyed by section, served from viewer/public/data/citation-graph/{lawId}.json
+VIEWER_GRAPH_DIR = ROOT / "viewer" / "public" / "data" / "citation-graph"
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Reference regex
@@ -380,6 +383,121 @@ def build_law_level_graph(graph: dict) -> dict:
     }
 
 
+def build_viewer_shards(graph: dict) -> tuple[int, int]:
+    """
+    One JSON file per law (keyed by lowercase abbreviation) for the Pro frontend.
+
+    Format per file (e.g. viewer/public/data/citation-graph/stgb.json):
+        {
+          "by_section": {
+            "185": {                                # bare paragraph number (no marker)
+              "marker": "§",                        # "§" or "Art"
+              "title": "Beleidigung",
+              "referenced_by": [
+                {"lawId": "stgb", "section": "188", "marker": "§", "title": "..."},
+                ...
+              ],
+              "references": [
+                {"lawId": "stgb", "section": "11", "marker": "§", "title": "Personen- und Sachbegriffe"},
+                ...
+              ]
+            },
+            "263a": {...}, ...
+          },
+          "law_abbr": "StGB"
+        }
+
+    The frontend fetches the shard once per law (cached by browser), then does
+    O(1) lookups by section. Total payload across all 4,852 laws is ~30 MB
+    aggregate, but each individual shard is small (StGB is ~80 KB, BGB ~150 KB).
+    Most laws have empty graphs and are skipped.
+    """
+    VIEWER_GRAPH_DIR.mkdir(parents=True, exist_ok=True)
+
+    # Index nodes by id and by law for quick joins
+    nodes_by_id: dict[str, dict] = {n["id"]: n for n in graph["nodes"]}
+    nodes_by_law: dict[str, list[dict]] = {}
+    for n in graph["nodes"]:
+        nodes_by_law.setdefault(n["law"].upper(), []).append(n)
+
+    # Bucket edges by source-law and target-law for two-pass writes
+    by_law_in: dict[str, dict[str, list[dict]]] = {}   # target_law → {section → [in-edges]}
+    by_law_out: dict[str, dict[str, list[dict]]] = {}  # source_law → {section → [out-edges]}
+
+    def _peer_descriptor(peer_id: str) -> dict:
+        """Convert 'STGB|§188' to {lawId, section, marker, title}."""
+        peer = nodes_by_id.get(peer_id)
+        if peer is None:
+            law, _, rest = peer_id.partition("|")
+            marker = "Art" if rest.startswith("Art") else "§"
+            section = rest.replace("Art", "").replace("§", "").strip()
+            return {"lawId": law.lower(), "section": section, "marker": marker, "title": None}
+        return {
+            "lawId": peer["law"].lower(),
+            "section": peer["number"],
+            "marker": peer["marker"],
+            "title": peer.get("title"),
+        }
+
+    for e in graph["edges"]:
+        src = nodes_by_id.get(e["from"])
+        tgt = nodes_by_id.get(e["to"])
+        if src:
+            by_law_out.setdefault(src["law"].upper(), {}).setdefault(src["number"], []).append(
+                _peer_descriptor(e["to"])
+            )
+        if tgt:
+            by_law_in.setdefault(tgt["law"].upper(), {}).setdefault(tgt["number"], []).append(
+                _peer_descriptor(e["from"])
+            )
+
+    # Write one shard per law that has any in/out edges
+    laws_with_edges = set(by_law_in.keys()) | set(by_law_out.keys())
+    files_written = 0
+    paragraphs_with_neighbours = 0
+
+    for law_abbr_upper in sorted(laws_with_edges):
+        in_map = by_law_in.get(law_abbr_upper, {})
+        out_map = by_law_out.get(law_abbr_upper, {})
+        sections = set(in_map) | set(out_map)
+        if not sections:
+            continue
+
+        # Get one canonical node for marker + display abbreviation
+        canonical = next(
+            (n for n in nodes_by_law.get(law_abbr_upper, []) if n["number"] in sections), None
+        )
+        display_abbr = canonical["law"] if canonical else law_abbr_upper
+        # Each paragraph keeps its own title from the canonical node
+        title_lookup: dict[str, dict] = {
+            n["number"]: {"marker": n["marker"], "title": n.get("title")}
+            for n in nodes_by_law.get(law_abbr_upper, [])
+        }
+
+        by_section: dict[str, dict] = {}
+        for section in sorted(sections, key=lambda s: (len(s), s)):
+            meta = title_lookup.get(section, {"marker": "§", "title": None})
+            by_section[section] = {
+                "marker": meta["marker"],
+                "title": meta["title"],
+                "referenced_by": in_map.get(section, []),
+                "references": out_map.get(section, []),
+            }
+            paragraphs_with_neighbours += 1
+
+        shard = {
+            "law_abbr": display_abbr,
+            "by_section": by_section,
+        }
+        # Sanitize: some law abbreviations contain slashes/spaces (e.g. "ATPANL1/3ÄNDG", "SGB 5")
+        safe_name = law_abbr_upper.lower().replace("/", "-").replace(" ", "-")
+        out_path = VIEWER_GRAPH_DIR / f"{safe_name}.json"
+        out_path.write_text(json.dumps(shard, ensure_ascii=False, separators=(",", ":")))
+        files_written += 1
+
+    return files_written, paragraphs_with_neighbours
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Build the GitLaw citation graph")
     parser.add_argument(
@@ -407,6 +525,12 @@ def main() -> None:
     print(
         f"      ({laws_graph['stats']['total_laws']:,} laws, {laws_graph['stats']['total_edges']:,} cross-law edges)"
     )
+    files, paragraphs = build_viewer_shards(graph)
+    print(
+        f"  ✓ Wrote {files:,} per-law shards to viewer/public/data/citation-graph/ "
+        f"({paragraphs:,} paragraphs with neighbours)"
+    )
+
     print("  Top-5 most-cited laws:")
     for entry in laws_graph["most_cited_laws"][:5]:
         print(f"      {entry['id']:14}  ←  {entry['in_degree']:4} refs   ({entry['name']})")
