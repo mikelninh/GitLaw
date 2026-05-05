@@ -1,0 +1,311 @@
+<!doctype html>
+<!--
+  GitLaw — Citation Graph Viewer
+
+  Standalone, no build step. Reads gitlaw_mcp/data/citation_graph_laws.json
+  (~75 KB, 290 laws + 242 cross-law edges) and renders a force-directed
+  network with D3 v7 from CDN.
+
+  Open via:
+    python -m http.server 8000   (then visit http://localhost:8000/gitlaw_mcp/graph_viewer.html)
+
+  Design choices:
+  - law-level (not paragraph-level) → renders smoothly, story-clearer
+  - node size = log(paragraph_count) → big laws (StGB, BGB) stand out
+  - node fill = log(in_degree)     → most-cited laws are warmest
+  - edge thickness = log(weight)    → frequent cross-refs are thicker
+  - click a node → highlights 1-hop neighbourhood, dims the rest
+-->
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GitLaw — Citation Graph (290 deutsche Bundesgesetze)</title>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<style>
+  :root {
+    --cream:#f8f1e3; --paper:#fdf8ec; --ink:#1a1614;
+    --accent:#e85d2f; --warm:#c8a96b; --line:#3a352f;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin:0; height:100%; background:var(--cream); color:var(--ink); font-family:'Inter',system-ui,sans-serif; }
+  header {
+    padding: 16px 24px 12px; border-bottom: 1px solid rgba(0,0,0,0.08);
+    display:flex; justify-content:space-between; align-items:flex-start; gap:24px; flex-wrap:wrap;
+    background:var(--paper);
+  }
+  h1 { font-family:'Fraunces',ui-serif,Georgia,serif; font-weight: 800; margin:0; font-size: 22px; letter-spacing: -0.02em; }
+  .sub { font-size: 12px; color:#5e564d; margin-top: 4px; max-width: 720px; line-height: 1.5; }
+  .pill { display:inline-block; padding:2px 8px; background:var(--ink); color:var(--cream); border-radius:999px; font-size:10px; letter-spacing:.18em; text-transform:uppercase; font-weight:600; margin-right:6px; }
+  .controls { display:flex; gap:8px; align-items:center; }
+  .controls input {
+    border: 1px solid rgba(0,0,0,0.15); border-radius: 999px; padding: 6px 14px;
+    font-size: 13px; min-width: 180px; background:white; color:var(--ink);
+  }
+  .controls button {
+    border: 1px solid rgba(0,0,0,0.15); background:white; padding: 6px 14px; border-radius:999px;
+    cursor:pointer; font-size:13px;
+  }
+  .controls button:hover { background: rgba(0,0,0,0.04); }
+  main { display:grid; grid-template-columns: 1fr 320px; height: calc(100vh - 92px); }
+  @media (max-width: 900px) { main { grid-template-columns: 1fr; } #panel { display:none; } }
+
+  #stage { position: relative; overflow: hidden; }
+  #graph { width:100%; height:100%; display:block; cursor: grab; }
+  #graph:active { cursor: grabbing; }
+
+  #panel {
+    border-left: 1px solid rgba(0,0,0,0.08); background:var(--paper);
+    padding: 18px 20px; overflow-y: auto; font-size: 13px;
+  }
+  #panel h2 { font-family:'Fraunces',serif; font-size: 16px; margin:0 0 8px; letter-spacing: -0.01em; }
+  #panel .label { font-size: 10px; letter-spacing:.18em; text-transform:uppercase; color:#7a6f60; font-weight:600; }
+  #panel .stat-row { display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px dashed rgba(0,0,0,0.08); }
+  #panel .stat-row:last-child { border:none; }
+  #panel .stat-key { color:#5e564d; }
+  #panel .stat-val { font-family:'JetBrains Mono',ui-monospace,monospace; font-weight:600; }
+  #panel .neighbour {
+    padding: 6px 0; border-bottom: 1px dashed rgba(0,0,0,0.08);
+    display:flex; gap:8px; align-items:center; cursor:pointer;
+  }
+  #panel .neighbour:last-child { border:none; }
+  #panel .neighbour:hover { background:rgba(0,0,0,0.03); }
+  #panel .arrow { width:14px; color:var(--accent); font-weight:700; }
+
+  .tooltip {
+    position: fixed; pointer-events:none; background:var(--ink); color:var(--cream);
+    padding:8px 12px; border-radius: 8px; font-size: 12px; line-height:1.5; max-width: 260px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18); opacity: 0; transition: opacity .12s ease;
+    font-family:'JetBrains Mono',ui-monospace,monospace;
+  }
+  .tooltip strong { font-family: 'Inter',sans-serif; font-size: 13px; display:block; margin-bottom:2px; }
+
+  .node circle { stroke: var(--ink); stroke-width: 1.2; cursor:pointer; transition: opacity .2s ease; }
+  .node text { font-size: 9px; fill: var(--ink); pointer-events:none; opacity: 0; transition: opacity .2s ease; }
+  .node.highlighted circle { stroke-width: 2.5; }
+  .node.dimmed circle, .node.dimmed text { opacity: 0.12; }
+
+  line.edge { stroke: var(--line); stroke-opacity: 0.25; transition: stroke-opacity .2s ease; }
+  line.edge.highlighted { stroke: var(--accent); stroke-opacity: 0.85; }
+  line.edge.dimmed { stroke-opacity: 0.04; }
+
+  footer { padding: 8px 24px; border-top: 1px solid rgba(0,0,0,0.08); font-size:11px; color:#7a6f60; display:flex; justify-content:space-between; }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <span class="pill">Knowledge Graph</span>
+    <h1>GitLaw — Citation Network <span style="color:#7a6f60;font-weight:400">· 290 deutsche Bundesgesetze</span></h1>
+    <p class="sub">Aus 94.178 Paragraphen extrahierte Cross-References, aggregiert auf Gesetz-Ebene. Knoten = ein Gesetz; Kantenstärke = wie viele Paragraphen aus Gesetz A das Gesetz B zitieren. Klick auf einen Knoten zeigt seine Nachbarschaft. Quelle: <code>data/citation_graph_laws.json</code>.</p>
+  </div>
+  <div class="controls">
+    <input id="search" type="search" placeholder="Suche · z.B. StGB, Grundgesetz" />
+    <button id="reset">Reset</button>
+  </div>
+</header>
+
+<main>
+  <div id="stage">
+    <svg id="graph"></svg>
+    <div id="tip" class="tooltip"></div>
+  </div>
+  <aside id="panel">
+    <h2>Wähle einen Knoten</h2>
+    <p style="color:#7a6f60">Klick auf ein Gesetz im Graph, um seine Verweise zu sehen — wer es zitiert, was es zitiert.</p>
+    <div id="panel-content" style="margin-top:14px"></div>
+    <hr style="margin:24px 0;border:0;border-top:1px solid rgba(0,0,0,0.08)">
+    <h2>Top-cited laws</h2>
+    <div id="top-list" style="margin-top:8px"></div>
+  </aside>
+</main>
+
+<footer>
+  <span>Erzeugt aus <code>laws/*.md</code> via <code>gitlaw_mcp/graph_builder.py</code></span>
+  <span><strong>Tools:</strong> D3.js v7 · keine Build-Pipeline, keine Dependencies</span>
+</footer>
+
+<script>
+const tip = document.getElementById('tip');
+const panelContent = document.getElementById('panel-content');
+const topList = document.getElementById('top-list');
+
+(async () => {
+  const data = await fetch('data/citation_graph_laws.json').then(r => r.json());
+  render(data);
+})();
+
+function render(data) {
+  const svg = d3.select('#graph');
+  const stage = document.getElementById('stage');
+  const W = stage.clientWidth, H = stage.clientHeight;
+  svg.attr('viewBox', `0 0 ${W} ${H}`);
+
+  // ── data prep ─────────────────────────────────────────────
+  const nodes = data.nodes.map(n => ({ ...n }));
+  const edges = data.edges.map(e => ({ source: e.from, target: e.to, weight: e.weight }));
+  const idToNode = new Map(nodes.map(n => [n.id, n]));
+
+  const maxIn = d3.max(nodes, n => n.in_degree) || 1;
+  const maxParas = d3.max(nodes, n => n.paragraph_count) || 1;
+  const maxWeight = d3.max(edges, e => e.weight) || 1;
+
+  const radius = d3.scaleSqrt().domain([1, maxParas]).range([3, 22]).clamp(true);
+  const fillScale = d3.scaleSequential(d3.interpolateOranges).domain([0, Math.log(maxIn + 1)]);
+  const edgeWidth = d3.scaleSqrt().domain([1, maxWeight]).range([0.4, 4]);
+
+  // ── containers ────────────────────────────────────────────
+  const g = svg.append('g');
+
+  // Zoom
+  svg.call(d3.zoom().scaleExtent([0.3, 4]).on('zoom', e => g.attr('transform', e.transform)));
+
+  // Edges
+  const link = g.append('g').selectAll('line').data(edges).join('line')
+    .attr('class', 'edge')
+    .attr('stroke-width', d => edgeWidth(d.weight));
+
+  // Nodes
+  const node = g.append('g').selectAll('g').data(nodes).join('g')
+    .attr('class', 'node')
+    .on('mouseover', (e, d) => { showTip(e, d); highlightNeighbourhood(d); })
+    .on('mousemove', (e) => moveTip(e))
+    .on('mouseout', () => { hideTip(); resetHighlight(); })
+    .on('click', (e, d) => {
+      pinNode(d);
+      e.stopPropagation();
+    })
+    .call(d3.drag()
+      .on('start', (e, d) => { if (!e.active) sim.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
+      .on('drag',  (e, d) => { d.fx = e.x; d.fy = e.y; })
+      .on('end',   (e, d) => { if (!e.active) sim.alphaTarget(0); d.fx = null; d.fy = null; }));
+
+  node.append('circle')
+    .attr('r', d => radius(d.paragraph_count))
+    .attr('fill', d => fillScale(Math.log(d.in_degree + 1)));
+
+  node.append('text')
+    .attr('dy', d => -radius(d.paragraph_count) - 3)
+    .attr('text-anchor', 'middle')
+    .text(d => d.id);
+
+  // Click on empty space resets pin
+  svg.on('click', () => { pinned = null; resetHighlight(); panelContent.innerHTML = ''; document.querySelector('#panel h2').textContent = 'Wähle einen Knoten'; });
+
+  // ── simulation ────────────────────────────────────────────
+  const sim = d3.forceSimulation(nodes)
+    .force('link',   d3.forceLink(edges).id(d => d.id).distance(d => 60 + 30 / d.weight).strength(0.4))
+    .force('charge', d3.forceManyBody().strength(-160))
+    .force('center', d3.forceCenter(W / 2, H / 2))
+    .force('collide', d3.forceCollide().radius(d => radius(d.paragraph_count) + 4))
+    .on('tick', () => {
+      link.attr('x1', d => d.source.x).attr('y1', d => d.source.y)
+          .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
+      node.attr('transform', d => `translate(${d.x},${d.y})`);
+    });
+
+  // ── highlighting ──────────────────────────────────────────
+  let pinned = null;
+
+  function neighboursOf(d) {
+    const ns = new Set([d.id]);
+    edges.forEach(e => {
+      if (e.source.id === d.id) ns.add(e.target.id);
+      if (e.target.id === d.id) ns.add(e.source.id);
+    });
+    return ns;
+  }
+
+  function highlightNeighbourhood(d) {
+    if (pinned) return;
+    const ns = neighboursOf(d);
+    node.classed('highlighted', n => n.id === d.id);
+    node.classed('dimmed', n => !ns.has(n.id));
+    node.selectAll('text').attr('opacity', n => ns.has(n.id) ? 1 : 0);
+    link.classed('highlighted', e => e.source.id === d.id || e.target.id === d.id);
+    link.classed('dimmed', e => !(e.source.id === d.id || e.target.id === d.id));
+  }
+  function resetHighlight() {
+    if (pinned) { highlightNeighbourhood(pinned); return; }
+    node.classed('highlighted', false).classed('dimmed', false);
+    node.selectAll('text').attr('opacity', 0);
+    link.classed('highlighted', false).classed('dimmed', false);
+  }
+  function pinNode(d) { pinned = d; highlightNeighbourhood(d); renderPanel(d); }
+
+  // ── side panel ────────────────────────────────────────────
+  function renderPanel(d) {
+    document.querySelector('#panel h2').textContent = d.name;
+    const ins  = edges.filter(e => e.target.id === d.id).sort((a,b) => b.weight - a.weight).slice(0, 12);
+    const outs = edges.filter(e => e.source.id === d.id).sort((a,b) => b.weight - a.weight).slice(0, 12);
+    panelContent.innerHTML = `
+      <div class="label">Kennzahlen</div>
+      <div class="stat-row"><span class="stat-key">Abkürzung</span><span class="stat-val">${d.id}</span></div>
+      <div class="stat-row"><span class="stat-key">Paragraphen</span><span class="stat-val">${d.paragraph_count.toLocaleString('de-DE')}</span></div>
+      <div class="stat-row"><span class="stat-key">Eingehende Refs</span><span class="stat-val">${d.in_degree}</span></div>
+      <div class="stat-row"><span class="stat-key">Ausgehende Refs</span><span class="stat-val">${d.out_degree}</span></div>
+      ${ins.length ? `<div class="label" style="margin-top:18px">Wird zitiert von</div>
+      ${ins.map(e => `<div class="neighbour" data-id="${e.source.id}"><span class="arrow">←</span><span>${idToNode.get(e.source.id)?.name || e.source.id}</span><span style="margin-left:auto;color:#7a6f60;font-family:monospace;font-size:11px">${e.weight}</span></div>`).join('')}` : ''}
+      ${outs.length ? `<div class="label" style="margin-top:18px">Zitiert</div>
+      ${outs.map(e => `<div class="neighbour" data-id="${e.target.id}"><span class="arrow">→</span><span>${idToNode.get(e.target.id)?.name || e.target.id}</span><span style="margin-left:auto;color:#7a6f60;font-family:monospace;font-size:11px">${e.weight}</span></div>`).join('')}` : ''}
+    `;
+    panelContent.querySelectorAll('.neighbour').forEach(el => {
+      el.addEventListener('click', () => {
+        const target = idToNode.get(el.dataset.id);
+        if (target) pinNode(target);
+      });
+    });
+  }
+
+  // ── top-cited list ────────────────────────────────────────
+  topList.innerHTML = (data.most_cited_laws || []).slice(0, 10).map((l, i) => `
+    <div class="neighbour" data-id="${l.id}">
+      <span style="width:18px;color:#7a6f60;font-family:monospace">${i+1}.</span>
+      <span style="font-weight:600">${l.id}</span>
+      <span style="margin-left:auto;color:#7a6f60;font-size:11px">${l.in_degree} refs</span>
+    </div>`).join('');
+  topList.querySelectorAll('.neighbour').forEach(el => {
+    el.addEventListener('click', () => {
+      const target = idToNode.get(el.dataset.id);
+      if (target) { pinNode(target); }
+    });
+  });
+
+  // ── search ────────────────────────────────────────────────
+  document.getElementById('search').addEventListener('input', (ev) => {
+    const q = ev.target.value.trim().toLowerCase();
+    if (!q) { resetHighlight(); return; }
+    const matches = nodes.filter(n => n.id.toLowerCase().includes(q) || n.name.toLowerCase().includes(q));
+    const ms = new Set(matches.map(n => n.id));
+    node.classed('dimmed', n => !ms.has(n.id));
+    node.classed('highlighted', n => ms.has(n.id));
+    node.selectAll('text').attr('opacity', n => ms.has(n.id) ? 1 : 0);
+    link.classed('dimmed', e => !ms.has(e.source.id) && !ms.has(e.target.id));
+    if (matches.length === 1) pinNode(matches[0]);
+  });
+
+  document.getElementById('reset').addEventListener('click', () => {
+    document.getElementById('search').value = '';
+    pinned = null;
+    resetHighlight();
+    panelContent.innerHTML = '';
+    document.querySelector('#panel h2').textContent = 'Wähle einen Knoten';
+    sim.alpha(0.6).restart();
+  });
+
+  // ── tooltip ───────────────────────────────────────────────
+  function showTip(e, d) {
+    tip.innerHTML = `<strong>${d.name}</strong>${d.id} · ${d.paragraph_count} Paragraphen<br>← ${d.in_degree} eingehende · → ${d.out_degree} ausgehende`;
+    tip.style.opacity = 1;
+    moveTip(e);
+  }
+  function moveTip(e) {
+    tip.style.left = (e.clientX + 14) + 'px';
+    tip.style.top  = (e.clientY + 14) + 'px';
+  }
+  function hideTip() { tip.style.opacity = 0; }
+}
+</script>
+</body>
+</html>

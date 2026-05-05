@@ -49,7 +49,10 @@ jobs:
       - name: Install MCP package (no heavy deps for offline tools)
         run: |
           pip install --upgrade pip
-          pip install mcp  # SDK only — verify_citation / lookup / list don't need OpenAI/FAISS
+          pip install mcp  # SDK only — verify_citation / lookup / list / related don't need OpenAI/FAISS
+
+      - name: Build citation graph (required by find_related_paragraphs)
+        run: python -m gitlaw_mcp.graph_builder
 
       - name: Run offline demo
         run: python -m gitlaw_mcp.demo
@@ -116,7 +119,9 @@ jobs:
 
       - name: Run offline demo inside container
         run: |
-          docker run --rm gitlaw-mcp:ci python -m gitlaw_mcp.demo
+          # Build graph in container, then run demo (graph is gitignored,
+          # so it's not in the image — built fresh from /app/laws/ on demand)
+          docker run --rm gitlaw-mcp:ci sh -c "python -m gitlaw_mcp.graph_builder && python -m gitlaw_mcp.demo"
 
       - name: Image size
         run: docker images gitlaw-mcp:ci --format "{{.Repository}}:{{.Tag}} → {{.Size}}"

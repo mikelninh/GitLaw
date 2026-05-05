@@ -21,6 +21,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from gitlaw_mcp.server import (  # type: ignore
+    find_related_paragraphs,
     list_laws,
     lookup_paragraph,
     verify_citation,
@@ -38,6 +39,8 @@ CASES: list[tuple[str, str, str]] = [
     ("Free text (not a citation)", "verify", "Mit freundlichen Grüßen"),
     ("Exact lookup", "lookup", ("BGB", "823")),
     ("Filter laws by 'bgb'", "list", "bgb"),
+    ("Graph — Beleidigung neighbours", "related", "§ 185 StGB"),
+    ("Graph — Computerbetrug neighbours", "related", "§ 263a StGB"),
 ]
 
 
@@ -65,6 +68,9 @@ def main() -> None:
         elif kind == "list":
             print(f"  list_laws(filter={args!r})")
             print(fmt(list_laws(filter=args, limit=5)))
+        elif kind == "related":
+            print(f"  find_related_paragraphs({args!r})")
+            print(fmt(find_related_paragraphs(args, limit=5)))
 
     print("\n" + "─" * 72)
     print("Note: search_laws requires OPENAI_API_KEY + rag/vectorstore/. Skipped here.")

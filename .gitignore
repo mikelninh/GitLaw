@@ -7,3 +7,8 @@ rag/vectorstore/index.faiss
 rag/vectorstore/index.pkl
 .vercel
 api/node_modules
+
+# 32 MB paragraph-level citation graph — regeneratable in 6s via:
+#   python -m gitlaw_mcp.graph_builder
+# The smaller law-level (75 KB) and top-30 (6 MB) JSONs are committed.
+gitlaw_mcp/data/citation_graph.json

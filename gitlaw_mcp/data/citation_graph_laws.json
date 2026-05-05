@@ -1,0 +1,3353 @@
+{
+  "stats": {
+    "total_laws": 290,
+    "total_edges": 242,
+    "total_paragraphs": 94178
+  },
+  "nodes": [
+    {
+      "id": "ABBERGV",
+      "name": "Bergverordnung für alle bergbaulichen Bereiche",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 2
+    },
+    {
+      "id": "AEG",
+      "name": "Allgemeines Eisenbahngesetz",
+      "paragraph_count": 6,
+      "in_degree": 2,
+      "out_degree": 0
+    },
+    {
+      "id": "AGRSTATG",
+      "name": "Gesetz über Agrarstatistiken",
+      "paragraph_count": 0,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "AKTG",
+      "name": "Aktiengesetz",
+      "paragraph_count": 0,
+      "in_degree": 1,
+      "out_degree": 31
+    },
+    {
+      "id": "AKTGEG",
+      "name": "Einführungsgesetz zum Aktiengesetz",
+      "paragraph_count": 0,
+      "in_degree": 8,
+      "out_degree": 0
+    },
+    {
+      "id": "AKTUARV 2016",
+      "name": "Verordnung über die versicherungsmathematische Bestätigung, den Erläuterungsbericht und den Angemessenheitsbericht des Verantwortlichen Aktuars",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 8
+    },
+    {
+      "id": "ALKSTG",
+      "name": "Alkoholsteuergesetz",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "ALKSTV",
+      "name": "Verordnung zur Durchführung des Alkoholsteuergesetzes",
+      "paragraph_count": 0,
+      "in_degree": 2,
+      "out_degree": 0
+    },
+    {
+      "id": "ANZV",
+      "name": "ANZV",
+      "paragraph_count": 0,
+      "in_degree": 3,
+      "out_degree": 0
+    },
+    {
+      "id": "AO",
+      "name": "AO",
+      "paragraph_count": 0,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "AO 1977",
+      "name": "Abgabenordnung",
+      "paragraph_count": 501,
+      "in_degree": 0,
+      "out_degree": 105
+    },
+    {
+      "id": "AOEG",
+      "name": "AOEG",
+      "paragraph_count": 0,
+      "in_degree": 88,
+      "out_degree": 0
+    },
+    {
+      "id": "ASYLBLG",
+      "name": "Asylbewerberleistungsgesetz",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "ATDG",
+      "name": "Gesetz zur Errichtung einer standardisierten zentralen Antiterrordatei von Polizeibehörden und Nachrichtendiensten von Bund und Ländern",
+      "paragraph_count": 14,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "ATG",
+      "name": "Gesetz über die friedliche Verwendung der Kernenergie und den Schutz gegen ihre Gefahren",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "AUFENTHG",
+      "name": "AUFENTHG",
+      "paragraph_count": 0,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "AUSLSCHULDABKAG",
+      "name": "Gesetz zur Ausführung des Abkommens vom 27. Februar 1953 über deutsche Auslandsschulden",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 3
+    },
+    {
+      "id": "AUSLWBENTSCHG",
+      "name": "Gesetz zur näheren Regelung der Entschädigungsansprüche für Auslandsbonds",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 14
+    },
+    {
+      "id": "AUSLWBG",
+      "name": "Gesetz zur Bereinigung von deutschen Schuldverschreibungen, die auf ausländische Währung lauten",
+      "paragraph_count": 0,
+      "in_degree": 15,
+      "out_degree": 0
+    },
+    {
+      "id": "AUSLWBGDV 9",
+      "name": "Neunte Durchführungsverordnung zum Bereinigungsgesetz für deutsche",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "AWAFFV",
+      "name": "Allgemeine Waffengesetz-Verordnung",
+      "paragraph_count": 0,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "AZRG",
+      "name": "Gesetz über das Ausländerzentralregister",
+      "paragraph_count": 60,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "AZRG-DV",
+      "name": "Verordnung zur Durchführung des Gesetzes über das Ausländerzentralregister",
+      "paragraph_count": 23,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "BAFLSBAÜBNG",
+      "name": "Gesetz zur Übernahme der Beamten und Arbeitnehmer der Bundesanstalt für Flugsicherung",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 2
+    },
+    {
+      "id": "BAFÖG",
+      "name": "Bundesgesetz über individuelle Förderung der Ausbildung",
+      "paragraph_count": 0,
+      "in_degree": 2,
+      "out_degree": 1
+    },
+    {
+      "id": "BAFÖG-EINKOMMENSV",
+      "name": "Verordnung zur Bezeichnung der als Einkommen geltenden sonstigen",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 8
+    },
+    {
+      "id": "BAFÖGFACHLEHRERV",
+      "name": "Verordnung über die Ausbildungsförderung für den Besuch von Instituten",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "BBANKG",
+      "name": "Gesetz über die Deutsche Bundesbank",
+      "paragraph_count": 0,
+      "in_degree": 12,
+      "out_degree": 0
+    },
+    {
+      "id": "BBERGG",
+      "name": "Bundesberggesetz",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "BBESG",
+      "name": "Bundesbesoldungsgesetz",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "BBG",
+      "name": "BBG",
+      "paragraph_count": 0,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "BBPLG",
+      "name": "Gesetz über den Bundesbedarfsplan",
+      "paragraph_count": 0,
+      "in_degree": 2,
+      "out_degree": 0
+    },
+    {
+      "id": "BBVANPG 91",
+      "name": "Gesetz über die Anpassung von Dienst- und Versorgungsbezügen in Bund und",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "BEAMTVG",
+      "name": "Gesetz über die Versorgung der Beamten und Richter des Bundes",
+      "paragraph_count": 0,
+      "in_degree": 4,
+      "out_degree": 1
+    },
+    {
+      "id": "BEFBEDV",
+      "name": "Verordnung über die Allgemeinen Beförderungsbedingungen für den Straßenbahn- und Obusverkehr sowie den Linienverkehr mit Kraftfahrzeugen",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "BEG",
+      "name": "Bundesgesetz zur Entschädigung für Opfer der nationalsozialistischen Verfolgung",
+      "paragraph_count": 275,
+      "in_degree": 101,
+      "out_degree": 1
+    },
+    {
+      "id": "BEGDV 1",
+      "name": "Erste Verordnung zur Durchführung des Bundesentschädigungsgesetzes",
+      "paragraph_count": 30,
+      "in_degree": 0,
+      "out_degree": 17
+    },
+    {
+      "id": "BEGDV 2",
+      "name": "Zweite Verordnung zur Durchführung des Bundesentschädigungsgesetzes",
+      "paragraph_count": 34,
+      "in_degree": 0,
+      "out_degree": 21
+    },
+    {
+      "id": "BEGDV 3",
+      "name": "Dritte Verordnung zur Durchführung des Bundesentschädigungsgesetzes",
+      "paragraph_count": 54,
+      "in_degree": 0,
+      "out_degree": 49
+    },
+    {
+      "id": "BEGDV 6",
+      "name": "Sechste Verordnung zur Durchführung des Bundesentschädigungsgesetzes",
+      "paragraph_count": 4,
+      "in_degree": 0,
+      "out_degree": 5
+    },
+    {
+      "id": "BEGDV6ERGVO",
+      "name": "Verordnung zur Änderung und Ergänzung der Sechsten Verordnung zur",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 5
+    },
+    {
+      "id": "BEGSCHLGVERFV",
+      "name": "Verfahrensverordnung zu Artikel VI des Zweiten Gesetzes zur Änderung des Bundesentschädigungsgesetzes (BEG-Schlußgesetz)",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 2
+    },
+    {
+      "id": "BERVERSV",
+      "name": "BERVERSV",
+      "paragraph_count": 0,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "BETRAVG",
+      "name": "Gesetz zur Verbesserung der betrieblichen Altersversorgung",
+      "paragraph_count": 0,
+      "in_degree": 14,
+      "out_degree": 0
+    },
+    {
+      "id": "BEWÄNDG 1971",
+      "name": "Gesetz zur Änderung bewertungsrechtlicher und anderer steuerrechtlicher",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "BFSTRMG",
+      "name": "Gesetz über die Erhebung von streckenbezogenen Gebühren für die Benutzung von Bundesautobahnen und Bundesstraßen",
+      "paragraph_count": 0,
+      "in_degree": 4,
+      "out_degree": 0
+    },
+    {
+      "id": "BGB",
+      "name": "Bürgerliches Gesetzbuch",
+      "paragraph_count": 2518,
+      "in_degree": 11,
+      "out_degree": 20
+    },
+    {
+      "id": "BGBEG",
+      "name": "Einführungsgesetz zum Bürgerlichen Gesetzbuche",
+      "paragraph_count": 220,
+      "in_degree": 7,
+      "out_degree": 0
+    },
+    {
+      "id": "BGRUVERKOLYMPG",
+      "name": "Gesetz über den Verkauf von bundeseigenem Gelände in München zur",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "BGSG 1994",
+      "name": "Gesetz über die Bundespolizei",
+      "paragraph_count": 82,
+      "in_degree": 0,
+      "out_degree": 5
+    },
+    {
+      "id": "BHO",
+      "name": "Bundeshaushaltsordnung",
+      "paragraph_count": 124,
+      "in_degree": 3,
+      "out_degree": 22
+    },
+    {
+      "id": "BIMSCHG",
+      "name": "Gesetz zum Schutz vor schädlichen Umwelteinwirkungen durch Luftverunreinigungen, Geräusche, Erschütterungen und ähnliche Vorgänge",
+      "paragraph_count": 0,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "BIMSCHV 9",
+      "name": "Neunte Verordnung zur Durchführung des Bundes-Immissionsschutzgesetzes",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "BINSCHGERG",
+      "name": "Gesetz über das gerichtliche Verfahren in Binnenschiffahrtssachen",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "BLG",
+      "name": "Bundesleistungsgesetz",
+      "paragraph_count": 97,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "BNDG",
+      "name": "Gesetz über den Bundesnachrichtendienst",
+      "paragraph_count": 93,
+      "in_degree": 1,
+      "out_degree": 2
+    },
+    {
+      "id": "BNOTO",
+      "name": "Bundesnotarordnung",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 3
+    },
+    {
+      "id": "BOKRAFT 1975",
+      "name": "Verordnung über den Betrieb von Kraftfahrunternehmen im Personenverkehr",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 10
+    },
+    {
+      "id": "BQFG",
+      "name": "Gesetz über die Feststellung der Gleichwertigkeit von Berufsqualifikationen",
+      "paragraph_count": 20,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "BRRG",
+      "name": "Rahmengesetz zur Vereinheitlichung des Beamtenrechts",
+      "paragraph_count": 32,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "BRÜG",
+      "name": "Bundesgesetz zur Regelung der rückerstattungsrechtlichen",
+      "paragraph_count": 0,
+      "in_degree": 13,
+      "out_degree": 0
+    },
+    {
+      "id": "BRÜGDV 1",
+      "name": "Erste Verordnung zur Durchführung des Bundesrückerstattungsgesetzes",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 13
+    },
+    {
+      "id": "BSTATG",
+      "name": "BSTATG",
+      "paragraph_count": 0,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "BSTATG 1987",
+      "name": "Gesetz über die Statistik für Bundeszwecke",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "BVERFGG",
+      "name": "Gesetz über das Bundesverfassungsgericht",
+      "paragraph_count": 0,
+      "in_degree": 35,
+      "out_degree": 0
+    },
+    {
+      "id": "BVERFGGO 2015",
+      "name": "Geschäftsordnung des Bundesverfassungsgerichts",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 35
+    },
+    {
+      "id": "BVERFSCHG",
+      "name": "Gesetz über die Zusammenarbeit des Bundes und der Länder in Angelegenheiten des Verfassungsschutzes und über das Bundesamt für Verfassungsschutz",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 9
+    },
+    {
+      "id": "BVFG",
+      "name": "Gesetz über die Angelegenheiten der Vertriebenen und Flüchtlinge",
+      "paragraph_count": 34,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "BWAHLG",
+      "name": "Bundeswahlgesetz",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "DIÄTENG",
+      "name": "Gesetz über die Entschädigung der Mitglieder des Bundestages",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "DNG",
+      "name": "Gesetz für die Nutzung von Daten des öffentlichen Sektors",
+      "paragraph_count": 13,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "DPMAVWKOSTV 2006",
+      "name": "Verordnung über Verwaltungskosten beim Deutschen Patent- und Markenamt",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 6
+    },
+    {
+      "id": "DSLBUMWG",
+      "name": "Gesetz über die Umwandlung der Deutschen Siedlungs- und Landesrentenbank in eine Aktiengesellschaft",
+      "paragraph_count": 0,
+      "in_degree": 5,
+      "out_degree": 0
+    },
+    {
+      "id": "EAEG",
+      "name": "Anlegerentschädigungsgesetz",
+      "paragraph_count": 19,
+      "in_degree": 0,
+      "out_degree": 4
+    },
+    {
+      "id": "EBO",
+      "name": "Eisenbahn-Bau- und Betriebsordnung",
+      "paragraph_count": 52,
+      "in_degree": 2,
+      "out_degree": 0
+    },
+    {
+      "id": "EEG 2014",
+      "name": "Gesetz für den Ausbau erneuerbarer Energien",
+      "paragraph_count": 200,
+      "in_degree": 0,
+      "out_degree": 4
+    },
+    {
+      "id": "EEMD-ZVANL I",
+      "name": "Vereinbarung über die Durchführung des Prüfverfahrens zur Erbringung mautdienstbezogener Leistungen",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 6
+    },
+    {
+      "id": "EEMD-ZVANL II",
+      "name": "Vertrag über die Durchführung des europäischen elektronischen Mautdienstes auf Bundesstraßen im Geltungsbereich des Bundesfernstraßenmautgesetzes",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 12
+    },
+    {
+      "id": "EGGMBHG",
+      "name": "Einführungsgesetz zum Gesetz betreffend die Gesellschaften mit beschränkter Haftung",
+      "paragraph_count": 0,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "EINSIG",
+      "name": "Einlagensicherungsgesetz",
+      "paragraph_count": 0,
+      "in_degree": 15,
+      "out_degree": 1
+    },
+    {
+      "id": "EKFV",
+      "name": "Verordnung über die Teilnahme von Elektrokleinstfahrzeugen am Straßenverkehr",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "ENDLSIANFV",
+      "name": "Verordnung über Sicherheitsanforderungen an die Endlagerung hochradioaktiver Abfälle",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "ENDLSIUNTV",
+      "name": "Verordnung über Anforderungen an die Durchführung der vorläufigen Sicherheitsuntersuchungen im Standortauswahlverfahren für die Endlagerung hochradioaktiver Abfälle",
+      "paragraph_count": 0,
+      "in_degree": 2,
+      "out_degree": 0
+    },
+    {
+      "id": "ENLAG",
+      "name": "Gesetz zum Ausbau von Energieleitungen",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "ENTSCHG",
+      "name": "Gesetz über die Entschädigung nach dem Gesetz zur Regelung offener",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 2
+    },
+    {
+      "id": "ENTSCHRG",
+      "name": "Entschädigungsrentengesetz",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 3
+    },
+    {
+      "id": "ENWG 2005",
+      "name": "Gesetz über die Elektrizitäts- und Gasversorgung",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 113
+    },
+    {
+      "id": "ESBO",
+      "name": "Eisenbahn-Bau- und Betriebsordnung für Schmalspurbahnen",
+      "paragraph_count": 51,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "ESTG",
+      "name": "Einkommensteuergesetz",
+      "paragraph_count": 0,
+      "in_degree": 16,
+      "out_degree": 3
+    },
+    {
+      "id": "EU/EWRHWV 2016",
+      "name": "Verordnung über die für Staatsangehörige eines Mitgliedstaates der Europäischen Union oder eines anderen Vertragsstaates des Abkommens über den Europäischen Wirtschaftsraum oder der Schweiz geltenden Voraussetzungen für die Ausübung eines zulassungspflichtigen Handwerks",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 3
+    },
+    {
+      "id": "EUPAG",
+      "name": "Gesetz über die Tätigkeit europäischer Patentanwälte in Deutschland",
+      "paragraph_count": 0,
+      "in_degree": 5,
+      "out_degree": 0
+    },
+    {
+      "id": "EUTERRORÜBKG",
+      "name": "Gesetz zu dem Europäischen Übereinkommen vom 27. Januar 1977 zur Bekämpfung des Terrorismus",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "EUWG",
+      "name": "Gesetz über die Wahl der Abgeordneten des Europäischen Parlaments aus der Bundesrepublik Deutschland",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "EVO",
+      "name": "EVO",
+      "paragraph_count": 0,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "EÜG",
+      "name": "Gesetz über den Einfluß von Eignungsübungen der Streitkräfte auf Vertragsverhältnisse der Arbeitnehmer und Handelsvertreter sowie auf Beamtenverhältnisse",
+      "paragraph_count": 13,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "FATCA-USA-UMSV",
+      "name": "Verordnung zur Umsetzung der Verpflichtungen aus dem Abkommen zwischen der Bundesrepublik Deutschland und den Vereinigten Staaten von Amerika zur Förderung der Steuerehrlichkeit bei internationalen Sachverhalten und hinsichtlich der als Gesetz über die Steuerehrlichkeit bezüglich Auslandskonten bekannten US-amerikanischen Informations- und Meldebestimmungen",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "FEV",
+      "name": "FEV",
+      "paragraph_count": 0,
+      "in_degree": 4,
+      "out_degree": 0
+    },
+    {
+      "id": "FEV 2010",
+      "name": "Verordnung über die Zulassung von Personen zum Straßenverkehr",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 4
+    },
+    {
+      "id": "FGO",
+      "name": "Finanzgerichtsordnung",
+      "paragraph_count": 167,
+      "in_degree": 1,
+      "out_degree": 1
+    },
+    {
+      "id": "FINAUSGLG 2005",
+      "name": "Gesetz über den Finanzausgleich zwischen Bund und Ländern",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "FINDAG",
+      "name": "Gesetz über die Bundesanstalt für Finanzdienstleistungsaufsicht",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 2
+    },
+    {
+      "id": "FLÜHG",
+      "name": "Flüchtlingshilfegesetz",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "FMSTBG",
+      "name": "Gesetz zur Beschleunigung und Vereinfachung des Erwerbs von Anteilen an sowie Risikopositionen von Unternehmen des Finanzsektors durch den Fonds „Finanzmarktstabilisierungsfonds – FMS“ und der Realwirtschaft durch den Fonds „Wirtschaftsstabilisierungsfonds – WSF“",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "FSTRG",
+      "name": "Bundesfernstraßengesetz",
+      "paragraph_count": 0,
+      "in_degree": 3,
+      "out_degree": 0
+    },
+    {
+      "id": "FSTRKRV",
+      "name": "Verordnung über Kreuzungsanlagen im Zuge von Bundesfernstraßen",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "FUTTMV",
+      "name": "FUTTMV",
+      "paragraph_count": 0,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "G10 2001",
+      "name": "Gesetz zur Beschränkung des Brief-, Post- und Fernmeldegeheimnisses",
+      "paragraph_count": 29,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "GASNEV",
+      "name": "Verordnung über die Entgelte für den Zugang zu Gasversorgungsnetzen",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "GBBERG",
+      "name": "GBBERG",
+      "paragraph_count": 0,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "GBO",
+      "name": "Grundbuchordnung",
+      "paragraph_count": 163,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "GBVFG",
+      "name": "Verordnung zur Durchführung der Grundbuchordnung",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "GEEV",
+      "name": "GEEV",
+      "paragraph_count": 0,
+      "in_degree": 3,
+      "out_degree": 0
+    },
+    {
+      "id": "GENG",
+      "name": "Gesetz betreffend die Erwerbs- und Wirtschaftsgenossenschaften",
+      "paragraph_count": 0,
+      "in_degree": 6,
+      "out_degree": 0
+    },
+    {
+      "id": "GESCHMMG",
+      "name": "GESCHMMG",
+      "paragraph_count": 0,
+      "in_degree": 6,
+      "out_degree": 0
+    },
+    {
+      "id": "GEWO",
+      "name": "Gewerbeordnung",
+      "paragraph_count": 0,
+      "in_degree": 14,
+      "out_degree": 1
+    },
+    {
+      "id": "GEWSTG",
+      "name": "Gewerbesteuergesetz",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "GG",
+      "name": "Grundgesetz für die Bundesrepublik Deutschland",
+      "paragraph_count": 201,
+      "in_degree": 45,
+      "out_degree": 0
+    },
+    {
+      "id": "GGV",
+      "name": "Verordnung über die Anlegung und Führung von Gebäudegrundbüchern",
+      "paragraph_count": 15,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "GKG",
+      "name": "GKG",
+      "paragraph_count": 0,
+      "in_degree": 2,
+      "out_degree": 0
+    },
+    {
+      "id": "GMBHG",
+      "name": "Gesetz betreffend die Gesellschaften mit beschränkter Haftung",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "GNOTKG",
+      "name": "Gesetz über Kosten der freiwilligen Gerichtsbarkeit für Gerichte und Notare",
+      "paragraph_count": 0,
+      "in_degree": 2,
+      "out_degree": 0
+    },
+    {
+      "id": "GPATG",
+      "name": "Gesetz über das Gemeinschaftspatent und zur Änderung patentrechtlicher Vorschriften",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "GROMIKV 2014",
+      "name": "Verordnung zur Ergänzung der Großkreditvorschriften nach der Verordnung (EU) Nr. 575/2013 des Europäischen Parlaments und des Rates vom 26. Juni 2013 über Aufsichtsanforderungen an Kreditinstitute und Wertpapierfirmen und zur Änderung der Verordnung (EU) Nr. 648/2012 und zur Ergänzung der Millionenkreditvorschriften nach dem Kreditwesengesetz",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 6
+    },
+    {
+      "id": "GVG",
+      "name": "Gerichtsverfassungsgesetz",
+      "paragraph_count": 215,
+      "in_degree": 2,
+      "out_degree": 1
+    },
+    {
+      "id": "GWB",
+      "name": "Gesetz gegen Wettbewerbsbeschränkungen",
+      "paragraph_count": 238,
+      "in_degree": 1,
+      "out_degree": 86
+    },
+    {
+      "id": "GWG 2017",
+      "name": "Gesetz über das Aufspüren von Gewinnen aus schweren Straftaten",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 2
+    },
+    {
+      "id": "GÜKG",
+      "name": "GÜKG",
+      "paragraph_count": 0,
+      "in_degree": 14,
+      "out_degree": 0
+    },
+    {
+      "id": "GÜKG§6AV",
+      "name": "Verordnung über die Anerkennung von Stadt- und Landkreisen nach § 6a des",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 14
+    },
+    {
+      "id": "HAG",
+      "name": "Heimarbeitsgesetz",
+      "paragraph_count": 38,
+      "in_degree": 21,
+      "out_degree": 0
+    },
+    {
+      "id": "HAGDV 1",
+      "name": "Erste Rechtsverordnung zur Durchführung des Heimarbeitsgesetzes",
+      "paragraph_count": 13,
+      "in_degree": 0,
+      "out_degree": 21
+    },
+    {
+      "id": "HBEGLEITG 1984",
+      "name": "Gesetz über Maßnahmen zur Entlastung der öffentlichen Haushalte und zur Stabilisierung der Finanzentwicklung in der Rentenversicherung sowie über die Verlängerung der Investitionshilfeabgabe",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "HEILPRG",
+      "name": "Gesetz über die berufsmäßige Ausübung der Heilkunde ohne Bestallung",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 3
+    },
+    {
+      "id": "HEILPRGDV 1",
+      "name": "Erste Durchführungsverordnung zum Gesetz über die berufsmäßige Ausübung",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 2
+    },
+    {
+      "id": "HG",
+      "name": "HG",
+      "paragraph_count": 0,
+      "in_degree": 6,
+      "out_degree": 0
+    },
+    {
+      "id": "HGB",
+      "name": "Handelsgesetzbuch",
+      "paragraph_count": 688,
+      "in_degree": 5,
+      "out_degree": 66
+    },
+    {
+      "id": "HGBEG",
+      "name": "Einführungsgesetz zum Handelsgesetzbuch",
+      "paragraph_count": 84,
+      "in_degree": 54,
+      "out_degree": 0
+    },
+    {
+      "id": "HINSCHG",
+      "name": "Gesetz für einen besseren Schutz hinweisgebender Personen",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 14
+    },
+    {
+      "id": "HUFBESCHLG 2006",
+      "name": "Gesetz über den Beschlag von Hufen und Klauen",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 2
+    },
+    {
+      "id": "HWO",
+      "name": "Gesetz zur Ordnung des Handwerks",
+      "paragraph_count": 0,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "IFCABKG",
+      "name": "Gesetz betreffend das Abkommen über die Internationale Finanz-Corporation und betreffend Gouverneure und Direktoren in der Internationalen Bank für Wiederaufbau und Entwicklung sowie in der Internationalen Finanz-Corporation",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 2
+    },
+    {
+      "id": "IFSG",
+      "name": "Gesetz zur Verhütung und Bekämpfung von Infektionskrankheiten beim Menschen",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "INHKONTROLLV",
+      "name": "Verordnung über die Anzeigen nach § 2c des Kreditwesengesetzes und § 17 des Versicherungsaufsichtsgesetzes",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 3
+    },
+    {
+      "id": "INVSTG",
+      "name": "INVSTG",
+      "paragraph_count": 0,
+      "in_degree": 6,
+      "out_degree": 0
+    },
+    {
+      "id": "JGG",
+      "name": "Jugendgerichtsgesetz",
+      "paragraph_count": 144,
+      "in_degree": 2,
+      "out_degree": 0
+    },
+    {
+      "id": "KAGB",
+      "name": "Kapitalanlagegesetzbuch",
+      "paragraph_count": 405,
+      "in_degree": 29,
+      "out_degree": 0
+    },
+    {
+      "id": "KARG",
+      "name": "Gesetz über Änderungen von Vorschriften des Zweiten Buches der",
+      "paragraph_count": 14,
+      "in_degree": 0,
+      "out_degree": 2
+    },
+    {
+      "id": "KCANG",
+      "name": "Gesetz zum Umgang mit Konsumcannabis",
+      "paragraph_count": 0,
+      "in_degree": 5,
+      "out_degree": 0
+    },
+    {
+      "id": "KFWV",
+      "name": "Verordnung zur Anwendung von bankaufsichtsrechtlichen Vorschriften auf die Kreditanstalt für Wiederaufbau sowie zur Zuweisung der Aufsicht über die Einhaltung dieser Vorschriften an die Bundesanstalt für Finanzdienstleistungsaufsicht",
+      "paragraph_count": 0,
+      "in_degree": 14,
+      "out_degree": 0
+    },
+    {
+      "id": "KINVFERRG",
+      "name": "Gesetz zur Errichtung eines Sondervermögens „Kommunalinvestitionsförderungsfonds“",
+      "paragraph_count": 0,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "KMAG",
+      "name": "Gesetz zur Aufsicht über Märkte für Kryptowerte",
+      "paragraph_count": 51,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "KRAFTNAV",
+      "name": "Verordnung zur Regelung des Netzanschlusses von Anlagen zur Erzeugung",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "KREDWG",
+      "name": "Gesetz über das Kreditwesen",
+      "paragraph_count": 0,
+      "in_degree": 11,
+      "out_degree": 16
+    },
+    {
+      "id": "KRZWMG",
+      "name": "Gesetz über den Zweitmarkt für notleidende Kredite und über Kreditdienstleistungsinstitute",
+      "paragraph_count": 0,
+      "in_degree": 2,
+      "out_degree": 0
+    },
+    {
+      "id": "KSTG 1977",
+      "name": "Körperschaftsteuergesetz",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 2
+    },
+    {
+      "id": "KVBG",
+      "name": "Gesetz zur Reduzierung und zur Beendigung der Kohleverstromung",
+      "paragraph_count": 67,
+      "in_degree": 38,
+      "out_degree": 0
+    },
+    {
+      "id": "KWKAUSV",
+      "name": "Verordnung zur Einführung von Ausschreibungen zur Ermittlung der Höhe der Zuschlagszahlungen für KWK-Anlagen und für innovative KWK-Systeme",
+      "paragraph_count": 0,
+      "in_degree": 19,
+      "out_degree": 3
+    },
+    {
+      "id": "KWKG",
+      "name": "KWKG",
+      "paragraph_count": 0,
+      "in_degree": 4,
+      "out_degree": 0
+    },
+    {
+      "id": "KWKG 2016",
+      "name": "Gesetz für die Erhaltung, die Modernisierung und den Ausbau der Kraft-Wärme-Kopplung",
+      "paragraph_count": 51,
+      "in_degree": 0,
+      "out_degree": 19
+    },
+    {
+      "id": "LAG",
+      "name": "Gesetz über den Lastenausgleich",
+      "paragraph_count": 174,
+      "in_degree": 35,
+      "out_degree": 0
+    },
+    {
+      "id": "LAGÄNDG 11",
+      "name": "Elftes Gesetz zur Änderung des Lastenausgleichsgesetzes",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 2
+    },
+    {
+      "id": "LAGÄNDG 14",
+      "name": "Vierzehntes Gesetz zur Änderung des Lastenausgleichsgesetzes",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "LAGÄNDG 4",
+      "name": "Viertes Gesetz zur Änderung des Lastenausgleichsgesetzes",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 27
+    },
+    {
+      "id": "LASAARDV 2",
+      "name": "Zweite Verordnung zur Durchführung des Gesetzes zur Einführung von",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "LASAAREG",
+      "name": "Gesetz zur Einführung von Vorschriften des Lastenausgleichsrechts im",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 3
+    },
+    {
+      "id": "LFÜG",
+      "name": "Gesetz über den Übergang auf das neue Lebensmittel- und Futtermittelrecht",
+      "paragraph_count": 6,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "LUFTBO",
+      "name": "Betriebsordnung für Luftfahrtgerät",
+      "paragraph_count": 0,
+      "in_degree": 2,
+      "out_degree": 0
+    },
+    {
+      "id": "LUFTBODV 1 2008",
+      "name": "Erste Durchführungsverordnung zur Betriebsordnung für Luftfahrtgerät (Anwendungsbestimmungen zu Anhang III - EU-OPS - der VO (EWG) Nr. 3922/91",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "LUFTBODV 3 2009",
+      "name": "Dritte Durchführungsverordnung zur Betriebsordnung für Luftfahrtgerät (Ausrüstung und Betrieb des Luftfahrtgerätes außerhalb von Luftfahrtunternehmen)",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "LUFTBODV 4",
+      "name": "Vierte Durchführungsverordnung zur",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "LUFTFZGG",
+      "name": "Gesetz über Rechte an Luftfahrzeugen",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "LUFTPERSV",
+      "name": "Verordnung über Luftfahrtpersonal",
+      "paragraph_count": 0,
+      "in_degree": 9,
+      "out_degree": 0
+    },
+    {
+      "id": "LUFTPERSVDV 2",
+      "name": "Zweite Durchführungsverordnung zur Verordnung über Luftfahrtpersonal",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 9
+    },
+    {
+      "id": "LUFTSIG",
+      "name": "Luftsicherheitsgesetz",
+      "paragraph_count": 0,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "LUFTVG",
+      "name": "Luftverkehrsgesetz",
+      "paragraph_count": 0,
+      "in_degree": 3,
+      "out_degree": 0
+    },
+    {
+      "id": "LUFTVGÄNDG 11",
+      "name": "Elftes Gesetz zur Änderung des Luftverkehrsgesetzes",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "LUFTVO",
+      "name": "LUFTVO",
+      "paragraph_count": 0,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "LWERZGSCHULPROG",
+      "name": "Gesetz zur Durchführung unionsrechtlicher Vorschriften über das Schulprogramm für Obst, Gemüse und Milch",
+      "paragraph_count": 0,
+      "in_degree": 26,
+      "out_degree": 0
+    },
+    {
+      "id": "MARKSCHBERGV",
+      "name": "Verordnung über markscheiderische Arbeiten und Beobachtungen der Oberfläche",
+      "paragraph_count": 0,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "MAUTSYSG",
+      "name": "MAUTSYSG",
+      "paragraph_count": 0,
+      "in_degree": 9,
+      "out_degree": 0
+    },
+    {
+      "id": "MESSBG",
+      "name": "Gesetz über den Messstellenbetrieb und die Datenkommunikation in intelligenten Energienetzen",
+      "paragraph_count": 0,
+      "in_degree": 132,
+      "out_degree": 0
+    },
+    {
+      "id": "MOG",
+      "name": "Gesetz zur Durchführung der gemeinsamen Marktorganisationen und der Direktzahlungen",
+      "paragraph_count": 56,
+      "in_degree": 0,
+      "out_degree": 26
+    },
+    {
+      "id": "MPDG",
+      "name": "Gesetz zur Durchführung unionsrechtlicher Vorschriften betreffend Medizinprodukte",
+      "paragraph_count": 110,
+      "in_degree": 2,
+      "out_degree": 1
+    },
+    {
+      "id": "MPG",
+      "name": "Gesetz über Medizinprodukte",
+      "paragraph_count": 2,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "MUSCHG",
+      "name": "MUSCHG",
+      "paragraph_count": 0,
+      "in_degree": 4,
+      "out_degree": 0
+    },
+    {
+      "id": "MV",
+      "name": "Verordnung über Mitteilungen an die Finanzbehörden durch andere Behörden und öffentlich-rechtliche Rundfunkanstalten",
+      "paragraph_count": 12,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "MVSCHPANO",
+      "name": "Schiffahrtspolizeiliche Anordnung über die Ergänzung von Schiffahrtszeichen auf den Seeschiffahrtsstraßen im Bereich des Landes Mecklenburg-Vorpommern",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "NDAV",
+      "name": "Verordnung über Allgemeine Bedingungen für den Netzanschluss und dessen Nutzung für die Gasversorgung in Niederdruck",
+      "paragraph_count": 30,
+      "in_degree": 3,
+      "out_degree": 0
+    },
+    {
+      "id": "OFFSHOREBERGV",
+      "name": "Bergverordnung für das Gebiet der Küstengewässer und des Festlandsockels",
+      "paragraph_count": 0,
+      "in_degree": 2,
+      "out_degree": 0
+    },
+    {
+      "id": "OWIG 1968",
+      "name": "Gesetz über Ordnungswidrigkeiten",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "PATG",
+      "name": "Patentgesetz",
+      "paragraph_count": 0,
+      "in_degree": 1,
+      "out_degree": 6
+    },
+    {
+      "id": "PBEFG",
+      "name": "Personenbeförderungsgesetz",
+      "paragraph_count": 0,
+      "in_degree": 10,
+      "out_degree": 0
+    },
+    {
+      "id": "PFANDBG",
+      "name": "Pfandbriefgesetz",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 5
+    },
+    {
+      "id": "PKDBSA",
+      "name": "Satzung der Pensionskasse Deutscher Eisenbahnen und Straßenbahnen VVaG Köln (Anlage zur Verordnung über die Feststellung der Satzung der Pensionskasse Deutscher Eisenbahnen und Straßenbahnen VVaG)",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 79
+    },
+    {
+      "id": "PLANSIG",
+      "name": "Gesetz zur Sicherstellung ordnungsgemäßer Planungs- und Genehmigungsverfahren während der COVID-19-Pandemie",
+      "paragraph_count": 0,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "PROSTSCHG",
+      "name": "Gesetz zum Schutz von in der Prostitution tätigen Personen",
+      "paragraph_count": 0,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "PSTG",
+      "name": "Personenstandsgesetz",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "RAG 1",
+      "name": "Erstes Gesetz über die Anpassung der Renten aus den gesetzlichen",
+      "paragraph_count": 10,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "RAG 2",
+      "name": "Zweites Gesetz über die Anpassung der Renten aus den gesetzlichen",
+      "paragraph_count": 10,
+      "in_degree": 0,
+      "out_degree": 2
+    },
+    {
+      "id": "RAG 3",
+      "name": "Drittes Gesetz über die Anpassung der Renten aus den gesetzlichen",
+      "paragraph_count": 9,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "RAG 4",
+      "name": "Viertes Gesetz über die Anpassung der Renten aus den gesetzlichen",
+      "paragraph_count": 12,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "RAG 5",
+      "name": "Fünftes Gesetz über die Anpassung der Renten aus den gesetzlichen",
+      "paragraph_count": 12,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "RAG 6",
+      "name": "Sechstes Gesetz über die Anpassung der Renten aus den gesetzlichen",
+      "paragraph_count": 18,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "RVERMVG§6DV",
+      "name": "Verordnung zur Durchführung des § 6 des Gesetzes zur vorläufigen Regelung",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "RVO",
+      "name": "Reichsversicherungsordnung",
+      "paragraph_count": 31,
+      "in_degree": 12,
+      "out_degree": 0
+    },
+    {
+      "id": "SAARGLV",
+      "name": "Verordnung über die Gleichstellung von aus dem Saargebiet verdrängten",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "SACHENR-DV",
+      "name": "Verordnung zur Durchführung des Grundbuchbereinigungsgesetzes und anderer Vorschriften auf dem Gebiet des Sachenrechts",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "SAG",
+      "name": "Gesetz zur Sanierung und Abwicklung von Instituten und Finanzgruppen",
+      "paragraph_count": 205,
+      "in_degree": 4,
+      "out_degree": 0
+    },
+    {
+      "id": "SBG 2016",
+      "name": "Soldatinnen- und Soldatenbeteiligungsgesetz",
+      "paragraph_count": 65,
+      "in_degree": 0,
+      "out_degree": 2
+    },
+    {
+      "id": "SCHNELLLG",
+      "name": "Gesetz über die Bereitstellung flächendeckender Schnellladeinfrastruktur für reine Batterieelektrofahrzeuge",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "SCHUV",
+      "name": "Verordnung über die Erfüllung von Entschädigungs- und",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "SEESCHSTRO",
+      "name": "SEESCHSTRO",
+      "paragraph_count": 0,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "SEG",
+      "name": "Gesetz über die Entschädigung der Soldatinnen und Soldaten",
+      "paragraph_count": 89,
+      "in_degree": 0,
+      "out_degree": 3
+    },
+    {
+      "id": "SEV",
+      "name": "Verordnung zum Soldatenentschädigungsgesetz",
+      "paragraph_count": 3,
+      "in_degree": 3,
+      "out_degree": 0
+    },
+    {
+      "id": "SGB",
+      "name": "SGB",
+      "paragraph_count": 0,
+      "in_degree": 60,
+      "out_degree": 0
+    },
+    {
+      "id": "SGB 1",
+      "name": "Sozialgesetzbuch (SGB) Erstes Buch (I) - Allgemeiner Teil - (Artikel I des Gesetzes vom 11. Dezember 1975, BGBl. I S. 3015)",
+      "paragraph_count": 83,
+      "in_degree": 0,
+      "out_degree": 2
+    },
+    {
+      "id": "SGB 10",
+      "name": "Zehntes Buch Sozialgesetzbuch - Sozialverwaltungsverfahren und Sozialdatenschutz -",
+      "paragraph_count": 135,
+      "in_degree": 0,
+      "out_degree": 4
+    },
+    {
+      "id": "SGB 12",
+      "name": "Sozialgesetzbuch (SGB) Zwölftes Buch (XII) - Sozialhilfe - (Artikel 1 des Gesetzes vom 27. Dezember 2003, BGBl. I S. 3022)",
+      "paragraph_count": 194,
+      "in_degree": 0,
+      "out_degree": 2
+    },
+    {
+      "id": "SGB 2",
+      "name": "Sozialgesetzbuch (SGB) Zweites Buch (II) - Bürgergeld, Grundsicherung für Arbeitsuchende - (Artikel 1 des Gesetzes vom 24. Dezember 2003, BGBl. I S. 2954)",
+      "paragraph_count": 152,
+      "in_degree": 0,
+      "out_degree": 3
+    },
+    {
+      "id": "SGB 5",
+      "name": "Sozialgesetzbuch (SGB) Fünftes Buch (V) - Gesetzliche Krankenversicherung - (Artikel 1 des Gesetzes v. 20. Dezember 1988, BGBl. I S. 2477)",
+      "paragraph_count": 695,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "SGB 8",
+      "name": "Sozialgesetzbuch (SGB) - Achtes Buch (VIII) - Kinder- und Jugendhilfe - (Artikel 1 des Gesetzes v. 26. Juni 1990, BGBl. I S. 1163)",
+      "paragraph_count": 166,
+      "in_degree": 0,
+      "out_degree": 2
+    },
+    {
+      "id": "SGB 9 2018",
+      "name": "Sozialgesetzbuch Neuntes Buch – Rehabilitation und Teilhabe von Menschen mit Behinderungen – (Artikel 1 des Gesetzes v. 23. Dezember 2016, BGBl. I S. 3234)",
+      "paragraph_count": 249,
+      "in_degree": 0,
+      "out_degree": 2
+    },
+    {
+      "id": "STANDAG 2017",
+      "name": "Gesetz zur Suche und Auswahl eines Standortes für ein Endlager für hochradioaktive Abfälle",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "STBERG",
+      "name": "Steuerberatungsgesetz",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "STGB",
+      "name": "Strafgesetzbuch",
+      "paragraph_count": 0,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "STGEBO 2011",
+      "name": "Gebührenordnung für Maßnahmen im Straßenverkehr",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "STPO",
+      "name": "Strafprozeßordnung",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 5
+    },
+    {
+      "id": "STRABBO 1987",
+      "name": "Verordnung über den Bau und Betrieb der Straßenbahnen",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 2
+    },
+    {
+      "id": "STRBEG",
+      "name": "Gesetz über die strafbefreiende Erklärung von Einkünften aus",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "STRLSCHG",
+      "name": "Gesetz zum Schutz vor der schädlichen Wirkung ionisierender Strahlung",
+      "paragraph_count": 0,
+      "in_degree": 2,
+      "out_degree": 0
+    },
+    {
+      "id": "STROMNEV",
+      "name": "Verordnung über die Entgelte für den Zugang zu Elektrizitätsversorgungsnetzen",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "STVO",
+      "name": "STVO",
+      "paragraph_count": 0,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "STVZO",
+      "name": "STVZO",
+      "paragraph_count": 0,
+      "in_degree": 10,
+      "out_degree": 0
+    },
+    {
+      "id": "STVZOAUSNV 23",
+      "name": "Dreiundzwanzigste Verordnung über Ausnahmen von den Vorschriften der",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 3
+    },
+    {
+      "id": "STVZOAUSNV 25",
+      "name": "Fünfundzwanzigste Verordnung über Ausnahmen von den Vorschriften der",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 2
+    },
+    {
+      "id": "STVZOAUSNV 6",
+      "name": "Sechste Verordnung über Ausnahmen von den Vorschriften der Straßenverkehrs-Zulassungs-Ordnung",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 2
+    },
+    {
+      "id": "SVG",
+      "name": "SVG",
+      "paragraph_count": 0,
+      "in_degree": 2,
+      "out_degree": 0
+    },
+    {
+      "id": "SVORGSAARG",
+      "name": "Gesetz zur Neuordnung der Sozialversicherungsträger im Saarland",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 3
+    },
+    {
+      "id": "SÜG",
+      "name": "Gesetz über die Voraussetzungen und das Verfahren von Sicherheitsüberprüfungen des Bundes und den Schutz von Verschlusssachen",
+      "paragraph_count": 45,
+      "in_degree": 10,
+      "out_degree": 0
+    },
+    {
+      "id": "TEXTILKENNZG",
+      "name": "TEXTILKENNZG",
+      "paragraph_count": 0,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "TGV",
+      "name": "TGV",
+      "paragraph_count": 0,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "TGV 1986",
+      "name": "Verordnung über das Trennungsgeld bei Versetzungen und Abordnungen im Inland",
+      "paragraph_count": 12,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "TVMINDESTLOHN VFLUGHSIK 4",
+      "name": "Rechtsnormen des Entgelttarifvertrags für Sicherheitskräfte an Verkehrsflughäfen vom 8. April 2025",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "TVMINDESTLOHNGEBÄUDE 2024",
+      "name": "Rechtsnormen des Tarifvertrags zur Regelung der Mindestlöhne für gewerbliche Arbeitnehmer",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "UERGG",
+      "name": "Gesetz über die Ergänzung von Vorschriften des Umstellungsrechts und über die Ausstattung der Berliner Altbanken mit Ausgleichsforderungen",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 9
+    },
+    {
+      "id": "UKRAINEAUFENTHFGV",
+      "name": "Verordnung zur Regelung der Fortgeltung der gemäß § 24 Absatz 1 Aufenthaltsgesetz erteilten Aufenthaltserlaubnisse für vorübergehend Schutzberechtigte aus der Ukraine",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "UMSTG",
+      "name": "Drittes Gesetz zur Neuordnung des Geldwesens",
+      "paragraph_count": 0,
+      "in_degree": 1,
+      "out_degree": 1
+    },
+    {
+      "id": "UMWRG",
+      "name": "Gesetz über ergänzende Vorschriften zu Rechtsbehelfen in Umweltangelegenheiten nach der EG-Richtlinie 2003/35/EG",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 3
+    },
+    {
+      "id": "URHG",
+      "name": "Gesetz über Urheberrecht und verwandte Schutzrechte",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "URÜV",
+      "name": "Verordnung zum Vermögensgesetz über die Rückgabe von Unternehmen",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "USTG",
+      "name": "USTG",
+      "paragraph_count": 0,
+      "in_degree": 3,
+      "out_degree": 0
+    },
+    {
+      "id": "UVPG",
+      "name": "Gesetz über die Umweltverträglichkeitsprüfung",
+      "paragraph_count": 79,
+      "in_degree": 0,
+      "out_degree": 3
+    },
+    {
+      "id": "VAG",
+      "name": "VAG",
+      "paragraph_count": 0,
+      "in_degree": 9,
+      "out_degree": 0
+    },
+    {
+      "id": "VAG 2016",
+      "name": "Gesetz über die Beaufsichtigung der Versicherungsunternehmen",
+      "paragraph_count": 402,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "VERGWERKEREGV",
+      "name": "Verordnung über das Register vergriffener Werke",
+      "paragraph_count": 0,
+      "in_degree": 6,
+      "out_degree": 0
+    },
+    {
+      "id": "VERKFING",
+      "name": "Verkehrsfinanzgesetz 1955",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 2
+    },
+    {
+      "id": "VERKSIG",
+      "name": "Gesetz zur Sicherstellung des Verkehrs",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "VERMANLG",
+      "name": "Gesetz über Vermögensanlagen",
+      "paragraph_count": 0,
+      "in_degree": 4,
+      "out_degree": 0
+    },
+    {
+      "id": "VGG",
+      "name": "Gesetz über die Wahrnehmung von Urheberrechten und verwandten Schutzrechten durch Verwertungsgesellschaften",
+      "paragraph_count": 151,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "VKBKMG",
+      "name": "Gesetz über die Verkündung von Gesetzen und Rechtsverordnungen und über Bekanntmachungen",
+      "paragraph_count": 0,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "VSBG",
+      "name": "Gesetz über die alternative Streitbeilegung in Verbrauchersachen",
+      "paragraph_count": 43,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "VSORGLASTVTEILSTVTR",
+      "name": "Staatsvertrag über die Verteilung von Versorgungslasten bei bund- und länderübergreifenden Dienstherrenwechseln",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 6
+    },
+    {
+      "id": "VSTG 1974",
+      "name": "Vermögensteuergesetz",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "VVG",
+      "name": "VVG",
+      "paragraph_count": 0,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "VVG 2008",
+      "name": "Gesetz über den Versicherungsvertrag",
+      "paragraph_count": 223,
+      "in_degree": 0,
+      "out_degree": 5
+    },
+    {
+      "id": "VVGEG",
+      "name": "Einführungsgesetz zum Versicherungsvertragsgesetz",
+      "paragraph_count": 9,
+      "in_degree": 5,
+      "out_degree": 0
+    },
+    {
+      "id": "VWGO",
+      "name": "Verwaltungsgerichtsordnung",
+      "paragraph_count": 0,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "VWVFG",
+      "name": "Verwaltungsverfahrensgesetz",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 7
+    },
+    {
+      "id": "WAFFG 2002",
+      "name": "Waffengesetz",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "WASTRG",
+      "name": "Bundeswasserstraßengesetz",
+      "paragraph_count": 0,
+      "in_degree": 5,
+      "out_degree": 1
+    },
+    {
+      "id": "WASTRGANLERMV",
+      "name": "Verordnung zur Übertragung der Ermächtigung zum Erlaß von",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "WASTRGGEMGEBRERMV",
+      "name": "Verordnung zur Übertragung der Ermächtigung zum Erlaß von Rechtsverordnungen nach dem Bundeswasserstraßengesetz über die Regelung, Beschränkung oder Untersagung des Gemeingebrauchs",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "WASTRGTALSPERMV",
+      "name": "Verordnung zur Übertragung der Ermächtigung zum Erlaß von",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "WBO",
+      "name": "Wehrbeschwerdeordnung",
+      "paragraph_count": 28,
+      "in_degree": 0,
+      "out_degree": 2
+    },
+    {
+      "id": "WDO",
+      "name": "WDO",
+      "paragraph_count": 0,
+      "in_degree": 4,
+      "out_degree": 0
+    },
+    {
+      "id": "WINDSEEG",
+      "name": "Gesetz zur Entwicklung und Förderung der Windenergie auf See",
+      "paragraph_count": 0,
+      "in_degree": 33,
+      "out_degree": 0
+    },
+    {
+      "id": "WIPRO",
+      "name": "Gesetz über eine Berufsordnung der Wirtschaftsprüfer",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 6
+    },
+    {
+      "id": "WOSTICHPRG",
+      "name": "Gesetz über die Durchführung einer Repräsentativstatistik auf dem Gebiet",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "WPHG",
+      "name": "Gesetz über den Wertpapierhandel",
+      "paragraph_count": 0,
+      "in_degree": 4,
+      "out_degree": 1
+    },
+    {
+      "id": "WPI-ANZV",
+      "name": "Verordnung über die Anzeigen und die Vorlage von Unterlagen nach dem Wertpapierinstitutsgesetz",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 2
+    },
+    {
+      "id": "WPIG",
+      "name": "Gesetz zur Beaufsichtigung von Wertpapierinstituten",
+      "paragraph_count": 0,
+      "in_degree": 8,
+      "out_degree": 0
+    },
+    {
+      "id": "WPPG",
+      "name": "Gesetz über die Erstellung, Billigung und Veröffentlichung des Prospekts, der beim öffentlichen Angebot von Wertpapieren oder bei der Zulassung von Wertpapieren zum Handel an einem organisierten Markt zu veröffentlichen ist",
+      "paragraph_count": 0,
+      "in_degree": 5,
+      "out_degree": 0
+    },
+    {
+      "id": "WPÜG",
+      "name": "Wertpapiererwerbs- und Übernahmegesetz",
+      "paragraph_count": 0,
+      "in_degree": 4,
+      "out_degree": 0
+    },
+    {
+      "id": "WSG",
+      "name": "WSG",
+      "paragraph_count": 0,
+      "in_degree": 1,
+      "out_degree": 0
+    },
+    {
+      "id": "ZAG",
+      "name": "ZAG",
+      "paragraph_count": 0,
+      "in_degree": 2,
+      "out_degree": 0
+    },
+    {
+      "id": "ZAGMONAWV",
+      "name": "Verordnung zur Einreichung von Monatsausweisen nach dem Zahlungsdiensteaufsichtsgesetz",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 2
+    },
+    {
+      "id": "ZOLLV",
+      "name": "Zollverordnung",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    },
+    {
+      "id": "ZPO",
+      "name": "Zivilprozessordnung",
+      "paragraph_count": 1081,
+      "in_degree": 1,
+      "out_degree": 2
+    },
+    {
+      "id": "ZPOEG",
+      "name": "Gesetz, betreffend die Einführung der Zivilprozeßordnung",
+      "paragraph_count": 49,
+      "in_degree": 2,
+      "out_degree": 0
+    },
+    {
+      "id": "ZUSTERGG",
+      "name": "Gesetz zur Ergänzung von Zuständigkeiten auf den Gebieten des",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 2
+    },
+    {
+      "id": "ÜBLG 2",
+      "name": "Zweites Gesetz zur Überleitung von Lasten und Deckungsmitteln auf den",
+      "paragraph_count": 0,
+      "in_degree": 0,
+      "out_degree": 1
+    }
+  ],
+  "edges": [
+    {
+      "from": "GWB",
+      "to": "MESSBG",
+      "weight": 85
+    },
+    {
+      "from": "AO 1977",
+      "to": "AOEG",
+      "weight": 84
+    },
+    {
+      "from": "HGB",
+      "to": "HGBEG",
+      "weight": 54
+    },
+    {
+      "from": "BEGDV 3",
+      "to": "BEG",
+      "weight": 49
+    },
+    {
+      "from": "ENWG 2005",
+      "to": "MESSBG",
+      "weight": 45
+    },
+    {
+      "from": "PKDBSA",
+      "to": "SGB",
+      "weight": 44
+    },
+    {
+      "from": "ENWG 2005",
+      "to": "KVBG",
+      "weight": 36
+    },
+    {
+      "from": "BVERFGGO 2015",
+      "to": "BVERFGG",
+      "weight": 35
+    },
+    {
+      "from": "ENWG 2005",
+      "to": "WINDSEEG",
+      "weight": 32
+    },
+    {
+      "from": "LAGÄNDG 4",
+      "to": "LAG",
+      "weight": 27
+    },
+    {
+      "from": "MOG",
+      "to": "LWERZGSCHULPROG",
+      "weight": 26
+    },
+    {
+      "from": "AKTG",
+      "to": "KAGB",
+      "weight": 21
+    },
+    {
+      "from": "BEGDV 2",
+      "to": "BEG",
+      "weight": 21
+    },
+    {
+      "from": "HAGDV 1",
+      "to": "HAG",
+      "weight": 21
+    },
+    {
+      "from": "KWKG 2016",
+      "to": "KWKAUSV",
+      "weight": 19
+    },
+    {
+      "from": "BEGDV 1",
+      "to": "BEG",
+      "weight": 17
+    },
+    {
+      "from": "PKDBSA",
+      "to": "ESTG",
+      "weight": 16
+    },
+    {
+      "from": "AUSLWBENTSCHG",
+      "to": "AUSLWBG",
+      "weight": 14
+    },
+    {
+      "from": "GÜKG§6AV",
+      "to": "GÜKG",
+      "weight": 14
+    },
+    {
+      "from": "HINSCHG",
+      "to": "GEWO",
+      "weight": 14
+    },
+    {
+      "from": "KREDWG",
+      "to": "KFWV",
+      "weight": 14
+    },
+    {
+      "from": "PKDBSA",
+      "to": "BETRAVG",
+      "weight": 14
+    },
+    {
+      "from": "BRÜGDV 1",
+      "to": "BRÜG",
+      "weight": 13
+    },
+    {
+      "from": "BHO",
+      "to": "EINSIG",
+      "weight": 11
+    },
+    {
+      "from": "LUFTPERSVDV 2",
+      "to": "LUFTPERSV",
+      "weight": 9
+    },
+    {
+      "from": "AKTG",
+      "to": "AKTGEG",
+      "weight": 8
+    },
+    {
+      "from": "BOKRAFT 1975",
+      "to": "PBEFG",
+      "weight": 8
+    },
+    {
+      "from": "BVERFSCHG",
+      "to": "SÜG",
+      "weight": 8
+    },
+    {
+      "from": "UERGG",
+      "to": "BBANKG",
+      "weight": 8
+    },
+    {
+      "from": "BGB",
+      "to": "BGBEG",
+      "weight": 7
+    },
+    {
+      "from": "HGB",
+      "to": "KAGB",
+      "weight": 7
+    },
+    {
+      "from": "BGB",
+      "to": "KREDWG",
+      "weight": 6
+    },
+    {
+      "from": "BHO",
+      "to": "HG",
+      "weight": 6
+    },
+    {
+      "from": "DPMAVWKOSTV 2006",
+      "to": "VERGWERKEREGV",
+      "weight": 6
+    },
+    {
+      "from": "GROMIKV 2014",
+      "to": "WPIG",
+      "weight": 6
+    },
+    {
+      "from": "PATG",
+      "to": "GESCHMMG",
+      "weight": 6
+    },
+    {
+      "from": "WIPRO",
+      "to": "GENG",
+      "weight": 6
+    },
+    {
+      "from": "BEGDV6ERGVO",
+      "to": "BEG",
+      "weight": 5
+    },
+    {
+      "from": "BEGDV 6",
+      "to": "BEG",
+      "weight": 5
+    },
+    {
+      "from": "BGSG 1994",
+      "to": "KCANG",
+      "weight": 5
+    },
+    {
+      "from": "EEMD-ZVANL II",
+      "to": "MAUTSYSG",
+      "weight": 5
+    },
+    {
+      "from": "PFANDBG",
+      "to": "DSLBUMWG",
+      "weight": 5
+    },
+    {
+      "from": "STPO",
+      "to": "GG",
+      "weight": 5
+    },
+    {
+      "from": "VVG 2008",
+      "to": "VVGEG",
+      "weight": 5
+    },
+    {
+      "from": "VWVFG",
+      "to": "EUPAG",
+      "weight": 5
+    },
+    {
+      "from": "AKTUARV 2016",
+      "to": "HGB",
+      "weight": 4
+    },
+    {
+      "from": "AKTUARV 2016",
+      "to": "VAG",
+      "weight": 4
+    },
+    {
+      "from": "AO 1977",
+      "to": "VERMANLG",
+      "weight": 4
+    },
+    {
+      "from": "AO 1977",
+      "to": "WPÜG",
+      "weight": 4
+    },
+    {
+      "from": "AO 1977",
+      "to": "WPHG",
+      "weight": 4
+    },
+    {
+      "from": "AO 1977",
+      "to": "WPPG",
+      "weight": 4
+    },
+    {
+      "from": "BAFÖG-EINKOMMENSV",
+      "to": "SGB",
+      "weight": 4
+    },
+    {
+      "from": "BAFÖG-EINKOMMENSV",
+      "to": "MUSCHG",
+      "weight": 4
+    },
+    {
+      "from": "BHO",
+      "to": "SAG",
+      "weight": 4
+    },
+    {
+      "from": "EAEG",
+      "to": "EINSIG",
+      "weight": 4
+    },
+    {
+      "from": "EEMD-ZVANL I",
+      "to": "MAUTSYSG",
+      "weight": 4
+    },
+    {
+      "from": "EEMD-ZVANL II",
+      "to": "BFSTRMG",
+      "weight": 4
+    },
+    {
+      "from": "FEV 2010",
+      "to": "FEV",
+      "weight": 4
+    },
+    {
+      "from": "SGB 10",
+      "to": "SGB",
+      "weight": 4
+    },
+    {
+      "from": "VSORGLASTVTEILSTVTR",
+      "to": "BEAMTVG",
+      "weight": 4
+    },
+    {
+      "from": "AO 1977",
+      "to": "USTG",
+      "weight": 3
+    },
+    {
+      "from": "BGB",
+      "to": "GG",
+      "weight": 3
+    },
+    {
+      "from": "BNOTO",
+      "to": "GG",
+      "weight": 3
+    },
+    {
+      "from": "EEG 2014",
+      "to": "GEEV",
+      "weight": 3
+    },
+    {
+      "from": "EEMD-ZVANL II",
+      "to": "BGB",
+      "weight": 3
+    },
+    {
+      "from": "ENTSCHRG",
+      "to": "BEG",
+      "weight": 3
+    },
+    {
+      "from": "EU/EWRHWV 2016",
+      "to": "NDAV",
+      "weight": 3
+    },
+    {
+      "from": "HEILPRG",
+      "to": "GG",
+      "weight": 3
+    },
+    {
+      "from": "HGB",
+      "to": "VAG",
+      "weight": 3
+    },
+    {
+      "from": "INHKONTROLLV",
+      "to": "ANZV",
+      "weight": 3
+    },
+    {
+      "from": "KWKAUSV",
+      "to": "KWKG",
+      "weight": 3
+    },
+    {
+      "from": "LASAAREG",
+      "to": "LAG",
+      "weight": 3
+    },
+    {
+      "from": "PKDBSA",
+      "to": "BGB",
+      "weight": 3
+    },
+    {
+      "from": "SEG",
+      "to": "SEV",
+      "weight": 3
+    },
+    {
+      "from": "STVZOAUSNV 23",
+      "to": "STVZO",
+      "weight": 3
+    },
+    {
+      "from": "ABBERGV",
+      "to": "OFFSHOREBERGV",
+      "weight": 2
+    },
+    {
+      "from": "AKTG",
+      "to": "GNOTKG",
+      "weight": 2
+    },
+    {
+      "from": "AO 1977",
+      "to": "INVSTG",
+      "weight": 2
+    },
+    {
+      "from": "AUSLSCHULDABKAG",
+      "to": "BBANKG",
+      "weight": 2
+    },
+    {
+      "from": "BAFLSBAÜBNG",
+      "to": "LUFTVG",
+      "weight": 2
+    },
+    {
+      "from": "BGB",
+      "to": "KVBG",
+      "weight": 2
+    },
+    {
+      "from": "BNDG",
+      "to": "SÜG",
+      "weight": 2
+    },
+    {
+      "from": "EEMD-ZVANL I",
+      "to": "BGB",
+      "weight": 2
+    },
+    {
+      "from": "ENTSCHG",
+      "to": "GG",
+      "weight": 2
+    },
+    {
+      "from": "ESTG",
+      "to": "INVSTG",
+      "weight": 2
+    },
+    {
+      "from": "GWG 2017",
+      "to": "KREDWG",
+      "weight": 2
+    },
+    {
+      "from": "HGB",
+      "to": "KREDWG",
+      "weight": 2
+    },
+    {
+      "from": "HUFBESCHLG 2006",
+      "to": "GG",
+      "weight": 2
+    },
+    {
+      "from": "IFCABKG",
+      "to": "BBANKG",
+      "weight": 2
+    },
+    {
+      "from": "KARG",
+      "to": "RVO",
+      "weight": 2
+    },
+    {
+      "from": "LAGÄNDG 11",
+      "to": "LAG",
+      "weight": 2
+    },
+    {
+      "from": "RAG 2",
+      "to": "RVO",
+      "weight": 2
+    },
+    {
+      "from": "SBG 2016",
+      "to": "WDO",
+      "weight": 2
+    },
+    {
+      "from": "SGB 1",
+      "to": "SGB",
+      "weight": 2
+    },
+    {
+      "from": "SGB 12",
+      "to": "GG",
+      "weight": 2
+    },
+    {
+      "from": "SGB 2",
+      "to": "SGB",
+      "weight": 2
+    },
+    {
+      "from": "SGB 8",
+      "to": "JGG",
+      "weight": 2
+    },
+    {
+      "from": "SGB 9 2018",
+      "to": "SGB",
+      "weight": 2
+    },
+    {
+      "from": "STRABBO 1987",
+      "to": "PBEFG",
+      "weight": 2
+    },
+    {
+      "from": "STVZOAUSNV 25",
+      "to": "STVZO",
+      "weight": 2
+    },
+    {
+      "from": "STVZOAUSNV 6",
+      "to": "STVZO",
+      "weight": 2
+    },
+    {
+      "from": "SVORGSAARG",
+      "to": "RVO",
+      "weight": 2
+    },
+    {
+      "from": "VERKFING",
+      "to": "GG",
+      "weight": 2
+    },
+    {
+      "from": "VSORGLASTVTEILSTVTR",
+      "to": "SVG",
+      "weight": 2
+    },
+    {
+      "from": "WBO",
+      "to": "WDO",
+      "weight": 2
+    },
+    {
+      "from": "WPI-ANZV",
+      "to": "WPIG",
+      "weight": 2
+    },
+    {
+      "from": "ZAGMONAWV",
+      "to": "ZAG",
+      "weight": 2
+    },
+    {
+      "from": "ZPO",
+      "to": "ZPOEG",
+      "weight": 2
+    },
+    {
+      "from": "ZUSTERGG",
+      "to": "GVG",
+      "weight": 2
+    },
+    {
+      "from": "ALKSTG",
+      "to": "ALKSTV",
+      "weight": 1
+    },
+    {
+      "from": "ASYLBLG",
+      "to": "GG",
+      "weight": 1
+    },
+    {
+      "from": "ATDG",
+      "to": "GG",
+      "weight": 1
+    },
+    {
+      "from": "ATG",
+      "to": "STRLSCHG",
+      "weight": 1
+    },
+    {
+      "from": "AUSLSCHULDABKAG",
+      "to": "GKG",
+      "weight": 1
+    },
+    {
+      "from": "AUSLWBGDV 9",
+      "to": "AUSLWBG",
+      "weight": 1
+    },
+    {
+      "from": "AZRG-DV",
+      "to": "AZRG",
+      "weight": 1
+    },
+    {
+      "from": "BAFÖG",
+      "to": "GG",
+      "weight": 1
+    },
+    {
+      "from": "BAFÖGFACHLEHRERV",
+      "to": "BAFÖG",
+      "weight": 1
+    },
+    {
+      "from": "BBERGG",
+      "to": "MARKSCHBERGV",
+      "weight": 1
+    },
+    {
+      "from": "BBESG",
+      "to": "WSG",
+      "weight": 1
+    },
+    {
+      "from": "BBVANPG 91",
+      "to": "GG",
+      "weight": 1
+    },
+    {
+      "from": "BEAMTVG",
+      "to": "GG",
+      "weight": 1
+    },
+    {
+      "from": "BEFBEDV",
+      "to": "BGB",
+      "weight": 1
+    },
+    {
+      "from": "BEG",
+      "to": "GG",
+      "weight": 1
+    },
+    {
+      "from": "BEGSCHLGVERFV",
+      "to": "BEG",
+      "weight": 1
+    },
+    {
+      "from": "BEGSCHLGVERFV",
+      "to": "GKG",
+      "weight": 1
+    },
+    {
+      "from": "BEWÄNDG 1971",
+      "to": "AOEG",
+      "weight": 1
+    },
+    {
+      "from": "BGB",
+      "to": "KAGB",
+      "weight": 1
+    },
+    {
+      "from": "BGB",
+      "to": "VVG",
+      "weight": 1
+    },
+    {
+      "from": "BGRUVERKOLYMPG",
+      "to": "BHO",
+      "weight": 1
+    },
+    {
+      "from": "BHO",
+      "to": "KINVFERRG",
+      "weight": 1
+    },
+    {
+      "from": "BIMSCHV 9",
+      "to": "BIMSCHG",
+      "weight": 1
+    },
+    {
+      "from": "BINSCHGERG",
+      "to": "GG",
+      "weight": 1
+    },
+    {
+      "from": "BLG",
+      "to": "GG",
+      "weight": 1
+    },
+    {
+      "from": "BOKRAFT 1975",
+      "to": "STVO",
+      "weight": 1
+    },
+    {
+      "from": "BOKRAFT 1975",
+      "to": "STVZO",
+      "weight": 1
+    },
+    {
+      "from": "BQFG",
+      "to": "HWO",
+      "weight": 1
+    },
+    {
+      "from": "BSTATG 1987",
+      "to": "AGRSTATG",
+      "weight": 1
+    },
+    {
+      "from": "BVERFSCHG",
+      "to": "BNDG",
+      "weight": 1
+    },
+    {
+      "from": "BWAHLG",
+      "to": "GG",
+      "weight": 1
+    },
+    {
+      "from": "DIÄTENG",
+      "to": "GG",
+      "weight": 1
+    },
+    {
+      "from": "DNG",
+      "to": "VKBKMG",
+      "weight": 1
+    },
+    {
+      "from": "EEG 2014",
+      "to": "WINDSEEG",
+      "weight": 1
+    },
+    {
+      "from": "EINSIG",
+      "to": "KREDWG",
+      "weight": 1
+    },
+    {
+      "from": "EKFV",
+      "to": "STVZO",
+      "weight": 1
+    },
+    {
+      "from": "ENDLSIANFV",
+      "to": "ENDLSIUNTV",
+      "weight": 1
+    },
+    {
+      "from": "ENLAG",
+      "to": "BBPLG",
+      "weight": 1
+    },
+    {
+      "from": "ESBO",
+      "to": "EBO",
+      "weight": 1
+    },
+    {
+      "from": "ESTG",
+      "to": "GG",
+      "weight": 1
+    },
+    {
+      "from": "EUTERRORÜBKG",
+      "to": "STGB",
+      "weight": 1
+    },
+    {
+      "from": "EUWG",
+      "to": "GG",
+      "weight": 1
+    },
+    {
+      "from": "EÜG",
+      "to": "BBG",
+      "weight": 1
+    },
+    {
+      "from": "FATCA-USA-UMSV",
+      "to": "AOEG",
+      "weight": 1
+    },
+    {
+      "from": "FGO",
+      "to": "AOEG",
+      "weight": 1
+    },
+    {
+      "from": "FINAUSGLG 2005",
+      "to": "GG",
+      "weight": 1
+    },
+    {
+      "from": "FINDAG",
+      "to": "KRZWMG",
+      "weight": 1
+    },
+    {
+      "from": "FINDAG",
+      "to": "BERVERSV",
+      "weight": 1
+    },
+    {
+      "from": "FLÜHG",
+      "to": "LAG",
+      "weight": 1
+    },
+    {
+      "from": "FMSTBG",
+      "to": "AKTG",
+      "weight": 1
+    },
+    {
+      "from": "FSTRKRV",
+      "to": "FSTRG",
+      "weight": 1
+    },
+    {
+      "from": "G10 2001",
+      "to": "GG",
+      "weight": 1
+    },
+    {
+      "from": "GASNEV",
+      "to": "MESSBG",
+      "weight": 1
+    },
+    {
+      "from": "GBVFG",
+      "to": "BGB",
+      "weight": 1
+    },
+    {
+      "from": "GEWO",
+      "to": "PROSTSCHG",
+      "weight": 1
+    },
+    {
+      "from": "GEWSTG",
+      "to": "INVSTG",
+      "weight": 1
+    },
+    {
+      "from": "GGV",
+      "to": "GBO",
+      "weight": 1
+    },
+    {
+      "from": "GMBHG",
+      "to": "EGGMBHG",
+      "weight": 1
+    },
+    {
+      "from": "GPATG",
+      "to": "PATG",
+      "weight": 1
+    },
+    {
+      "from": "GVG",
+      "to": "GG",
+      "weight": 1
+    },
+    {
+      "from": "GWB",
+      "to": "VGG",
+      "weight": 1
+    },
+    {
+      "from": "HBEGLEITG 1984",
+      "to": "BAFÖG",
+      "weight": 1
+    },
+    {
+      "from": "HEILPRGDV 1",
+      "to": "GG",
+      "weight": 1
+    },
+    {
+      "from": "HEILPRGDV 1",
+      "to": "VWGO",
+      "weight": 1
+    },
+    {
+      "from": "IFSG",
+      "to": "GG",
+      "weight": 1
+    },
+    {
+      "from": "KRAFTNAV",
+      "to": "KWKG",
+      "weight": 1
+    },
+    {
+      "from": "KREDWG",
+      "to": "KRZWMG",
+      "weight": 1
+    },
+    {
+      "from": "KREDWG",
+      "to": "KMAG",
+      "weight": 1
+    },
+    {
+      "from": "KSTG 1977",
+      "to": "GG",
+      "weight": 1
+    },
+    {
+      "from": "KSTG 1977",
+      "to": "INVSTG",
+      "weight": 1
+    },
+    {
+      "from": "LAGÄNDG 14",
+      "to": "LAG",
+      "weight": 1
+    },
+    {
+      "from": "LASAARDV 2",
+      "to": "LAG",
+      "weight": 1
+    },
+    {
+      "from": "LFÜG",
+      "to": "FUTTMV",
+      "weight": 1
+    },
+    {
+      "from": "LUFTBODV 1 2008",
+      "to": "LUFTBO",
+      "weight": 1
+    },
+    {
+      "from": "LUFTBODV 3 2009",
+      "to": "LUFTVO",
+      "weight": 1
+    },
+    {
+      "from": "LUFTBODV 4",
+      "to": "LUFTBO",
+      "weight": 1
+    },
+    {
+      "from": "LUFTFZGG",
+      "to": "ZPO",
+      "weight": 1
+    },
+    {
+      "from": "LUFTVGÄNDG 11",
+      "to": "LUFTVG",
+      "weight": 1
+    },
+    {
+      "from": "MPDG",
+      "to": "STRLSCHG",
+      "weight": 1
+    },
+    {
+      "from": "MPG",
+      "to": "MPDG",
+      "weight": 1
+    },
+    {
+      "from": "MV",
+      "to": "AOEG",
+      "weight": 1
+    },
+    {
+      "from": "MVSCHPANO",
+      "to": "SEESCHSTRO",
+      "weight": 1
+    },
+    {
+      "from": "OWIG 1968",
+      "to": "MPDG",
+      "weight": 1
+    },
+    {
+      "from": "PKDBSA",
+      "to": "RVO",
+      "weight": 1
+    },
+    {
+      "from": "PKDBSA",
+      "to": "VAG",
+      "weight": 1
+    },
+    {
+      "from": "PSTG",
+      "to": "GG",
+      "weight": 1
+    },
+    {
+      "from": "RAG 1",
+      "to": "RVO",
+      "weight": 1
+    },
+    {
+      "from": "RAG 3",
+      "to": "RVO",
+      "weight": 1
+    },
+    {
+      "from": "RAG 4",
+      "to": "RVO",
+      "weight": 1
+    },
+    {
+      "from": "RAG 5",
+      "to": "RVO",
+      "weight": 1
+    },
+    {
+      "from": "RAG 6",
+      "to": "RVO",
+      "weight": 1
+    },
+    {
+      "from": "RVERMVG§6DV",
+      "to": "BHO",
+      "weight": 1
+    },
+    {
+      "from": "SAARGLV",
+      "to": "BVFG",
+      "weight": 1
+    },
+    {
+      "from": "SACHENR-DV",
+      "to": "GBBERG",
+      "weight": 1
+    },
+    {
+      "from": "SCHNELLLG",
+      "to": "GWB",
+      "weight": 1
+    },
+    {
+      "from": "SCHUV",
+      "to": "BHO",
+      "weight": 1
+    },
+    {
+      "from": "SGB 2",
+      "to": "GG",
+      "weight": 1
+    },
+    {
+      "from": "SGB 5",
+      "to": "SGB",
+      "weight": 1
+    },
+    {
+      "from": "STANDAG 2017",
+      "to": "ENDLSIUNTV",
+      "weight": 1
+    },
+    {
+      "from": "STBERG",
+      "to": "GG",
+      "weight": 1
+    },
+    {
+      "from": "STGEBO 2011",
+      "to": "STVZO",
+      "weight": 1
+    },
+    {
+      "from": "STRBEG",
+      "to": "AO",
+      "weight": 1
+    },
+    {
+      "from": "STROMNEV",
+      "to": "MESSBG",
+      "weight": 1
+    },
+    {
+      "from": "SVORGSAARG",
+      "to": "BRRG",
+      "weight": 1
+    },
+    {
+      "from": "TGV 1986",
+      "to": "TGV",
+      "weight": 1
+    },
+    {
+      "from": "TVMINDESTLOHN VFLUGHSIK 4",
+      "to": "LUFTSIG",
+      "weight": 1
+    },
+    {
+      "from": "TVMINDESTLOHNGEBÄUDE 2024",
+      "to": "SGB",
+      "weight": 1
+    },
+    {
+      "from": "UERGG",
+      "to": "UMSTG",
+      "weight": 1
+    },
+    {
+      "from": "UKRAINEAUFENTHFGV",
+      "to": "AUFENTHG",
+      "weight": 1
+    },
+    {
+      "from": "UMSTG",
+      "to": "BGB",
+      "weight": 1
+    },
+    {
+      "from": "UMWRG",
+      "to": "FSTRG",
+      "weight": 1
+    },
+    {
+      "from": "UMWRG",
+      "to": "AEG",
+      "weight": 1
+    },
+    {
+      "from": "UMWRG",
+      "to": "WASTRG",
+      "weight": 1
+    },
+    {
+      "from": "URHG",
+      "to": "GG",
+      "weight": 1
+    },
+    {
+      "from": "URÜV",
+      "to": "HGB",
+      "weight": 1
+    },
+    {
+      "from": "UVPG",
+      "to": "FSTRG",
+      "weight": 1
+    },
+    {
+      "from": "UVPG",
+      "to": "AEG",
+      "weight": 1
+    },
+    {
+      "from": "UVPG",
+      "to": "WASTRG",
+      "weight": 1
+    },
+    {
+      "from": "VAG 2016",
+      "to": "VAG",
+      "weight": 1
+    },
+    {
+      "from": "VERKSIG",
+      "to": "EBO",
+      "weight": 1
+    },
+    {
+      "from": "VSBG",
+      "to": "EVO",
+      "weight": 1
+    },
+    {
+      "from": "VSTG 1974",
+      "to": "GG",
+      "weight": 1
+    },
+    {
+      "from": "VWVFG",
+      "to": "TEXTILKENNZG",
+      "weight": 1
+    },
+    {
+      "from": "VWVFG",
+      "to": "PLANSIG",
+      "weight": 1
+    },
+    {
+      "from": "WAFFG 2002",
+      "to": "AWAFFV",
+      "weight": 1
+    },
+    {
+      "from": "WASTRG",
+      "to": "BBPLG",
+      "weight": 1
+    },
+    {
+      "from": "WASTRGANLERMV",
+      "to": "WASTRG",
+      "weight": 1
+    },
+    {
+      "from": "WASTRGGEMGEBRERMV",
+      "to": "WASTRG",
+      "weight": 1
+    },
+    {
+      "from": "WASTRGTALSPERMV",
+      "to": "WASTRG",
+      "weight": 1
+    },
+    {
+      "from": "WOSTICHPRG",
+      "to": "BSTATG",
+      "weight": 1
+    },
+    {
+      "from": "WPHG",
+      "to": "WPPG",
+      "weight": 1
+    },
+    {
+      "from": "ZOLLV",
+      "to": "ALKSTV",
+      "weight": 1
+    },
+    {
+      "from": "ÜBLG 2",
+      "to": "FGO",
+      "weight": 1
+    }
+  ],
+  "most_cited_laws": [
+    {
+      "id": "MESSBG",
+      "name": "Gesetz über den Messstellenbetrieb und die Datenkommunikation in intelligenten Energienetzen",
+      "in_degree": 132
+    },
+    {
+      "id": "BEG",
+      "name": "Bundesgesetz zur Entschädigung für Opfer der nationalsozialistischen Verfolgung",
+      "in_degree": 101
+    },
+    {
+      "id": "AOEG",
+      "name": "AOEG",
+      "in_degree": 88
+    },
+    {
+      "id": "SGB",
+      "name": "SGB",
+      "in_degree": 60
+    },
+    {
+      "id": "HGBEG",
+      "name": "Einführungsgesetz zum Handelsgesetzbuch",
+      "in_degree": 54
+    },
+    {
+      "id": "GG",
+      "name": "Grundgesetz für die Bundesrepublik Deutschland",
+      "in_degree": 45
+    },
+    {
+      "id": "KVBG",
+      "name": "Gesetz zur Reduzierung und zur Beendigung der Kohleverstromung",
+      "in_degree": 38
+    },
+    {
+      "id": "BVERFGG",
+      "name": "Gesetz über das Bundesverfassungsgericht",
+      "in_degree": 35
+    },
+    {
+      "id": "LAG",
+      "name": "Gesetz über den Lastenausgleich",
+      "in_degree": 35
+    },
+    {
+      "id": "WINDSEEG",
+      "name": "Gesetz zur Entwicklung und Förderung der Windenergie auf See",
+      "in_degree": 33
+    },
+    {
+      "id": "KAGB",
+      "name": "Kapitalanlagegesetzbuch",
+      "in_degree": 29
+    },
+    {
+      "id": "LWERZGSCHULPROG",
+      "name": "Gesetz zur Durchführung unionsrechtlicher Vorschriften über das Schulprogramm für Obst, Gemüse und Milch",
+      "in_degree": 26
+    },
+    {
+      "id": "HAG",
+      "name": "Heimarbeitsgesetz",
+      "in_degree": 21
+    },
+    {
+      "id": "KWKAUSV",
+      "name": "Verordnung zur Einführung von Ausschreibungen zur Ermittlung der Höhe der Zuschlagszahlungen für KWK-Anlagen und für innovative KWK-Systeme",
+      "in_degree": 19
+    },
+    {
+      "id": "ESTG",
+      "name": "Einkommensteuergesetz",
+      "in_degree": 16
+    },
+    {
+      "id": "AUSLWBG",
+      "name": "Gesetz zur Bereinigung von deutschen Schuldverschreibungen, die auf ausländische Währung lauten",
+      "in_degree": 15
+    },
+    {
+      "id": "EINSIG",
+      "name": "Einlagensicherungsgesetz",
+      "in_degree": 15
+    },
+    {
+      "id": "BETRAVG",
+      "name": "Gesetz zur Verbesserung der betrieblichen Altersversorgung",
+      "in_degree": 14
+    },
+    {
+      "id": "GEWO",
+      "name": "Gewerbeordnung",
+      "in_degree": 14
+    },
+    {
+      "id": "GÜKG",
+      "name": "GÜKG",
+      "in_degree": 14
+    }
+  ]
+}

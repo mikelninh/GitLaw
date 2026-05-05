@@ -44,6 +44,7 @@ from gitlaw_mcp.citations import (  # type: ignore
 
 LAWS_DIR = ROOT / "laws"
 VECTORSTORE_DIR = ROOT / "rag" / "vectorstore"
+GRAPH_FILE = Path(__file__).parent / "data" / "citation_graph.json"
 
 mcp = FastMCP("gitlaw")
 
@@ -79,6 +80,49 @@ def _get_vectorstore():
         str(VECTORSTORE_DIR), embeddings, allow_dangerous_deserialization=True
     )
     return _vectorstore
+
+
+# ---------------------------------------------------------------------------
+# Lazy citation graph (loaded on first find_related_paragraphs call)
+# ---------------------------------------------------------------------------
+
+_graph_indexes: dict[str, Any] | None = None
+
+
+def _get_graph_indexes() -> dict[str, Any]:
+    """Lazy-build the in-memory edge indexes from data/citation_graph.json."""
+    global _graph_indexes
+    if _graph_indexes is not None:
+        return _graph_indexes
+
+    if not GRAPH_FILE.exists():
+        raise RuntimeError(
+            f"Citation graph not found at {GRAPH_FILE.relative_to(ROOT)}. "
+            f"Run: python -m gitlaw_mcp.graph_builder"
+        )
+    import json
+    from collections import defaultdict
+
+    raw = json.loads(GRAPH_FILE.read_text(encoding="utf-8"))
+    nodes_by_id: dict[str, dict[str, Any]] = {n["id"]: n for n in raw["nodes"]}
+    outgoing: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    incoming: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for e in raw["edges"]:
+        outgoing[e["from"]].append(e)
+        incoming[e["to"]].append(e)
+
+    _graph_indexes = {
+        "nodes_by_id": nodes_by_id,
+        "outgoing": outgoing,
+        "incoming": incoming,
+        "stats": raw.get("stats", {}),
+    }
+    return _graph_indexes
+
+
+def _node_id(abbr: str, marker: str, number: str) -> str:
+    """Match the format produced by graph_builder._node_id: 'STGB|§185'."""
+    return f"{abbr.upper()}|{marker}{number}"
 
 
 # ---------------------------------------------------------------------------
@@ -271,6 +315,103 @@ def list_laws(filter: str | None = None, limit: int = 50) -> dict[str, Any]:
         "matched": len(items),
         "returned": len(limited),
         "laws": [{"abbreviation": a, "file": p.name} for a, p in limited],
+    }
+
+
+@mcp.tool()
+def find_related_paragraphs(citation: str, limit: int = 20) -> dict[str, Any]:
+    """
+    Find paragraphs that reference, or are referenced by, a given paragraph.
+
+    Walks the GitLaw citation graph (94K paragraphs, 200K extracted references
+    across 5,936 laws). Returns both directions:
+      - referenced_by: paragraphs that cite the given one (in-edges)
+      - references:    paragraphs cited from the given one (out-edges)
+
+    Useful for: building agentic legal research workflows that need to
+    traverse statutory cross-references, finding "what else is relevant",
+    and explaining a paragraph in context of its surrounding statute.
+
+    Args:
+        citation: Citation string, e.g. "§ 185 StGB", "Art. 5 GG"
+        limit: Max results per direction (default 20, max 100)
+
+    Returns:
+        Dict with: input, node_id, found, in_degree, out_degree,
+        referenced_by [{id, law, marker, number, title, type}],
+        references    [{id, law, marker, number, title, type}].
+    """
+    parsed = parse_citation(citation)
+    if not parsed:
+        return {"found": False, "reason": "could_not_parse", "input": citation}
+
+    abbr_index = get_abbr_index()
+    if parsed.abbreviation.upper() not in abbr_index:
+        return {
+            "found": False,
+            "reason": "law_not_found",
+            "input": citation,
+            "law_abbreviation_searched": parsed.abbreviation,
+        }
+
+    indexes = _get_graph_indexes()
+    nid = _node_id(parsed.abbreviation, parsed.marker, parsed.number)
+
+    if nid not in indexes["nodes_by_id"]:
+        return {
+            "found": False,
+            "reason": "paragraph_not_in_graph",
+            "input": citation,
+            "node_id": nid,
+            "hint": "Paragraph may exist in the corpus but had no parseable cross-references.",
+        }
+
+    limit = max(1, min(100, int(limit)))
+
+    def _hydrate(edges: list[dict[str, Any]], peer_field: str) -> list[dict[str, Any]]:
+        out = []
+        for e in edges[:limit]:
+            peer_id = e[peer_field]
+            peer = indexes["nodes_by_id"].get(peer_id)
+            if peer is None:
+                # Edge target wasn't in our parsed nodes (rare — orphan citation)
+                law, _, num = peer_id.partition("|")
+                out.append(
+                    {
+                        "id": peer_id,
+                        "law": law,
+                        "marker": num[:3].strip("§Art"),
+                        "number": num.lstrip("§Art"),
+                        "title": None,
+                        "type": e["type"],
+                    }
+                )
+            else:
+                out.append(
+                    {
+                        "id": peer_id,
+                        "law": peer["law"],
+                        "marker": peer["marker"],
+                        "number": peer["number"],
+                        "title": peer.get("title"),
+                        "type": e["type"],
+                    }
+                )
+        return out
+
+    in_edges = indexes["incoming"].get(nid, [])
+    out_edges = indexes["outgoing"].get(nid, [])
+
+    return {
+        "found": True,
+        "input": citation,
+        "node_id": nid,
+        "law": indexes["nodes_by_id"][nid]["law"],
+        "title": indexes["nodes_by_id"][nid].get("title"),
+        "in_degree": len(in_edges),
+        "out_degree": len(out_edges),
+        "referenced_by": _hydrate(in_edges, "from"),
+        "references": _hydrate(out_edges, "to"),
     }
 
 

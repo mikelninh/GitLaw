@@ -27,6 +27,7 @@ The result: an LLM connected to this server can ground every legal claim in the 
 | `verify_citation(citation)` | Parse `§ 185 StGB` style strings, return actual text or `verified: false` with reason | `"§ 185 Abs. 1 StGB"` |
 | `lookup_paragraph(abbr, paragraph)` | Exact lookup with structured input | `("StGB", "263a")` |
 | `list_laws(filter=None, limit=50)` | Enumerate available laws (4,852+ unique abbreviations indexed) | `filter="bgb"` |
+| `find_related_paragraphs(citation)` | Walk the citation graph (94K paragraphs, 200K refs) — returns who cites X *and* what X cites | `"§ 185 StGB"` |
 
 Plus the resource `gitlaw://law/{abbreviation}` returning the full markdown content of a law.
 
@@ -143,17 +144,40 @@ Calls `verify_citation('§ 999 StGB')` and reports it does not exist.
 
 ```
 gitlaw_mcp/
-├── server.py        — FastMCP server, 4 @tool decorators + 1 @resource
-├── citations.py     — German legal-citation regex parser + paragraph extractor
-├── demo.py          — runnable smoke test (no API key needed)
-├── Dockerfile       — multi-stage prod build, non-root user, healthcheck
-├── ARCHITECTURE.md  — cloud migration path (AWS Fargate / Azure Container Apps)
+├── server.py          — FastMCP server, 5 @tool decorators + 1 @resource
+├── citations.py       — German legal-citation regex parser + paragraph extractor
+├── graph_builder.py   — extracts cross-references from all 5,936 laws → JSON
+├── graph_viewer.html  — D3 force-directed network of 290 laws + 242 cross-edges
+├── data/
+│   ├── citation_graph.json       — 94K paragraphs, 200K refs (gitignored, regen via builder)
+│   ├── citation_graph_top.json   — top-30 laws subset
+│   └── citation_graph_laws.json  — law-level aggregation (used by viewer)
+├── demo.py            — runnable smoke test (no API key needed)
+├── Dockerfile         — multi-stage prod build, non-root user, healthcheck
+├── ARCHITECTURE.md    — cloud migration path (AWS Fargate / Azure Container Apps)
 ├── pyproject.toml
 └── README.md
 
   reuses:
-  laws/             — 5,936 markdown files (one per law, paragraphs as ### headings)
-  rag/vectorstore/  — FAISS index (paragraph-level chunks, OpenAI embeddings)
+  laws/               — 5,936 markdown files (one per law, paragraphs as ### headings)
+  rag/vectorstore/    — FAISS index (paragraph-level chunks, OpenAI embeddings)
+```
+
+### Knowledge Graph
+
+The 5,936 laws form a citation network — every paragraph that mentions another (`§ 11 Absatz 3` inside the body of `§ 185`) becomes a graph edge. After running:
+
+```bash
+python -m gitlaw_mcp.graph_builder      # ~6s, writes data/citation_graph.json
+```
+
+… you get **94,178 paragraphs (nodes)** and **200,464 references (edges)** — 199,301 intra-law plus 1,163 cross-law. The MCP tool `find_related_paragraphs(citation)` walks this graph in both directions: paragraphs that cite the input, and paragraphs cited by the input.
+
+For the visual story, open `graph_viewer.html` (D3 v7, no build step) to see all 290 actively-cross-referencing laws as a force-directed network, with hover, click-to-pin, and search:
+
+```bash
+python -m http.server 8000
+# then open http://localhost:8000/gitlaw_mcp/graph_viewer.html
 ```
 
 ### Docker
