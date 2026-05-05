@@ -298,3 +298,77 @@ export interface RechtsprechungsAlert {
   url?: string
   createdAt: string
 }
+
+// ---------------------------------------------------------------------------
+// Modul A: Mandatsart-Checklisten (Sprint 0 — Bao pilot foundation)
+// ---------------------------------------------------------------------------
+
+/**
+ * Top-level grouping for Mandatsarten displayed in Bao's intake workflow.
+ */
+export type MandatsartCategory =
+  | 'migration'
+  | 'strafrecht'
+  | 'familie'
+  | 'sozial'
+  | 'sonstiges'
+
+/**
+ * Whether a document is unconditionally required, optional, or only needed
+ * under certain conditions (explained in `conditionalNote`).
+ */
+export type DocumentRequirementLevel = 'required' | 'optional' | 'conditional'
+
+/**
+ * A single line-item in a Mandatsart checklist.
+ * Both DE and VI labels are provided for Bao's bilingual workflow.
+ */
+export interface ChecklistItem {
+  /** Stable slug used as a React key and future OCR-match target. */
+  id: string
+  /** German label shown to Refa/Anwalt staff — be specific about copies, originals, etc. */
+  label: string
+  /** Vietnamese label shown to Mandant — marked TODO if not fully reviewed. */
+  labelVi?: string
+  /** Why this document is needed — shown as hover tooltip for staff. */
+  description?: string
+  level: DocumentRequirementLevel
+  /** For 'conditional' items: describes the condition when this document is needed. */
+  conditionalNote?: string
+  /** Accepted file formats (default: all common image/PDF formats). */
+  acceptedFormats?: string[]
+  /** Common problems Bao's team has seen — preemptive staff guidance. */
+  typicalIssues?: string[]
+  /** Semantic bucket for grouping within the checklist UI. */
+  category?:
+    | 'identitaet'
+    | 'aufenthalt'
+    | 'familie'
+    | 'wohnen'
+    | 'einkommen'
+    | 'gesundheit'
+    | 'sprache'
+    | 'biometrie'
+    | 'sonstiges'
+}
+
+/**
+ * A complete Mandatsart-Checkliste: describes which documents are expected
+ * for a given type of mandate, plus metadata for UI display and legal reference.
+ */
+export interface MandatsartChecklist {
+  /** Stable slug — used as URL segment and OCR-match key. */
+  id: string
+  /** German title shown in dropdown / Akte header. */
+  title: string
+  /** Vietnamese title — for Mandant-facing portal (Phase 4). */
+  titleVi?: string
+  category: MandatsartCategory
+  /** When this Mandatsart applies and who it is for (shown in tooltip / info panel). */
+  description: string
+  /** Canonical legal paragraphs / articles — reference for Pro users and AVV. */
+  legalBasis?: string[]
+  /** Typical processing duration, citizen-facing ("8–12 Wochen"). */
+  typicalDuration?: string
+  requiredDocuments: ChecklistItem[]
+}
