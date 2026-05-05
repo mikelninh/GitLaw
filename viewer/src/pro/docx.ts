@@ -37,8 +37,8 @@ import type { KanzleiSettings, ResearchQuery, GeneratedLetter, MandantCase, Cita
 
 function letterhead(settings: KanzleiSettings): Paragraph[] {
   const lines: string[] = []
-  if (settings.kanzleiName) lines.push(settings.kanzleiName)
-  if (settings.kanzleiAdresse) lines.push(...settings.kanzleiAdresse.split('\n'))
+  if (settings.name) lines.push(settings.name)
+  if (settings.address) lines.push(...settings.address.split('\n'))
   if (settings.anwaltName) lines.push(settings.anwaltName)
 
   return lines.map(
@@ -127,7 +127,7 @@ function footerSection(settings: KanzleiSettings): Footer {
         alignment: AlignmentType.CENTER,
         children: [
           new TextRun({
-            text: `${settings.kanzleiName || 'GitLaw Pro'} · Seite `,
+            text: `${settings.name || 'GitLaw Pro'} · Seite `,
             size: 16,
             color: '888888',
           }),
@@ -225,7 +225,7 @@ export async function exportLetterDOCX(args: {
     children.push(paragraph(' '))
   }
 
-  for (const block of (letter.renderedText || '').split(/\n\n+/)) {
+  for (const block of (letter.body || '').split(/\n\n+/)) {
     if (block.trim()) children.push(paragraph(block.trim()))
   }
 
@@ -235,8 +235,8 @@ export async function exportLetterDOCX(args: {
   if (settings.anwaltName) {
     children.push(paragraph(settings.anwaltName, { bold: true }))
   }
-  if (settings.kanzleiName) {
-    children.push(paragraph(settings.kanzleiName, { color: '666666', size: 10 }))
+  if (settings.name) {
+    children.push(paragraph(settings.name, { color: '666666', size: 10 }))
   }
 
   const doc = new Document({

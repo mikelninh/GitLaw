@@ -13,6 +13,8 @@
  * generated PDF (handled in `pdf.ts`).
  */
 
+import { gerichtFuerPLZ, formatGerichtAdresse, type GerichtTyp } from './gerichte'
+
 export interface LawyerField {
   id: string
   label: string
@@ -36,6 +38,26 @@ export interface LawyerTemplate {
 }
 
 const SIGN_OFF = `Mit freundlichen kollegialen Grüßen`
+
+/**
+ * Helper: auto-fill a court address based on PLZ + court type.
+ * Falls back to the raw value if the lookup returns nothing.
+ */
+function resolveGericht(rawValue: string, plz: string, typ: GerichtTyp): string {
+  const lookedUp = gerichtFuerPLZ(plz.trim(), typ)
+  if (lookedUp) return formatGerichtAdresse(lookedUp)
+  return rawValue
+}
+
+function pickCourtType(templateId: string): GerichtTyp {
+  if (templateId.includes('straf') || templateId.includes('staats')) return 'ag'
+  if (templateId.includes('sozial') || templateId.includes('sgb')) return 'sg'
+  if (templateId.includes('arbeits')) return 'arbg'
+  if (templateId.includes('verwaltung') || templateId.includes('vwgo') || templateId.includes('vwvg')) return 'vg'
+  if (templateId.includes('finanz') || templateId.includes('fg')) return 'fg'
+  if (templateId.includes('familiengericht') || templateId.includes('ehe')) return 'ag'
+  return 'ag'
+}
 
 export const LAWYER_TEMPLATES: LawyerTemplate[] = [
   // ---------------------------------------------------------------------
@@ -95,14 +117,17 @@ ${SIGN_OFF}
     description: 'Allgemeiner Widerspruch gegen Verwaltungsbescheid (Sozialamt, Jobcenter, Bauamt, …).',
     useCase: 'Mandant:in hat einen ungünstigen Verwaltungsbescheid erhalten. Frist meist 1 Monat (§ 70 VwGO / § 84 SGG).',
     fields: [
-      { id: 'recipient', label: 'Empfänger:in (Behörde)', type: 'text', required: true },
+      { id: 'recipient', label: 'Empfänger:in (Behörde / Gericht)', type: 'text', required: true },
       { id: 'mandant', label: 'Mandant:in', type: 'text', required: true },
       { id: 'mandantAdresse', label: 'Anschrift Mandant:in', type: 'textarea' },
+      { id: 'mandantPLZ', label: 'PLZ Mandant:in', type: 'text', placeholder: '10115 — Gerichtsadresse wird vorschlagen', hint: 'Eingabe füllt den Empfänger vor, wenn ein zuständiges Verwaltungsgericht bekannt ist.' },
       { id: 'aktenzeichen', label: 'Aktenzeichen der Behörde', type: 'text', required: true },
       { id: 'bescheidDatum', label: 'Datum des Bescheids', type: 'date', required: true },
       { id: 'begruendung', label: 'Widerspruchsbegründung', type: 'textarea', required: true },
     ],
-    render: f => `An ${f.recipient || '[Behörde]'}
+    render: f => {
+      const recipient = resolveGericht(f.recipient, f.mandantPLZ || '', pickCourtType('widerspruch_bescheid'))
+      return `An ${recipient || '[Behörde]'}
 
 Widerspruch
 
@@ -128,7 +153,8 @@ Vorsorglich beantrage ich, die aufschiebende Wirkung anzuordnen, soweit gesetzli
 Die anwaltliche Vertretungsvollmacht wird anwaltlich versichert; sie wird auf Verlangen nachgereicht.
 
 ${SIGN_OFF}
-`,
+`
+      },
   },
 
   // ---------------------------------------------------------------------
@@ -207,11 +233,14 @@ ${SIGN_OFF}
     fields: [
       { id: 'recipient', label: 'Empfänger:in (Gericht / StA / Behörde)', type: 'text', required: true },
       { id: 'mandant', label: 'Mandant:in', type: 'text', required: true },
+      { id: 'mandantPLZ', label: 'PLZ Mandant:in', type: 'text', placeholder: '10115 — Gerichtsadresse wird vorschlagen', hint: 'Eingabe füllt den Empfänger vor, wenn ein zuständiges Gericht bekannt ist.' },
       { id: 'aktenzeichen', label: 'Aktenzeichen der Behörde', type: 'text', required: true },
       { id: 'rolle', label: 'Rolle der Mandantschaft', type: 'text', required: true, placeholder: 'Beschuldigte:r / Geschädigte:r / Beteiligte:r' },
       { id: 'rechtsgrundlage', label: 'Rechtsgrundlage', type: 'text', placeholder: '§ 147 StPO / § 406e StPO / § 29 VwVfG' },
     ],
-    render: f => `An ${f.recipient || '[Empfänger:in]'}
+    render: f => {
+      const recipient = resolveGericht(f.recipient, f.mandantPLZ || '', pickCourtType('akteneinsicht'))
+      return `An ${recipient || '[Empfänger:in]'}
 
 Antrag auf Akteneinsicht
 in der Sache ${f.mandant || '[Mandant:in]'}, Az. ${f.aktenzeichen || '[Aktenzeichen]'}
@@ -229,7 +258,8 @@ Ich bitte um Übersendung der vollständigen Akte in elektronischer Form an mich
 Die anwaltliche Vertretungsvollmacht wird anwaltlich versichert.
 
 ${SIGN_OFF}
-`,
+`
+      },
   },
 ]
 

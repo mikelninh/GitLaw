@@ -7,9 +7,9 @@
 
 import { useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
-import { Scale, FolderOpen, FileText, Search, Settings, Shield, LogOut, ExternalLink, Inbox, Cloud, RefreshCw, AlertCircle, CheckCircle2, Upload } from 'lucide-react'
+import { Scale, FolderOpen, FileText, Search, Settings, Shield, LogOut, ExternalLink, Inbox, Cloud, RefreshCw, AlertCircle, CheckCircle2, Upload, Wand2 } from 'lucide-react'
 import { clearStoredInvite, getAccessContext, getSettings, isSessionExpired, listIntakes, touchSessionActivity } from './store'
-import { hasRole, type ProRole } from './access'
+import { hasRole, hasScope } from './access'
 import {
   getSyncState,
   isCloudSyncEnabled,
@@ -20,23 +20,34 @@ import {
 import { eraseAllProData } from './store'
 import { loadDemoData, getPreset } from './demo-data'
 
-const NAV_GROUPS = [
+type NavItem = {
+  to: string
+  icon: React.ElementType
+  label: string
+  end?: boolean
+  badge: number | 'pending'
+  /** Primary access check: either a minimum role or a required scope. */
+  access: () => boolean
+}
+
+const NAV_GROUPS: { title: string; items: NavItem[] }[] = [
   {
     title: 'Arbeitsfluss',
     items: [
-      { to: '/pro', icon: Scale, label: 'Übersicht', end: true, badge: 0 as const, minRole: 'read_only' as ProRole },
-      { to: '/pro/eingaenge', icon: Inbox, label: 'Eingänge', badge: 'pending' as const, minRole: 'assistenz' as ProRole },
-      { to: '/pro/akten', icon: FolderOpen, label: 'Akten', badge: 0 as const, minRole: 'assistenz' as ProRole },
-      { to: '/pro/recherche', icon: Search, label: 'Recherche', badge: 0 as const, minRole: 'assistenz' as ProRole },
-      { to: '/pro/schreiben', icon: FileText, label: 'Schreiben', badge: 0 as const, minRole: 'assistenz' as ProRole },
+      { to: '/pro', icon: Scale, label: 'Übersicht', end: true, badge: 0, access: () => true },
+      { to: '/pro/eingaenge', icon: Inbox, label: 'Eingänge', badge: 'pending', access: () => hasScope('intake.review') },
+      { to: '/pro/triage', icon: Wand2, label: 'Triage', badge: 0, access: () => hasScope('intake.classify') },
+      { to: '/pro/akten', icon: FolderOpen, label: 'Akten', badge: 0, access: () => hasScope('case.view') },
+      { to: '/pro/recherche', icon: Search, label: 'Recherche', badge: 0, access: () => hasScope('research.view') },
+      { to: '/pro/schreiben', icon: FileText, label: 'Schreiben', badge: 0, access: () => hasScope('letter.generate') },
     ],
   },
   {
     title: 'Verwaltung',
     items: [
-      { to: '/pro/audit', icon: Shield, label: 'Audit', badge: 0 as const, minRole: 'anwalt' as ProRole },
-      { to: '/pro/import', icon: Upload, label: 'Import', badge: 0 as const, minRole: 'assistenz' as ProRole },
-      { to: '/pro/einstellungen', icon: Settings, label: 'Einstellungen', badge: 0 as const, minRole: 'owner' as ProRole },
+      { to: '/pro/audit', icon: Shield, label: 'Audit', badge: 0, access: () => hasScope('audit.view') },
+      { to: '/pro/import', icon: Upload, label: 'Import', badge: 0, access: () => hasScope('case.create') },
+      { to: '/pro/einstellungen', icon: Settings, label: 'Einstellungen', badge: 0, access: () => hasRole('owner') },
     ],
   },
 ]
@@ -191,7 +202,7 @@ export default function ProLayout() {
                   {group.title}
                 </div>
                 <ul className="space-y-1">
-                  {group.items.filter(item => hasRole(item.minRole)).map(item => {
+                  {group.items.filter(item => item.access()).map(item => {
                     const showBadge = item.badge === 'pending' && pendingIntakes > 0
                     return (
                       <li key={item.to}>
