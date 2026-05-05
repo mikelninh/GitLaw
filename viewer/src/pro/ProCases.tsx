@@ -41,6 +41,8 @@ import { getCaseRecommendations } from './recommendations'
 import QrCard from './QrCard'
 import CaseChecklist from './CaseChecklist'
 import MandatsartSelector from './MandatsartSelector'
+import StatusDropdown from './StatusDropdown'
+import SachstandsGenerator from './SachstandsGenerator'
 import type { MandantCase } from './types'
 
 /** Returns days until the ISO date, negative if past. */
@@ -476,6 +478,7 @@ export function ProCaseDetail() {
   const [docLanguage, setDocLanguage] = useState<'de' | 'vi' | 'en' | 'tr' | 'ar' | 'other'>('de')
   const [selectedDocumentId, setSelectedDocumentId] = useState<string | null>(null)
   const [ocrProgress, setOcrProgress] = useState<{ page: number; total: number; stage: string } | null>(null)
+  const [showSachstand, setShowSachstand] = useState(false)
   const c = useMemo(() => (id ? getCase(id) : undefined), [id, tick])
   const research = useMemo(() => (id ? listResearch(id) : []), [id, tick])
   const letters = useMemo(() => (id ? listLetters(id) : []), [id, tick])
@@ -660,8 +663,8 @@ export function ProCaseDetail() {
         </div>
       </header>
 
-      {/* Mandatsart-Auswahl */}
-      <div className="bg-white border border-[var(--color-border)] rounded-xl px-4 py-3">
+      {/* Mandatsart-Auswahl + Status */}
+      <div className="bg-white border border-[var(--color-border)] rounded-xl px-4 py-3 space-y-3">
         <MandatsartSelector
           value={c.mandatsartId}
           onChange={id => {
@@ -669,7 +672,31 @@ export function ProCaseDetail() {
             setTick(t => t + 1)
           }}
         />
+        {/* Modul B — Status-Dropdown + Sachstands-Generator */}
+        <div className="flex items-center gap-3 flex-wrap pt-1 border-t border-[var(--color-border)]">
+          <StatusDropdown
+            case={c}
+            onChange={updated => {
+              updateCase(c.id, { caseStatus: updated.caseStatus })
+              setTick(t => t + 1)
+            }}
+          />
+          <button
+            onClick={() => setShowSachstand(true)}
+            className="inline-flex items-center gap-1.5 text-sm bg-[var(--color-ink)] text-white rounded-lg px-3 py-1.5 hover:opacity-90 transition-opacity"
+          >
+            Sachstand-Antwort generieren
+          </button>
+        </div>
       </div>
+
+      {/* Sachstands-Generator Drawer */}
+      {showSachstand && (
+        <SachstandsGenerator
+          case={c}
+          onClose={() => setShowSachstand(false)}
+        />
+      )}
 
       {/* Intake share dialog */}
       {showIntakeShare && c && (

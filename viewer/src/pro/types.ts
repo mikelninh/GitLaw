@@ -60,6 +60,12 @@ export interface MandantCase {
    * Items not in the map are treated as 'pending'.
    */
   checklistStates?: Record<string, 'received' | 'pending' | 'problem'>
+  /**
+   * Modul B — 8-Stati-Status-Modell (Sprint 1, Bao-Pilot).
+   * Corresponds to CaseStatus in case-status.ts.
+   * Defaults to 'unterlagen_fehlen' when not set.
+   */
+  caseStatus?: string
 }
 
 export interface CaseTask {
