@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mikel — AI Software Engineer · Portfolio</title>
+<meta name="description" content="GitLaw — Legal-Tech AI auf 5.936 deutschen Bundesgesetzen. RAG, MCP, Knowledge Graphs, Cloud-ready Container. Portfolio-Mapping für die AI Software Engineer Rolle.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,700;9..144,900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream:#f8f1e3; --paper:#fdf8ec; --ink:#1a1614;
+    --muted:#5e564d; --line:rgba(26,22,20,0.10);
+    --accent:#9a3324;        /* deep legal-red */
+    --warm:#c8a96b;          /* gold accent */
+    --code-bg:#f3ead7;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin:0; background: var(--cream); color: var(--ink); font-family: 'Inter', system-ui, sans-serif; line-height: 1.55; }
+  a { color: var(--ink); text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 2px; }
+  a:hover { color: var(--accent); }
+  .display { font-family: 'Fraunces', ui-serif, Georgia, serif; letter-spacing: -0.02em; line-height: 1.05; }
+  .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+  code { font-family: 'JetBrains Mono', ui-monospace, monospace; background: var(--code-bg); padding: 1px 6px; border-radius: 4px; font-size: 0.9em; }
+  hr { border: 0; border-top: 1px solid var(--line); margin: 4rem 0; }
+
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
+  @media (max-width: 720px) { .container { padding: 0 20px; } }
+
+  /* ── Hero ───────────────────────────────────────────────── */
+  .hero {
+    padding: 80px 0 60px; border-bottom: 1px solid var(--line);
+    background-image:
+      radial-gradient(at 8% 20%, rgba(154,51,36,0.06) 0, transparent 40%),
+      radial-gradient(at 90% 80%, rgba(200,169,107,0.10) 0, transparent 50%);
+  }
+  .hero .pre { font-size: 12px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .hero h1 { font-size: clamp(40px, 6.5vw, 72px); font-weight: 800; margin: 12px 0 0; }
+  .hero .tagline { font-size: clamp(18px, 2.2vw, 22px); color: var(--ink); max-width: 780px; margin: 24px 0 0; line-height: 1.5; }
+  .hero .stats { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 24px; font-size: 14px; color: var(--muted); }
+  .hero .stats strong { color: var(--ink); font-family: 'Fraunces', serif; font-weight: 700; }
+  .hero .links { margin-top: 36px; display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn {
+    display: inline-block; padding: 10px 18px; border-radius: 999px;
+    border: 1px solid var(--ink); font-size: 14px; font-weight: 500;
+    text-decoration: none; transition: all .18s ease;
+  }
+  .btn:hover { background: var(--ink); color: var(--cream); }
+  .btn-primary { background: var(--ink); color: var(--cream); }
+  .btn-primary:hover { background: var(--accent); border-color: var(--accent); }
+
+  /* ── Section heading ────────────────────────────────────── */
+  section { padding: 80px 0 0; }
+  section .pre { font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+  section h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 700; margin: 12px 0 16px; }
+  section .lede { font-size: 17px; color: var(--muted); max-width: 760px; margin: 0 0 36px; }
+
+  /* ── Headline trio ──────────────────────────────────────── */
+  .trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 880px) { .trio { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--paper); border: 1px solid var(--line); border-radius: 20px;
+    padding: 28px; transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .card:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(26,22,20,0.06); }
+  .card .num { font-family: 'Fraunces', serif; font-weight: 800; font-size: 42px; color: var(--accent); line-height: 1; letter-spacing: -0.03em; }
+  .card .label { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-top: 8px; }
+  .card h3 { font-family: 'Fraunces', serif; font-size: 22px; margin: 14px 0 8px; font-weight: 700; }
+  .card p { color: var(--muted); font-size: 14px; margin: 0; }
+  .card .tag { display: inline-block; margin-top: 14px; font-size: 12px; color: var(--accent); }
+
+  /* ── JD mapping table ───────────────────────────────────── */
+  .group { margin-bottom: 40px; }
+  .group h3 {
+    font-family: 'Fraunces', serif; font-size: 20px; margin: 0 0 16px;
+    padding-bottom: 8px; border-bottom: 2px solid var(--ink);
+    font-weight: 700;
+  }
+  .map-row {
+    display: grid; grid-template-columns: 1fr 1.2fr; gap: 24px;
+    padding: 18px 0; border-bottom: 1px dashed var(--line);
+  }
+  @media (max-width: 720px) { .map-row { grid-template-columns: 1fr; gap: 8px; } }
+  .map-row:last-child { border: none; }
+  .map-row .jd {
+    font-style: italic; color: var(--muted); font-size: 14.5px;
+    padding-left: 14px; border-left: 2px solid var(--warm);
+  }
+  .map-row .built { font-size: 14.5px; }
+  .map-row .built strong { display: block; margin-bottom: 4px; font-family: 'Fraunces', serif; font-weight: 600; color: var(--ink); }
+  .map-row .built code { font-size: 12px; }
+
+  /* ── Highlight grid ─────────────────────────────────────── */
+  .highlights { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  @media (max-width: 720px) { .highlights { grid-template-columns: 1fr; } }
+  .hl { padding: 22px; background: var(--paper); border: 1px solid var(--line); border-radius: 16px; }
+  .hl h4 { margin: 0 0 6px; font-family: 'Fraunces', serif; font-size: 17px; font-weight: 700; }
+  .hl p { margin: 0; font-size: 14px; color: var(--muted); }
+
+  /* ── Stack pills ────────────────────────────────────────── */
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .pill {
+    display: inline-block; padding: 5px 12px; border-radius: 999px;
+    font-size: 12.5px; background: var(--paper); border: 1px solid var(--line);
+    font-family: 'JetBrains Mono', monospace; color: var(--ink);
+  }
+
+  /* ── Footer ─────────────────────────────────────────────── */
+  footer { padding: 60px 0 40px; margin-top: 80px; border-top: 1px solid var(--line); background: var(--paper); }
+  footer .sig { font-family: 'Fraunces', serif; font-weight: 700; font-size: 18px; }
+  footer .meta { font-size: 13px; color: var(--muted); margin-top: 6px; }
+</style>
+</head>
+<body>
+
+<!-- ── HERO ────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="container">
+    <div class="pre">Bewerbung · AI Software Engineer · Legal Tech</div>
+    <h1 class="display">Mikel</h1>
+    <p class="tagline">
+      Ich baue produktionsreife AI-Systeme für deutsches Recht — RAG-Pipelines, Knowledge-Graphs, MCP-Server, mit Anti-Halluzinations-Layer und realer Verifikation gegen den vollen Bundesrecht-Korpus.
+    </p>
+    <div class="stats">
+      <span><strong>5.936</strong> deutsche Gesetze indiziert</span>
+      <span>·</span>
+      <span><strong>94.178</strong> Paragraphen als Graph-Knoten</span>
+      <span>·</span>
+      <span><strong>200.464</strong> verifizierte Cross-References</span>
+      <span>·</span>
+      <span><strong>~98K</strong> FAISS-Vektoren</span>
+    </div>
+    <div class="links">
+      <a class="btn btn-primary" href="https://github.com/mikelninh/gitlaw">GitHub Repo →</a>
+      <a class="btn" href="gitlaw_mcp/graph_viewer.html">Knowledge Graph Demo</a>
+      <a class="btn" href="gitlaw_mcp/README.md">MCP Server</a>
+      <a class="btn" href="https://gitlaw-xi.vercel.app/">Live App</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── HEADLINE TRIO ──────────────────────────────────────────── -->
+<section>
+  <div class="container">
+    <div class="pre">Drei Sachen, die in der Stellenanzeige spezifisch genannt sind</div>
+    <h2 class="display">Konkret gebaut. Demo-fähig.</h2>
+
+    <div class="trio">
+      <div class="card">
+        <div class="num">RAG</div>
+        <div class="label">Retrieval-Augmented Generation</div>
+        <h3>Legal-Doc Pipelines</h3>
+        <p>FAISS-Vectorstore über 5.936 Bundesgesetze, paragraphen-genaues Chunking, OpenAI text-embedding-3-small. Pro-Anwält:in-Recherche mit 3-Stufen-Belegen + Zitat-Verifikation gegen lokalen Korpus (kein Halluzinations-Risiko).</p>
+        <a class="tag" href="https://github.com/mikelninh/gitlaw/blob/main/rag/server.py">→ rag/server.py · rag/build_vectorstore.py</a>
+      </div>
+
+      <div class="card">
+        <div class="num">MCP</div>
+        <div class="label">Model Context Protocol</div>
+        <h3>Eigener MCP-Server</h3>
+        <p>FastMCP-Server, der GitLaw als Tools für jeden LLM-Client (Claude Desktop, Cursor, eigene Agenten) bereitstellt. Fünf Tools: search_laws, verify_citation, lookup_paragraph, list_laws, find_related_paragraphs. Anti-Halluzinations-Mechanik mit strukturierten Failure-Modes.</p>
+        <a class="tag" href="https://github.com/mikelninh/gitlaw/tree/main/gitlaw_mcp">→ gitlaw_mcp/</a>
+      </div>
+
+      <div class="card">
+        <div class="num">Graph</div>
+        <div class="label">Knowledge Graph</div>
+        <h3>Citation Network</h3>
+        <p>Aus dem Korpus extrahiert: 94K Paragraphen-Knoten, 200K Cross-Reference-Edges, davon 1.163 cross-law. Force-directed Visualisierung mit D3 v7, plus MCP-Tool find_related_paragraphs für agentic-Workflows die durch Statut-Verweise navigieren.</p>
+        <a class="tag" href="gitlaw_mcp/graph_viewer.html">→ Live-Demo (graph_viewer.html)</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── JD MAPPING ─────────────────────────────────────────────── -->
+<section>
+  <div class="container">
+    <div class="pre">Stellenbeschreibung × Code</div>
+    <h2 class="display">Jeder Bullet-Point — gemappt auf etwas Reales.</h2>
+    <p class="lede">Auf der linken Seite die Anforderung aus der Anzeige, auf der rechten Seite was in diesem Repo dafür existiert. Klick führt zum Code.</p>
+
+    <!-- AI Engineering -->
+    <div class="group">
+      <h3>AI Engineering &amp; Development</h3>
+
+      <div class="map-row">
+        <div class="jd">"Build and deploy AI pipelines for legal document workflows, including RAG and multi-step agentic processes."</div>
+        <div class="built"><strong>RAG-Pipeline + Citizen-Intent-Layer + Pro-Recherche-Workflow</strong>
+          Multi-Schritt: intent → clarification → retrieval → curated answer → PDF.<br>
+          <code><a href="https://github.com/mikelninh/gitlaw/blob/main/rag/server.py">rag/server.py</a></code> · <code><a href="https://github.com/mikelninh/gitlaw/blob/main/scripts/test_citizen_intents.mjs">scripts/test_citizen_intents.mjs</a></code>
+        </div>
+      </div>
+
+      <div class="map-row">
+        <div class="jd">"Design and implement robust data pipelines for legal technology applications, covering data ingestion, cleansing, transformation, and integration from diverse enterprise systems and databases."</div>
+        <div class="built"><strong>Parser-Pipeline für gesetze-im-internet.de</strong>
+          Crawl → Parse → Markdown-Normalisierung → FAISS-Index → Pro-Akten-CSV-Import (DATEV, RA-Micro, advoware Auto-Mapping).<br>
+          <code><a href="https://github.com/mikelninh/gitlaw/blob/main/parser/fetch_all.py">parser/fetch_all.py</a></code> · <code><a href="https://github.com/mikelninh/gitlaw/tree/main/parser">parser/</a></code>
+        </div>
+      </div>
+
+      <div class="map-row">
+        <div class="jd">"Establish and maintain automated data workflow processes to uphold high standards of data quality, consistency, and regulatory compliance throughout the entire data lifecycle."</div>
+        <div class="built"><strong>Wöchentliches Auto-Update via GitHub Actions</strong>
+          Sonntags-Cron prüft mit OpenAI Structured Outputs neue BGH-Urteile, öffnet PR mit Diff. Plus separater Workflow für Gesetzesänderungen.<br>
+          <code><a href="https://github.com/mikelninh/gitlaw/blob/main/.github/workflows/update-laws.yml">update-laws.yml</a></code> · <code><a href="https://github.com/mikelninh/gitlaw/blob/main/.github/workflows/update-leitsaetze.yml">update-leitsaetze.yml</a></code>
+        </div>
+      </div>
+
+      <div class="map-row">
+        <div class="jd">"Integrate knowledge graphs and vector databases for structured reasoning and semantic search across large legal datasets."</div>
+        <div class="built"><strong>FAISS-Vectorstore + Citation Graph</strong>
+          ~98K Paragraphen-Vektoren (FAISS, lokal) plus 94K-Knoten/200K-Edges Citation-Network mit interaktiver D3-Visualisierung und MCP-Tool zur Graph-Traversierung.<br>
+          <code><a href="https://github.com/mikelninh/gitlaw/blob/main/rag/build_vectorstore.py">rag/build_vectorstore.py</a></code> · <code><a href="https://github.com/mikelninh/gitlaw/blob/main/gitlaw_mcp/graph_builder.py">gitlaw_mcp/graph_builder.py</a></code>
+        </div>
+      </div>
+
+      <div class="map-row">
+        <div class="jd">"Optimize performance and scalability of LLM-based systems for production environments."</div>
+        <div class="built"><strong>Lazy-Loading + Structured Outputs + Caching</strong>
+          FAISS und Graph-Indexes erst beim ersten Tool-Call geladen, OpenAI gpt-4o-mini mit JSON-Schema Structured Outputs für deterministische Antworten, Upstash-Redis Frankfurt mit 60d-TTL für Rechtsprechungs-Suche.<br>
+          <code><a href="https://github.com/mikelninh/gitlaw/blob/main/gitlaw_mcp/server.py">gitlaw_mcp/server.py</a></code> · <code><a href="https://github.com/mikelninh/gitlaw/blob/main/api/ask-pro.ts">api/ask-pro.ts</a></code>
+        </div>
+      </div>
+
+      <div class="map-row">
+        <div class="jd">"Develop and integrate solutions with MCP servers to support advanced legal tech workflows."</div>
+        <div class="built"><strong>Eigener produktiver MCP-Server</strong>
+          FastMCP-basiert, fünf Tools, eine Resource. Multi-Stage Docker, CI mit smoke + lint + in-image-test. Cloud-Migration-Pfad dokumentiert (AWS Fargate / Azure Container Apps).<br>
+          <code><a href="https://github.com/mikelninh/gitlaw/blob/main/gitlaw_mcp/README.md">gitlaw_mcp/README.md</a></code> · <code><a href="https://github.com/mikelninh/gitlaw/blob/main/gitlaw_mcp/server.py">gitlaw_mcp/server.py</a></code>
+        </div>
+      </div>
+
+      <div class="map-row">
+        <div class="jd">"Collaborate with legal engineers and product teams to turn complex requirements into working prototypes."</div>
+        <div class="built"><strong>Drei Stakeholder, drei Apps, ein Korpus</strong>
+          Bürger-Tier (kostenlos), Anwält:innen-Tier (Pro mit Akten/Recherche/PDF), Mandant:innen-Intake (5 Sprachen, RTL für Arabisch). Verifizierte Pilot-Anwender:innen-Welcome-Pages mit Anpassung pro Kanzlei.<br>
+          <code><a href="https://github.com/mikelninh/gitlaw/tree/main/viewer/src/pro">viewer/src/pro/</a></code>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cloud Architecture -->
+    <div class="group">
+      <h3>Cloud Architecture &amp; Compliance</h3>
+
+      <div class="map-row">
+        <div class="jd">"Architect and deploy AI services on cloud platforms (Azure/AWS) using containerization and CI/CD pipelines."</div>
+        <div class="built"><strong>Multi-Stage Dockerfile + dokumentierter Migration-Pfad</strong>
+          Builder/Runtime-Split, non-root user, healthcheck, Bind-Mount für 150MB-Vectorstore. AWS-Pfad: ECS Fargate + ALB + EFS + Secrets Manager (eu-central-1). Azure-Pfad: Container Apps + Key Vault + AppGW (Germany West Central).<br>
+          <code><a href="https://github.com/mikelninh/gitlaw/blob/main/gitlaw_mcp/Dockerfile">gitlaw_mcp/Dockerfile</a></code> · <code><a href="https://github.com/mikelninh/gitlaw/blob/main/gitlaw_mcp/ARCHITECTURE.md">gitlaw_mcp/ARCHITECTURE.md</a></code>
+        </div>
+      </div>
+
+      <div class="map-row">
+        <div class="jd">"Implement security and compliance frameworks for GDPR and legal industry standards."</div>
+        <div class="built"><strong>14-Pattern PII-Anonymizer + Frankfurt-Hosting + signierte Pro-Sessions</strong>
+          Auto-Anonymisierung vor jeder LLM-Anfrage (Namen, Adressen, IBAN, BIC, Steuer-ID, SV-Nr., Aktenzeichen, Geb-Datum, Firmen) mit 50-Token-Whitelist gegen Falsch-Anonymisierung von Rechtsbegriffen. Tenant-gebundene Sessions mit RBAC.<br>
+          <code><a href="https://github.com/mikelninh/gitlaw/blob/main/GDPR_READINESS_DE.md">GDPR_READINESS_DE.md</a></code>
+        </div>
+      </div>
+
+      <div class="map-row">
+        <div class="jd">"Monitor and maintain system reliability through automated testing and observability tools."</div>
+        <div class="built"><strong>3-Job-Parallel-CI + Eval-Matrix + Logging-Pattern</strong>
+          smoke (offline-Demo + Korpus-Sanity) + lint (ruff + mypy) + docker (BuildKit-Cache, in-image-Test). Eval-Matrix für Citizen-Agent-Flows mit 9-PASS/0-FAIL Live-Check.<br>
+          <code><a href="https://github.com/mikelninh/gitlaw/blob/main/.github/workflows/mcp-ci.yml">.github/workflows/mcp-ci.yml</a></code> · <code><a href="https://github.com/mikelninh/gitlaw/blob/main/GITLAW_AGENT_EVAL_MATRIX_DE.md">EVAL_MATRIX_DE.md</a></code>
+        </div>
+      </div>
+    </div>
+
+    <!-- About You -->
+    <div class="group">
+      <h3>Coding Skills &amp; Working Style</h3>
+
+      <div class="map-row">
+        <div class="jd">"Strong coding skills (Python, Typescript and experience with knowledge graphs and vector databases)."</div>
+        <div class="built"><strong>Beide Sprachen produktiv im selben Repo</strong>
+          Python: rag/, parser/, gitlaw_mcp/. TypeScript: viewer/ (React 19 + Vite + Tailwind 4), api/ (Vercel Serverless Functions). Knowledge Graphs: Citation Network. Vector DBs: FAISS lokal, Strategie für Pinecone/Weaviate-Migration in ARCHITECTURE.md.</div>
+      </div>
+
+      <div class="map-row">
+        <div class="jd">"You don't just identify problems. You own solutions."</div>
+        <div class="built"><strong>Solo-built, drei Stakeholder bedient</strong>
+          GitLaw existiert bisher als Solo-Projekt (~9 Monate). Bürger-Version live deployed auf GitHub Pages, Pro-Version live auf Vercel mit Frankfurt-Cloud-Backend, MCP-Server CI-getestet. Kein Demo-Toy — produktive Workflows mit echten Pilot-Anwender:innen.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── HIGHLIGHTS ─────────────────────────────────────────────── -->
+<section>
+  <div class="container">
+    <div class="pre">Tech-Highlights · was beim Code-Review auffallen sollte</div>
+    <h2 class="display">Vier Stellen, an denen ich Production-Denken zeige.</h2>
+
+    <div class="highlights">
+      <div class="hl">
+        <h4>Anti-Halluzinations-Verifikation mit strukturierten Failure-Modes</h4>
+        <p><code>verify_citation()</code> liefert nicht nur ✓/✗, sondern bei Fehlschlag <code>reason: "law_not_found"</code> vs <code>"paragraph_not_found"</code> vs <code>"could_not_parse"</code> mit konkretem Hinweis, was als nächstes zu tun ist. Macht das Tool agent-tauglich.</p>
+      </div>
+      <div class="hl">
+        <h4>Lazy-Loading für teure Ressourcen</h4>
+        <p>FAISS (~150MB) und Citation-Graph (~32MB) werden erst beim ersten Aufruf geladen. Heißt: drei der fünf MCP-Tools laufen ohne OpenAI-Key und ohne Graph-Datei. Server startet in &lt;200ms.</p>
+      </div>
+      <div class="hl">
+        <h4>Citation-Regex mit Roman-Numeral-Lookahead</h4>
+        <p><code>§ 185 I StGB</code> parst korrekt (I = Roman-Subsection), aber <code>§ 185 InsO</code> nicht falsch (I gefolgt von n → kein Roman, abbreviation = InsO). Plus Blocklist gegen False-Positive-Caps wie "Absatz", "Satz", "Nummer" als angebliche Gesetz-Abkürzungen.</p>
+      </div>
+      <div class="hl">
+        <h4>Multi-Stage Docker, ~250MB Final-Image</h4>
+        <p>Builder mit Compiler/BLAS, Runtime nur Venv + App + libgomp1. Non-root user, eigener Healthcheck statt curl, Bind-Mount für regenerierbare Vectorstore-Daten — kein Re-Build pro Korpus-Update.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── WHAT'S NEXT ────────────────────────────────────────────── -->
+<section>
+  <div class="container">
+    <div class="pre">Roadmap</div>
+    <h2 class="display">Was als nächstes drankäme.</h2>
+    <p class="lede">Damit klar ist, dass ich weiß wie's weitergeht — nicht nur was schon da ist.</p>
+
+    <div class="highlights">
+      <div class="hl">
+        <h4>HTTP/SSE-Transport für hosted MCP-Clients</h4>
+        <p>Aktuell stdio. FastMCP unterstützt SSE und streamable-HTTP nativ — nächster Schritt für Production-Hosting.</p>
+      </div>
+      <div class="hl">
+        <h4>Eval-Harness für Citation-Verification</h4>
+        <p>100 hand-gelabelte Cases (echte vs. halluzinierte Zitate) als pytest-Suite, in CI getrackt. Pass-Rate als Metrik in jedem PR.</p>
+      </div>
+      <div class="hl">
+        <h4>Multi-Jurisdiction</h4>
+        <p>Schweizer und Österreichischer Korpus existiert bereits in <code>data/laws_*.py</code>. Mit minimalem Aufwand in MCP-Server + Vectorstore aufnehmbar.</p>
+      </div>
+      <div class="hl">
+        <h4>OpenTelemetry-Tracing pro Tool-Invocation</h4>
+        <p>Strukturierte Spans für FAISS-Suche + OpenAI-Call + Graph-Lookup. Visualisiert in Grafana / App Insights, hilft bei "warum war dieser Call langsam".</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── STACK ──────────────────────────────────────────────────── -->
+<section>
+  <div class="container">
+    <div class="pre">Stack</div>
+    <h2 class="display">Was im Repo lebt.</h2>
+
+    <div style="margin-top: 16px">
+      <div style="font-size:14px;color:var(--muted);margin-bottom:6px">AI &amp; Backend</div>
+      <div class="pills">
+        <span class="pill">Python 3.10+</span>
+        <span class="pill">FastAPI</span>
+        <span class="pill">FastMCP</span>
+        <span class="pill">LangChain</span>
+        <span class="pill">FAISS</span>
+        <span class="pill">OpenAI (gpt-4o-mini, embeddings, structured outputs)</span>
+        <span class="pill">pytest</span>
+        <span class="pill">ruff + mypy</span>
+      </div>
+    </div>
+
+    <div style="margin-top: 20px">
+      <div style="font-size:14px;color:var(--muted);margin-bottom:6px">Frontend &amp; APIs</div>
+      <div class="pills">
+        <span class="pill">React 19</span>
+        <span class="pill">TypeScript</span>
+        <span class="pill">Vite</span>
+        <span class="pill">Tailwind CSS 4</span>
+        <span class="pill">react-router-dom 7</span>
+        <span class="pill">Vercel Serverless Functions</span>
+        <span class="pill">D3 v7</span>
+      </div>
+    </div>
+
+    <div style="margin-top: 20px">
+      <div style="font-size:14px;color:var(--muted);margin-bottom:6px">Infra &amp; DevOps</div>
+      <div class="pills">
+        <span class="pill">Docker (multi-stage)</span>
+        <span class="pill">GitHub Actions</span>
+        <span class="pill">Upstash Redis (Frankfurt)</span>
+        <span class="pill">Vercel</span>
+        <span class="pill">GitHub Pages</span>
+        <span class="pill">BuildKit cache</span>
+      </div>
+    </div>
+
+    <div style="margin-top: 20px">
+      <div style="font-size:14px;color:var(--muted);margin-bottom:6px">Compliance &amp; Quality</div>
+      <div class="pills">
+        <span class="pill">DSGVO-Anonymizer (14 Patterns)</span>
+        <span class="pill">Tenant-gebundene Sessions</span>
+        <span class="pill">RBAC</span>
+        <span class="pill">Audit-Log</span>
+        <span class="pill">Frankfurt-Cloud-Hosting</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────── -->
+<footer>
+  <div class="container">
+    <div class="sig">Mikel</div>
+    <div class="meta mono">hallo.chupi@gmail.com · github.com/mikelninh · gitlaw-xi.vercel.app</div>
+    <div class="meta" style="margin-top:14px">
+      Diese Seite ist statisches HTML, kein Build-Step nötig — siehe <a href="https://github.com/mikelninh/gitlaw/blob/main/portfolio.html">portfolio.html</a> im Repo.
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

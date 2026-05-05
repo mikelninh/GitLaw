@@ -1,6 +1,9 @@
 # GitLaw ⚖️
 
+> **Bewerbung als AI Software Engineer:** [`portfolio.html`](portfolio.html) — Stellenanforderungen 1:1 gemappt auf Code-Pfade in diesem Repo (RAG, MCP-Server, Knowledge Graphs, Cloud-ready Container, DSGVO-Compliance).
+
 See also:
+- [portfolio.html](portfolio.html) — Portfolio-Page für Bewerbungen
 - [AGENTS.md](/Users/mikel/gitlaw/AGENTS.md) — repo priorities and low-interruption collaboration rules
 - [GITLAW_COMPANY_THESIS_DE.md](/Users/mikel/gitlaw/GITLAW_COMPANY_THESIS_DE.md)
 - [GITLAW_EXECUTION_PLAN_DE.md](/Users/mikel/gitlaw/GITLAW_EXECUTION_PLAN_DE.md)
