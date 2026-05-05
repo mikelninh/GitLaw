@@ -121,6 +121,29 @@ Eigenständiger Bereich unter `/#/pro` — Beta, Invite-only.
 
 ---
 
+## 🔌 MCP Server — GitLaw als Tool für jeden LLM-Client
+
+Der gesamte Korpus + Citation-Verification ist als **Model Context Protocol Server** verfügbar (`gitlaw_mcp/`). Das heißt: Claude Desktop, Cursor, Continue oder jeder eigene Agent kann GitLaw-Tools nativ aufrufen — semantische Suche, Zitat-Verifikation, exakte Paragraphen-Lookups.
+
+```python
+# Beispiel: ein LLM ruft verify_citation("§ 999 StGB") auf
+{
+  "verified": false,
+  "reason": "paragraph_not_found",
+  "law": { "name": "Strafgesetzbuch", "abbreviation": "StGB" },
+  "hint": "StGB exists, but '§ 999' was not found."
+}
+```
+
+Vier Tools: `search_laws` (FAISS-Retrieval), `verify_citation` (Anti-Halluzination), `lookup_paragraph` (exakter Lookup), `list_laws` (Korpus-Enumeration). Plus die Resource `gitlaw://law/{abbr}` für ganze Gesetzestexte. Setup-Anleitung + Claude-Desktop-Config: [`gitlaw_mcp/README.md`](gitlaw_mcp/README.md).
+
+Demo ohne API-Key:
+```bash
+python -m gitlaw_mcp.demo
+```
+
+---
+
 ## 🤖 Agentic GitLaw Pro
 
 GitLaw Pro wird bewusst nicht als generischer Legal-Chat gebaut, sondern als beaufsichtigter Multi-Agent-Workflow:

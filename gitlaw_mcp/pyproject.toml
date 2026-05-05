@@ -1,0 +1,28 @@
+[project]
+name = "gitlaw-mcp"
+version = "0.1.0"
+description = "MCP server that exposes 5,936 German laws + RAG search + citation verification as tools any LLM client can call."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Mikel" }]
+license = { text = "MIT" }
+
+dependencies = [
+    # Core MCP — stdio + tool/resource decorators
+    "mcp>=1.0.0",
+    # Semantic search backend (already in the parent rag/ pipeline)
+    "langchain-community>=0.3.0",
+    "langchain-openai>=0.2.0",
+    "faiss-cpu>=1.8.0",
+]
+
+[project.scripts]
+gitlaw-mcp = "gitlaw_mcp.server:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["gitlaw_mcp*"]
