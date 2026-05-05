@@ -1,0 +1,87 @@
+{
+  "summary": {
+    "total": 53,
+    "passed": 53,
+    "failed": 0,
+    "pass_rate": 1.0,
+    "duration_seconds": 1.636
+  },
+  "by_category": {
+    "real-canonical": {
+      "pass": 22,
+      "fail": 0,
+      "total": 22
+    },
+    "real-formatting": {
+      "pass": 1,
+      "fail": 0,
+      "total": 1
+    },
+    "real-with-subsection": {
+      "pass": 1,
+      "fail": 0,
+      "total": 1
+    },
+    "real-roman-numeral": {
+      "pass": 1,
+      "fail": 0,
+      "total": 1
+    },
+    "real-letter-suffix": {
+      "pass": 2,
+      "fail": 0,
+      "total": 2
+    },
+    "real-art-marker": {
+      "pass": 2,
+      "fail": 0,
+      "total": 2
+    },
+    "real-art-with-subsection": {
+      "pass": 1,
+      "fail": 0,
+      "total": 1
+    },
+    "real-art-multi-subsection": {
+      "pass": 1,
+      "fail": 0,
+      "total": 1
+    },
+    "halluzination-paragraph": {
+      "pass": 4,
+      "fail": 0,
+      "total": 4
+    },
+    "halluzination-letter-suffix": {
+      "pass": 4,
+      "fail": 0,
+      "total": 4
+    },
+    "halluzination-law": {
+      "pass": 2,
+      "fail": 0,
+      "total": 2
+    },
+    "halluzination-art": {
+      "pass": 2,
+      "fail": 0,
+      "total": 2
+    },
+    "no-citation": {
+      "pass": 4,
+      "fail": 0,
+      "total": 4
+    },
+    "edge-case-formatting": {
+      "pass": 4,
+      "fail": 0,
+      "total": 4
+    },
+    "real-multi-word-abbr": {
+      "pass": 2,
+      "fail": 0,
+      "total": 2
+    }
+  },
+  "failures": []
+}

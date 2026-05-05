@@ -1,5 +1,9 @@
 # GitLaw MCP Server
 
+[![MCP CI](https://github.com/mikelninh/gitlaw/actions/workflows/mcp-ci.yml/badge.svg)](https://github.com/mikelninh/gitlaw/actions/workflows/mcp-ci.yml)
+[![Citation Eval: 53/53](https://img.shields.io/badge/citation_eval-53%2F53_(100%25)-brightgreen?logo=pytest)](gitlaw_mcp/tests/cases.json)
+[![Transport: stdio + SSE](https://img.shields.io/badge/transport-stdio_%2B_SSE-blue)](#hosted-deployment-flyio-frankfurt)
+
 > **MCP server that exposes 5,936 German laws + RAG search + citation verification as tools any LLM client can call.**
 
 Built on top of the existing GitLaw RAG pipeline (FAISS vectorstore, OpenAI embeddings, paragraph-level chunking of all federal German laws).

@@ -1,0 +1,67 @@
+{
+  "_doc": "Hand-labelled citation-verification eval set. Each case is the input, expected verified, expected reason (if any). Used by tests/test_eval.py — run via pytest. The harness asserts (a) verified flag matches, (b) reason matches when expected. Pass-rate is reported in CI and surfaced as the README badge.",
+  "cases": [
+    {"id": "stgb-185-canonical",      "citation": "§ 185 StGB",            "expected": {"verified": true}, "category": "real-canonical"},
+    {"id": "stgb-185-no-space",       "citation": "§185 StGB",             "expected": {"verified": true}, "category": "real-formatting"},
+    {"id": "stgb-185-abs-1",          "citation": "§ 185 Abs. 1 StGB",     "expected": {"verified": true}, "category": "real-with-subsection"},
+    {"id": "stgb-185-roman-i",        "citation": "§ 185 I StGB",          "expected": {"verified": true}, "category": "real-roman-numeral"},
+    {"id": "stgb-263-betrug",         "citation": "§ 263 StGB",            "expected": {"verified": true}, "category": "real-canonical"},
+    {"id": "stgb-263a-letter-suffix", "citation": "§ 263a StGB",           "expected": {"verified": true}, "category": "real-letter-suffix"},
+    {"id": "stgb-129b-letter",        "citation": "§ 129b StGB",           "expected": {"verified": true}, "category": "real-letter-suffix"},
+    {"id": "stgb-186-defamation",     "citation": "§ 186 StGB",            "expected": {"verified": true}, "category": "real-canonical"},
+    {"id": "stgb-187-verleumdung",    "citation": "§ 187 StGB",            "expected": {"verified": true}, "category": "real-canonical"},
+    {"id": "stgb-241-bedrohung",      "citation": "§ 241 StGB",            "expected": {"verified": true}, "category": "real-canonical"},
+
+    {"id": "bgb-823-deliktsrecht",    "citation": "§ 823 BGB",             "expected": {"verified": true}, "category": "real-canonical"},
+    {"id": "bgb-280-pflichtverl",     "citation": "§ 280 BGB",             "expected": {"verified": true}, "category": "real-canonical"},
+    {"id": "bgb-573-mietvertrag",     "citation": "§ 573 BGB",             "expected": {"verified": true}, "category": "real-canonical"},
+    {"id": "bgb-1922-erbschaft",      "citation": "§ 1922 BGB",            "expected": {"verified": true}, "category": "real-canonical"},
+    {"id": "bgb-433-kaufvertrag",     "citation": "§ 433 BGB",             "expected": {"verified": true}, "category": "real-canonical"},
+
+    {"id": "gg-art-5-meinungsfr",     "citation": "Art. 5 GG",             "expected": {"verified": true}, "category": "real-art-marker"},
+    {"id": "gg-art-5-no-dot",         "citation": "Art 5 GG",              "expected": {"verified": true}, "category": "real-art-marker"},
+    {"id": "gg-art-5-abs-1",          "citation": "Art. 5 Abs. 1 GG",      "expected": {"verified": true}, "category": "real-art-with-subsection"},
+    {"id": "gg-art-5-abs-1-s-1",      "citation": "Art 5 Abs. 1 S. 1 GG",  "expected": {"verified": true}, "category": "real-art-multi-subsection"},
+    {"id": "gg-art-1-menschenwurde",  "citation": "Art. 1 GG",             "expected": {"verified": true}, "category": "real-canonical"},
+    {"id": "gg-art-2-grundrecht",     "citation": "Art 2 GG",              "expected": {"verified": true}, "category": "real-canonical"},
+    {"id": "gg-art-3-gleichheit",     "citation": "Art. 3 GG",             "expected": {"verified": true}, "category": "real-canonical"},
+
+    {"id": "stpo-152-anklage",        "citation": "§ 152 StPO",            "expected": {"verified": true}, "category": "real-canonical"},
+    {"id": "zpo-91-kostenentsch",     "citation": "§ 91 ZPO",              "expected": {"verified": true}, "category": "real-canonical"},
+    {"id": "hgb-1-kaufmann",          "citation": "§ 1 HGB",               "expected": {"verified": true}, "category": "real-canonical"},
+    {"id": "ao-37-anspruch",          "citation": "§ 37 AO",               "expected": {"verified": true}, "category": "real-canonical"},
+
+    {"id": "halu-stgb-999",           "citation": "§ 999 StGB",            "expected": {"verified": false, "reason": "paragraph_not_found"}, "category": "halluzination-paragraph"},
+    {"id": "halu-stgb-1000",          "citation": "§ 1000 StGB",           "expected": {"verified": false, "reason": "paragraph_not_found"}, "category": "halluzination-paragraph"},
+    {"id": "halu-bgb-9999",           "citation": "§ 9999 BGB",            "expected": {"verified": false, "reason": "paragraph_not_found"}, "category": "halluzination-paragraph"},
+    {"id": "halu-stgb-261b",          "citation": "§ 261b StGB",           "expected": {"verified": false, "reason": "paragraph_not_found"}, "category": "halluzination-letter-suffix"},
+    {"id": "halu-stgb-188a",          "citation": "§ 188a StGB",           "expected": {"verified": false, "reason": "paragraph_not_found"}, "category": "halluzination-letter-suffix"},
+    {"id": "halu-stgb-185-xyz",       "citation": "§ 185 XYZ",             "expected": {"verified": false, "reason": "law_not_found"}, "category": "halluzination-law"},
+    {"id": "halu-stgb-185-fakelaw",   "citation": "§ 185 SchrottG",        "expected": {"verified": false, "reason": "law_not_found"}, "category": "halluzination-law"},
+    {"id": "real-art-99-gg",          "citation": "Art. 99 GG",            "expected": {"verified": true}, "category": "real-canonical"},
+    {"id": "halu-art-150-gg",         "citation": "Art. 150 GG",           "expected": {"verified": false, "reason": "paragraph_not_found"}, "category": "halluzination-art"},
+    {"id": "halu-art-200-gg",         "citation": "Art. 200 GG",           "expected": {"verified": false, "reason": "paragraph_not_found"}, "category": "halluzination-art"},
+
+    {"id": "free-text-greeting",      "citation": "Mit freundlichen Grüßen",                  "expected": {"verified": false, "reason": "could_not_parse"}, "category": "no-citation"},
+    {"id": "free-text-empty",         "citation": "",                                          "expected": {"verified": false, "reason": "could_not_parse"}, "category": "no-citation"},
+    {"id": "free-text-prose",         "citation": "Hier sehe ich kein Zitat",                  "expected": {"verified": false, "reason": "could_not_parse"}, "category": "no-citation"},
+    {"id": "free-text-numbers-only",  "citation": "12345",                                     "expected": {"verified": false, "reason": "could_not_parse"}, "category": "no-citation"},
+
+    {"id": "edge-mixed-case-stgb",    "citation": "§ 185 stgb",            "expected": {"verified": true}, "category": "edge-case-formatting"},
+    {"id": "edge-mixed-case-StGB",    "citation": "§ 185 STGB",            "expected": {"verified": true}, "category": "edge-case-formatting"},
+    {"id": "edge-extra-whitespace",   "citation": "§   185   StGB",        "expected": {"verified": true}, "category": "edge-case-formatting"},
+    {"id": "edge-trailing-punkt",     "citation": "§ 185 StGB.",           "expected": {"verified": true}, "category": "edge-case-formatting"},
+
+    {"id": "real-uwg-3",              "citation": "§ 3 UWG",               "expected": {"verified": true}, "category": "real-canonical"},
+    {"id": "real-aufenthg-25",        "citation": "§ 25 AufenthG",         "expected": {"verified": true}, "category": "real-canonical"},
+    {"id": "real-arbzg-3",            "citation": "§ 3 ArbZG",             "expected": {"verified": true}, "category": "real-canonical"},
+    {"id": "real-kschg-1",            "citation": "§ 1 KSchG",             "expected": {"verified": true}, "category": "real-canonical"},
+
+    {"id": "real-sgb5-92",            "citation": "§ 92 SGB V",            "expected": {"verified": true}, "category": "real-multi-word-abbr"},
+    {"id": "real-sgb12-27a",          "citation": "§ 27a SGB XII",         "expected": {"verified": true}, "category": "real-multi-word-abbr"},
+
+    {"id": "halu-stgb-263c",          "citation": "§ 263c StGB",           "expected": {"verified": false, "reason": "paragraph_not_found"}, "category": "halluzination-letter-suffix"},
+    {"id": "halu-bgb-823a",           "citation": "§ 823a BGB",            "expected": {"verified": false, "reason": "paragraph_not_found"}, "category": "halluzination-letter-suffix"},
+    {"id": "halu-stpo-9999",          "citation": "§ 9999 StPO",           "expected": {"verified": false, "reason": "paragraph_not_found"}, "category": "halluzination-paragraph"}
+  ]
+}

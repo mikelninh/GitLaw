@@ -54,8 +54,22 @@ jobs:
       - name: Build citation graph (required by find_related_paragraphs)
         run: python -m gitlaw_mcp.graph_builder
 
+      - name: Install pytest (for eval suite)
+        run: pip install pytest
+
       - name: Run offline demo
         run: python -m gitlaw_mcp.demo
+
+      - name: Citation-verification eval suite (53 cases)
+        run: python -m gitlaw_mcp.tests.test_eval
+
+      - name: Upload eval report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: citation-eval-report
+          path: gitlaw_mcp/tests/eval_report.json
+          if-no-files-found: warn
 
       - name: Sanity-check abbr index
         run: |

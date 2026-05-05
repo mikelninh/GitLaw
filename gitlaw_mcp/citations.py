@@ -39,10 +39,44 @@ CITATION_RE = re.compile(
         ))*
     )
     \s+
-    (?P<abbr>[A-ZÄÖÜ][A-Za-zÄÖÜäöü\-]{1,30})              # law abbreviation
+    # Law abbreviation. We allow lowercase first letter (lawyers occasionally
+    # write "stgb") and an optional trailing arabic numeral OR Roman numeral
+    # (with one space) — for multi-token corpus keys like "SGB 5", "SGB XII",
+    # "AO 1977".
+    (?P<abbr>[A-Za-zÄÖÜäöü][A-Za-zÄÖÜäöü\-]{1,30}(?:\s+(?:\d{1,4}|[IVX]{1,4}))?)
     """,
     re.VERBOSE,
 )
+
+# Map Roman → Arabic for SGB book references — lawyers cite both styles.
+# "§ 92 SGB V" and "§ 92 SGB 5" should both resolve to the same file.
+_ROMAN_TO_ARABIC = {
+    "I": "1",
+    "II": "2",
+    "III": "3",
+    "IV": "4",
+    "V": "5",
+    "VI": "6",
+    "VII": "7",
+    "VIII": "8",
+    "IX": "9",
+    "X": "10",
+    "XI": "11",
+    "XII": "12",
+}
+
+
+def _normalize_abbreviation(raw: str) -> str:
+    """
+    Collapse internal whitespace and convert SGB-Roman to SGB-Arabic so
+    "SGB V" matches the corpus key "SGB 5". Idempotent.
+    """
+    parts = raw.strip().split()
+    if not parts:
+        return raw.strip()
+    if len(parts) == 2 and parts[1] in _ROMAN_TO_ARABIC:
+        return f"{parts[0]} {_ROMAN_TO_ARABIC[parts[1]]}"
+    return " ".join(parts)
 
 
 @dataclass
@@ -67,7 +101,7 @@ def parse_citation(text: str) -> Citation | None:
         marker=marker,
         number=m.group("number"),
         subsection=(m.group("sub") or "").strip() or None,
-        abbreviation=m.group("abbr"),
+        abbreviation=_normalize_abbreviation(m.group("abbr")),
     )
 
 
@@ -85,7 +119,10 @@ def _build_abbr_index() -> dict[str, Path]:
                 head = "".join(f.readline() for _ in range(30))
         except OSError:
             continue
-        m = re.search(r"\*\*Abkürzung:\*\*\s*([^\s\n]+)", head)
+        # Capture full line — many laws use multi-token abbreviations like
+        # "SGB 5", "SGB 12", "AO 1977". Splitting on the first whitespace
+        # would chop them.
+        m = re.search(r"\*\*Abkürzung:\*\*\s*([^\n]+)", head)
         if m:
             abbr = m.group(1).strip().upper()
             # Prefer the canonical filename (e.g. stgb.md) over variants (stgbeg.md)
@@ -104,8 +141,30 @@ def get_abbr_index() -> dict[str, Path]:
 
 
 def find_law_file(abbreviation: str) -> Path | None:
-    """Resolve a law abbreviation (case-insensitive) to its Markdown file."""
-    return get_abbr_index().get(abbreviation.upper())
+    """
+    Resolve a law abbreviation (case-insensitive) to its Markdown file.
+
+    Some statutes are indexed with a year suffix (corpus convention): e.g.
+    "AO 1977", "UWG 2004", "AufenthG 2004". Lawyers usually cite without it.
+    When the exact match fails, fall back to a prefix lookup; if exactly one
+    indexed key starts with the input + space, use that. If multiple match,
+    prefer the most-recent year (lexicographically last).
+    """
+    idx = get_abbr_index()
+    upper = abbreviation.upper()
+    direct = idx.get(upper)
+    if direct is not None:
+        return direct
+
+    # Prefix match against year-suffixed keys
+    candidates = [k for k in idx if k.startswith(upper + " ")]
+    if len(candidates) == 1:
+        return idx[candidates[0]]
+    if len(candidates) > 1:
+        # Multiple year-suffixed variants — pick the one with the highest year
+        candidates.sort()  # lexicographic ≈ chronological for "ABC YYYY"
+        return idx[candidates[-1]]
+    return None
 
 
 @dataclass
