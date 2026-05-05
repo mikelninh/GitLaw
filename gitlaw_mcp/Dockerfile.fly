@@ -1,0 +1,66 @@
+# Fly.io variant of the MCP-server image.
+#
+# Differs from gitlaw_mcp/Dockerfile in three places:
+#   1. Bakes the citation graph + FAISS metadata into the image so the first
+#      run after deploy doesn't fail. (For Fargate/EFS we mount these from
+#      shared storage; on Fly we use the bundled volume only for cache.)
+#   2. Exposes port 8000 explicitly for the http_service binding.
+#   3. CMD runs the MCP server in SSE mode, not stdio.
+#
+# Build context = repo root (not gitlaw_mcp/), so paths like `laws/` work.
+# Excluded via .dockerignore: viewer/, api/, viewer/dist, vectorstore (it'd
+# bloat the image).
+
+FROM python:3.11-slim AS builder
+
+RUN apt-get update \
+ && apt-get install --no-install-recommends -y build-essential libgomp1 \
+ && rm -rf /var/lib/apt/lists/*
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PIP_NO_CACHE_DIR=1
+
+WORKDIR /build
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+COPY gitlaw_mcp/pyproject.toml gitlaw_mcp/README.md ./gitlaw_mcp/
+COPY gitlaw_mcp/__init__.py ./gitlaw_mcp/
+
+RUN pip install --upgrade pip \
+ && pip install ./gitlaw_mcp
+
+# ─── Runtime ──────────────────────────────────────────────────────────
+FROM python:3.11-slim AS runtime
+
+RUN apt-get update \
+ && apt-get install --no-install-recommends -y libgomp1 ca-certificates \
+ && rm -rf /var/lib/apt/lists/*
+
+RUN useradd --create-home --shell /bin/bash gitlaw
+USER gitlaw
+WORKDIR /app
+
+ENV PATH="/opt/venv/bin:$PATH" \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    MCP_TRANSPORT=sse \
+    PORT=8000 \
+    FASTMCP_HOST=0.0.0.0
+
+COPY --from=builder --chown=gitlaw:gitlaw /opt/venv /opt/venv
+
+# Bake corpus + package — the citation graph is *generated* at startup
+# from laws/ (~6s) so we don't ship 32 MB JSON. Trade slightly slower cold
+# start for slim image + always-fresh data.
+COPY --chown=gitlaw:gitlaw laws/ /app/laws/
+COPY --chown=gitlaw:gitlaw gitlaw_mcp/ /app/gitlaw_mcp/
+
+EXPOSE 8000
+
+# On boot: build the citation graph (writes to gitlaw_mcp/data/),
+# then start the SSE server. Subsequent restarts skip the build because
+# the persistent volume keeps the JSON.
+CMD ["sh", "-c", "[ -f /app/gitlaw_mcp/data/citation_graph.json ] || python -m gitlaw_mcp.graph_builder; exec python -m gitlaw_mcp.server"]

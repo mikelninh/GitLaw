@@ -231,12 +231,35 @@ The Roman-numeral sub-pattern uses a lookahead so `X` in `XYZ` is not mistaken f
 
 ---
 
+## Hosted deployment (Fly.io, Frankfurt)
+
+The MCP server is also packaged for **HTTP+SSE transport** so any hosted MCP
+client (or your own agent on AWS/Render/Cloudflare Workers) can connect over
+TLS without running it locally.
+
+```bash
+# Deploys to https://gitlaw-mcp.fly.dev/sse in Frankfurt (eu-central):
+flyctl auth login
+flyctl launch --no-deploy           # accepts fly.toml as-is
+flyctl secrets set OPENAI_API_KEY=sk-...
+flyctl volumes create gitlaw_data --region fra --size 1
+flyctl deploy
+```
+
+After that, push-to-deploy is wired via `.github/workflows/fly-deploy.yml` —
+add `FLY_API_TOKEN` to your repo secrets and every commit on `main` that
+touches `gitlaw_mcp/`, `laws/`, or `fly.toml` ships within ~60s.
+
+The Dockerfile.fly variant binds to `0.0.0.0:8000` and serves SSE; the
+default `gitlaw_mcp/Dockerfile` stays in stdio mode for Claude Desktop.
+
 ## Roadmap
 
-- [ ] HTTP/SSE transport (currently stdio only) — for hosted clients
-- [ ] Optional citation graph: extract cross-references from paragraph text → expose as `find_related(citation)` tool
-- [ ] Eval harness: a fixed set of 100 hand-labelled citation-verification cases, run on every commit
-- [ ] Schweizer / Österreichischer Rechtskorpus (already partially in `laws_*.py` data files in the parent repo)
+- [x] ~~HTTP/SSE transport~~ — done (Dockerfile.fly + fly.toml + SSE in server.py)
+- [x] ~~Citation graph + `find_related_paragraphs` tool~~ — done (94K nodes, 200K edges)
+- [ ] Eval harness: 50+ hand-labelled citation-verification cases, run in CI
+- [ ] Schweizer / Österreichischer Rechtskorpus (already partially in `laws_*.py`)
+- [ ] Per-tenant rate limiting (relevant once multi-tenant SSE clients exist)
 
 ---
 

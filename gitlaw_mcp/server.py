@@ -435,7 +435,25 @@ def get_law_text(abbreviation: str) -> str:
 
 
 def main() -> None:
-    mcp.run()
+    """
+    Entry point for the GitLaw MCP server.
+
+    Transport selection via environment:
+        MCP_TRANSPORT=stdio  (default) — for Claude Desktop, Cursor, local clients
+        MCP_TRANSPORT=sse              — for hosted clients (HTTP+Server-Sent Events)
+        MCP_TRANSPORT=streamable-http  — newer HTTP transport (FastMCP ≥ 1.2)
+
+    SSE mode binds to 0.0.0.0:$PORT (default 8000), suitable for Fly.io / Railway
+    / Cloud Run / Fargate where a port-bound process is required.
+    """
+    transport = os.getenv("MCP_TRANSPORT", "stdio").lower()
+    if transport in ("sse", "streamable-http"):
+        # FastMCP picks up host/port from these conventional env vars.
+        os.environ.setdefault("FASTMCP_HOST", "0.0.0.0")
+        os.environ.setdefault("FASTMCP_PORT", os.getenv("PORT", "8000"))
+        mcp.run(transport=transport)
+    else:
+        mcp.run()
 
 
 if __name__ == "__main__":

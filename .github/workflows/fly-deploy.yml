@@ -1,0 +1,41 @@
+# Fly.io push-to-deploy for the GitLaw MCP server.
+#
+# Triggers on every push to main that touches gitlaw_mcp/, fly.toml, laws/
+# or this workflow. Uses BuildKit cache via Fly's remote builder, so subsequent
+# deploys are typically <60s.
+#
+# Setup once:
+#   1. flyctl auth login
+#   2. flyctl auth token              # generates an API token
+#   3. Add it as repo secret FLY_API_TOKEN in GitHub → Settings → Secrets
+
+name: Fly Deploy (MCP server)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "gitlaw_mcp/**"
+      - "laws/**"
+      - "fly.toml"
+      - ".github/workflows/fly-deploy.yml"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fly-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Deploy to Fly.io (Frankfurt)
+    runs-on: ubuntu-latest
+    if: ${{ secrets.FLY_API_TOKEN != '' }}    # skip if token not set yet
+    steps:
+      - uses: actions/checkout@v4
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: flyctl deploy --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
