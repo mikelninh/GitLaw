@@ -59,6 +59,9 @@ Eigenständiger Bereich unter `/#/pro` — Beta, Invite-only.
 | **Anti-Halluzinations-Badges** | Strukturierte Verifikations-Stati: ✓ verifiziert · ⚠ Gesetz unbekannt · ⚠ § nicht gefunden · 🚨 aufgehoben (weggefallen). Erkennt auch Range-Marker (`§§ 2 bis 3f weggefallen` deckt § 3 NetzDG ab). 53/53 Eval-Cases passing in CI. |
 | **Word-Export (.docx)** | Editierbares Word-Dokument neben dem PDF — direkt in Word/Office weiterarbeiten ohne Copy-Paste. Briefkopf, Verifikations-Status pro Zitat, Page-Footer. |
 | **Mandant:innen-Akten** | CRUD mit Frist-Tracker (Calc aus Bescheid-Datum, §§ 187/188 BGB-konform), Mandant:in-E-Mail, Status, Such- & Filter-Tabs |
+| **Mandatsart-Checklisten** *(Sprint 1)* | 11 Migrations-Mandatsarten · 108 kuratierte Pflicht-Unterlagen · Status pro Item (erhalten / ausstehend / Problem) · „nur fehlende Pflicht"-Filter |
+| **8-Stati-Workflow + Sachstand-Generator** *(Sprint 1)* | Klar definierte Übergangs-Regeln (`unterlagen_fehlen` → … → `verfahren_abgeschlossen`) · 32 Antwort-Templates DE+VI für Mandant und Mittelsperson · Generator setzt Mandantenname, Behörde, Frist, Aktenzeichen automatisch ein |
+| **Behörden-DB** *(Sprint 1)* | 17 Berliner Migrations-Stellen vorbefüllt (LEA, BAMF, VG Berlin, Botschaften Vietnam) — Combobox-Suche statt Freitext |
 | **59 Schreiben-Templates** | 5 allgemein + 12 Notariat + 12 Migration + 10 Familien + 10 Sozial + 10 Steuer + Custom mit `{{placeholder}}` |
 | **Branded PDF-Export** | Logo + Kanzlei-Anschrift + Disclaimer-Footer auf jedem Dokument |
 | **Mandant:innen-Intake** | QR-Code für Erstanfragen-Formular in 5 Sprachen (DE/VI/TR/AR/EN, RTL für Arabisch), inkl. Dringlichkeit + Frist-Hinweis + Anhangs-Metadaten (Kategorie/Sprache/interner Dateiname), Antwort landet in Akte |
@@ -266,6 +269,8 @@ Anwält:innen sehen unseren Code → Vertrauen. Falls die Firma stirbt → Code 
 - [x] **Mehrsprachiger Intake-Triage-Block** (Dringlichkeit/Frist/Anhangsklassifikation vollständig in DE/VI/TR/AR/EN)
 - [x] **Recherche-Verlauf mit Follow-up-Kontext** (vertiefte Folgefragen + Einzel-Speichern/Prüfen/Export je Antwort)
 - [x] **Personal Welcome-Pages** für Beta-Tester (`/#/bao`, `/#/rubin`, `/#/werner`, `/#/jasmin`)
+- [x] **Migrations-MVP Sprint 1** *(Mai 2026, mit Bao Nguyen)* — 11 Mandatsart-Checklisten · 8-Stati-Workflow · Sachstand-Generator DE+VI · Behörden-DB
+- [ ] **Migrations-MVP Sprint 2-4** — Auto-Versand · OCR-Klassifikation · Mittelspersonen-Datenmodell · Mandanten-Portal
 - [ ] **Mobile App** (iOS/Android — vorerst PWA via Browser tauglich)
 - [ ] **Echtes RBAC** (Partner:in vs. Associate-Rechte)
 - [ ] **Azure OpenAI EU-Region** (für Großkanzlei-AVV-Anforderungen)

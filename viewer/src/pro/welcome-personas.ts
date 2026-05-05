@@ -50,7 +50,7 @@ export const PERSONAS: Record<string, WelcomePersona> = {
     tagline: 'GitLaw Pro ist mein Versuch, einen echten anwaltlichen Arbeitsflow kompakter zu machen: Intake, Akte, Recherche und Schreiben an einem Ort.',
     betaToken: 'BETA-NGUYEN',
     presetKey: 'nguyen',
-    personalNote: 'Du hattest neulich Interesse an so einem Tool für den Arbeitsalltag. Genau dafür ist das hier gedacht. Mich interessiert vor allem, ob sich der Flow für dich natürlich anfühlt und wo du sofort Mehrwert siehst.',
+    personalNote: 'Bao, dein Lastenheft hat den Plan für die nächsten Wochen geprägt. Sprint 0 + 1 sind drin: 11 Mandatsarten mit Pflicht-Unterlagen, 8 klar definierte Stati, Sachstands-Antworten DE+VI auf einen Klick. Klick die Demo-Akte unten an, dann sehen wir morgen gemeinsam was als Nächstes kommt.',
     highlights: [
       {
         emoji: '🇻🇳',
@@ -59,8 +59,24 @@ export const PERSONAS: Record<string, WelcomePersona> = {
         showQrFor: { lang: 'vi', caption: 'Demo-Formular auf Vietnamesisch' },
       },
       {
+        emoji: '✅',
+        title: 'Mandatsart-Checklisten + 8-Stati-Workflow (neu, Sprint 1)',
+        description: 'Pro Mandatsart eine kuratierte Liste der Pflicht-Unterlagen, sichtbar in der Akte. Status-Modell verhindert unsinnige Übergänge. Live im Demo-Klick.',
+        bullets: [
+          '11 Mandatsarten · 108 Unterlagen-Items',
+          'Status-Workflow: unterlagen_fehlen → … → verfahren_abgeschlossen',
+          'Behörden-DB: 17 Berliner Migrations-Stellen vorbefüllt',
+        ],
+      },
+      {
+        emoji: '✉',
+        title: 'Sachstands-Antwort DE+VI auf einen Klick (neu, Sprint 1)',
+        description: '32 Templates — 8 Stati × Mandant/Mittelsperson × Deutsch/Vietnamesisch. Generator setzt Mandantenname, Behörde, Frist und Aktenzeichen automatisch ein. Copy-paste in dein E-Mail-Tool.',
+        footnote: 'VI-Templates sind grammatikalisch sauber, aber Voice-Polish kommt erst nach unserer Session morgen.',
+      },
+      {
         emoji: '📋',
-        title: '12 Migrationsrecht-Vorlagen',
+        title: '12 Migrationsrecht-Schreiben-Vorlagen',
         description: 'Kein anderes deutsches Tool hat das in dieser Tiefe.',
         bullets: [
           'Aufenthaltstitel-Verlängerung (§ 8 AufenthG)',
