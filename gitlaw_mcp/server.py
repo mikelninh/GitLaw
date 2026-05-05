@@ -23,14 +23,110 @@ Hook into Claude Desktop / Cursor / any MCP client via stdio — see README.
 
 from __future__ import annotations
 
+import functools
+import json as _json
+import logging
 import os
 import sys
+import time
+import uuid
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 # Allow `python -m mcp.server` from repo root and `uv run`
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
+
+
+# ─── Structured logging ───────────────────────────────────────────────
+# JSON-per-line on stderr: each log entry is a single JSON object so it
+# pipes cleanly into Datadog/Loki/Sentry/Axiom without a parser. Tool
+# calls get latency, status and a request_id automatically via @_traced.
+class _JsonFormatter(logging.Formatter):
+    def format(self, record: logging.LogRecord) -> str:
+        payload: dict[str, Any] = {
+            "ts": self.formatTime(record, "%Y-%m-%dT%H:%M:%S"),
+            "level": record.levelname,
+            "logger": record.name,
+            "msg": record.getMessage(),
+        }
+        # Merge anything attached via `extra={}`
+        for k, v in record.__dict__.items():
+            if k in (
+                "msg",
+                "args",
+                "levelname",
+                "levelno",
+                "pathname",
+                "filename",
+                "module",
+                "exc_info",
+                "exc_text",
+                "stack_info",
+                "lineno",
+                "funcName",
+                "created",
+                "msecs",
+                "relativeCreated",
+                "thread",
+                "threadName",
+                "processName",
+                "process",
+                "name",
+                "message",
+                "taskName",
+                "asctime",
+            ):
+                continue
+            try:
+                _json.dumps(v)  # only include JSON-serialisable extras
+                payload[k] = v
+            except (TypeError, ValueError):
+                payload[k] = repr(v)
+        return _json.dumps(payload, ensure_ascii=False)
+
+
+_logger = logging.getLogger("gitlaw_mcp")
+if not _logger.handlers:
+    _h = logging.StreamHandler(sys.stderr)
+    _h.setFormatter(_JsonFormatter())
+    _logger.addHandler(_h)
+    _logger.setLevel(os.getenv("GITLAW_LOG_LEVEL", "INFO").upper())
+    _logger.propagate = False
+
+
+def _traced(fn: Callable[..., Any]) -> Callable[..., Any]:
+    """Decorator: emit a structured JSON log around every tool invocation.
+    Tool name is derived from the function name."""
+    tool_name = fn.__name__
+
+    @functools.wraps(fn)
+    def wrapper(*args: Any, **kwargs: Any) -> Any:
+        req_id = uuid.uuid4().hex[:12]
+        t0 = time.perf_counter()
+        status = "ok"
+        err: str | None = None
+        try:
+            return fn(*args, **kwargs)
+        except Exception as e:  # noqa: BLE001
+            status = "error"
+            err = f"{type(e).__name__}: {e}"
+            raise
+        finally:
+            latency_ms = round((time.perf_counter() - t0) * 1000, 2)
+            _logger.info(
+                f"tool.{tool_name}",
+                extra={
+                    "request_id": req_id,
+                    "tool": tool_name,
+                    "latency_ms": latency_ms,
+                    "status": status,
+                    "error": err,
+                },
+            )
+
+    return wrapper
+
 
 from mcp.server.fastmcp import FastMCP  # type: ignore
 
@@ -131,6 +227,7 @@ def _node_id(abbr: str, marker: str, number: str) -> str:
 
 
 @mcp.tool()
+@_traced
 def search_laws(query: str, limit: int = 5) -> list[dict[str, Any]]:
     """
     Semantic search across all 5,936 German laws (paragraph-level).
@@ -166,6 +263,7 @@ def search_laws(query: str, limit: int = 5) -> list[dict[str, Any]]:
 
 
 @mcp.tool()
+@_traced
 def verify_citation(citation: str) -> dict[str, Any]:
     """
     Verify whether a German legal citation exists and return its actual text.
@@ -242,6 +340,7 @@ def verify_citation(citation: str) -> dict[str, Any]:
 
 
 @mcp.tool()
+@_traced
 def lookup_paragraph(abbreviation: str, paragraph: str) -> dict[str, Any]:
     """
     Exact lookup by law abbreviation and paragraph number — faster than
@@ -292,6 +391,7 @@ def lookup_paragraph(abbreviation: str, paragraph: str) -> dict[str, Any]:
 
 
 @mcp.tool()
+@_traced
 def list_laws(filter: str | None = None, limit: int = 50) -> dict[str, Any]:
     """
     List laws available in the GitLaw corpus.
@@ -319,6 +419,7 @@ def list_laws(filter: str | None = None, limit: int = 50) -> dict[str, Any]:
 
 
 @mcp.tool()
+@_traced
 def find_related_paragraphs(citation: str, limit: int = 20) -> dict[str, Any]:
     """
     Find paragraphs that reference, or are referenced by, a given paragraph.
@@ -412,6 +513,122 @@ def find_related_paragraphs(citation: str, limit: int = 20) -> dict[str, Any]:
         "out_degree": len(out_edges),
         "referenced_by": _hydrate(in_edges, "from"),
         "references": _hydrate(out_edges, "to"),
+    }
+
+
+@mcp.tool()
+@_traced
+def hybrid_search(query: str, limit: int = 5, expand: int = 2) -> dict[str, Any]:
+    """
+    Hybrid retrieval: semantic search via FAISS PLUS graph expansion via the
+    citation network. Closes the loop between vector search (which finds
+    *similar* paragraphs) and the citation graph (which finds *related* ones
+    via legal-dogmatic cross-references).
+
+    Algorithm:
+      1. Run search_laws (FAISS) for `limit` semantic hits
+      2. For each hit, fetch its in-edges + out-edges from the citation graph
+         and expand by up to `expand` peers
+      3. Deduplicate, score peers by 1/(1+rank) of their semantic source
+      4. Return both groups separately so the caller can render hierarchy
+
+    Useful for: "I want everything that's *semantically* near this query AND
+    everything *legally* connected to those hits". Closes the gap between
+    'similar' and 'cited together'.
+
+    Args:
+        query: Natural-language search, e.g. "Beleidigung im Internet"
+        limit: How many semantic hits (default 5, max 15)
+        expand: How many graph peers to add per semantic hit (default 2, max 5)
+
+    Returns:
+        {
+          "query": "...",
+          "semantic_hits": [...],      # FAISS top-k with metadata
+          "graph_neighbours": [...],   # 1-hop graph expansion of those hits
+          "stats": {...}
+        }
+    """
+    if not query or not query.strip():
+        return {"query": query, "semantic_hits": [], "graph_neighbours": [], "stats": {}}
+
+    limit = max(1, min(15, int(limit)))
+    expand = max(0, min(5, int(expand)))
+
+    semantic = search_laws(query, limit=limit)
+    if not semantic:
+        return {"query": query, "semantic_hits": [], "graph_neighbours": [], "stats": {}}
+
+    # Try graph expansion. If the graph file isn't there, return semantic-only
+    # gracefully — keeps the tool useful even on a fresh deploy.
+    try:
+        indexes = _get_graph_indexes()
+    except RuntimeError:
+        return {
+            "query": query,
+            "semantic_hits": semantic,
+            "graph_neighbours": [],
+            "stats": {"semantic_count": len(semantic), "graph_skipped": "no_graph_data"},
+        }
+
+    seen: set[str] = set()
+    neighbours: list[dict[str, Any]] = []
+
+    for rank, hit in enumerate(semantic):
+        # Map FAISS hit metadata to our graph-id format. We need (lawAbbr.upper())|(marker)(number)
+        # The hit.section field is like "§ 185 — Beleidigung". Parse just the marker+number.
+        section_str = hit.get("section", "").strip()
+        abbr = hit.get("abbreviation", "").strip().upper()
+        if not section_str or not abbr:
+            continue
+        marker = "Art" if section_str.lower().startswith("art") else "§"
+        # Extract first numeric token (with optional letter suffix)
+        import re as _re
+
+        m = _re.search(r"(\d+[a-z]?)", section_str)
+        if not m:
+            continue
+        nid = f"{abbr}|{marker}{m.group(1)}"
+        seen.add(nid)
+
+        # Pull peers — combine in + out, dedupe, take up to `expand`
+        peer_edges = indexes["incoming"].get(nid, []) + indexes["outgoing"].get(nid, [])
+        peer_ids = []
+        for e in peer_edges:
+            pid = e["from"] if e["to"] == nid else e["to"]
+            if pid not in peer_ids:
+                peer_ids.append(pid)
+            if len(peer_ids) >= expand:
+                break
+
+        for pid in peer_ids:
+            if pid in seen:
+                continue
+            seen.add(pid)
+            peer = indexes["nodes_by_id"].get(pid)
+            if peer is None:
+                continue
+            neighbours.append(
+                {
+                    "id": pid,
+                    "law": peer["law"],
+                    "marker": peer["marker"],
+                    "number": peer["number"],
+                    "title": peer.get("title"),
+                    "source_rank": rank,  # which semantic hit pulled it in
+                    "score": round(1.0 / (1 + rank), 3),  # heuristic boost
+                }
+            )
+
+    return {
+        "query": query,
+        "semantic_hits": semantic,
+        "graph_neighbours": neighbours,
+        "stats": {
+            "semantic_count": len(semantic),
+            "graph_count": len(neighbours),
+            "total_unique_paragraphs": len(seen),
+        },
     }
 
 

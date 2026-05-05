@@ -115,7 +115,7 @@ def run_eval_with_report() -> dict:
 def main() -> int:
     report = run_eval_with_report()
     s = report["summary"]
-    print(f"\nGitLaw MCP — citation eval")
+    print("\nGitLaw MCP — citation eval")
     print(f"{'─' * 50}")
     print(f"  total:      {s['total']}")
     print(f"  passed:     {s['passed']}")
